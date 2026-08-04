@@ -15,7 +15,8 @@
     "profile": "Mon profil",
     "login": "Connexion",
     "signup": "Inscription",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "requests": "Demandes"
   },
   "Landing": {
     "title": "Trouvez votre prochain chavrusa",
@@ -99,6 +100,20 @@
     "noResults": "Aucun étudiant ne correspond à vos filtres pour le moment. Essayez de les ajuster.",
     "connect": "Se connecter",
     "requestSent": "Demande envoyée",
-    "comingSoon": "L'envoi de demandes de connexion arrive bientôt."
+    "respond": "Répondre",
+    "matched": "Mis en relation"
+  },
+  "Requests": {
+    "title": "Demandes de connexion",
+    "incomingTitle": "Demandes reçues",
+    "outgoingTitle": "Demandes envoyées",
+    "matchedTitle": "Vos mises en relation",
+    "noIncoming": "Aucune demande en attente.",
+    "noOutgoing": "Vous n'avez encore envoyé aucune demande.",
+    "noMatched": "Pas encore de mise en relation — parcourez les étudiants et envoyez une demande de connexion.",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "pending": "En attente",
+    "matched": "Mis en relation"
   }
 }

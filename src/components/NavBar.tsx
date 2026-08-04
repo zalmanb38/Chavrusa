@@ -26,6 +26,9 @@ export default async function NavBar() {
 
           {user ? (
             <>
+              <Link href="/requests" className="text-sm hover:underline">
+                {t("requests")}
+              </Link>
               <Link href="/profile" className="text-sm hover:underline">
                 {t("profile")}
               </Link>

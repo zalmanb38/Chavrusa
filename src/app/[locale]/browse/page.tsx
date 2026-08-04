@@ -13,6 +13,7 @@ import {
   type Preference,
 } from "@/lib/profile-options";
 import ConnectButton from "@/components/ConnectButton";
+import { buildConnectStatusMap, type ConnectRequestRow } from "@/lib/connect";
 
 type SearchParams = {
   language?: string;
@@ -71,6 +72,16 @@ export default async function BrowsePage({
   const { data: profiles } = await query.order("created_at", {
     ascending: false,
   });
+
+  const { data: connectRequests } = await supabase
+    .from("connect_requests")
+    .select("id, requester_id, recipient_id, status")
+    .or(`requester_id.eq.${user!.id},recipient_id.eq.${user!.id}`);
+
+  const connectStatusMap = buildConnectStatusMap(
+    (connectRequests ?? []) as ConnectRequestRow[],
+    user!.id,
+  );
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
@@ -181,7 +192,13 @@ export default async function BrowsePage({
                 {profile.level && <span>{tProfile(levelMessageKey[profile.level])}</span>}
               </div>
 
-              <ConnectButton recipientId={profile.id} />
+              <ConnectButton
+                currentUserId={user!.id}
+                recipientId={profile.id}
+                initialStatus={
+                  connectStatusMap.get(profile.id)?.status ?? "none"
+                }
+              />
             </li>
           ))}
         </ul>

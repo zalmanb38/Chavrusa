@@ -15,7 +15,8 @@
     "profile": "My Profile",
     "login": "Log In",
     "signup": "Sign Up",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "requests": "Requests"
   },
   "Landing": {
     "title": "Find your next chavrusa",
@@ -99,6 +100,20 @@
     "noResults": "No learners match your filters yet. Try adjusting them.",
     "connect": "Connect",
     "requestSent": "Request sent",
-    "comingSoon": "Sending connect requests is coming soon."
+    "respond": "Respond",
+    "matched": "Matched"
+  },
+  "Requests": {
+    "title": "Connect Requests",
+    "incomingTitle": "Requests you've received",
+    "outgoingTitle": "Requests you've sent",
+    "matchedTitle": "Your matches",
+    "noIncoming": "No pending requests.",
+    "noOutgoing": "You haven't sent any requests yet.",
+    "noMatched": "No matches yet — browse learners and send a connect request.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "pending": "Pending",
+    "matched": "Matched"
   }
 }

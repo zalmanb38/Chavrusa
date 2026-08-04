@@ -22,8 +22,8 @@ This is the first milestone: project setup plus the core auth/profile flow.
       availability)
 - [x] Browse/discovery page with filters (language, topic, city,
       preference)
-- [ ] Sending/accepting connect requests (browse page has a placeholder
-      "Connect" button — wiring it up is next)
+- [x] Sending, accepting, and declining connect requests; a Requests page
+      showing incoming/outgoing requests and current matches
 - [ ] Scheduling flow once matched
 - [ ] Contact handoff after a session is confirmed
 - [ ] Phone number verification, report/block
@@ -80,6 +80,7 @@ src/
       login/ signup/     # auth pages
       profile/            # profile create/edit (auth-guarded)
       browse/              # discovery + filters (auth-guarded)
+      requests/             # incoming/outgoing connect requests + matches
     auth/callback/         # OAuth + email-confirmation redirect handler
   components/               # NavBar, LocaleSwitcher, forms, etc.
   i18n/                      # next-intl routing/navigation/request config
