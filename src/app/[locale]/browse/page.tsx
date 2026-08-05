@@ -198,6 +198,7 @@ export default async function BrowsePage({
                 initialStatus={
                   connectStatusMap.get(profile.id)?.status ?? "none"
                 }
+                requestId={connectStatusMap.get(profile.id)?.requestId ?? null}
               />
             </li>
           ))}

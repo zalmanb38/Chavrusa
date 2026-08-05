@@ -17,6 +17,7 @@ import {
   type Level,
   type Preference,
 } from "@/lib/profile-options";
+import type { ProfileContacts } from "@/lib/contacts";
 
 function toggle<T>(list: T[], value: T): T[] {
   return list.includes(value)
@@ -26,9 +27,11 @@ function toggle<T>(list: T[], value: T): T[] {
 
 export default function ProfileForm({
   initialProfile,
+  initialContacts,
   userId,
 }: {
   initialProfile: Profile | null;
+  initialContacts: ProfileContacts | null;
   userId: string;
 }) {
   const t = useTranslations("Profile");
@@ -52,6 +55,11 @@ export default function ProfileForm({
   const [availability, setAvailability] = useState(
     initialProfile?.availability ?? "",
   );
+  const [whatsapp, setWhatsapp] = useState(initialContacts?.whatsapp ?? "");
+  const [contactPhone, setContactPhone] = useState(
+    initialContacts?.contact_phone ?? "",
+  );
+  const [zoomLink, setZoomLink] = useState(initialContacts?.zoom_link ?? "");
 
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -75,10 +83,25 @@ export default function ProfileForm({
       availability,
     });
 
+    if (saveError) {
+      setSaving(false);
+      setError(saveError.message);
+      return;
+    }
+
+    const { error: contactsError } = await supabase
+      .from("profile_contacts")
+      .upsert({
+        id: userId,
+        whatsapp,
+        contact_phone: contactPhone,
+        zoom_link: zoomLink,
+      });
+
     setSaving(false);
 
-    if (saveError) {
-      setError(saveError.message);
+    if (contactsError) {
+      setError(contactsError.message);
       return;
     }
 
@@ -198,6 +221,48 @@ export default function ProfileForm({
           className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
         />
       </label>
+
+      <fieldset className="flex flex-col gap-4 rounded-lg border border-black/10 p-4 dark:border-white/10">
+        <legend className="px-1 text-sm font-medium">
+          {t("contactSectionTitle")}
+        </legend>
+        <p className="-mt-2 text-xs text-black/60 dark:text-white/60">
+          {t("contactSectionHint")}
+        </p>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("whatsapp")}
+          <input
+            type="text"
+            value={whatsapp}
+            placeholder={t("whatsappPlaceholder")}
+            onChange={(e) => setWhatsapp(e.target.value)}
+            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
+          />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("contactPhone")}
+          <input
+            type="text"
+            value={contactPhone}
+            placeholder={t("contactPhonePlaceholder")}
+            onChange={(e) => setContactPhone(e.target.value)}
+            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
+          />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("zoomLink")}
+          <input
+            type="text"
+            value={zoomLink}
+            placeholder={t("zoomLinkPlaceholder")}
+            onChange={(e) => setZoomLink(e.target.value)}
+            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
+          />
+        </label>
+      </fieldset>
 
       {error && <p className="text-sm text-red-600">{error}</p>}
       {success && (

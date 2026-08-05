@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import RespondButtons from "@/components/RespondButtons";
 
@@ -164,9 +164,12 @@ export default async function RequestsPage({
                       </p>
                     )}
                   </div>
-                  <span className="rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 dark:bg-green-900/40 dark:text-green-300">
+                  <Link
+                    href={`/matches/${row.id}`}
+                    className="rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 hover:bg-green-200 dark:bg-green-900/40 dark:text-green-300 dark:hover:bg-green-900/70"
+                  >
                     {t("matched")}
-                  </span>
+                  </Link>
                 </li>
               );
             })}

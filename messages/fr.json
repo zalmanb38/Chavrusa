@@ -72,7 +72,15 @@
     "availabilityPlaceholder": "ex. Soirées en semaine, dimanche matin",
     "saveSuccess": "Profil enregistré.",
     "completeYourProfile": "Complétez votre profil pour que d'autres puissent vous trouver.",
-    "noProfileYet": "Vous n'avez pas encore créé de profil."
+    "noProfileYet": "Vous n'avez pas encore créé de profil.",
+    "contactSectionTitle": "Coordonnées",
+    "contactSectionHint": "Partagées avec un autre apprenant seulement une fois qu'une séance est confirmée entre vous — jamais affichées lors de la navigation.",
+    "whatsapp": "Numéro WhatsApp",
+    "whatsappPlaceholder": "ex. +33 6 12 34 56 78",
+    "contactPhone": "Numéro de téléphone",
+    "contactPhonePlaceholder": "ex. +33 6 12 34 56 78",
+    "zoomLink": "Lien Zoom",
+    "zoomLinkPlaceholder": "ex. https://zoom.us/j/..."
   },
   "Topics": {
     "chumash": "Houmach",
@@ -115,5 +123,28 @@
     "decline": "Refuser",
     "pending": "En attente",
     "matched": "Mis en relation"
+  },
+  "Schedule": {
+    "proposeTitle": "Proposer un horaire",
+    "dateTimeLabel": "Date et heure",
+    "noteLabel": "Note (facultatif)",
+    "notePlaceholder": "ex. Commençons par le chapitre 3",
+    "proposeSubmit": "Proposer",
+    "sessionsTitle": "Séances",
+    "noSessions": "Aucune séance programmée pour l'instant — proposez un horaire ci-dessous.",
+    "statusConfirmed": "Confirmée",
+    "statusCancelled": "Annulée",
+    "statusYourTurn": "À vous de répondre",
+    "statusWaiting": "En attente de {name}",
+    "confirm": "Confirmer",
+    "suggestDifferentTime": "Proposer un autre horaire",
+    "cancel": "Annuler",
+    "withdraw": "Retirer",
+    "contactRevealedTitle": "Tout est prêt pour vous connecter",
+    "contactRevealedHint": "Puisque vous avez confirmé une séance ensemble, voici comment vous joindre.",
+    "contactWhatsappLabel": "WhatsApp",
+    "contactPhoneLabel": "Téléphone",
+    "contactZoomLabel": "Zoom",
+    "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées."
   }
 }

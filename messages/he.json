@@ -72,7 +72,15 @@
     "availabilityPlaceholder": "לדוגמה: ערבי חול, בקרים בימי ראשון",
     "saveSuccess": "הפרופיל נשמר.",
     "completeYourProfile": "השלימו את הפרופיל כדי שאחרים יוכלו למצוא אתכם.",
-    "noProfileYet": "עדיין לא הגדרת פרופיל."
+    "noProfileYet": "עדיין לא הגדרת פרופיל.",
+    "contactSectionTitle": "פרטי התקשרות",
+    "contactSectionHint": "משותף עם לומד/ת רק לאחר שאישרתם מפגש משותף — לעולם לא מוצג בעת עיון.",
+    "whatsapp": "מספר וואטסאפ",
+    "whatsappPlaceholder": "לדוגמה: 054-1234567+",
+    "contactPhone": "מספר טלפון",
+    "contactPhonePlaceholder": "לדוגמה: 054-1234567+",
+    "zoomLink": "קישור זום",
+    "zoomLinkPlaceholder": "לדוגמה: https://zoom.us/j/..."
   },
   "Topics": {
     "chumash": "חומש",
@@ -115,5 +123,28 @@
     "decline": "דחייה",
     "pending": "ממתין",
     "matched": "הותאמתם"
+  },
+  "Schedule": {
+    "proposeTitle": "הצע/י זמן",
+    "dateTimeLabel": "תאריך ושעה",
+    "noteLabel": "הערה (רשות)",
+    "notePlaceholder": "לדוגמה: נתחיל מפרק ג׳",
+    "proposeSubmit": "הצע/י",
+    "sessionsTitle": "מפגשים",
+    "noSessions": "עדיין לא נקבעו מפגשים — הציעו זמן למטה.",
+    "statusConfirmed": "אושר",
+    "statusCancelled": "בוטל",
+    "statusYourTurn": "תורך להגיב",
+    "statusWaiting": "ממתין/ה ל-{name}",
+    "confirm": "אישור",
+    "suggestDifferentTime": "הצע/י זמן אחר",
+    "cancel": "ביטול",
+    "withdraw": "משיכת ההצעה",
+    "contactRevealedTitle": "הכל מוכן להתחברות",
+    "contactRevealedHint": "מכיוון שאישרתם מפגש משותף, כך תוכלו ליצור קשר.",
+    "contactWhatsappLabel": "וואטסאפ",
+    "contactPhoneLabel": "טלפון",
+    "contactZoomLabel": "זום",
+    "contactNoneSet": "{name} עדיין לא הוסיף/ה פרטי התקשרות."
   }
 }

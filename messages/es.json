@@ -72,7 +72,15 @@
     "availabilityPlaceholder": "p. ej. Noches entre semana, domingos por la mañana",
     "saveSuccess": "Perfil guardado.",
     "completeYourProfile": "Completa tu perfil para que otros puedan encontrarte.",
-    "noProfileYet": "Aún no has creado tu perfil."
+    "noProfileYet": "Aún no has creado tu perfil.",
+    "contactSectionTitle": "Información de contacto",
+    "contactSectionHint": "Solo se comparte con otro estudiante una vez que confirmen una sesión juntos — nunca se muestra al explorar.",
+    "whatsapp": "Número de WhatsApp",
+    "whatsappPlaceholder": "p. ej. +54 9 11 1234 5678",
+    "contactPhone": "Número de teléfono",
+    "contactPhonePlaceholder": "p. ej. +54 9 11 1234 5678",
+    "zoomLink": "Enlace de Zoom",
+    "zoomLinkPlaceholder": "p. ej. https://zoom.us/j/..."
   },
   "Topics": {
     "chumash": "Jumash",
@@ -115,5 +123,28 @@
     "decline": "Rechazar",
     "pending": "Pendiente",
     "matched": "Conectados"
+  },
+  "Schedule": {
+    "proposeTitle": "Proponer un horario",
+    "dateTimeLabel": "Fecha y hora",
+    "noteLabel": "Nota (opcional)",
+    "notePlaceholder": "p. ej. Empecemos por el capítulo 3",
+    "proposeSubmit": "Proponer",
+    "sessionsTitle": "Sesiones",
+    "noSessions": "Aún no hay sesiones programadas — propone un horario abajo.",
+    "statusConfirmed": "Confirmada",
+    "statusCancelled": "Cancelada",
+    "statusYourTurn": "Te toca responder",
+    "statusWaiting": "Esperando a {name}",
+    "confirm": "Confirmar",
+    "suggestDifferentTime": "Proponer otro horario",
+    "cancel": "Cancelar",
+    "withdraw": "Retirar",
+    "contactRevealedTitle": "Todo listo para conectarse",
+    "contactRevealedHint": "Como ya confirmaron una sesión juntos, así pueden contactarse.",
+    "contactWhatsappLabel": "WhatsApp",
+    "contactPhoneLabel": "Teléfono",
+    "contactZoomLabel": "Zoom",
+    "contactNoneSet": "{name} todavía no agregó información de contacto."
   }
 }

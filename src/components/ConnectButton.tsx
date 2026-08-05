@@ -10,10 +10,12 @@ export default function ConnectButton({
   currentUserId,
   recipientId,
   initialStatus,
+  requestId,
 }: {
   currentUserId: string;
   recipientId: string;
   initialStatus: ConnectStatus;
+  requestId: string | null;
 }) {
   const t = useTranslations("Browse");
   const router = useRouter();
@@ -43,7 +45,14 @@ export default function ConnectButton({
   }
 
   if (status === "matched") {
-    return (
+    return requestId ? (
+      <Link
+        href={`/matches/${requestId}`}
+        className="mt-1 w-fit rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 hover:bg-green-200 dark:bg-green-900/40 dark:text-green-300 dark:hover:bg-green-900/70"
+      >
+        {t("matched")}
+      </Link>
+    ) : (
       <span className="mt-1 w-fit rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 dark:bg-green-900/40 dark:text-green-300">
         {t("matched")}
       </span>

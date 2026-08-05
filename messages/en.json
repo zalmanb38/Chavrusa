@@ -72,7 +72,15 @@
     "availabilityPlaceholder": "e.g. Weekday evenings, Sunday mornings",
     "saveSuccess": "Profile saved.",
     "completeYourProfile": "Complete your profile so others can find you.",
-    "noProfileYet": "You haven't set up your profile yet."
+    "noProfileYet": "You haven't set up your profile yet.",
+    "contactSectionTitle": "Contact info",
+    "contactSectionHint": "Only shared with a learner once you've confirmed a session together — never shown while browsing.",
+    "whatsapp": "WhatsApp number",
+    "whatsappPlaceholder": "e.g. +1 555 123 4567",
+    "contactPhone": "Phone number",
+    "contactPhonePlaceholder": "e.g. +1 555 123 4567",
+    "zoomLink": "Zoom link",
+    "zoomLinkPlaceholder": "e.g. https://zoom.us/j/..."
   },
   "Topics": {
     "chumash": "Chumash",
@@ -115,5 +123,28 @@
     "decline": "Decline",
     "pending": "Pending",
     "matched": "Matched"
+  },
+  "Schedule": {
+    "proposeTitle": "Propose a time",
+    "dateTimeLabel": "Date & time",
+    "noteLabel": "Note (optional)",
+    "notePlaceholder": "e.g. Let's start with Perek 3",
+    "proposeSubmit": "Propose",
+    "sessionsTitle": "Sessions",
+    "noSessions": "No sessions scheduled yet — propose a time below.",
+    "statusConfirmed": "Confirmed",
+    "statusCancelled": "Cancelled",
+    "statusYourTurn": "Your turn to respond",
+    "statusWaiting": "Waiting on {name}",
+    "confirm": "Confirm",
+    "suggestDifferentTime": "Suggest a different time",
+    "cancel": "Cancel",
+    "withdraw": "Withdraw",
+    "contactRevealedTitle": "You're all set to connect",
+    "contactRevealedHint": "Since you've confirmed a session together, here's how to reach each other.",
+    "contactWhatsappLabel": "WhatsApp",
+    "contactPhoneLabel": "Phone",
+    "contactZoomLabel": "Zoom",
+    "contactNoneSet": "{name} hasn't added contact info yet."
   }
 }

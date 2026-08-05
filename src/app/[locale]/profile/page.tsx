@@ -3,6 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
 import type { Profile } from "@/lib/profile-options";
+import type { ProfileContacts } from "@/lib/contacts";
 
 export default async function ProfilePage({
   params,
@@ -27,9 +28,19 @@ export default async function ProfilePage({
     .eq("id", user!.id)
     .maybeSingle();
 
+  const { data: contacts } = await supabase
+    .from("profile_contacts")
+    .select("id, whatsapp, contact_phone, zoom_link")
+    .eq("id", user!.id)
+    .maybeSingle();
+
   return (
     <div className="mx-auto max-w-lg px-4 py-12">
-      <ProfileForm initialProfile={profile as Profile | null} userId={user!.id} />
+      <ProfileForm
+        initialProfile={profile as Profile | null}
+        initialContacts={contacts as ProfileContacts | null}
+        userId={user!.id}
+      />
     </div>
   );
 }

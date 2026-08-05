@@ -24,8 +24,9 @@ This is the first milestone: project setup plus the core auth/profile flow.
       preference)
 - [x] Sending, accepting, and declining connect requests; a Requests page
       showing incoming/outgoing requests and current matches
-- [ ] Scheduling flow once matched
-- [ ] Contact handoff after a session is confirmed
+- [x] Scheduling flow once matched (propose/confirm/suggest-a-different-time)
+      and contact handoff (WhatsApp/phone/Zoom revealed only after a
+      confirmed session — enforced at the RLS level, not just in the UI)
 - [ ] Phone number verification, report/block
 - [ ] Paid tier / donations (intentionally deferred — schema and layout
       leave room for it)
@@ -81,6 +82,7 @@ src/
       profile/            # profile create/edit (auth-guarded)
       browse/              # discovery + filters (auth-guarded)
       requests/             # incoming/outgoing connect requests + matches
+      matches/[id]/          # scheduling + contact handoff for one match
     auth/callback/         # OAuth + email-confirmation redirect handler
   components/               # NavBar, LocaleSwitcher, forms, etc.
   i18n/                      # next-intl routing/navigation/request config
