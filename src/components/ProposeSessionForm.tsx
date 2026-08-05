@@ -50,29 +50,29 @@ export default function ProposeSessionForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-lg border border-black/10 p-4 dark:border-white/10"
+      className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 shadow-sm"
     >
-      <h3 className="text-sm font-medium">{t("proposeTitle")}</h3>
+      <h3 className="font-serif text-lg font-medium">{t("proposeTitle")}</h3>
 
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-1.5 text-sm">
         {t("dateTimeLabel")}
         <input
           type="datetime-local"
           required
           value={scheduledAt}
           onChange={(e) => setScheduledAt(e.target.value)}
-          className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
+          className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
         />
       </label>
 
-      <label className="flex flex-col gap-1 text-sm">
+      <label className="flex flex-col gap-1.5 text-sm">
         {t("noteLabel")}
         <input
           type="text"
           value={note}
           placeholder={t("notePlaceholder")}
           onChange={(e) => setNote(e.target.value)}
-          className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
+          className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
         />
       </label>
 
@@ -81,7 +81,7 @@ export default function ProposeSessionForm({
       <button
         type="submit"
         disabled={saving}
-        className="w-fit rounded-md bg-black px-4 py-2 text-sm font-medium text-white disabled:opacity-50 dark:bg-white dark:text-black"
+        className="w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
       >
         {t("proposeSubmit")}
       </button>

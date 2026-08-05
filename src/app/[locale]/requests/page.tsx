@@ -80,27 +80,23 @@ export default async function RequestsPage({
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-12">
-      <h1 className="text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="font-serif text-3xl font-medium">{t("title")}</h1>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">{t("incomingTitle")}</h2>
         {incomingRows.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            {t("noIncoming")}
-          </p>
+          <p className="text-sm text-muted">{t("noIncoming")}</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {incomingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-black/10 p-4 dark:border-white/10"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
               >
                 <div>
                   <p className="font-medium">{row.requester.name}</p>
                   {row.requester.city && (
-                    <p className="text-sm text-black/60 dark:text-white/60">
-                      {row.requester.city}
-                    </p>
+                    <p className="text-sm text-muted">{row.requester.city}</p>
                   )}
                 </div>
                 <RespondButtons requestId={row.id} />
@@ -113,25 +109,21 @@ export default async function RequestsPage({
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">{t("outgoingTitle")}</h2>
         {outgoingRows.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            {t("noOutgoing")}
-          </p>
+          <p className="text-sm text-muted">{t("noOutgoing")}</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {outgoingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-black/10 p-4 dark:border-white/10"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
               >
                 <div>
                   <p className="font-medium">{row.recipient.name}</p>
                   {row.recipient.city && (
-                    <p className="text-sm text-black/60 dark:text-white/60">
-                      {row.recipient.city}
-                    </p>
+                    <p className="text-sm text-muted">{row.recipient.city}</p>
                   )}
                 </div>
-                <span className="text-sm text-black/50 dark:text-white/50">
+                <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
                   {t("pending")}
                 </span>
               </li>
@@ -143,9 +135,7 @@ export default async function RequestsPage({
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">{t("matchedTitle")}</h2>
         {matchedRows.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            {t("noMatched")}
-          </p>
+          <p className="text-sm text-muted">{t("noMatched")}</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {matchedRows.map((row) => {
@@ -154,19 +144,17 @@ export default async function RequestsPage({
               return (
                 <li
                   key={row.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-black/10 p-4 dark:border-white/10"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
                 >
                   <div>
                     <p className="font-medium">{other.name}</p>
                     {other.city && (
-                      <p className="text-sm text-black/60 dark:text-white/60">
-                        {other.city}
-                      </p>
+                      <p className="text-sm text-muted">{other.city}</p>
                     )}
                   </div>
                   <Link
                     href={`/matches/${row.id}`}
-                    className="rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 hover:bg-green-200 dark:bg-green-900/40 dark:text-green-300 dark:hover:bg-green-900/70"
+                    className="rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
                   >
                     {t("matched")}
                   </Link>

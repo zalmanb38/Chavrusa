@@ -52,75 +52,73 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16">
-      <h1 className="text-2xl font-semibold">{t("signupTitle")}</h1>
+    <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16 sm:py-24">
+      <h1 className="font-serif text-3xl font-medium">{t("signupTitle")}</h1>
 
-      <GoogleSignInButton />
+      <div className="flex flex-col gap-6 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+        <GoogleSignInButton />
 
-      <div className="flex items-center gap-3 text-xs text-black/40 dark:text-white/40">
-        <span className="h-px flex-1 bg-black/10 dark:bg-white/10" />
-        {t("or")}
-        <span className="h-px flex-1 bg-black/10 dark:bg-white/10" />
+        <div className="flex items-center gap-3 text-xs text-muted">
+          <span className="h-px flex-1 bg-border" />
+          {t("or")}
+          <span className="h-px flex-1 bg-border" />
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <label className="flex flex-col gap-1.5 text-sm">
+            {t("email")}
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5 text-sm">
+            {t("password")}
+            <input
+              type="password"
+              required
+              minLength={6}
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5 text-sm">
+            {t("confirmPassword")}
+            <input
+              type="password"
+              required
+              minLength={6}
+              autoComplete="new-password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+            />
+          </label>
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          {info && <p className="text-sm text-accent">{info}</p>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+          >
+            {t("signupButton")}
+          </button>
+        </form>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-1 text-sm">
-          {t("email")}
-          <input
-            type="email"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("password")}
-          <input
-            type="password"
-            required
-            minLength={6}
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("confirmPassword")}
-          <input
-            type="password"
-            required
-            minLength={6}
-            autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            className="rounded-md border border-black/15 px-3 py-2 text-sm dark:border-white/20 dark:bg-transparent"
-          />
-        </label>
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {info && (
-          <p className="text-sm text-green-700 dark:text-green-400">
-            {info}
-          </p>
-        )}
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white disabled:opacity-50 dark:bg-white dark:text-black"
-        >
-          {t("signupButton")}
-        </button>
-      </form>
-
-      <p className="text-center text-sm text-black/60 dark:text-white/60">
+      <p className="text-center text-sm text-muted">
         {t("haveAccount")}{" "}
-        <Link href="/login" className="font-medium underline">
+        <Link href="/login" className="font-medium text-primary underline">
           {t("loginLink")}
         </Link>
       </p>

@@ -13,35 +13,47 @@ export default async function NavBar() {
   } = await supabase.auth.getUser();
 
   return (
-    <header className="sticky top-0 z-10 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/10 dark:bg-black/90">
-      <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-        <Link href="/" className="text-base font-semibold">
+    <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
+      <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-4">
+        <Link href="/" className="font-serif text-lg font-medium">
           {common("appName")}
         </Link>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <Link href="/browse" className="text-sm hover:underline">
+        <div className="flex flex-wrap items-center gap-5">
+          <Link
+            href="/browse"
+            className="text-sm text-foreground/80 hover:text-foreground"
+          >
             {t("browse")}
           </Link>
 
           {user ? (
             <>
-              <Link href="/requests" className="text-sm hover:underline">
+              <Link
+                href="/requests"
+                className="text-sm text-foreground/80 hover:text-foreground"
+              >
                 {t("requests")}
               </Link>
-              <Link href="/profile" className="text-sm hover:underline">
+              <Link
+                href="/profile"
+                className="text-sm text-foreground/80 hover:text-foreground"
+              >
                 {t("profile")}
               </Link>
               <LogoutButton />
             </>
           ) : (
             <>
-              <Link href="/login" className="text-sm hover:underline">
+              <Link
+                href="/login"
+                className="text-sm text-foreground/80 hover:text-foreground"
+              >
                 {t("login")}
               </Link>
               <Link
                 href="/signup"
-                className="rounded-md bg-black px-3 py-1.5 text-sm text-white dark:bg-white dark:text-black"
+                className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:opacity-90"
               >
                 {t("signup")}
               </Link>

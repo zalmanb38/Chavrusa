@@ -15,6 +15,9 @@ import {
 import ConnectButton from "@/components/ConnectButton";
 import { buildConnectStatusMap, type ConnectRequestRow } from "@/lib/connect";
 
+const selectClass =
+  "rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
+
 type SearchParams = {
   language?: string;
   topic?: string;
@@ -85,15 +88,15 @@ export default async function BrowsePage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-6 text-2xl font-semibold">{t("title")}</h1>
+      <h1 className="mb-6 font-serif text-3xl font-medium">{t("title")}</h1>
 
-      <form className="mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <form className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border border-border bg-surface p-4 sm:grid-cols-4">
         <label className="flex flex-col gap-1 text-sm">
           {t("filterLanguage")}
           <select
             name="language"
             defaultValue={filters.language ?? ""}
-            className="rounded-md border border-black/15 bg-transparent px-2 py-1.5 text-sm dark:border-white/20"
+            className={selectClass}
           >
             <option value="">{t("all")}</option>
             {LANGUAGE_CODES.map((code) => (
@@ -109,7 +112,7 @@ export default async function BrowsePage({
           <select
             name="topic"
             defaultValue={filters.topic ?? ""}
-            className="rounded-md border border-black/15 bg-transparent px-2 py-1.5 text-sm dark:border-white/20"
+            className={selectClass}
           >
             <option value="">{t("all")}</option>
             {TOPIC_KEYS.map((key) => (
@@ -126,7 +129,7 @@ export default async function BrowsePage({
             type="text"
             name="city"
             defaultValue={filters.city ?? ""}
-            className="rounded-md border border-black/15 px-2 py-1.5 text-sm dark:border-white/20 dark:bg-transparent"
+            className={selectClass}
           />
         </label>
 
@@ -135,7 +138,7 @@ export default async function BrowsePage({
           <select
             name="preference"
             defaultValue={filters.preference ?? ""}
-            className="rounded-md border border-black/15 bg-transparent px-2 py-1.5 text-sm dark:border-white/20"
+            className={selectClass}
           >
             <option value="">{t("all")}</option>
             {PREFERENCES.map((p) => (
@@ -148,29 +151,27 @@ export default async function BrowsePage({
 
         <button
           type="submit"
-          className="col-span-2 rounded-md bg-black px-4 py-2 text-sm font-medium text-white sm:col-span-4 sm:w-fit dark:bg-white dark:text-black"
+          className="col-span-2 w-fit rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground sm:col-span-4"
         >
           {t("title")}
         </button>
       </form>
 
       {!profiles || profiles.length === 0 ? (
-        <p className="text-sm text-black/60 dark:text-white/60">
-          {t("noResults")}
-        </p>
+        <p className="text-sm text-muted">{t("noResults")}</p>
       ) : (
         <ul className="flex flex-col gap-4">
           {(profiles as Profile[]).map((profile) => (
             <li
               key={profile.id}
-              className="flex flex-col gap-2 rounded-lg border border-black/10 p-4 dark:border-white/10"
+              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5 shadow-sm"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="font-medium">{profile.name}</h2>
+                <h2 className="font-serif text-lg font-medium">
+                  {profile.name}
+                </h2>
                 {profile.city && (
-                  <span className="text-sm text-black/60 dark:text-white/60">
-                    {profile.city}
-                  </span>
+                  <span className="text-sm text-muted">{profile.city}</span>
                 )}
               </div>
 
@@ -180,7 +181,7 @@ export default async function BrowsePage({
                 </p>
               )}
 
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-black/60 dark:text-white/60">
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
                 {profile.languages?.length > 0 && (
                   <span>
                     {profile.languages

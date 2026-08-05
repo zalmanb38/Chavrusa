@@ -76,22 +76,18 @@ export default async function MatchDetailPage({
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-12">
       <div>
-        <h1 className="text-2xl font-semibold">{otherName}</h1>
+        <h1 className="font-serif text-3xl font-medium">{otherName}</h1>
         {otherProfile?.city && (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            {otherProfile.city}
-          </p>
+          <p className="text-sm text-muted">{otherProfile.city}</p>
         )}
       </div>
 
       {hasConfirmedSession && (
-        <section className="flex flex-col gap-2 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-900 dark:bg-green-950/30">
-          <h2 className="text-sm font-medium text-green-800 dark:text-green-300">
+        <section className="flex flex-col gap-2 rounded-2xl border border-accent/25 bg-accent/10 p-5">
+          <h2 className="text-sm font-medium text-accent">
             {t("contactRevealedTitle")}
           </h2>
-          <p className="text-xs text-green-800/80 dark:text-green-300/80">
-            {t("contactRevealedHint")}
-          </p>
+          <p className="text-xs text-accent/80">{t("contactRevealedHint")}</p>
           {hasAnyContactInfo ? (
             <dl className="mt-1 flex flex-col gap-1 text-sm">
               {contacts?.whatsapp && (
@@ -114,7 +110,7 @@ export default async function MatchDetailPage({
               )}
             </dl>
           ) : (
-            <p className="text-sm text-green-800/80 dark:text-green-300/80">
+            <p className="text-sm text-accent/80">
               {t("contactNoneSet", { name: otherName })}
             </p>
           )}
@@ -124,9 +120,7 @@ export default async function MatchDetailPage({
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">{t("sessionsTitle")}</h2>
         {sessionRows.length === 0 ? (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            {t("noSessions")}
-          </p>
+          <p className="text-sm text-muted">{t("noSessions")}</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {sessionRows.map((session) => (

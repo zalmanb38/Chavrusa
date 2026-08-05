@@ -38,7 +38,7 @@ export default function RespondButtons({ requestId }: { requestId: string }) {
           type="button"
           onClick={() => respond("accepted")}
           disabled={loading !== null}
-          className="rounded-md bg-black px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50 dark:bg-white dark:text-black"
+          className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
         >
           {t("accept")}
         </button>
@@ -46,7 +46,7 @@ export default function RespondButtons({ requestId }: { requestId: string }) {
           type="button"
           onClick={() => respond("declined")}
           disabled={loading !== null}
-          className="rounded-md border border-black/15 px-3 py-1.5 text-sm font-medium disabled:opacity-50 dark:border-white/20"
+          className="rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
         >
           {t("decline")}
         </button>

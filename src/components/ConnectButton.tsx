@@ -48,12 +48,12 @@ export default function ConnectButton({
     return requestId ? (
       <Link
         href={`/matches/${requestId}`}
-        className="mt-1 w-fit rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 hover:bg-green-200 dark:bg-green-900/40 dark:text-green-300 dark:hover:bg-green-900/70"
+        className="mt-1 w-fit rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
       >
         {t("matched")}
       </Link>
     ) : (
-      <span className="mt-1 w-fit rounded-md bg-green-100 px-3 py-1.5 text-sm text-green-800 dark:bg-green-900/40 dark:text-green-300">
+      <span className="mt-1 w-fit rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent">
         {t("matched")}
       </span>
     );
@@ -61,7 +61,7 @@ export default function ConnectButton({
 
   if (status === "pending_sent") {
     return (
-      <span className="mt-1 w-fit rounded-md border border-black/15 px-3 py-1.5 text-sm text-black/50 dark:border-white/20 dark:text-white/50">
+      <span className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
         {t("requestSent")}
       </span>
     );
@@ -71,7 +71,7 @@ export default function ConnectButton({
     return (
       <Link
         href="/requests"
-        className="mt-1 w-fit rounded-md border border-black/15 px-3 py-1.5 text-sm font-medium hover:bg-black/[.03] dark:border-white/20 dark:hover:bg-white/[.06]"
+        className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5"
       >
         {t("respond")}
       </Link>
@@ -88,7 +88,7 @@ export default function ConnectButton({
         type="button"
         onClick={handleConnect}
         disabled={sending}
-        className="mt-1 w-fit rounded-md border border-black/15 px-3 py-1.5 text-sm font-medium hover:bg-black/[.03] disabled:opacity-50 dark:border-white/20 dark:hover:bg-white/[.06]"
+        className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
       >
         {t("connect")}
       </button>
