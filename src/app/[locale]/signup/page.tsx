@@ -109,7 +109,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={loading}
-            className="rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+            className="rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("signupButton")}
           </button>

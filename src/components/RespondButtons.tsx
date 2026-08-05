@@ -38,7 +38,7 @@ export default function RespondButtons({ requestId }: { requestId: string }) {
           type="button"
           onClick={() => respond("accepted")}
           disabled={loading !== null}
-          className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+          className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
         >
           {t("accept")}
         </button>

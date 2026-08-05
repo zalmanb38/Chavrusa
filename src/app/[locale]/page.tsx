@@ -35,7 +35,7 @@ export default async function HomePage({
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
               href="/signup"
-              className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
+              className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90"
             >
               {t("ctaSignup")}
             </Link>

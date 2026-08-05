@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import LocaleSwitcher from "./LocaleSwitcher";
 import LogoutButton from "./LogoutButton";
+import Logo from "./Logo";
 
 export default async function NavBar() {
   const t = await getTranslations("Nav");
@@ -15,7 +16,8 @@ export default async function NavBar() {
   return (
     <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
       <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-        <Link href="/" className="font-serif text-lg font-medium">
+        <Link href="/" className="flex items-center gap-2 font-serif text-lg font-medium">
+          <Logo className="size-7" />
           {common("appName")}
         </Link>
 
@@ -53,7 +55,7 @@ export default async function NavBar() {
               </Link>
               <Link
                 href="/signup"
-                className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground hover:opacity-90"
+                className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
               >
                 {t("signup")}
               </Link>

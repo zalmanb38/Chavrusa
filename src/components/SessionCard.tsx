@@ -104,7 +104,7 @@ export default function SessionCard({
             type="button"
             onClick={() => updateSession("confirm", { status: "confirmed" })}
             disabled={loading !== null}
-            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("confirm")}
           </button>
@@ -145,7 +145,7 @@ export default function SessionCard({
           <button
             type="submit"
             disabled={loading !== null}
-            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("proposeSubmit")}
           </button>

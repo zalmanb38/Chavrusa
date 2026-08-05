@@ -276,7 +276,7 @@ export default function ProfileForm({
       <button
         type="submit"
         disabled={saving}
-        className="w-fit rounded-full bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
+        className="w-fit rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
       >
         {tCommon("save")}
       </button>
