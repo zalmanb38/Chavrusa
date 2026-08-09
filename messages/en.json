@@ -48,7 +48,19 @@
     "loginLink": "Log in",
     "checkEmail": "Check your email to confirm your account before logging in.",
     "genericError": "Something went wrong. Please try again.",
-    "passwordMismatch": "Passwords do not match."
+    "passwordMismatch": "Passwords do not match.",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordTitle": "Reset your password",
+    "forgotPasswordSubtitle": "Enter your email and we'll send you a link to reset your password.",
+    "sendResetLink": "Send reset link",
+    "resetLinkSent": "Check your email for a link to reset your password.",
+    "backToLogin": "Back to log in",
+    "resetPasswordTitle": "Set a new password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "resetPasswordButton": "Update password",
+    "resetPasswordSuccess": "Password updated. Taking you to your profile…",
+    "requestNewLink": "Request a new link"
   },
   "Profile": {
     "title": "My Profile",

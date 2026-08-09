@@ -48,7 +48,19 @@
     "loginLink": "Inicia sesión",
     "checkEmail": "Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.",
     "genericError": "Algo salió mal. Inténtalo de nuevo.",
-    "passwordMismatch": "Las contraseñas no coinciden."
+    "passwordMismatch": "Las contraseñas no coinciden.",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "forgotPasswordTitle": "Restablece tu contraseña",
+    "forgotPasswordSubtitle": "Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+    "sendResetLink": "Enviar enlace",
+    "resetLinkSent": "Revisa tu correo para el enlace de restablecimiento de contraseña.",
+    "backToLogin": "Volver a iniciar sesión",
+    "resetPasswordTitle": "Establece una nueva contraseña",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "resetPasswordButton": "Actualizar contraseña",
+    "resetPasswordSuccess": "Contraseña actualizada. Redirigiendo a tu perfil…",
+    "requestNewLink": "Solicitar un nuevo enlace"
   },
   "Profile": {
     "title": "Mi perfil",

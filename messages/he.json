@@ -48,7 +48,19 @@
     "loginLink": "התחברות",
     "checkEmail": "בדוק/י את תיבת הדואר שלך כדי לאשר את החשבון לפני ההתחברות.",
     "genericError": "משהו השתבש. נסה/י שוב.",
-    "passwordMismatch": "הסיסמאות אינן תואמות."
+    "passwordMismatch": "הסיסמאות אינן תואמות.",
+    "forgotPassword": "שכחת סיסמה?",
+    "forgotPasswordTitle": "איפוס סיסמה",
+    "forgotPasswordSubtitle": "הזן/י את האימייל שלך ונשלח לך קישור לאיפוס הסיסמה.",
+    "sendResetLink": "שלח/י קישור לאיפוס",
+    "resetLinkSent": "בדוק/י את תיבת הדואר שלך לקישור לאיפוס הסיסמה.",
+    "backToLogin": "חזרה להתחברות",
+    "resetPasswordTitle": "קביעת סיסמה חדשה",
+    "newPassword": "סיסמה חדשה",
+    "confirmNewPassword": "אימות סיסמה חדשה",
+    "resetPasswordButton": "עדכון סיסמה",
+    "resetPasswordSuccess": "הסיסמה עודכנה. מעביר/ה אותך לפרופיל שלך…",
+    "requestNewLink": "בקש/י קישור חדש"
   },
   "Profile": {
     "title": "הפרופיל שלי",

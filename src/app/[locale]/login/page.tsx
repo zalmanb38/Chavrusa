@@ -74,6 +74,13 @@ export default function LoginPage() {
             />
           </label>
 
+          <Link
+            href="/forgot-password"
+            className="-mt-2 self-end text-sm text-primary underline"
+          >
+            {t("forgotPassword")}
+          </Link>
+
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
