@@ -16,7 +16,8 @@
     "login": "Connexion",
     "signup": "Inscription",
     "logout": "Déconnexion",
-    "requests": "Demandes"
+    "requests": "Demandes",
+    "admin": "Admin"
   },
   "Landing": {
     "title": "Trouvez votre prochain chavrusa",
@@ -173,5 +174,11 @@
     "blockedSectionTitle": "Bloqués",
     "noBlocked": "Vous n'avez bloqué personne.",
     "unblock": "Débloquer"
+  },
+  "Admin": {
+    "reportsTitle": "Signalements",
+    "noReports": "Aucun signalement déposé.",
+    "unknownUser": "Utilisateur inconnu",
+    "reportedArrow": "a signalé"
   }
 }

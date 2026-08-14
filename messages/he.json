@@ -16,7 +16,8 @@
     "login": "התחברות",
     "signup": "הרשמה",
     "logout": "התנתקות",
-    "requests": "בקשות"
+    "requests": "בקשות",
+    "admin": "ניהול"
   },
   "Landing": {
     "title": "מצא/י את החברותא הבאה שלך",
@@ -173,5 +174,11 @@
     "blockedSectionTitle": "חסומים",
     "noBlocked": "עדיין לא חסמת אף אחד.",
     "unblock": "ביטול חסימה"
+  },
+  "Admin": {
+    "reportsTitle": "דיווחים",
+    "noReports": "לא הוגשו דיווחים.",
+    "unknownUser": "משתמש/ת לא ידוע/ה",
+    "reportedArrow": "דיווח/ה על"
   }
 }
