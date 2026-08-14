@@ -135,7 +135,8 @@
     "accept": "Aceptar",
     "decline": "Rechazar",
     "pending": "Pendiente",
-    "matched": "Conectados"
+    "matched": "Conectados",
+    "adminResolved": "Resuelto — descartado por el administrador del sitio"
   },
   "Schedule": {
     "proposeTitle": "Proponer un horario",

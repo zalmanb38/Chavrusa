@@ -118,7 +118,11 @@ export default async function AdminReportsPage({
                     isActive={row.reported.is_active}
                   />
                 )}
-                <AdminDismissReportButton reportId={row.id} />
+                <AdminDismissReportButton
+                  reportId={row.id}
+                  reporterId={row.reporter?.id}
+                  reportedId={row.reported?.id}
+                />
               </div>
             </li>
           ))}

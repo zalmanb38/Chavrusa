@@ -7,8 +7,12 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function AdminDismissReportButton({
   reportId,
+  reporterId,
+  reportedId,
 }: {
   reportId: string;
+  reporterId?: string;
+  reportedId?: string;
 }) {
   const t = useTranslations("Admin");
   const router = useRouter();
@@ -21,6 +25,23 @@ export default function AdminDismissReportButton({
     setError(null);
 
     const supabase = createClient();
+
+    if (reporterId && reportedId) {
+      const { error: resolveError } = await supabase
+        .from("connect_requests")
+        .update({ status: "admin_resolved" })
+        .eq("status", "pending")
+        .or(
+          `and(requester_id.eq.${reporterId},recipient_id.eq.${reportedId}),and(requester_id.eq.${reportedId},recipient_id.eq.${reporterId})`,
+        );
+
+      if (resolveError) {
+        setLoading(false);
+        setError(resolveError.message);
+        return;
+      }
+    }
+
     const { error: deleteError } = await supabase
       .from("reports")
       .delete()

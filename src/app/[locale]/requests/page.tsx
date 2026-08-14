@@ -13,12 +13,14 @@ interface ProfileSummary {
 interface IncomingRow {
   id: string;
   created_at: string;
+  status: string;
   requester: ProfileSummary;
 }
 
 interface OutgoingRow {
   id: string;
   created_at: string;
+  status: string;
   recipient: ProfileSummary;
 }
 
@@ -61,15 +63,15 @@ export default async function RequestsPage({
     await Promise.all([
       supabase
         .from("connect_requests")
-        .select(`id, created_at, requester:requester_id(${PROFILE_SUMMARY_FIELDS})`)
+        .select(`id, created_at, status, requester:requester_id(${PROFILE_SUMMARY_FIELDS})`)
         .eq("recipient_id", userId)
-        .eq("status", "pending")
+        .in("status", ["pending", "admin_resolved"])
         .order("created_at", { ascending: false }),
       supabase
         .from("connect_requests")
-        .select(`id, created_at, recipient:recipient_id(${PROFILE_SUMMARY_FIELDS})`)
+        .select(`id, created_at, status, recipient:recipient_id(${PROFILE_SUMMARY_FIELDS})`)
         .eq("requester_id", userId)
-        .eq("status", "pending")
+        .in("status", ["pending", "admin_resolved"])
         .order("created_at", { ascending: false }),
       supabase
         .from("connect_requests")
@@ -124,7 +126,13 @@ export default async function RequestsPage({
                     <p className="text-sm text-muted">{row.requester.city}</p>
                   )}
                 </div>
-                <RespondButtons requestId={row.id} />
+                {row.status === "admin_resolved" ? (
+                  <span className="text-sm text-muted">
+                    {t("adminResolved")}
+                  </span>
+                ) : (
+                  <RespondButtons requestId={row.id} />
+                )}
               </li>
             ))}
           </ul>
@@ -149,7 +157,9 @@ export default async function RequestsPage({
                   )}
                 </div>
                 <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
-                  {t("pending")}
+                  {row.status === "admin_resolved"
+                    ? t("adminResolved")
+                    : t("pending")}
                 </span>
               </li>
             ))}
