@@ -1,11 +1,17 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
+import AdminDeactivateButton from "@/components/AdminDeactivateButton";
+import AdminDismissReportButton from "@/components/AdminDismissReportButton";
 
 interface ProfileSummary {
   id: string;
   name: string;
+}
+
+interface ReportedProfile extends ProfileSummary {
+  is_active: boolean;
 }
 
 interface ReportRow {
@@ -13,7 +19,7 @@ interface ReportRow {
   reason: string;
   created_at: string;
   reporter: ProfileSummary | null;
-  reported: ProfileSummary | null;
+  reported: ReportedProfile | null;
 }
 
 export default async function AdminReportsPage({
@@ -48,7 +54,7 @@ export default async function AdminReportsPage({
   const { data: reports } = await supabase
     .from("reports")
     .select(
-      "id, reason, created_at, reporter:reporter_id(id, name), reported:reported_id(id, name)",
+      "id, reason, created_at, reporter:reporter_id(id, name), reported:reported_id(id, name, is_active)",
     )
     .order("created_at", { ascending: false });
 
@@ -70,18 +76,50 @@ export default async function AdminReportsPage({
               <div className="flex flex-wrap items-baseline justify-between gap-2 text-sm">
                 <p>
                   <span className="font-medium">
-                    {row.reporter?.name || t("unknownUser")}
+                    {row.reporter ? (
+                      <Link
+                        href={`/admin/profiles/${row.reporter.id}`}
+                        className="underline"
+                      >
+                        {row.reporter.name || t("unknownUser")}
+                      </Link>
+                    ) : (
+                      t("unknownUser")
+                    )}
                   </span>{" "}
                   <span className="text-muted">{t("reportedArrow")}</span>{" "}
                   <span className="font-medium">
-                    {row.reported?.name || t("unknownUser")}
+                    {row.reported ? (
+                      <Link
+                        href={`/admin/profiles/${row.reported.id}`}
+                        className="underline"
+                      >
+                        {row.reported.name || t("unknownUser")}
+                      </Link>
+                    ) : (
+                      t("unknownUser")
+                    )}
                   </span>
+                  {row.reported && !row.reported.is_active && (
+                    <span className="ms-2 rounded-full border border-border px-2 py-0.5 text-xs text-muted">
+                      {t("inactiveBadge")}
+                    </span>
+                  )}
                 </p>
                 <time className="text-xs text-muted" dateTime={row.created_at}>
                   {new Date(row.created_at).toLocaleString(locale)}
                 </time>
               </div>
               <p className="text-sm">{row.reason}</p>
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                {row.reported && (
+                  <AdminDeactivateButton
+                    profileId={row.reported.id}
+                    isActive={row.reported.is_active}
+                  />
+                )}
+                <AdminDismissReportButton reportId={row.id} />
+              </div>
             </li>
           ))}
         </ul>

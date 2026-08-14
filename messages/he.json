@@ -179,6 +179,19 @@
     "reportsTitle": "דיווחים",
     "noReports": "לא הוגשו דיווחים.",
     "unknownUser": "משתמש/ת לא ידוע/ה",
-    "reportedArrow": "דיווח/ה על"
+    "reportedArrow": "דיווח/ה על",
+    "inactiveBadge": "לא פעיל/ה",
+    "deactivateProfile": "השבתת פרופיל",
+    "reactivateProfile": "הפעלת פרופיל מחדש",
+    "dismissReport": "סגירת דיווח",
+    "backToReports": "חזרה לדיווחים",
+    "statusLabel": "סטטוס",
+    "activeStatus": "פעיל/ה",
+    "joinedLabel": "תאריך הצטרפות",
+    "reportCountLabel": "מספר דיווחים",
+    "blockCountLabel": "מספר חסימות",
+    "contactSectionTitle": "פרטי התקשרות",
+    "phoneVerified": "(מאומת)",
+    "phoneNotVerified": "(לא מאומת)"
   }
 }

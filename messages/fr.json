@@ -179,6 +179,19 @@
     "reportsTitle": "Signalements",
     "noReports": "Aucun signalement déposé.",
     "unknownUser": "Utilisateur inconnu",
-    "reportedArrow": "a signalé"
+    "reportedArrow": "a signalé",
+    "inactiveBadge": "Inactif",
+    "deactivateProfile": "Désactiver le profil",
+    "reactivateProfile": "Réactiver le profil",
+    "dismissReport": "Rejeter le signalement",
+    "backToReports": "Retour aux signalements",
+    "statusLabel": "Statut",
+    "activeStatus": "Actif",
+    "joinedLabel": "Inscrit le",
+    "reportCountLabel": "Nombre de signalements",
+    "blockCountLabel": "Nombre de blocages",
+    "contactSectionTitle": "Coordonnées",
+    "phoneVerified": "(vérifié)",
+    "phoneNotVerified": "(non vérifié)"
   }
 }

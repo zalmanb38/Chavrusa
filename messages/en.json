@@ -179,6 +179,19 @@
     "reportsTitle": "Reports",
     "noReports": "No reports filed.",
     "unknownUser": "Unknown user",
-    "reportedArrow": "reported"
+    "reportedArrow": "reported",
+    "inactiveBadge": "Inactive",
+    "deactivateProfile": "Deactivate profile",
+    "reactivateProfile": "Reactivate profile",
+    "dismissReport": "Dismiss report",
+    "backToReports": "Back to reports",
+    "statusLabel": "Status",
+    "activeStatus": "Active",
+    "joinedLabel": "Joined",
+    "reportCountLabel": "Times reported",
+    "blockCountLabel": "Times blocked",
+    "contactSectionTitle": "Contact info",
+    "phoneVerified": "(verified)",
+    "phoneNotVerified": "(not verified)"
   }
 }

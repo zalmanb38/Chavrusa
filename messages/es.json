@@ -179,6 +179,19 @@
     "reportsTitle": "Reportes",
     "noReports": "No hay reportes.",
     "unknownUser": "Usuario desconocido",
-    "reportedArrow": "reportó a"
+    "reportedArrow": "reportó a",
+    "inactiveBadge": "Inactivo",
+    "deactivateProfile": "Desactivar perfil",
+    "reactivateProfile": "Reactivar perfil",
+    "dismissReport": "Descartar reporte",
+    "backToReports": "Volver a reportes",
+    "statusLabel": "Estado",
+    "activeStatus": "Activo",
+    "joinedLabel": "Se unió el",
+    "reportCountLabel": "Veces reportado",
+    "blockCountLabel": "Veces bloqueado",
+    "contactSectionTitle": "Información de contacto",
+    "phoneVerified": "(verificado)",
+    "phoneNotVerified": "(no verificado)"
   }
 }
