@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/server";
-import AdminDeactivateButton from "@/components/AdminDeactivateButton";
+import { requireAdmin } from "@/lib/admin";
+import AdminNav from "@/components/AdminNav";
+import AdminUserActions from "@/components/AdminUserActions";
 import {
   preferenceMessageKey,
   levelMessageKey,
@@ -24,6 +24,8 @@ interface FullProfile {
   phone: string | null;
   phone_verified: boolean;
   is_active: boolean;
+  suspended: boolean;
+  is_admin: boolean;
   created_at: string;
 }
 
@@ -46,48 +48,37 @@ export default async function AdminProfileDetailPage({
   const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { supabase } = await requireAdmin(locale);
 
-  if (!user) {
-    redirect({ href: "/login", locale });
-  }
-
-  const { data: viewer } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user!.id)
-    .maybeSingle();
-
-  if (!viewer?.is_admin) {
-    notFound();
-  }
-
-  const [{ data: profile }, { data: contact }, { count: reportCount }, { count: blockCount }] =
-    await Promise.all([
-      supabase
-        .from("profiles")
-        .select(
-          "id, name, languages, topics, level, city, preference, availability, phone, phone_verified, is_active, created_at",
-        )
-        .eq("id", id)
-        .maybeSingle(),
-      supabase
-        .from("profile_contacts")
-        .select("whatsapp, contact_phone, zoom_link")
-        .eq("id", id)
-        .maybeSingle(),
-      supabase
-        .from("reports")
-        .select("id", { count: "exact", head: true })
-        .eq("reported_id", id),
-      supabase
-        .from("blocks")
-        .select("id", { count: "exact", head: true })
-        .eq("blocked_id", id),
-    ]);
+  const [
+    { data: profile },
+    { data: contact },
+    { count: reportCount },
+    { count: blockCount },
+    { data: email },
+  ] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select(
+        "id, name, languages, topics, level, city, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
+      )
+      .eq("id", id)
+      .maybeSingle(),
+    supabase
+      .from("profile_contacts")
+      .select("whatsapp, contact_phone, zoom_link")
+      .eq("id", id)
+      .maybeSingle(),
+    supabase
+      .from("reports")
+      .select("id", { count: "exact", head: true })
+      .eq("reported_id", id),
+    supabase
+      .from("blocks")
+      .select("id", { count: "exact", head: true })
+      .eq("blocked_id", id),
+    supabase.rpc("admin_get_user_email", { user_id: id }),
+  ]);
 
   if (!profile) {
     notFound();
@@ -98,21 +89,35 @@ export default async function AdminProfileDetailPage({
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12">
-      <Link href="/admin/reports" className="text-sm text-primary underline">
-        {t("backToReports")}
-      </Link>
+      <AdminNav />
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col gap-1">
         <h1 className="font-serif text-3xl font-medium">
           {p.name || t("unknownUser")}
         </h1>
-        <AdminDeactivateButton profileId={p.id} isActive={p.is_active} />
+        <p className="text-sm text-muted" dir="ltr">
+          {(email as string | null) ?? "—"}
+        </p>
       </div>
+
+      <AdminUserActions
+        profileId={p.id}
+        isActive={p.is_active}
+        isSuspended={p.suspended}
+        isVerified={p.phone_verified}
+        isAdminUser={p.is_admin}
+      />
 
       <section className="grid grid-cols-2 gap-x-4 gap-y-3 rounded-2xl border border-border bg-surface p-5 text-sm sm:grid-cols-3">
         <div>
           <p className="text-xs text-muted">{t("statusLabel")}</p>
-          <p>{p.is_active ? t("activeStatus") : t("inactiveBadge")}</p>
+          <p>
+            {p.suspended
+              ? t("badgeSuspended")
+              : p.is_active
+                ? t("activeStatus")
+                : t("inactiveBadge")}
+          </p>
         </div>
         <div>
           <p className="text-xs text-muted">{t("joinedLabel")}</p>

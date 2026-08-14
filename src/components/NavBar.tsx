@@ -1,27 +1,20 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/server";
 import LocaleSwitcher from "./LocaleSwitcher";
 import LogoutButton from "./LogoutButton";
 import Logo from "./Logo";
 
-export default async function NavBar() {
+// Auth state is resolved once in the locale layout and passed down, so the
+// nav doesn't repeat the same profile query on every page render.
+export default async function NavBar({
+  signedIn,
+  isAdmin,
+}: {
+  signedIn: boolean;
+  isAdmin: boolean;
+}) {
   const t = await getTranslations("Nav");
   const common = await getTranslations("Common");
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  let isAdmin = false;
-  if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("is_admin")
-      .eq("id", user.id)
-      .maybeSingle();
-    isAdmin = profile?.is_admin ?? false;
-  }
 
   return (
     <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
@@ -39,7 +32,7 @@ export default async function NavBar() {
             {t("browse")}
           </Link>
 
-          {user ? (
+          {signedIn ? (
             <>
               <Link
                 href="/requests"
@@ -55,7 +48,7 @@ export default async function NavBar() {
               </Link>
               {isAdmin && (
                 <Link
-                  href="/admin/reports"
+                  href="/admin"
                   className="text-sm text-foreground/80 hover:text-foreground"
                 >
                   {t("admin")}

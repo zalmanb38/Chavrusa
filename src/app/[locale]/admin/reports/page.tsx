@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { Link } from "@/i18n/navigation";
+import { requireAdmin } from "@/lib/admin";
+import AdminNav from "@/components/AdminNav";
 import AdminDeactivateButton from "@/components/AdminDeactivateButton";
 import AdminDismissReportButton from "@/components/AdminDismissReportButton";
 
@@ -32,24 +32,7 @@ export default async function AdminReportsPage({
 
   const t = await getTranslations("Admin");
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect({ href: "/login", locale });
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user!.id)
-    .maybeSingle();
-
-  if (!profile?.is_admin) {
-    notFound();
-  }
+  const { supabase } = await requireAdmin(locale);
 
   const { data: reports } = await supabase
     .from("reports")
@@ -63,6 +46,7 @@ export default async function AdminReportsPage({
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12">
       <h1 className="font-serif text-3xl font-medium">{t("reportsTitle")}</h1>
+      <AdminNav />
 
       {reportRows.length === 0 ? (
         <p className="text-sm text-muted">{t("noReports")}</p>

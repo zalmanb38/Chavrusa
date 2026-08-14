@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getTwilioVerifyService } from "@/lib/twilio-server";
 
 const E164_PHONE = /^\+[1-9]\d{7,14}$/;
@@ -42,7 +43,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
-  const { error: updateError } = await supabase
+  // Written with the service role: the profiles_protect_privileged trigger
+  // deliberately blocks users from setting their own phone_verified flag,
+  // so that marking a number verified can only ever follow a real Twilio
+  // check like the one just performed above.
+  let adminClient;
+  try {
+    adminClient = createAdminClient();
+  } catch {
+    return NextResponse.json({ error: "server_misconfigured" }, { status: 500 });
+  }
+
+  const { error: updateError } = await adminClient
     .from("profiles")
     .update({ phone, phone_verified: true })
     .eq("id", user.id);
