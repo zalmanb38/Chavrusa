@@ -136,7 +136,8 @@
     "decline": "Refuser",
     "pending": "En attente",
     "matched": "Mis en relation",
-    "adminResolved": "Résolu — rejeté par l'administrateur du site"
+    "adminResolved": "Résolu — rejeté par l'administrateur du site",
+    "removeResolved": "Supprimer"
   },
   "Schedule": {
     "proposeTitle": "Proposer un horaire",

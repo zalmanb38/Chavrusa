@@ -3,6 +3,7 @@ import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import RespondButtons from "@/components/RespondButtons";
 import UnblockButton from "@/components/UnblockButton";
+import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButton";
 
 interface ProfileSummary {
   id: string;
@@ -127,9 +128,12 @@ export default async function RequestsPage({
                   )}
                 </div>
                 {row.status === "admin_resolved" ? (
-                  <span className="text-sm text-muted">
-                    {t("adminResolved")}
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-sm text-muted">
+                      {t("adminResolved")}
+                    </span>
+                    <RemoveResolvedRequestButton requestId={row.id} />
+                  </div>
                 ) : (
                   <RespondButtons requestId={row.id} />
                 )}
@@ -156,11 +160,18 @@ export default async function RequestsPage({
                     <p className="text-sm text-muted">{row.recipient.city}</p>
                   )}
                 </div>
-                <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
-                  {row.status === "admin_resolved"
-                    ? t("adminResolved")
-                    : t("pending")}
-                </span>
+                {row.status === "admin_resolved" ? (
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
+                      {t("adminResolved")}
+                    </span>
+                    <RemoveResolvedRequestButton requestId={row.id} />
+                  </div>
+                ) : (
+                  <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
+                    {t("pending")}
+                  </span>
+                )}
               </li>
             ))}
           </ul>

@@ -136,7 +136,8 @@
     "decline": "דחייה",
     "pending": "ממתין",
     "matched": "הותאמתם",
-    "adminResolved": "טופל — נסגר על ידי מנהל האתר"
+    "adminResolved": "טופל — נסגר על ידי מנהל האתר",
+    "removeResolved": "הסרה"
   },
   "Schedule": {
     "proposeTitle": "הצע/י זמן",

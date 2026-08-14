@@ -136,7 +136,8 @@
     "decline": "Decline",
     "pending": "Pending",
     "matched": "Matched",
-    "adminResolved": "Resolved — dismissed by site administrator"
+    "adminResolved": "Resolved — dismissed by site administrator",
+    "removeResolved": "Remove"
   },
   "Schedule": {
     "proposeTitle": "Propose a time",
