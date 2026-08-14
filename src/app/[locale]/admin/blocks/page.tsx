@@ -37,8 +37,10 @@ export default async function AdminBlocksPage({
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("blocksTitle")}</h1>
-      <AdminNav />
+      <div className="flex flex-col gap-4">
+        <h1 className="font-serif text-3xl font-medium">{t("blocksTitle")}</h1>
+        <AdminNav />
+      </div>
 
       {blocks.length === 0 ? (
         <p className="text-sm text-muted">{t("noBlocksRecorded")}</p>

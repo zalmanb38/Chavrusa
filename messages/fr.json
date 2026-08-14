@@ -239,7 +239,10 @@
     "cancelButton": "Annuler",
     "deleteConfirmQuestion": "Supprimer définitivement ce profil ? Ses mises en relation, demandes, blocages et signalements seront supprimés avec lui.",
     "deleteConfirmButton": "Oui, supprimer",
-    "deleteHint": "La suppression retire les données du profil mais pas le compte de connexion — la personne pourrait se réinscrire. Pour l'empêcher d'accéder au site, suspendez plutôt le compte."
+    "deleteHint": "La suppression retire les données du profil mais pas le compte de connexion — la personne pourrait se réinscrire. Pour l'empêcher d'accéder au site, suspendez plutôt le compte.",
+    "communityHealthTitle": "Santé de la communauté",
+    "dashboardActionHint": "{count} signalement(s) en attente d'examen.",
+    "dashboardAllClear": "Rien ne requiert votre attention pour le moment."
   },
   "Phone": {
     "title": "Vérifier le téléphone",

@@ -239,7 +239,10 @@
     "cancelButton": "Cancel",
     "deleteConfirmQuestion": "Delete this profile permanently? Their matches, requests, blocks and reports go with it.",
     "deleteConfirmButton": "Yes, delete",
-    "deleteHint": "Deleting removes profile data but not the login itself — the person could sign up again. To keep someone out, suspend the account instead."
+    "deleteHint": "Deleting removes profile data but not the login itself — the person could sign up again. To keep someone out, suspend the account instead.",
+    "communityHealthTitle": "Community health",
+    "dashboardActionHint": "{count} report(s) waiting on review.",
+    "dashboardAllClear": "Nothing needs your attention right now."
   },
   "Phone": {
     "title": "Verify phone",

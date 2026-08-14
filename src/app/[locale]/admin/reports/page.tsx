@@ -45,8 +45,10 @@ export default async function AdminReportsPage({
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("reportsTitle")}</h1>
-      <AdminNav />
+      <div className="flex flex-col gap-4">
+        <h1 className="font-serif text-3xl font-medium">{t("reportsTitle")}</h1>
+        <AdminNav />
+      </div>
 
       {reportRows.length === 0 ? (
         <p className="text-sm text-muted">{t("noReports")}</p>

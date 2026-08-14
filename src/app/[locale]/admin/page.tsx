@@ -13,6 +13,42 @@ interface DashboardStats {
   total_blocks: number;
 }
 
+function StatTile({
+  value,
+  label,
+  href,
+  attention = false,
+}: {
+  value: number;
+  label: string;
+  href?: string;
+  attention?: boolean;
+}) {
+  const base =
+    "flex flex-col justify-between gap-3 rounded-2xl border p-4 shadow-sm transition-colors";
+  const tone = attention
+    ? "border-primary/60 bg-primary/10"
+    : "border-border bg-surface";
+  const interactive = href ? "hover:border-primary" : "";
+
+  const body = (
+    <>
+      <p className="text-xs text-muted">{label}</p>
+      <p className="font-serif text-4xl leading-none font-medium tabular-nums">
+        {value}
+      </p>
+    </>
+  );
+
+  return href ? (
+    <Link href={href} className={`${base} ${tone} ${interactive} group`}>
+      {body}
+    </Link>
+  ) : (
+    <div className={`${base} ${tone}`}>{body}</div>
+  );
+}
+
 export default async function AdminDashboardPage({
   params,
 }: {
@@ -25,81 +61,69 @@ export default async function AdminDashboardPage({
   const { supabase } = await requireAdmin(locale);
 
   const { data } = await supabase.rpc("admin_dashboard_stats");
-  const stats = (data ?? null) as DashboardStats | null;
+  const s = (data ?? null) as DashboardStats | null;
 
-  const tiles: { key: string; label: string; value: number; href?: string }[] = [
-    {
-      key: "users",
-      label: t("statTotalUsers"),
-      value: stats?.total_users ?? 0,
-      href: "/admin/users",
-    },
-    {
-      key: "reports",
-      label: t("statPendingReports"),
-      value: stats?.pending_reports ?? 0,
-      href: "/admin/reports",
-    },
-    {
-      key: "signups",
-      label: t("statSignupsThisWeek"),
-      value: stats?.signups_this_week ?? 0,
-    },
-    {
-      key: "matches",
-      label: t("statActiveMatches"),
-      value: stats?.active_matches ?? 0,
-    },
-    {
-      key: "verified",
-      label: t("statVerifiedUsers"),
-      value: stats?.verified_users ?? 0,
-    },
-    {
-      key: "suspended",
-      label: t("statSuspendedUsers"),
-      value: stats?.suspended_users ?? 0,
-    },
-    {
-      key: "blocks",
-      label: t("statTotalBlocks"),
-      value: stats?.total_blocks ?? 0,
-      href: "/admin/blocks",
-    },
+  const pendingReports = s?.pending_reports ?? 0;
+  const suspendedUsers = s?.suspended_users ?? 0;
+
+  // Secondary figures: useful context, but not what you open the page for.
+  const secondary = [
+    { key: "verified", label: t("statVerifiedUsers"), value: s?.verified_users ?? 0 },
+    { key: "suspended", label: t("statSuspendedUsers"), value: suspendedUsers },
+    { key: "blocks", label: t("statTotalBlocks"), value: s?.total_blocks ?? 0 },
   ];
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("dashboardTitle")}</h1>
-      <AdminNav />
-
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {tiles.map((tile) => {
-          const body = (
-            <>
-              <p className="font-serif text-3xl font-medium">{tile.value}</p>
-              <p className="text-xs text-muted">{tile.label}</p>
-            </>
-          );
-
-          return tile.href ? (
-            <Link
-              key={tile.key}
-              href={tile.href}
-              className="flex flex-col gap-1 rounded-2xl border border-border bg-surface p-5 shadow-sm hover:border-primary"
-            >
-              {body}
-            </Link>
-          ) : (
-            <div
-              key={tile.key}
-              className="flex flex-col gap-1 rounded-2xl border border-border bg-surface p-5 shadow-sm"
-            >
-              {body}
-            </div>
-          );
-        })}
+    <div className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-12">
+      <div className="flex flex-col gap-4">
+        <h1 className="font-serif text-3xl font-medium">
+          {t("dashboardTitle")}
+        </h1>
+        <AdminNav />
       </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <StatTile
+          value={s?.total_users ?? 0}
+          label={t("statTotalUsers")}
+          href="/admin/users"
+        />
+        <StatTile
+          value={pendingReports}
+          label={t("statPendingReports")}
+          href="/admin/reports"
+          attention={pendingReports > 0}
+        />
+        <StatTile
+          value={s?.signups_this_week ?? 0}
+          label={t("statSignupsThisWeek")}
+        />
+        <StatTile
+          value={s?.active_matches ?? 0}
+          label={t("statActiveMatches")}
+        />
+      </div>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-sm font-medium text-muted">
+          {t("communityHealthTitle")}
+        </h2>
+        <dl className="grid grid-cols-3 divide-x divide-border rounded-2xl border border-border bg-surface">
+          {secondary.map((item) => (
+            <div key={item.key} className="flex flex-col gap-1 px-4 py-3">
+              <dt className="text-xs text-muted">{item.label}</dt>
+              <dd className="font-serif text-xl font-medium tabular-nums">
+                {item.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="text-xs text-muted">
+          {pendingReports > 0
+            ? t("dashboardActionHint", { count: pendingReports })
+            : t("dashboardAllClear")}
+        </p>
+      </section>
     </div>
   );
 }

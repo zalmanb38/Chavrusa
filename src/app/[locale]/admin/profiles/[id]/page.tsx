@@ -88,16 +88,44 @@ export default async function AdminProfileDetailPage({
   const c = contact as ContactInfo | null;
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12">
-      <AdminNav />
+    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <h1 className="font-serif text-3xl font-medium">
+            {p.name || t("unknownUser")}
+          </h1>
+          <p className="text-sm text-muted" dir="ltr">
+            {(email as string | null) ?? "—"}
+          </p>
+        </div>
+        <AdminNav />
+      </div>
 
-      <div className="flex flex-col gap-1">
-        <h1 className="font-serif text-3xl font-medium">
-          {p.name || t("unknownUser")}
-        </h1>
-        <p className="text-sm text-muted" dir="ltr">
-          {(email as string | null) ?? "—"}
-        </p>
+      <div className="-mt-2 flex flex-wrap gap-2 text-xs">
+        <span
+          className={`rounded-full border px-2 py-0.5 ${
+            p.phone_verified
+              ? "border-accent/40 text-accent"
+              : "border-border text-muted"
+          }`}
+        >
+          {p.phone_verified ? t("badgeVerified") : t("badgeUnverified")}
+        </span>
+        {p.suspended && (
+          <span className="rounded-full border border-red-600/40 px-2 py-0.5 text-red-600">
+            {t("badgeSuspended")}
+          </span>
+        )}
+        {!p.is_active && !p.suspended && (
+          <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+            {t("inactiveBadge")}
+          </span>
+        )}
+        {p.is_admin && (
+          <span className="rounded-full border border-primary/50 px-2 py-0.5 text-primary">
+            {t("badgeAdmin")}
+          </span>
+        )}
       </div>
 
       <AdminUserActions

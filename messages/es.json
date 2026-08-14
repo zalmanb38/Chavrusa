@@ -239,7 +239,10 @@
     "cancelButton": "Cancelar",
     "deleteConfirmQuestion": "¿Eliminar este perfil permanentemente? Sus conexiones, solicitudes, bloqueos y reportes se eliminarán con él.",
     "deleteConfirmButton": "Sí, eliminar",
-    "deleteHint": "Eliminar quita los datos del perfil pero no la cuenta de acceso — la persona podría registrarse de nuevo. Para impedirle el acceso, suspende la cuenta."
+    "deleteHint": "Eliminar quita los datos del perfil pero no la cuenta de acceso — la persona podría registrarse de nuevo. Para impedirle el acceso, suspende la cuenta.",
+    "communityHealthTitle": "Salud de la comunidad",
+    "dashboardActionHint": "{count} reporte(s) esperando revisión.",
+    "dashboardAllClear": "No hay nada que requiera tu atención ahora mismo."
   },
   "Phone": {
     "title": "Verificar teléfono",
