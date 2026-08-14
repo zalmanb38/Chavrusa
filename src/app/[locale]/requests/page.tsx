@@ -86,10 +86,22 @@ export default async function RequestsPage({
         .order("created_at", { ascending: false }),
     ]);
 
-  const incomingRows = (incoming ?? []) as unknown as IncomingRow[];
-  const outgoingRows = (outgoing ?? []) as unknown as OutgoingRow[];
-  const matchedRows = (matched ?? []) as unknown as MatchedRow[];
-  const blockedRows = (blocked ?? []) as unknown as BlockedRow[];
+  // Filter out rows whose embedded profile came back null. This happens
+  // when the other side of a request/match/block is a profile RLS hides
+  // from us (most commonly: they blocked us after the row was created) —
+  // reading .name off a null embed would otherwise crash the page.
+  const incomingRows = ((incoming ?? []) as unknown as IncomingRow[]).filter(
+    (row) => row.requester,
+  );
+  const outgoingRows = ((outgoing ?? []) as unknown as OutgoingRow[]).filter(
+    (row) => row.recipient,
+  );
+  const matchedRows = ((matched ?? []) as unknown as MatchedRow[]).filter(
+    (row) => row.requester && row.recipient,
+  );
+  const blockedRows = ((blocked ?? []) as unknown as BlockedRow[]).filter(
+    (row) => row.blocked,
+  );
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-12">

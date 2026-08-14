@@ -52,6 +52,15 @@ export default async function BrowsePage({
     redirect({ href: "/login", locale });
   }
 
+  // RLS only hides profiles from people who blocked *you*; profiles you've
+  // blocked yourself are excluded from Browse here at the query level so
+  // your own Blocked-users list can still read their name to display it.
+  const { data: blocks } = await supabase
+    .from("blocks")
+    .select("blocked_id")
+    .eq("blocker_id", user!.id);
+  const blockedIds = (blocks ?? []).map((b) => b.blocked_id);
+
   let query = supabase
     .from("profiles")
     .select(
@@ -60,6 +69,10 @@ export default async function BrowsePage({
     .neq("id", user!.id)
     .eq("is_active", true)
     .not("name", "eq", "");
+
+  if (blockedIds.length > 0) {
+    query = query.not("id", "in", `(${blockedIds.join(",")})`);
+  }
 
   if (filters.language) {
     query = query.contains("languages", [filters.language]);
