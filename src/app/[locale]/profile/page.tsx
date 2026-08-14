@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
+import PhoneVerification from "@/components/PhoneVerification";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
 
@@ -24,7 +25,9 @@ export default async function ProfilePage({
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, name, languages, topics, level, city, preference, availability, is_active")
+    .select(
+      "id, name, languages, topics, level, city, preference, availability, is_active, phone, phone_verified",
+    )
     .eq("id", user!.id)
     .maybeSingle();
 
@@ -35,7 +38,13 @@ export default async function ProfilePage({
     .maybeSingle();
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-12">
+    <div className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-12">
+      <PhoneVerification
+        initialPhone={(profile as { phone: string | null } | null)?.phone ?? null}
+        initialVerified={
+          (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
+        }
+      />
       <ProfileForm
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}

@@ -61,6 +61,11 @@ export default async function BrowsePage({
     .eq("blocker_id", user!.id);
   const blockedIds = (blocks ?? []).map((b) => b.blocked_id);
 
+  // TODO(launch): add `.eq("phone_verified", true)` here to hide
+  // unverified profiles from Browse, per the original safety spec.
+  // Deliberately left off for now (2026-08) so existing/early testers
+  // aren't hidden before phone verification is widely adopted — turn
+  // this on once the site is ready to go live.
   let query = supabase
     .from("profiles")
     .select(

@@ -197,5 +197,24 @@
     "contactSectionTitle": "Contact info",
     "phoneVerified": "(verified)",
     "phoneNotVerified": "(not verified)"
+  },
+  "Phone": {
+    "title": "Verify phone",
+    "hint": "Verifying your phone number helps keep the community safe.",
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "e.g. +1 555 123 4567",
+    "sendCode": "Send code",
+    "sending": "Sending…",
+    "resendCode": "Resend code",
+    "codeLabel": "Verification code",
+    "codePlaceholder": "6-digit code",
+    "verifyCode": "Verify",
+    "verifying": "Verifying…",
+    "verifiedBadge": "Verified",
+    "changeNumber": "Change number",
+    "invalidPhone": "Enter a valid phone number including country code (e.g. +1 555 123 4567).",
+    "sendError": "Couldn't send the code. Please try again.",
+    "codeIncorrect": "That code is incorrect or has expired.",
+    "verifyError": "Couldn't verify the code. Please try again."
   }
 }

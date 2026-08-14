@@ -197,5 +197,24 @@
     "contactSectionTitle": "Información de contacto",
     "phoneVerified": "(verificado)",
     "phoneNotVerified": "(no verificado)"
+  },
+  "Phone": {
+    "title": "Verificar teléfono",
+    "hint": "Verificar tu número de teléfono ayuda a mantener segura a la comunidad.",
+    "phoneLabel": "Número de teléfono",
+    "phonePlaceholder": "p. ej. +54 9 11 1234 5678",
+    "sendCode": "Enviar código",
+    "sending": "Enviando…",
+    "resendCode": "Reenviar código",
+    "codeLabel": "Código de verificación",
+    "codePlaceholder": "Código de 6 dígitos",
+    "verifyCode": "Verificar",
+    "verifying": "Verificando…",
+    "verifiedBadge": "Verificado",
+    "changeNumber": "Cambiar número",
+    "invalidPhone": "Ingresa un número de teléfono válido con código de país (p. ej. +54 9 11 1234 5678).",
+    "sendError": "No se pudo enviar el código. Inténtalo de nuevo.",
+    "codeIncorrect": "Ese código es incorrecto o ha expirado.",
+    "verifyError": "No se pudo verificar el código. Inténtalo de nuevo."
   }
 }

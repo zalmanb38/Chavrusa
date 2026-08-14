@@ -197,5 +197,24 @@
     "contactSectionTitle": "פרטי התקשרות",
     "phoneVerified": "(מאומת)",
     "phoneNotVerified": "(לא מאומת)"
+  },
+  "Phone": {
+    "title": "אימות טלפון",
+    "hint": "אימות מספר הטלפון שלך עוזר לשמור על קהילה בטוחה.",
+    "phoneLabel": "מספר טלפון",
+    "phonePlaceholder": "לדוגמה: 054-1234567+",
+    "sendCode": "שליחת קוד",
+    "sending": "שולח…",
+    "resendCode": "שליחת קוד מחדש",
+    "codeLabel": "קוד אימות",
+    "codePlaceholder": "קוד בן 6 ספרות",
+    "verifyCode": "אימות",
+    "verifying": "מאמת…",
+    "verifiedBadge": "מאומת",
+    "changeNumber": "שינוי מספר",
+    "invalidPhone": "יש להזין מספר טלפון תקין הכולל קידומת מדינה (לדוגמה: 054-1234567+).",
+    "sendError": "לא ניתן היה לשלוח את הקוד. נסה/י שוב.",
+    "codeIncorrect": "הקוד שגוי או שפג תוקפו.",
+    "verifyError": "לא ניתן היה לאמת את הקוד. נסה/י שוב."
   }
 }

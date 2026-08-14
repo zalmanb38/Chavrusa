@@ -197,5 +197,24 @@
     "contactSectionTitle": "Coordonnées",
     "phoneVerified": "(vérifié)",
     "phoneNotVerified": "(non vérifié)"
+  },
+  "Phone": {
+    "title": "Vérifier le téléphone",
+    "hint": "Vérifier votre numéro de téléphone aide à garder la communauté sûre.",
+    "phoneLabel": "Numéro de téléphone",
+    "phonePlaceholder": "ex. +33 6 12 34 56 78",
+    "sendCode": "Envoyer le code",
+    "sending": "Envoi…",
+    "resendCode": "Renvoyer le code",
+    "codeLabel": "Code de vérification",
+    "codePlaceholder": "Code à 6 chiffres",
+    "verifyCode": "Vérifier",
+    "verifying": "Vérification…",
+    "verifiedBadge": "Vérifié",
+    "changeNumber": "Changer de numéro",
+    "invalidPhone": "Entrez un numéro de téléphone valide avec l'indicatif du pays (ex. +33 6 12 34 56 78).",
+    "sendError": "Impossible d'envoyer le code. Veuillez réessayer.",
+    "codeIncorrect": "Ce code est incorrect ou a expiré.",
+    "verifyError": "Impossible de vérifier le code. Veuillez réessayer."
   }
 }
