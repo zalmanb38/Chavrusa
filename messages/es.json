@@ -61,7 +61,9 @@
     "confirmNewPassword": "Confirmar nueva contraseña",
     "resetPasswordButton": "Actualizar contraseña",
     "resetPasswordSuccess": "Contraseña actualizada. Redirigiendo a tu perfil…",
-    "requestNewLink": "Solicitar un nuevo enlace"
+    "requestNewLink": "Solicitar un nuevo enlace",
+    "verifyingLink": "Verificando tu enlace de restablecimiento…",
+    "resetLinkInvalid": "Este enlace para restablecer la contraseña no es válido o ha expirado."
   },
   "Profile": {
     "title": "Mi perfil",

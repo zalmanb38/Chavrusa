@@ -61,7 +61,9 @@
     "confirmNewPassword": "Confirmer le nouveau mot de passe",
     "resetPasswordButton": "Mettre à jour le mot de passe",
     "resetPasswordSuccess": "Mot de passe mis à jour. Redirection vers votre profil…",
-    "requestNewLink": "Demander un nouveau lien"
+    "requestNewLink": "Demander un nouveau lien",
+    "verifyingLink": "Vérification de votre lien de réinitialisation…",
+    "resetLinkInvalid": "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
   },
   "Profile": {
     "title": "Mon profil",

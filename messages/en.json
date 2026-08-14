@@ -61,7 +61,9 @@
     "confirmNewPassword": "Confirm new password",
     "resetPasswordButton": "Update password",
     "resetPasswordSuccess": "Password updated. Taking you to your profile…",
-    "requestNewLink": "Request a new link"
+    "requestNewLink": "Request a new link",
+    "verifyingLink": "Verifying your reset link…",
+    "resetLinkInvalid": "This password reset link is invalid or has expired."
   },
   "Profile": {
     "title": "My Profile",

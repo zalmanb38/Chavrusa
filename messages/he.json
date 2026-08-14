@@ -61,7 +61,9 @@
     "confirmNewPassword": "אימות סיסמה חדשה",
     "resetPasswordButton": "עדכון סיסמה",
     "resetPasswordSuccess": "הסיסמה עודכנה. מעביר/ה אותך לפרופיל שלך…",
-    "requestNewLink": "בקש/י קישור חדש"
+    "requestNewLink": "בקש/י קישור חדש",
+    "verifyingLink": "מאמת/ת את קישור האיפוס…",
+    "resetLinkInvalid": "קישור איפוס הסיסמה אינו תקף או שפג תוקפו."
   },
   "Profile": {
     "title": "הפרופיל שלי",
