@@ -158,5 +158,20 @@
     "contactPhoneLabel": "Téléphone",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées."
+  },
+  "Safety": {
+    "report": "Signaler",
+    "reportReasonLabel": "Pourquoi signalez-vous ce profil ?",
+    "reportReasonPlaceholder": "ex. comportement inapproprié, faux profil, spam…",
+    "reportSubmit": "Envoyer le signalement",
+    "reportCancel": "Annuler",
+    "reportSubmitted": "Signalement envoyé. Merci de nous aider à préserver la sécurité de la communauté.",
+    "block": "Bloquer",
+    "blockConfirmQuestion": "Bloquer {name} ? Cette personne ne pourra plus voir votre profil ni vous contacter, et vous ne la verrez plus non plus.",
+    "blockConfirmButton": "Oui, bloquer",
+    "blockCancelButton": "Annuler",
+    "blockedSectionTitle": "Bloqués",
+    "noBlocked": "Vous n'avez bloqué personne.",
+    "unblock": "Débloquer"
   }
 }

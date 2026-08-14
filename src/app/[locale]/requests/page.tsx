@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import RespondButtons from "@/components/RespondButtons";
+import UnblockButton from "@/components/UnblockButton";
 
 interface ProfileSummary {
   id: string;
@@ -28,6 +29,11 @@ interface MatchedRow {
   recipient: ProfileSummary;
 }
 
+interface BlockedRow {
+  id: string;
+  blocked: ProfileSummary;
+}
+
 const PROFILE_SUMMARY_FIELDS = "id, name, city";
 
 export default async function RequestsPage({
@@ -39,6 +45,7 @@ export default async function RequestsPage({
   setRequestLocale(locale);
 
   const t = await getTranslations("Requests");
+  const tSafety = await getTranslations("Safety");
 
   const supabase = await createClient();
   const {
@@ -50,7 +57,7 @@ export default async function RequestsPage({
   }
   const userId = user!.id;
 
-  const [{ data: incoming }, { data: outgoing }, { data: matched }] =
+  const [{ data: incoming }, { data: outgoing }, { data: matched }, { data: blocked }] =
     await Promise.all([
       supabase
         .from("connect_requests")
@@ -72,11 +79,17 @@ export default async function RequestsPage({
         .or(`requester_id.eq.${userId},recipient_id.eq.${userId}`)
         .eq("status", "accepted")
         .order("created_at", { ascending: false }),
+      supabase
+        .from("blocks")
+        .select(`id, blocked:blocked_id(${PROFILE_SUMMARY_FIELDS})`)
+        .eq("blocker_id", userId)
+        .order("created_at", { ascending: false }),
     ]);
 
   const incomingRows = (incoming ?? []) as unknown as IncomingRow[];
   const outgoingRows = (outgoing ?? []) as unknown as OutgoingRow[];
   const matchedRows = (matched ?? []) as unknown as MatchedRow[];
+  const blockedRows = (blocked ?? []) as unknown as BlockedRow[];
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-12">
@@ -161,6 +174,32 @@ export default async function RequestsPage({
                 </li>
               );
             })}
+          </ul>
+        )}
+      </section>
+
+      <section className="flex flex-col gap-3">
+        <h2 className="text-lg font-medium">
+          {tSafety("blockedSectionTitle")}
+        </h2>
+        {blockedRows.length === 0 ? (
+          <p className="text-sm text-muted">{tSafety("noBlocked")}</p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {blockedRows.map((row) => (
+              <li
+                key={row.id}
+                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+              >
+                <div>
+                  <p className="font-medium">{row.blocked.name}</p>
+                  {row.blocked.city && (
+                    <p className="text-sm text-muted">{row.blocked.city}</p>
+                  )}
+                </div>
+                <UnblockButton blockId={row.id} />
+              </li>
+            ))}
           </ul>
         )}
       </section>

@@ -27,7 +27,10 @@ This is the first milestone: project setup plus the core auth/profile flow.
 - [x] Scheduling flow once matched (propose/confirm/suggest-a-different-time)
       and contact handoff (WhatsApp/phone/Zoom revealed only after a
       confirmed session — enforced at the RLS level, not just in the UI)
-- [ ] Phone number verification, report/block
+- [x] Password reset flow (forgot-password / reset-password)
+- [x] Report and Block (blocked users are hidden from browse and can't send
+      or receive new connect requests, both enforced via RLS)
+- [ ] Phone number verification
 - [ ] Paid tier / donations (intentionally deferred — schema and layout
       leave room for it)
 

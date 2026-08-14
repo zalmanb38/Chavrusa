@@ -13,6 +13,8 @@ import {
   type Preference,
 } from "@/lib/profile-options";
 import ConnectButton from "@/components/ConnectButton";
+import ReportButton from "@/components/ReportButton";
+import BlockButton from "@/components/BlockButton";
 import { buildConnectStatusMap, type ConnectRequestRow } from "@/lib/connect";
 
 const selectClass =
@@ -201,6 +203,20 @@ export default async function BrowsePage({
                 }
                 requestId={connectStatusMap.get(profile.id)?.requestId ?? null}
               />
+
+              <div className="flex flex-col items-start gap-2 pt-1">
+                <div className="flex gap-3">
+                  <ReportButton
+                    currentUserId={user!.id}
+                    reportedId={profile.id}
+                  />
+                  <BlockButton
+                    currentUserId={user!.id}
+                    blockedId={profile.id}
+                    blockedName={profile.name}
+                  />
+                </div>
+              </div>
             </li>
           ))}
         </ul>

@@ -158,5 +158,20 @@
     "contactPhoneLabel": "טלפון",
     "contactZoomLabel": "זום",
     "contactNoneSet": "{name} עדיין לא הוסיף/ה פרטי התקשרות."
+  },
+  "Safety": {
+    "report": "דיווח",
+    "reportReasonLabel": "מדוע את/ה מדווח/ת על פרופיל זה?",
+    "reportReasonPlaceholder": "לדוגמה: התנהגות לא הולמת, פרופיל מזויף, ספאם…",
+    "reportSubmit": "שליחת דיווח",
+    "reportCancel": "ביטול",
+    "reportSubmitted": "הדיווח נשלח. תודה שעזרת לשמור על קהילה בטוחה.",
+    "block": "חסימה",
+    "blockConfirmQuestion": "לחסום את {name}? הם לא יוכלו לראות את הפרופיל שלך או ליצור איתך קשר, וגם את/ה לא תראה אותם.",
+    "blockConfirmButton": "כן, חסום/י",
+    "blockCancelButton": "ביטול",
+    "blockedSectionTitle": "חסומים",
+    "noBlocked": "עדיין לא חסמת אף אחד.",
+    "unblock": "ביטול חסימה"
   }
 }

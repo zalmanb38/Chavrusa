@@ -158,5 +158,20 @@
     "contactPhoneLabel": "Phone",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} hasn't added contact info yet."
+  },
+  "Safety": {
+    "report": "Report",
+    "reportReasonLabel": "Why are you reporting this profile?",
+    "reportReasonPlaceholder": "e.g. inappropriate behavior, fake profile, spam…",
+    "reportSubmit": "Submit report",
+    "reportCancel": "Cancel",
+    "reportSubmitted": "Report submitted. Thank you for helping keep the community safe.",
+    "block": "Block",
+    "blockConfirmQuestion": "Block {name}? They won't be able to see your profile or contact you, and you won't see them either.",
+    "blockConfirmButton": "Yes, block",
+    "blockCancelButton": "Cancel",
+    "blockedSectionTitle": "Blocked",
+    "noBlocked": "You haven't blocked anyone.",
+    "unblock": "Unblock"
   }
 }

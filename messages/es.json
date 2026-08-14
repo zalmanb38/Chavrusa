@@ -158,5 +158,20 @@
     "contactPhoneLabel": "Teléfono",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} todavía no agregó información de contacto."
+  },
+  "Safety": {
+    "report": "Reportar",
+    "reportReasonLabel": "¿Por qué estás reportando este perfil?",
+    "reportReasonPlaceholder": "p. ej. comportamiento inapropiado, perfil falso, spam…",
+    "reportSubmit": "Enviar reporte",
+    "reportCancel": "Cancelar",
+    "reportSubmitted": "Reporte enviado. Gracias por ayudar a mantener la comunidad segura.",
+    "block": "Bloquear",
+    "blockConfirmQuestion": "¿Bloquear a {name}? No podrá ver tu perfil ni contactarte, y tú tampoco lo verás.",
+    "blockConfirmButton": "Sí, bloquear",
+    "blockCancelButton": "Cancelar",
+    "blockedSectionTitle": "Bloqueados",
+    "noBlocked": "Aún no has bloqueado a nadie.",
+    "unblock": "Desbloquear"
   }
 }

@@ -4,6 +4,8 @@ import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SessionCard from "@/components/SessionCard";
 import ProposeSessionForm from "@/components/ProposeSessionForm";
+import ReportButton from "@/components/ReportButton";
+import BlockButton from "@/components/BlockButton";
 import type { StudySession } from "@/lib/sessions";
 
 export default async function MatchDetailPage({
@@ -75,11 +77,20 @@ export default async function MatchDetailPage({
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-12">
-      <div>
+      <div className="flex flex-col gap-2">
         <h1 className="font-serif text-3xl font-medium">{otherName}</h1>
         {otherProfile?.city && (
           <p className="text-sm text-muted">{otherProfile.city}</p>
         )}
+        <div className="flex gap-3">
+          <ReportButton currentUserId={userId} reportedId={otherId} />
+          <BlockButton
+            currentUserId={userId}
+            blockedId={otherId}
+            blockedName={otherName}
+            redirectAfter="/requests"
+          />
+        </div>
       </div>
 
       {hasConfirmedSession && (
