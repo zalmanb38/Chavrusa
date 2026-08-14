@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import {
+  COUNTRY_CODES,
+  splitPhone,
+  type CountryCode,
+} from "@/lib/country-codes";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none disabled:opacity-60";
@@ -17,16 +22,23 @@ export default function PhoneVerification({
   const t = useTranslations("Phone");
   const router = useRouter();
 
+  const initialSplit = splitPhone(initialPhone);
+
   const [verified, setVerified] = useState(initialVerified);
   const [verifiedPhone, setVerifiedPhone] = useState(initialPhone ?? "");
   const [changing, setChanging] = useState(false);
 
-  const [phone, setPhone] = useState(initialPhone ?? "");
+  const [dial, setDial] = useState(initialSplit.dial);
+  const [national, setNational] = useState(initialSplit.national);
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // The API expects E.164: dial code plus digits only, no spaces, dashes or
+  // parentheses, and no leading trunk "0" (common in FR/IL/GB local format).
+  const fullPhone = `${dial}${national.replace(/\D/g, "").replace(/^0+/, "")}`;
 
   async function handleSendCode() {
     setError(null);
@@ -35,13 +47,15 @@ export default function PhoneVerification({
     const res = await fetch("/api/phone/send-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone }),
+      body: JSON.stringify({ phone: fullPhone }),
     });
     const data = await res.json();
     setSending(false);
 
     if (!res.ok) {
-      setError(data.error === "invalid_phone" ? t("invalidPhone") : t("sendError"));
+      setError(
+        data.error === "invalid_phone" ? t("invalidPhone") : t("sendError"),
+      );
       return;
     }
     setCodeSent(true);
@@ -54,7 +68,7 @@ export default function PhoneVerification({
     const res = await fetch("/api/phone/verify-code", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, code }),
+      body: JSON.stringify({ phone: fullPhone, code }),
     });
     const data = await res.json();
     setVerifying(false);
@@ -67,11 +81,15 @@ export default function PhoneVerification({
     }
 
     setVerified(true);
-    setVerifiedPhone(phone);
+    setVerifiedPhone(fullPhone);
     setChanging(false);
     setCodeSent(false);
     setCode("");
     router.refresh();
+  }
+
+  function countryLabel(c: CountryCode) {
+    return `${c.flag} ${c.name} (${c.dial})`;
   }
 
   if (verified && !changing) {
@@ -80,14 +98,16 @@ export default function PhoneVerification({
         <legend className="px-1 text-sm font-medium">{t("title")}</legend>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="text-sm">
-            {verifiedPhone}{" "}
+            <span dir="ltr">{verifiedPhone}</span>{" "}
             <span className="text-xs text-accent">{t("verifiedBadge")}</span>
           </p>
           <button
             type="button"
             onClick={() => {
+              const split = splitPhone(verifiedPhone);
               setChanging(true);
-              setPhone(verifiedPhone);
+              setDial(split.dial);
+              setNational(split.national);
               setCodeSent(false);
               setCode("");
               setError(null);
@@ -106,29 +126,50 @@ export default function PhoneVerification({
       <legend className="px-1 text-sm font-medium">{t("title")}</legend>
       <p className="-mt-2 text-xs text-muted">{t("hint")}</p>
 
-      <label className="flex flex-col gap-1.5 text-sm">
+      <div className="flex flex-col gap-1.5 text-sm">
         {t("phoneLabel")}
-        <input
-          type="tel"
-          value={phone}
-          disabled={codeSent}
-          placeholder={t("phonePlaceholder")}
-          onChange={(e) => setPhone(e.target.value)}
-          className={inputClass}
-        />
-      </label>
+        <div className="flex gap-2" dir="ltr">
+          <label className="sr-only" htmlFor="phone-country">
+            {t("countryLabel")}
+          </label>
+          <select
+            id="phone-country"
+            value={dial}
+            disabled={codeSent}
+            onChange={(e) => setDial(e.target.value)}
+            className={`${inputClass} w-32 shrink-0`}
+          >
+            {COUNTRY_CODES.map((c) => (
+              <option key={c.iso} value={c.dial} title={countryLabel(c)}>
+                {c.flag} {c.dial}
+              </option>
+            ))}
+          </select>
+          <input
+            type="tel"
+            value={national}
+            disabled={codeSent}
+            placeholder={t("phonePlaceholder")}
+            onChange={(e) => setNational(e.target.value)}
+            className={`${inputClass} w-full`}
+          />
+        </div>
+      </div>
 
       {!codeSent ? (
         <button
           type="button"
           onClick={handleSendCode}
-          disabled={sending || !phone}
+          disabled={sending || !national.trim()}
           className="w-fit rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
         >
           {sending ? t("sending") : t("sendCode")}
         </button>
       ) : (
         <>
+          <p className="text-xs text-muted">
+            {t("codeSentTo")} <span dir="ltr">{fullPhone}</span>
+          </p>
           <label className="flex flex-col gap-1.5 text-sm">
             {t("codeLabel")}
             <input
@@ -149,6 +190,17 @@ export default function PhoneVerification({
               className="w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
             >
               {verifying ? t("verifying") : t("verifyCode")}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCodeSent(false);
+                setCode("");
+                setError(null);
+              }}
+              className="text-xs text-muted underline"
+            >
+              {t("editNumber")}
             </button>
             <button
               type="button"
