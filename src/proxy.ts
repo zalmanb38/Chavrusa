@@ -41,6 +41,11 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    // The proxy runs ahead of filesystem routes, so anything served from
+    // public/ has to be excluded here or next-intl rewrites it to a
+    // locale path and it 404s. That covers site-verification files,
+    // robots.txt and sitemap.xml — all of which have to answer on the
+    // bare domain, with no /en prefix.
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|html|txt|xml)$).*)",
   ],
 };
