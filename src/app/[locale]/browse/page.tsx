@@ -5,11 +5,11 @@ import {
   LANGUAGE_CODES,
   TOPIC_KEYS,
   PREFERENCES,
+  topicLabels,
   preferenceMessageKey,
   levelMessageKey,
   type Profile,
   type LanguageCode,
-  type TopicKey,
   type Preference,
 } from "@/lib/profile-options";
 import ConnectButton from "@/components/ConnectButton";
@@ -78,7 +78,7 @@ export default async function BrowsePage({
   let query = supabase
     .from("profiles")
     .select(
-      "id, name, languages, topics, level, city, preference, availability, is_active",
+      "id, name, languages, topics, topic_other, level, city, preference, availability, is_active",
     )
     .neq("id", user!.id)
     .eq("is_active", true)
@@ -218,9 +218,14 @@ export default async function BrowsePage({
                 )}
               </div>
 
-              {profile.topics?.length > 0 && (
+              {topicLabels(profile.topics, profile.topic_other, tTopics)
+                .length > 0 && (
                 <p className="text-sm">
-                  {profile.topics.map((tp: TopicKey) => tTopics(tp)).join(", ")}
+                  {topicLabels(
+                    profile.topics,
+                    profile.topic_other,
+                    tTopics,
+                  ).join(", ")}
                 </p>
               )}
 

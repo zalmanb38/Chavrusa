@@ -98,17 +98,27 @@
     "contactPhone": "Phone number",
     "contactPhonePlaceholder": "e.g. +1 555 123 4567",
     "zoomLink": "Zoom link",
-    "zoomLinkPlaceholder": "e.g. https://zoom.us/j/..."
+    "zoomLinkPlaceholder": "e.g. https://zoom.us/j/...",
+    "topicOtherLabel": "Please specify",
+    "topicOtherPlaceholder": "e.g. Kuzari, Pirkei Avos"
   },
   "Topics": {
     "chumash": "Chumash",
     "gemara": "Gemara",
+    "chassidus": "Chassidus",
     "mishnah": "Mishnah",
-    "yadHachazakah": "Yad HaChazakah",
-    "musar": "Musar",
+    "tanya": "Tanya",
     "halacha": "Halacha",
-    "tanach": "Tanach",
-    "hashkafa": "Hashkafa"
+    "rambam": "Rambam",
+    "musar": "Mussar",
+    "maamorim": "Maamorim",
+    "sichos": "Sichos",
+    "novi": "Novi",
+    "shaarHabitachon": "Shaar Habitachon",
+    "chitas": "Chitas",
+    "mesillasYesharim": "Mesillas Yesharim",
+    "parsha": "Parsha",
+    "other": "Other"
   },
   "Languages": {
     "en": "English",

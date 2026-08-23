@@ -98,17 +98,27 @@
     "contactPhone": "Número de teléfono",
     "contactPhonePlaceholder": "p. ej. +54 9 11 1234 5678",
     "zoomLink": "Enlace de Zoom",
-    "zoomLinkPlaceholder": "p. ej. https://zoom.us/j/..."
+    "zoomLinkPlaceholder": "p. ej. https://zoom.us/j/...",
+    "topicOtherLabel": "Especifica cuál",
+    "topicOtherPlaceholder": "p. ej. Kuzari, Pirkei Avot"
   },
   "Topics": {
     "chumash": "Jumash",
     "gemara": "Guemará",
+    "chassidus": "Jasidut",
     "mishnah": "Mishná",
-    "yadHachazakah": "Yad HaJazaká",
-    "musar": "Musar",
+    "tanya": "Tania",
     "halacha": "Halajá",
-    "tanach": "Tanaj",
-    "hashkafa": "Hashkafá"
+    "rambam": "Rambam",
+    "musar": "Musar",
+    "maamorim": "Maamarim",
+    "sichos": "Sijot",
+    "novi": "Naví",
+    "shaarHabitachon": "Shaar HaBitajón",
+    "chitas": "Jitat",
+    "mesillasYesharim": "Mesilat Yesharim",
+    "parsha": "Parashá",
+    "other": "Otro"
   },
   "Languages": {
     "en": "Inglés",

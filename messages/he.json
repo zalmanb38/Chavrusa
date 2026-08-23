@@ -98,17 +98,27 @@
     "contactPhone": "מספר טלפון",
     "contactPhonePlaceholder": "לדוגמה: 054-1234567+",
     "zoomLink": "קישור זום",
-    "zoomLinkPlaceholder": "לדוגמה: https://zoom.us/j/..."
+    "zoomLinkPlaceholder": "לדוגמה: https://zoom.us/j/...",
+    "topicOtherLabel": "נא לפרט",
+    "topicOtherPlaceholder": "לדוגמה: כוזרי, פרקי אבות"
   },
   "Topics": {
     "chumash": "חומש",
     "gemara": "גמרא",
+    "chassidus": "חסידות",
     "mishnah": "משנה",
-    "yadHachazakah": "יד החזקה",
-    "musar": "מוסר",
+    "tanya": "תניא",
     "halacha": "הלכה",
-    "tanach": "תנ\"ך",
-    "hashkafa": "השקפה"
+    "rambam": "רמב\"ם",
+    "musar": "מוסר",
+    "maamorim": "מאמרים",
+    "sichos": "שיחות",
+    "novi": "נביא",
+    "shaarHabitachon": "שער הביטחון",
+    "chitas": "חת\"ת",
+    "mesillasYesharim": "מסילת ישרים",
+    "parsha": "פרשה",
+    "other": "אחר"
   },
   "Languages": {
     "en": "אנגלית",

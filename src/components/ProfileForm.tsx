@@ -9,6 +9,7 @@ import {
   TOPIC_KEYS,
   LEVELS,
   PREFERENCES,
+  OTHER_TOPIC,
   levelMessageKey,
   preferenceMessageKey,
   type Profile,
@@ -50,6 +51,9 @@ export default function ProfileForm({
   const [topics, setTopics] = useState<TopicKey[]>(
     initialProfile?.topics ?? [],
   );
+  const [topicOther, setTopicOther] = useState(
+    initialProfile?.topic_other ?? "",
+  );
   const [level, setLevel] = useState<Level | "">(initialProfile?.level ?? "");
   const [city, setCity] = useState(initialProfile?.city ?? "");
   const [preference, setPreference] = useState<Preference>(
@@ -80,6 +84,7 @@ export default function ProfileForm({
       name,
       languages,
       topics,
+      topic_other: topics.includes(OTHER_TOPIC) ? topicOther.trim() : "",
       level: level || null,
       city,
       preference,
@@ -169,6 +174,20 @@ export default function ProfileForm({
             </label>
           ))}
         </div>
+
+        {topics.includes(OTHER_TOPIC) && (
+          <label className="flex flex-col gap-1.5 text-sm">
+            {t("topicOtherLabel")}
+            <input
+              type="text"
+              maxLength={100}
+              value={topicOther}
+              placeholder={t("topicOtherPlaceholder")}
+              onChange={(e) => setTopicOther(e.target.value)}
+              className={inputClass}
+            />
+          </label>
+        )}
       </fieldset>
 
       <label className="flex flex-col gap-1.5 text-sm">

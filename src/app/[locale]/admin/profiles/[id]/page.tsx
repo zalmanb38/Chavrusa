@@ -6,6 +6,7 @@ import AdminUserActions from "@/components/AdminUserActions";
 import {
   preferenceMessageKey,
   levelMessageKey,
+  topicLabels,
   type LanguageCode,
   type TopicKey,
   type Level,
@@ -17,6 +18,7 @@ interface FullProfile {
   name: string;
   languages: LanguageCode[];
   topics: TopicKey[];
+  topic_other: string;
   level: Level | null;
   city: string;
   preference: Preference;
@@ -60,7 +62,7 @@ export default async function AdminProfileDetailPage({
     supabase
       .from("profiles")
       .select(
-        "id, name, languages, topics, level, city, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
+        "id, name, languages, topics, topic_other, level, city, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
       )
       .eq("id", id)
       .maybeSingle(),
@@ -182,9 +184,7 @@ export default async function AdminProfileDetailPage({
         <div>
           <p className="text-xs text-muted">{tProfile("topicsOfInterest")}</p>
           <p>
-            {p.topics?.length > 0
-              ? p.topics.map((tp) => tTopics(tp)).join(", ")
-              : "—"}
+            {topicLabels(p.topics, p.topic_other, tTopics).join(", ") || "—"}
           </p>
         </div>
         <div className="col-span-2 sm:col-span-3">
