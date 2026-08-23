@@ -21,6 +21,32 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_phone" }, { status: 400 });
   }
 
+  // Checked and recorded before we call Twilio, so a caller can't burn
+  // messages by racing the limiter — an attempt that is refused here never
+  // reaches the (billed) send below.
+  const { data: gate, error: gateError } = await supabase.rpc(
+    "record_phone_verification_attempt",
+    { target_phone: phone },
+  );
+
+  if (gateError) {
+    return NextResponse.json({ error: "rate_limit_unavailable" }, { status: 500 });
+  }
+
+  const decision = gate as {
+    allowed: boolean;
+    reason?: string;
+    retry_after_seconds?: number;
+  };
+
+  if (!decision?.allowed) {
+    const retryAfter = decision?.retry_after_seconds ?? 3600;
+    return NextResponse.json(
+      { error: decision?.reason ?? "rate_limited", retryAfterSeconds: retryAfter },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } },
+    );
+  }
+
   try {
     const verifyService = getTwilioVerifyService();
     await verifyService.verifications.create({ to: phone, channel: "sms" });

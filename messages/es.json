@@ -267,6 +267,8 @@
     "invalidPhone": "Ingresa un número de teléfono válido para el país seleccionado.",
     "sendError": "No se pudo enviar el código. Inténtalo de nuevo.",
     "codeIncorrect": "Ese código es incorrecto o ha expirado.",
-    "verifyError": "No se pudo verificar el código. Inténtalo de nuevo."
+    "verifyError": "No se pudo verificar el código. Inténtalo de nuevo.",
+    "rateLimited": "Demasiadas solicitudes de código. Inténtalo de nuevo en unos {minutes} minuto(s).",
+    "dailyLimit": "Has solicitado demasiados códigos hoy. Inténtalo de nuevo mañana, o contáctanos si tienes problemas."
   }
 }

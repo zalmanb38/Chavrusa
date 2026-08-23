@@ -53,6 +53,19 @@ export default function PhoneVerification({
     setSending(false);
 
     if (!res.ok) {
+      if (res.status === 429) {
+        // Round up: "try again in 0 minutes" would be worse than useless.
+        const minutes = Math.max(
+          1,
+          Math.ceil((data.retryAfterSeconds ?? 3600) / 60),
+        );
+        setError(
+          data.error === "daily_limit"
+            ? t("dailyLimit")
+            : t("rateLimited", { minutes }),
+        );
+        return;
+      }
       setError(
         data.error === "invalid_phone" ? t("invalidPhone") : t("sendError"),
       );
