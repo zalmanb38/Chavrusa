@@ -133,10 +133,17 @@ export async function POST(request: Request) {
 
   // Best effort: the message is already saved and visible in the admin
   // panel, so a failed notification must not read as a failed submission.
+  // It does need to be visible somewhere though — a silently dropped
+  // notification looks identical to one that was never attempted.
   try {
-    await notifyByEmail({ name, email, topic, message });
-  } catch {
-    // Swallowed deliberately — see above.
+    const result = await notifyByEmail({ name, email, topic, message });
+    if (!result.sent) {
+      console.error(
+        `contact: notification not sent (${result.reason}). Message is stored and readable at /admin/messages.`,
+      );
+    }
+  } catch (err) {
+    console.error("contact: notification threw", err);
   }
 
   return NextResponse.json({ success: true });
