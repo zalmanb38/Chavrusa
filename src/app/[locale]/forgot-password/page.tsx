@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("Auth");
+  const locale = useLocale();
 
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +23,11 @@ export default function ForgotPasswordPage() {
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(
       email,
       {
-        redirectTo: `${window.location.origin}/reset-password`,
+        // Locale-prefixed on purpose. Every route here lives under /[locale],
+        // so a bare /reset-password gets redirected by the proxy — an extra
+        // hop that can strip the token off the URL before the page reads it.
+        // Landing directly on the final path avoids the redirect entirely.
+        redirectTo: `${window.location.origin}/${locale}/reset-password`,
       },
     );
 
