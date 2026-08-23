@@ -126,7 +126,10 @@
     "connect": "Se connecter",
     "requestSent": "Demande envoyée",
     "respond": "Répondre",
-    "matched": "Mis en relation"
+    "matched": "Mis en relation",
+    "notVisibleTitle": "Vous n'êtes pas encore visible",
+    "notVisibleBody": "Vous pouvez parcourir librement, mais votre profil reste masqué tant que votre numéro n'est pas vérifié. La vérification protège la communauté.",
+    "verifyNow": "Vérifier mon téléphone"
   },
   "Requests": {
     "title": "Demandes de connexion",

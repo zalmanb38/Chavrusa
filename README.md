@@ -31,10 +31,9 @@ This is the first milestone: project setup plus the core auth/profile flow.
 - [x] Report and Block (blocked users are hidden from browse and can't send
       or receive new connect requests, both enforced via RLS)
 - [x] Phone number verification (Twilio Verify) — "Verify phone" section on
-      the Profile page. **Not yet gating Browse visibility on purpose** —
-      before going live, add `.eq("phone_verified", true)` to the query in
-      `src/app/[locale]/browse/page.tsx` (marked with a `TODO(launch)`
-      comment there) so unverified profiles stop appearing in Browse.
+      the Profile page. Browse only lists phone-verified profiles; unverified
+      users can still browse, and see a notice explaining they stay hidden
+      until they verify.
 - [ ] Paid tier / donations (intentionally deferred — schema and layout
       leave room for it)
 

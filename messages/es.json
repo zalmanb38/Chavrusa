@@ -126,7 +126,10 @@
     "connect": "Conectar",
     "requestSent": "Solicitud enviada",
     "respond": "Responder",
-    "matched": "Conectados"
+    "matched": "Conectados",
+    "notVisibleTitle": "Todavía no eres visible para los demás",
+    "notVisibleBody": "Puedes explorar libremente, pero tu perfil permanece oculto hasta que verifiques tu número de teléfono. Verificar ayuda a mantener segura a la comunidad.",
+    "verifyNow": "Verificar mi teléfono"
   },
   "Requests": {
     "title": "Solicitudes de conexión",

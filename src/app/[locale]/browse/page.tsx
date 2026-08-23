@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   LANGUAGE_CODES,
@@ -55,17 +55,26 @@ export default async function BrowsePage({
   // RLS only hides profiles from people who blocked *you*; profiles you've
   // blocked yourself are excluded from Browse here at the query level so
   // your own Blocked-users list can still read their name to display it.
-  const { data: blocks } = await supabase
-    .from("blocks")
-    .select("blocked_id")
-    .eq("blocker_id", user!.id);
+  const [{ data: blocks }, { data: viewer }] = await Promise.all([
+    supabase.from("blocks").select("blocked_id").eq("blocker_id", user!.id),
+    supabase
+      .from("profiles")
+      .select("phone_verified")
+      .eq("id", user!.id)
+      .maybeSingle(),
+  ]);
   const blockedIds = (blocks ?? []).map((b) => b.blocked_id);
 
-  // TODO(launch): add `.eq("phone_verified", true)` here to hide
-  // unverified profiles from Browse, per the original safety spec.
-  // Deliberately left off for now (2026-08) so existing/early testers
-  // aren't hidden before phone verification is widely adopted — turn
-  // this on once the site is ready to go live.
+  // Browsing still works while unverified, but nobody can see you back —
+  // so say so here rather than leaving someone to wonder why no requests
+  // ever arrive.
+  const viewerVerified = viewer?.phone_verified ?? false;
+
+  // Only phone-verified people are discoverable, per the safety spec:
+  // a verified number is what makes a bad actor costly to replace after
+  // being blocked or suspended. phone_verified can only be set by the
+  // SMS route (service role) or an admin — the profiles trigger reverts
+  // a user's own write to it — so this can't be self-granted.
   let query = supabase
     .from("profiles")
     .select(
@@ -73,6 +82,7 @@ export default async function BrowsePage({
     )
     .neq("id", user!.id)
     .eq("is_active", true)
+    .eq("phone_verified", true)
     .not("name", "eq", "");
 
   if (blockedIds.length > 0) {
@@ -109,6 +119,19 @@ export default async function BrowsePage({
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="mb-6 font-serif text-3xl font-medium">{t("title")}</h1>
+
+      {!viewerVerified && (
+        <div className="mb-6 flex flex-col gap-2 rounded-2xl border border-primary/60 bg-primary/10 p-4">
+          <p className="font-medium">{t("notVisibleTitle")}</p>
+          <p className="text-sm text-muted">{t("notVisibleBody")}</p>
+          <Link
+            href="/profile"
+            className="w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          >
+            {t("verifyNow")}
+          </Link>
+        </div>
+      )}
 
       <form className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border border-border bg-surface p-4 sm:grid-cols-4">
         <label className="flex flex-col gap-1 text-sm">

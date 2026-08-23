@@ -126,7 +126,10 @@
     "connect": "Connect",
     "requestSent": "Request sent",
     "respond": "Respond",
-    "matched": "Matched"
+    "matched": "Matched",
+    "notVisibleTitle": "You're not visible to others yet",
+    "notVisibleBody": "You can browse freely, but your profile stays hidden until you verify your phone number. Verifying keeps the community safe.",
+    "verifyNow": "Verify my phone"
   },
   "Requests": {
     "title": "Connect Requests",
