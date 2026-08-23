@@ -35,6 +35,10 @@ export default function PhoneVerification({
   const [sending, setSending] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Twilio's own message, shown small beneath ours. The route already
+  // returns it; collapsing every failure into one generic line is what
+  // made "couldn't send the code" impossible to act on.
+  const [errorDetail, setErrorDetail] = useState<string | null>(null);
 
   // The API expects E.164: dial code plus digits only, no spaces, dashes or
   // parentheses, and no leading trunk "0" (common in FR/IL/GB local format).
@@ -42,6 +46,7 @@ export default function PhoneVerification({
 
   async function handleSendCode() {
     setError(null);
+    setErrorDetail(null);
     setSending(true);
 
     const res = await fetch("/api/phone/send-code", {
@@ -66,9 +71,12 @@ export default function PhoneVerification({
         );
         return;
       }
-      setError(
-        data.error === "invalid_phone" ? t("invalidPhone") : t("sendError"),
-      );
+      if (data.error === "invalid_phone") {
+        setError(t("invalidPhone"));
+        return;
+      }
+      setError(t("sendError"));
+      setErrorDetail(typeof data.error === "string" ? data.error : null);
       return;
     }
     setCodeSent(true);
@@ -76,6 +84,7 @@ export default function PhoneVerification({
 
   async function handleVerifyCode() {
     setError(null);
+    setErrorDetail(null);
     setVerifying(true);
 
     const res = await fetch("/api/phone/verify-code", {
@@ -87,9 +96,12 @@ export default function PhoneVerification({
     setVerifying(false);
 
     if (!res.ok) {
-      setError(
-        data.error === "code_incorrect" ? t("codeIncorrect") : t("verifyError"),
-      );
+      if (data.error === "code_incorrect") {
+        setError(t("codeIncorrect"));
+        return;
+      }
+      setError(t("verifyError"));
+      setErrorDetail(typeof data.error === "string" ? data.error : null);
       return;
     }
 
@@ -227,7 +239,16 @@ export default function PhoneVerification({
         </>
       )}
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <div className="flex flex-col gap-1">
+          <p className="text-sm text-red-600">{error}</p>
+          {errorDetail && (
+            <p className="text-xs text-muted" dir="ltr">
+              {errorDetail}
+            </p>
+          )}
+        </div>
+      )}
     </fieldset>
   );
 }
