@@ -30,7 +30,15 @@ export async function POST(request: Request) {
   );
 
   if (gateError) {
-    return NextResponse.json({ error: "rate_limit_unavailable" }, { status: 500 });
+    // Fail closed: without a working limiter every request is a billable
+    // SMS, so a broken gate must not become an open one. Report the
+    // underlying reason though — a bare "rate_limit_unavailable" is
+    // indistinguishable from Twilio being down, which cost an afternoon.
+    console.error("send-code: rate limit RPC failed", gateError);
+    return NextResponse.json(
+      { error: `rate_limit_unavailable: ${gateError.message}` },
+      { status: 500 },
+    );
   }
 
   const decision = gate as {
@@ -53,6 +61,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : "twilio_error";
+    console.error("send-code: Twilio call failed", err);
     return NextResponse.json({ error: message }, { status: 400 });
   }
 }
