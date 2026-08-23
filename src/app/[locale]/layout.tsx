@@ -32,7 +32,7 @@ export const SITE_URL = "https://chavrusalink.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Chavrusa Match",
+  title: "Chavrusa Link",
   description: "Find a Torah study partner — remote or in person.",
 };
 

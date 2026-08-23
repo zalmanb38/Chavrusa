@@ -1,4 +1,4 @@
-# Chavrusa Match
+# Chavrusa Link
 
 A web app for finding a chavrusa (Torah study partner) — browse fellow
 learners, connect, schedule a time, and learn together remotely or in

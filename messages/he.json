@@ -1,6 +1,6 @@
 {
   "Common": {
-    "appName": "Chavrusa Match",
+    "appName": "Chavrusa Link",
     "loading": "טוען…",
     "save": "שמור",
     "cancel": "ביטול",
@@ -33,7 +33,7 @@
     "step2Body": "מצא/י לומדים שמתאימים לתחומי העניין שלך ושלח/י בקשת התחברות.",
     "step3Title": "קבע/י זמן ולמד/י",
     "step3Body": "לאחר ההתאמה, סכמו על זמן והתחילו ללמוד יחד.",
-    "freeNotice": "ההצטרפות ל-Chavrusa Match חינמית. תרומות מרצון עוזרות לתחזק את השירות."
+    "freeNotice": "ההצטרפות ל-Chavrusa Link חינמית. תרומות מרצון עוזרות לתחזק את השירות."
   },
   "Auth": {
     "loginTitle": "ברוכים השבים",

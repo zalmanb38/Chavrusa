@@ -1,6 +1,6 @@
 {
   "Common": {
-    "appName": "Chavrusa Match",
+    "appName": "Chavrusa Link",
     "loading": "Loading…",
     "save": "Save",
     "cancel": "Cancel",
@@ -33,7 +33,7 @@
     "step2Body": "Find learners who match your interests and send a connect request.",
     "step3Title": "Schedule & learn",
     "step3Body": "Once matched, agree on a time and start learning together.",
-    "freeNotice": "Chavrusa Match is free to join. Optional donations help keep it running."
+    "freeNotice": "Chavrusa Link is free to join. Optional donations help keep it running."
   },
   "Auth": {
     "loginTitle": "Welcome back",

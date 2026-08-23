@@ -1,6 +1,6 @@
 {
   "Common": {
-    "appName": "Chavrusa Match",
+    "appName": "Chavrusa Link",
     "loading": "Cargando…",
     "save": "Guardar",
     "cancel": "Cancelar",
@@ -33,7 +33,7 @@
     "step2Body": "Encuentra estudiantes que coincidan con tus intereses y envía una solicitud de conexión.",
     "step3Title": "Programa y estudia",
     "step3Body": "Una vez conectados, acuerden un horario y comiencen a estudiar juntos.",
-    "freeNotice": "Unirse a Chavrusa Match es gratis. Las donaciones opcionales ayudan a mantener el servicio."
+    "freeNotice": "Unirse a Chavrusa Link es gratis. Las donaciones opcionales ayudan a mantener el servicio."
   },
   "Auth": {
     "loginTitle": "Bienvenido de nuevo",
