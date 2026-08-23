@@ -7,6 +7,7 @@ import "./globals.css";
 import { getTranslations } from "next-intl/server";
 import { routing, isRtl, type Locale } from "@/i18n/routing";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
 
 // Chosen with Hebrew in mind: both have real Hebrew glyphs (unlike the
@@ -98,6 +99,10 @@ export default async function LocaleLayout({
               children
             )}
           </main>
+          {/* Outside the suspension gate: a suspended account still needs
+              the contact link to appeal, and the legal pages stay
+              reachable from every page for Google's OAuth review. */}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

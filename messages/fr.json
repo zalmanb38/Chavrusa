@@ -270,5 +270,10 @@
     "verifyError": "Impossible de vérifier le code. Veuillez réessayer.",
     "rateLimited": "Trop de demandes de code. Réessayez dans environ {minutes} minute(s).",
     "dailyLimit": "Vous avez demandé trop de codes aujourd'hui. Réessayez demain, ou contactez-nous si vous êtes bloqué."
+  },
+  "Footer": {
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "contact": "Contact"
   }
 }
