@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import {
   COUNTRY_CODES,
   splitPhone,
@@ -39,6 +39,9 @@ export default function PhoneVerification({
   // returns it; collapsing every failure into one generic line is what
   // made "couldn't send the code" impossible to act on.
   const [errorDetail, setErrorDetail] = useState<string | null>(null);
+  // Needs a route out rather than just an explanation: nobody can free up
+  // a number held by another account on their own.
+  const [showContact, setShowContact] = useState(false);
 
   // The API expects E.164: dial code plus digits only, no spaces, dashes or
   // parentheses, and no leading trunk "0" (common in FR/IL/GB local format).
@@ -47,6 +50,7 @@ export default function PhoneVerification({
   async function handleSendCode() {
     setError(null);
     setErrorDetail(null);
+    setShowContact(false);
     setSending(true);
 
     const res = await fetch("/api/phone/send-code", {
@@ -85,6 +89,7 @@ export default function PhoneVerification({
   async function handleVerifyCode() {
     setError(null);
     setErrorDetail(null);
+    setShowContact(false);
     setVerifying(true);
 
     const res = await fetch("/api/phone/verify-code", {
@@ -98,6 +103,11 @@ export default function PhoneVerification({
     if (!res.ok) {
       if (data.error === "code_incorrect") {
         setError(t("codeIncorrect"));
+        return;
+      }
+      if (data.error === "phone_in_use") {
+        setError(t("phoneInUse"));
+        setShowContact(true);
         return;
       }
       setError(t("verifyError"));
@@ -242,6 +252,14 @@ export default function PhoneVerification({
       {error && (
         <div className="flex flex-col gap-1">
           <p className="text-sm text-red-600">{error}</p>
+          {showContact && (
+            <Link
+              href="/contact"
+              className="w-fit text-sm font-medium text-primary underline"
+            >
+              {t("contactUs")}
+            </Link>
+          )}
           {errorDetail && (
             <p className="text-xs text-muted" dir="ltr">
               {errorDetail}

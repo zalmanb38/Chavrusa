@@ -277,7 +277,9 @@
     "codeIncorrect": "Ce code est incorrect ou a expiré.",
     "verifyError": "Impossible de vérifier le code. Veuillez réessayer.",
     "rateLimited": "Trop de demandes de code. Réessayez dans environ {minutes} minute(s).",
-    "dailyLimit": "Vous avez demandé trop de codes aujourd'hui. Réessayez demain, ou contactez-nous si vous êtes bloqué."
+    "dailyLimit": "Vous avez demandé trop de codes aujourd'hui. Réessayez demain, ou contactez-nous si vous êtes bloqué.",
+    "phoneInUse": "Ce numéro est déjà vérifié sur un autre compte. Chaque numéro ne peut être utilisé qu'une seule fois, pour la sécurité de la communauté.",
+    "contactUs": "Contactez-nous pour obtenir de l'aide"
   },
   "Footer": {
     "privacy": "Confidentialité",

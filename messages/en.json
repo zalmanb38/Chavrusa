@@ -277,7 +277,9 @@
     "codeIncorrect": "That code is incorrect or has expired.",
     "verifyError": "Couldn't verify the code. Please try again.",
     "rateLimited": "Too many code requests. Please try again in about {minutes} minute(s).",
-    "dailyLimit": "You've requested too many codes today. Please try again tomorrow, or contact us if you're stuck."
+    "dailyLimit": "You've requested too many codes today. Please try again tomorrow, or contact us if you're stuck.",
+    "phoneInUse": "This number is already verified on another account. Each phone number can only be used once, to help keep the community safe.",
+    "contactUs": "Contact us for help"
   },
   "Footer": {
     "privacy": "Privacy",

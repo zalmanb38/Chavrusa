@@ -60,6 +60,14 @@ export async function POST(request: Request) {
     .eq("id", user.id);
 
   if (updateError) {
+    // 23505: the partial unique index on verified numbers. The code was
+    // correct and the SMS did arrive — the number simply already belongs
+    // to another account, which is a different situation for the person
+    // in front of it and needs its own message.
+    if (updateError.code === "23505") {
+      return NextResponse.json({ error: "phone_in_use" }, { status: 409 });
+    }
+    console.error("verify-code: profile update failed", updateError);
     return NextResponse.json({ error: updateError.message }, { status: 500 });
   }
 
