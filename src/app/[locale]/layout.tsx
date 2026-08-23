@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import "./globals.css";
 import { getTranslations } from "next-intl/server";
 import { routing, isRtl, type Locale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
@@ -94,6 +95,12 @@ export default async function LocaleLayout({
                   {t("suspendedTitle")}
                 </h1>
                 <p className="text-sm text-muted">{t("suspendedBody")}</p>
+                <Link
+                  href="/contact"
+                  className="mx-auto w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
+                >
+                  {t("suspendedContact")}
+                </Link>
               </div>
             ) : (
               children

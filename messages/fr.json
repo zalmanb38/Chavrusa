@@ -9,7 +9,8 @@
     "optional": "facultatif",
     "language": "Langue",
     "suspendedTitle": "Votre compte est suspendu",
-    "suspendedBody": "Un administrateur a suspendu ce compte. Si vous pensez qu'il s'agit d'une erreur, veuillez nous contacter."
+    "suspendedBody": "Un administrateur a suspendu ce compte. Si vous pensez qu'il s'agit d'une erreur, veuillez nous contacter.",
+    "suspendedContact": "Nous contacter"
   },
   "Nav": {
     "home": "Accueil",
@@ -245,7 +246,14 @@
     "deleteHint": "La suppression retire les données du profil mais pas le compte de connexion — la personne pourrait se réinscrire. Pour l'empêcher d'accéder au site, suspendez plutôt le compte.",
     "communityHealthTitle": "Santé de la communauté",
     "dashboardActionHint": "{count} signalement(s) en attente d'examen.",
-    "dashboardAllClear": "Rien ne requiert votre attention pour le moment."
+    "dashboardAllClear": "Rien ne requiert votre attention pour le moment.",
+    "messagesTitle": "Messages",
+    "noMessages": "Aucun message pour l'instant.",
+    "messagesOpenCount": "{count} en attente de réponse",
+    "markHandled": "Marquer comme traité",
+    "markUnhandled": "Rouvrir",
+    "handledBadge": "Traité",
+    "viewSenderProfile": "Voir le profil de l'expéditeur"
   },
   "Phone": {
     "title": "Vérifier le téléphone",
@@ -275,5 +283,25 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "contact": "Contact"
+  },
+  "Contact": {
+    "title": "Nous contacter",
+    "subtitle": "Questions, préoccupations de sécurité ou retours — nous lisons chaque message.",
+    "nameLabel": "Votre nom",
+    "emailLabel": "Votre e-mail",
+    "topicLabel": "Sujet",
+    "topic_general": "Question générale",
+    "topic_safety": "Signaler un problème de sécurité",
+    "topic_technical": "Problème technique",
+    "topic_feedback": "Retour d'expérience",
+    "messageLabel": "Message",
+    "submit": "Envoyer le message",
+    "sending": "Envoi…",
+    "successTitle": "Merci pour votre message !",
+    "successBody": "Nous vous répondrons bientôt.",
+    "invalidInput": "Veuillez vérifier le formulaire et réessayer.",
+    "rateLimited": "Vous avez envoyé plusieurs messages récemment. Réessayez dans une heure.",
+    "sendError": "Impossible d'envoyer votre message. Réessayez, ou écrivez-nous directement.",
+    "orEmail": "Vous pouvez aussi nous écrire à"
   }
 }

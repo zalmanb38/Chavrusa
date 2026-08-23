@@ -21,12 +21,9 @@ export default async function Footer() {
           <Link href="/terms" className="text-muted hover:text-foreground">
             {t("terms")}
           </Link>
-          <a
-            href={`mailto:${SUPPORT_EMAIL}`}
-            className="text-muted hover:text-foreground"
-          >
+          <Link href="/contact" className="text-muted hover:text-foreground">
             {t("contact")}
-          </a>
+          </Link>
         </nav>
       </div>
     </footer>

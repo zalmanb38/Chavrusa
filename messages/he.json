@@ -9,7 +9,8 @@
     "optional": "רשות",
     "language": "שפה",
     "suspendedTitle": "החשבון שלך מושעה",
-    "suspendedBody": "מנהל השעה את החשבון הזה. אם לדעתך מדובר בטעות, אנא צור/צרי קשר."
+    "suspendedBody": "מנהל השעה את החשבון הזה. אם לדעתך מדובר בטעות, אנא צור/צרי קשר.",
+    "suspendedContact": "יצירת קשר"
   },
   "Nav": {
     "home": "בית",
@@ -245,7 +246,14 @@
     "deleteHint": "מחיקה מסירה את נתוני הפרופיל אך לא את החשבון עצמו — אפשר יהיה להירשם מחדש. כדי למנוע גישה, עדיף להשעות את החשבון.",
     "communityHealthTitle": "מצב הקהילה",
     "dashboardActionHint": "{count} דיווחים ממתינים לטיפול.",
-    "dashboardAllClear": "אין כרגע דבר שדורש את תשומת לבך."
+    "dashboardAllClear": "אין כרגע דבר שדורש את תשומת לבך.",
+    "messagesTitle": "הודעות",
+    "noMessages": "אין עדיין הודעות.",
+    "messagesOpenCount": "{count} ממתינות למענה",
+    "markHandled": "סימון כטופל",
+    "markUnhandled": "פתיחה מחדש",
+    "handledBadge": "טופל",
+    "viewSenderProfile": "צפייה בפרופיל השולח"
   },
   "Phone": {
     "title": "אימות טלפון",
@@ -275,5 +283,25 @@
     "privacy": "פרטיות",
     "terms": "תנאי שימוש",
     "contact": "יצירת קשר"
+  },
+  "Contact": {
+    "title": "יצירת קשר",
+    "subtitle": "שאלות, חששות בטיחות או משוב — אנו קוראים כל הודעה.",
+    "nameLabel": "השם שלך",
+    "emailLabel": "האימייל שלך",
+    "topicLabel": "נושא",
+    "topic_general": "שאלה כללית",
+    "topic_safety": "דיווח על בעיית בטיחות",
+    "topic_technical": "תקלה טכנית",
+    "topic_feedback": "משוב",
+    "messageLabel": "הודעה",
+    "submit": "שליחת הודעה",
+    "sending": "שולח…",
+    "successTitle": "תודה על ההודעה!",
+    "successBody": "נחזור אליך בהקדם.",
+    "invalidInput": "אנא בדקו את הטופס ונסו שוב.",
+    "rateLimited": "שלחתם מספר הודעות לאחרונה. נסו שוב בעוד שעה.",
+    "sendError": "לא ניתן היה לשלוח את ההודעה. נסו שוב, או שלחו לנו אימייל ישירות.",
+    "orEmail": "אפשר גם לשלוח לנו אימייל לכתובת"
   }
 }

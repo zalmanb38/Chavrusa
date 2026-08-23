@@ -9,7 +9,8 @@
     "optional": "opcional",
     "language": "Idioma",
     "suspendedTitle": "Tu cuenta está suspendida",
-    "suspendedBody": "Un administrador ha suspendido esta cuenta. Si crees que es un error, por favor ponte en contacto."
+    "suspendedBody": "Un administrador ha suspendido esta cuenta. Si crees que es un error, por favor ponte en contacto.",
+    "suspendedContact": "Contáctanos"
   },
   "Nav": {
     "home": "Inicio",
@@ -245,7 +246,14 @@
     "deleteHint": "Eliminar quita los datos del perfil pero no la cuenta de acceso — la persona podría registrarse de nuevo. Para impedirle el acceso, suspende la cuenta.",
     "communityHealthTitle": "Salud de la comunidad",
     "dashboardActionHint": "{count} reporte(s) esperando revisión.",
-    "dashboardAllClear": "No hay nada que requiera tu atención ahora mismo."
+    "dashboardAllClear": "No hay nada que requiera tu atención ahora mismo.",
+    "messagesTitle": "Mensajes",
+    "noMessages": "Aún no hay mensajes.",
+    "messagesOpenCount": "{count} esperando respuesta",
+    "markHandled": "Marcar como atendido",
+    "markUnhandled": "Reabrir",
+    "handledBadge": "Atendido",
+    "viewSenderProfile": "Ver perfil del remitente"
   },
   "Phone": {
     "title": "Verificar teléfono",
@@ -275,5 +283,25 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "contact": "Contacto"
+  },
+  "Contact": {
+    "title": "Contáctanos",
+    "subtitle": "Preguntas, problemas de seguridad o comentarios — leemos todos los mensajes.",
+    "nameLabel": "Tu nombre",
+    "emailLabel": "Tu correo electrónico",
+    "topicLabel": "Tema",
+    "topic_general": "Pregunta general",
+    "topic_safety": "Reportar un problema de seguridad",
+    "topic_technical": "Problema técnico",
+    "topic_feedback": "Comentarios",
+    "messageLabel": "Mensaje",
+    "submit": "Enviar mensaje",
+    "sending": "Enviando…",
+    "successTitle": "¡Gracias por tu mensaje!",
+    "successBody": "Te responderemos pronto.",
+    "invalidInput": "Revisa el formulario e inténtalo de nuevo.",
+    "rateLimited": "Has enviado varios mensajes recientemente. Inténtalo de nuevo en una hora.",
+    "sendError": "No se pudo enviar tu mensaje. Inténtalo de nuevo o escríbenos directamente.",
+    "orEmail": "También puedes escribirnos a"
   }
 }

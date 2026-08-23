@@ -9,7 +9,8 @@
     "optional": "optional",
     "language": "Language",
     "suspendedTitle": "Your account is suspended",
-    "suspendedBody": "An administrator has suspended this account. If you think this is a mistake, please get in touch."
+    "suspendedBody": "An administrator has suspended this account. If you think this is a mistake, please get in touch.",
+    "suspendedContact": "Contact us"
   },
   "Nav": {
     "home": "Home",
@@ -245,7 +246,14 @@
     "deleteHint": "Deleting removes profile data but not the login itself — the person could sign up again. To keep someone out, suspend the account instead.",
     "communityHealthTitle": "Community health",
     "dashboardActionHint": "{count} report(s) waiting on review.",
-    "dashboardAllClear": "Nothing needs your attention right now."
+    "dashboardAllClear": "Nothing needs your attention right now.",
+    "messagesTitle": "Messages",
+    "noMessages": "No messages yet.",
+    "messagesOpenCount": "{count} awaiting a reply",
+    "markHandled": "Mark handled",
+    "markUnhandled": "Reopen",
+    "handledBadge": "Handled",
+    "viewSenderProfile": "View sender profile"
   },
   "Phone": {
     "title": "Verify phone",
@@ -275,5 +283,25 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "contact": "Contact"
+  },
+  "Contact": {
+    "title": "Contact us",
+    "subtitle": "Questions, safety concerns, or feedback — we read every message.",
+    "nameLabel": "Your name",
+    "emailLabel": "Your email",
+    "topicLabel": "Topic",
+    "topic_general": "General question",
+    "topic_safety": "Report a safety issue",
+    "topic_technical": "Technical problem",
+    "topic_feedback": "Feedback",
+    "messageLabel": "Message",
+    "submit": "Send message",
+    "sending": "Sending…",
+    "successTitle": "Thanks for your message!",
+    "successBody": "We'll get back to you soon.",
+    "invalidInput": "Please check the form and try again.",
+    "rateLimited": "You've sent several messages recently. Please try again in an hour.",
+    "sendError": "Couldn't send your message. Please try again, or email us directly.",
+    "orEmail": "You can also email us at"
   }
 }
