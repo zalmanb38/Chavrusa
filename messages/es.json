@@ -157,6 +157,17 @@
     "anyRegion": "Cualquier estado / provincia",
     "anyCity": "Cualquier ciudad"
   },
+  "Map": {
+    "listView": "Lista",
+    "mapView": "Mapa",
+    "intro": "Las zonas se muestran como círculos cuyo tamaño depende de cuántas personas estudian allí. Nadie aparece de forma individual: una zona necesita al menos {min} personas para mostrarse.",
+    "noClusters": "Todavía no hay ninguna zona con suficientes personas para mostrar en el mapa. Prueba la vista de lista o amplía los filtros.",
+    "offMap": "{count, plural, one {# persona no aparece en el mapa} other {# personas no aparecen en el mapa}}: o no han indicado ubicación, o su zona está por debajo del mínimo.",
+    "areaHeading": "{area} · {count, plural, one {# persona} other {# personas}}",
+    "clearSelection": "Borrar selección",
+    "namesHidden": "Los nombres se ocultan en la vista de mapa. Los verás en la lista y después de conectar.",
+    "fallbackTiles": "Los mosaicos del mapa usan un proveedor alternativo."
+  },
   "Browse": {
     "title": "Explorar estudiantes",
     "filterLanguage": "Idioma",
@@ -170,7 +181,8 @@
     "matched": "Conectados",
     "notVisibleTitle": "Todavía no eres visible para los demás",
     "notVisibleBody": "Puedes explorar libremente, pero tu perfil permanece oculto hasta que verifiques tu número de teléfono. Verificar ayuda a mantener segura a la comunidad.",
-    "verifyNow": "Verificar mi teléfono"
+    "verifyNow": "Verificar mi teléfono",
+    "anonymousLearner": "Alguien de la zona"
   },
   "Requests": {
     "title": "Solicitudes de conexión",

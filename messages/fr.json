@@ -157,6 +157,17 @@
     "anyRegion": "Tous les États / provinces",
     "anyCity": "Toutes les villes"
   },
+  "Map": {
+    "listView": "Liste",
+    "mapView": "Carte",
+    "intro": "Les zones apparaissent sous forme de cercles dont la taille dépend du nombre d'apprenants. Personne n'est localisé individuellement — une zone doit compter au moins {min} apprenants pour apparaître.",
+    "noClusters": "Aucune zone ne compte encore assez d'apprenants pour figurer sur la carte. Essayez la vue liste ou élargissez vos filtres.",
+    "offMap": "{count, plural, one {# apprenant n'apparaît pas sur la carte} other {# apprenants n'apparaissent pas sur la carte}} — soit ils n'ont pas indiqué de localisation, soit leur zone est en dessous du minimum.",
+    "areaHeading": "{area} · {count, plural, one {# apprenant} other {# apprenants}}",
+    "clearSelection": "Effacer la sélection",
+    "namesHidden": "Les noms sont masqués sur la carte. Vous les verrez dans la liste et après la mise en relation.",
+    "fallbackTiles": "Les tuiles de la carte utilisent un fournisseur de secours."
+  },
   "Browse": {
     "title": "Parcourir les étudiants",
     "filterLanguage": "Langue",
@@ -170,7 +181,8 @@
     "matched": "Mis en relation",
     "notVisibleTitle": "Vous n'êtes pas encore visible",
     "notVisibleBody": "Vous pouvez parcourir librement, mais votre profil reste masqué tant que votre numéro n'est pas vérifié. La vérification protège la communauté.",
-    "verifyNow": "Vérifier mon téléphone"
+    "verifyNow": "Vérifier mon téléphone",
+    "anonymousLearner": "Un apprenant à proximité"
   },
   "Requests": {
     "title": "Demandes de connexion",

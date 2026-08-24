@@ -5,19 +5,17 @@ import {
   LANGUAGE_CODES,
   TOPIC_KEYS,
   PREFERENCES,
-  topicLabels,
   preferenceMessageKey,
-  levelMessageKey,
   type Profile,
-  type LanguageCode,
-  type Preference,
 } from "@/lib/profile-options";
-import ConnectButton from "@/components/ConnectButton";
-import ReportButton from "@/components/ReportButton";
-import BlockButton from "@/components/BlockButton";
 import LocationFilter from "@/components/LocationFilter";
-import { formatLocation } from "@/lib/locations";
-import { buildConnectStatusMap, type ConnectRequestRow } from "@/lib/connect";
+import BrowseCard from "@/components/BrowseCard";
+import BrowseMapView from "@/components/BrowseMapView";
+import {
+  buildConnectStatusMap,
+  type ConnectRequestRow,
+  type ConnectStatus,
+} from "@/lib/connect";
 
 const selectClass =
   "rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
@@ -29,6 +27,7 @@ type SearchParams = {
   region?: string;
   city?: string;
   preference?: string;
+  view?: string;
 };
 
 export default async function BrowsePage({
@@ -46,8 +45,12 @@ export default async function BrowsePage({
   const tProfile = await getTranslations("Profile");
   const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
-  const tLocation = await getTranslations("Location");
-  const tLocationName = (code: string) => tLocation(`country_${code}`);
+  const tMap = await getTranslations("Map");
+  const mapView = filters.view === "map";
+  // Everything except the view itself, so each toggle link carries the
+  // current filters rather than resetting them.
+  const { view: _view, ...filterQuery } = filters;
+  void _view;
 
   const supabase = await createClient();
   const {
@@ -131,6 +134,13 @@ export default async function BrowsePage({
     user!.id,
   );
 
+  // Both views are client components, and a Map doesn't survive the
+  // server/client boundary — hand them a plain object instead.
+  const connectStatuses: Record<
+    string,
+    { status: ConnectStatus; requestId: string | null }
+  > = Object.fromEntries(connectStatusMap);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <h1 className="mb-6 font-serif text-3xl font-medium">{t("title")}</h1>
@@ -147,6 +157,26 @@ export default async function BrowsePage({
           </Link>
         </div>
       )}
+
+      <div className="mb-4 flex gap-2">
+        {(["list", "map"] as const).map((view) => {
+          const active = (view === "map") === mapView;
+          const query = view === "map" ? { ...filterQuery, view } : filterQuery;
+          return (
+            <Link
+              key={view}
+              href={{ pathname: "/browse", query }}
+              className={
+                active
+                  ? "rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground"
+                  : "rounded-full border border-border px-4 py-1.5 text-sm"
+              }
+            >
+              {tMap(view === "map" ? "mapView" : "listView")}
+            </Link>
+          );
+        })}
+      </div>
 
       <form className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border border-border bg-surface p-4 sm:grid-cols-4">
         <label className="flex flex-col gap-1 text-sm">
@@ -203,6 +233,8 @@ export default async function BrowsePage({
           </select>
         </label>
 
+        {mapView && <input type="hidden" name="view" value="map" />}
+
         <button
           type="submit"
           className="col-span-2 w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground sm:col-span-4"
@@ -213,70 +245,23 @@ export default async function BrowsePage({
 
       {!profiles || profiles.length === 0 ? (
         <p className="text-sm text-muted">{t("noResults")}</p>
+      ) : mapView ? (
+        <BrowseMapView
+          profiles={profiles as Profile[]}
+          currentUserId={user!.id}
+          connectStatuses={connectStatuses}
+        />
       ) : (
         <ul className="flex flex-col gap-4">
           {(profiles as Profile[]).map((profile) => (
-            <li
+            <BrowseCard
               key={profile.id}
-              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5 shadow-sm"
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h2 className="font-serif text-lg font-medium">
-                  {profile.name}
-                </h2>
-                {formatLocation(profile, tLocationName) && (
-                  <span className="text-sm text-muted">
-                    {formatLocation(profile, tLocationName)}
-                  </span>
-                )}
-              </div>
-
-              {topicLabels(profile.topics, profile.topic_other, tTopics)
-                .length > 0 && (
-                <p className="text-sm">
-                  {topicLabels(
-                    profile.topics,
-                    profile.topic_other,
-                    tTopics,
-                  ).join(", ")}
-                </p>
-              )}
-
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
-                {profile.languages?.length > 0 && (
-                  <span>
-                    {profile.languages
-                      .map((l: LanguageCode) => tLanguages(l))
-                      .join(", ")}
-                  </span>
-                )}
-                <span>{tProfile(preferenceMessageKey[profile.preference as Preference])}</span>
-                {profile.level && <span>{tProfile(levelMessageKey[profile.level])}</span>}
-              </div>
-
-              <ConnectButton
-                currentUserId={user!.id}
-                recipientId={profile.id}
-                initialStatus={
-                  connectStatusMap.get(profile.id)?.status ?? "none"
-                }
-                requestId={connectStatusMap.get(profile.id)?.requestId ?? null}
-              />
-
-              <div className="flex flex-col items-start gap-2 pt-1">
-                <div className="flex gap-3">
-                  <ReportButton
-                    currentUserId={user!.id}
-                    reportedId={profile.id}
-                  />
-                  <BlockButton
-                    currentUserId={user!.id}
-                    blockedId={profile.id}
-                    blockedName={profile.name}
-                  />
-                </div>
-              </div>
-            </li>
+              profile={profile}
+              currentUserId={user!.id}
+              connectStatus={connectStatuses[profile.id]?.status ?? "none"}
+              requestId={connectStatuses[profile.id]?.requestId ?? null}
+              showName
+            />
           ))}
         </ul>
       )}

@@ -75,7 +75,7 @@ export const REGIONS: Partial<Record<CountryCode, Region[]>> = {
  */
 export const CITIES: Record<string, string[]> = {
   "US-NY": [
-    "Brooklyn", "Monsey", "Queens", "Manhattan", "Lakewood-adjacent NY",
+    "Brooklyn", "Monsey", "Queens", "Manhattan",
     "Spring Valley", "New Square", "Kiryas Joel", "Suffern", "Staten Island",
     "Cedarhurst", "Lawrence", "Woodmere", "Great Neck", "Far Rockaway",
     "White Plains", "New Rochelle", "Rochester", "Buffalo", "Albany",

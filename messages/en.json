@@ -157,6 +157,17 @@
     "anyRegion": "Any state / province",
     "anyCity": "Any city"
   },
+  "Map": {
+    "listView": "List",
+    "mapView": "Map",
+    "intro": "Areas are shown as circles sized by how many learners are there. Nobody is placed individually — an area needs at least {min} learners before it appears.",
+    "noClusters": "No area has enough learners to show on the map yet. Try the list view, or widen your filters.",
+    "offMap": "{count, plural, =1 {# learner isn't shown on the map} other {# learners aren't shown on the map}} — either they haven't set a location, or their area is below the minimum.",
+    "areaHeading": "{area} · {count, plural, =1 {# learner} other {# learners}}",
+    "clearSelection": "Clear selection",
+    "namesHidden": "Names are hidden in map view. You'll see them in the list, and after you connect.",
+    "fallbackTiles": "Map tiles are running on a fallback provider."
+  },
   "Browse": {
     "title": "Browse Learners",
     "filterLanguage": "Language",
@@ -170,7 +181,8 @@
     "matched": "Matched",
     "notVisibleTitle": "You're not visible to others yet",
     "notVisibleBody": "You can browse freely, but your profile stays hidden until you verify your phone number. Verifying keeps the community safe.",
-    "verifyNow": "Verify my phone"
+    "verifyNow": "Verify my phone",
+    "anonymousLearner": "A learner nearby"
   },
   "Requests": {
     "title": "Connect Requests",
