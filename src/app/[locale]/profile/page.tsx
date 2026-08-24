@@ -26,7 +26,7 @@ export default async function ProfilePage({
   const { data: profile } = await supabase
     .from("profiles")
     .select(
-      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, is_active, phone, phone_verified",
+      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, display_name_set, is_active, phone, phone_verified",
     )
     .eq("id", user!.id)
     .maybeSingle();
@@ -34,6 +34,12 @@ export default async function ProfilePage({
   const { data: contacts } = await supabase
     .from("profile_contacts")
     .select("id, whatsapp, contact_phone, zoom_link")
+    .eq("id", user!.id)
+    .maybeSingle();
+
+  const { data: nameRow } = await supabase
+    .from("profile_names")
+    .select("full_name")
     .eq("id", user!.id)
     .maybeSingle();
 
@@ -48,6 +54,7 @@ export default async function ProfilePage({
       <ProfileForm
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}
+        initialFullName={(nameRow as { full_name: string } | null)?.full_name ?? ""}
         userId={user!.id}
       />
     </div>

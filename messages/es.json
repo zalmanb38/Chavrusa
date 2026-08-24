@@ -71,8 +71,6 @@
   "Profile": {
     "title": "Mi perfil",
     "editTitle": "Editar perfil",
-    "name": "Nombre",
-    "namePlaceholder": "Tu nombre completo",
     "languagesSpoken": "Idiomas que hablas",
     "topicsOfInterest": "Temas de interés",
     "learningLevel": "Nivel de aprendizaje",
@@ -100,7 +98,17 @@
     "zoomLink": "Enlace de Zoom",
     "zoomLinkPlaceholder": "p. ej. https://zoom.us/j/...",
     "topicOtherLabel": "Especifica cuál",
-    "topicOtherPlaceholder": "p. ej. Kuzari, Pirkei Avot"
+    "topicOtherPlaceholder": "p. ej. Kuzari, Pirkei Avot",
+    "displayName": "Nombre visible",
+    "displayNamePlaceholder": "p. ej. Zalman B.",
+    "displayNameHint": "Público: lo ve cualquiera que navegue por el sitio. Mucha gente usa su nombre y la inicial del apellido, como «Zalman B.», pero tú decides.",
+    "fullName": "Nombre completo",
+    "fullNamePlaceholder": "p. ej. Zalman Bernstein",
+    "fullNameHint": "Privado. Solo se muestra a alguien cuando hacéis match, igual que tus datos de contacto.",
+    "displayNamePromptTitle": "Revisa tu nombre visible",
+    "displayNamePromptBody": "Tu nombre visible se acortó automáticamente a partir del nombre que habías puesto, así que puede que no quede como quieres. Edítalo aquí abajo y guarda: tu nombre completo se guarda aparte y sigue siendo privado.",
+    "ageRange": "Rango de edad",
+    "ageRangeUnset": "Prefiero no decirlo"
   },
   "Topics": {
     "chumash": "Jumash",
@@ -182,7 +190,8 @@
     "notVisibleTitle": "Todavía no eres visible para los demás",
     "notVisibleBody": "Puedes explorar libremente, pero tu perfil permanece oculto hasta que verifiques tu número de teléfono. Verificar ayuda a mantener segura a la comunidad.",
     "verifyNow": "Verificar mi teléfono",
-    "anonymousLearner": "Alguien de la zona"
+    "anonymousLearner": "Alguien de la zona",
+    "filterAge": "Edad"
   },
   "Requests": {
     "title": "Solicitudes de conexión",
@@ -220,7 +229,8 @@
     "contactWhatsappLabel": "WhatsApp",
     "contactPhoneLabel": "Teléfono",
     "contactZoomLabel": "Zoom",
-    "contactNoneSet": "{name} todavía no agregó información de contacto."
+    "contactNoneSet": "{name} todavía no agregó información de contacto.",
+    "fullNameLabel": "Nombre completo: {name}"
   },
   "Safety": {
     "report": "Reportar",

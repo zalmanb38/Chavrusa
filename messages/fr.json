@@ -71,8 +71,6 @@
   "Profile": {
     "title": "Mon profil",
     "editTitle": "Modifier le profil",
-    "name": "Nom",
-    "namePlaceholder": "Votre nom complet",
     "languagesSpoken": "Langues parlées",
     "topicsOfInterest": "Sujets d'intérêt",
     "learningLevel": "Niveau d'étude",
@@ -100,7 +98,17 @@
     "zoomLink": "Lien Zoom",
     "zoomLinkPlaceholder": "ex. https://zoom.us/j/...",
     "topicOtherLabel": "Veuillez préciser",
-    "topicOtherPlaceholder": "ex. Kouzari, Pirkei Avot"
+    "topicOtherPlaceholder": "ex. Kouzari, Pirkei Avot",
+    "displayName": "Nom affiché",
+    "displayNamePlaceholder": "ex. Zalman B.",
+    "displayNameHint": "Public — visible par toutes les personnes qui parcourent le site. Beaucoup utilisent leur prénom suivi de l'initiale du nom, comme « Zalman B. », mais c'est vous qui choisissez.",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "ex. Zalman Bernstein",
+    "fullNameHint": "Privé. Communiqué uniquement à une personne avec laquelle vous êtes mis en relation, comme vos coordonnées.",
+    "displayNamePromptTitle": "Vérifiez votre nom affiché",
+    "displayNamePromptBody": "Votre nom affiché a été raccourci automatiquement à partir du nom que vous aviez saisi ; il ne vous convient peut-être pas. Modifiez-le ci-dessous et enregistrez — votre nom complet est conservé séparément et reste privé.",
+    "ageRange": "Tranche d'âge",
+    "ageRangeUnset": "Je préfère ne pas le dire"
   },
   "Topics": {
     "chumash": "Houmach",
@@ -182,7 +190,8 @@
     "notVisibleTitle": "Vous n'êtes pas encore visible",
     "notVisibleBody": "Vous pouvez parcourir librement, mais votre profil reste masqué tant que votre numéro n'est pas vérifié. La vérification protège la communauté.",
     "verifyNow": "Vérifier mon téléphone",
-    "anonymousLearner": "Un apprenant à proximité"
+    "anonymousLearner": "Un apprenant à proximité",
+    "filterAge": "Âge"
   },
   "Requests": {
     "title": "Demandes de connexion",
@@ -220,7 +229,8 @@
     "contactWhatsappLabel": "WhatsApp",
     "contactPhoneLabel": "Téléphone",
     "contactZoomLabel": "Zoom",
-    "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées."
+    "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées.",
+    "fullNameLabel": "Nom complet : {name}"
   },
   "Safety": {
     "report": "Signaler",

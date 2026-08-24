@@ -21,6 +21,7 @@ interface FullProfile {
   topics: TopicKey[];
   topic_other: string;
   level: Level | null;
+  age_range: string;
   city: string;
   country: string;
   region: string;
@@ -64,11 +65,12 @@ export default async function AdminProfileDetailPage({
     { count: reportCount },
     { count: blockCount },
     { data: email },
+    { data: nameRow },
   ] = await Promise.all([
     supabase
       .from("profiles")
       .select(
-        "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
+        "id, name, languages, topics, topic_other, level, age_range, city, country, region, neighborhood, meeting_spot, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
       )
       .eq("id", id)
       .maybeSingle(),
@@ -86,6 +88,11 @@ export default async function AdminProfileDetailPage({
       .select("id", { count: "exact", head: true })
       .eq("blocked_id", id),
     supabase.rpc("admin_get_user_email", { user_id: id }),
+    supabase
+      .from("profile_names")
+      .select("full_name")
+      .eq("id", id)
+      .maybeSingle(),
   ]);
 
   if (!profile) {
@@ -176,6 +183,16 @@ export default async function AdminProfileDetailPage({
         <div>
           <p className="text-xs text-muted">{tLocation("meetingSpot")}</p>
           <p>{p.meeting_spot || "—"}</p>
+        </div>
+        <div>
+          <p className="text-xs text-muted">{tProfile("fullName")}</p>
+          <p>
+            {(nameRow as { full_name: string } | null)?.full_name || "—"}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-muted">{tProfile("ageRange")}</p>
+          <p>{p.age_range || "—"}</p>
         </div>
         <div>
           <p className="text-xs text-muted">{tProfile("learningLevel")}</p>

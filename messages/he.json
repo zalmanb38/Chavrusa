@@ -71,8 +71,6 @@
   "Profile": {
     "title": "הפרופיל שלי",
     "editTitle": "עריכת פרופיל",
-    "name": "שם",
-    "namePlaceholder": "השם המלא שלך",
     "languagesSpoken": "שפות מדוברות",
     "topicsOfInterest": "נושאי עניין",
     "learningLevel": "רמת לימוד",
@@ -100,7 +98,17 @@
     "zoomLink": "קישור זום",
     "zoomLinkPlaceholder": "לדוגמה: https://zoom.us/j/...",
     "topicOtherLabel": "נא לפרט",
-    "topicOtherPlaceholder": "לדוגמה: כוזרי, פרקי אבות"
+    "topicOtherPlaceholder": "לדוגמה: כוזרי, פרקי אבות",
+    "displayName": "שם תצוגה",
+    "displayNamePlaceholder": "לדוגמה: זלמן ב.",
+    "displayNameHint": "פומבי — כל מי שמעיין באתר רואה אותו. רבים משתמשים בשם פרטי ובאות ראשונה של שם המשפחה, כמו “זלמן ב.”, אבל ההחלטה שלכם.",
+    "fullName": "שם מלא",
+    "fullNamePlaceholder": "לדוגמה: זלמן ברנשטיין",
+    "fullNameHint": "פרטי. מוצג רק למי שנוצרה איתו התאמה, בדיוק כמו פרטי ההתקשרות שלכם.",
+    "displayNamePromptTitle": "בדקו את שם התצוגה שלכם",
+    "displayNamePromptBody": "שם התצוגה שלכם קוצר אוטומטית מהשם שהזנתם, וייתכן שאינו נראה כפי שהייתם רוצים. ערכו אותו כאן ושמרו — השם המלא נשמר בנפרד ונשאר פרטי.",
+    "ageRange": "טווח גילים",
+    "ageRangeUnset": "מעדיף/ה לא לציין"
   },
   "Topics": {
     "chumash": "חומש",
@@ -182,7 +190,8 @@
     "notVisibleTitle": "הפרופיל שלך עדיין אינו גלוי לאחרים",
     "notVisibleBody": "אפשר לעיין בחופשיות, אבל הפרופיל שלך מוסתר עד לאימות מספר הטלפון. האימות עוזר לשמור על קהילה בטוחה.",
     "verifyNow": "אימות הטלפון שלי",
-    "anonymousLearner": "לומד/ת באזור"
+    "anonymousLearner": "לומד/ת באזור",
+    "filterAge": "גיל"
   },
   "Requests": {
     "title": "בקשות התחברות",
@@ -220,7 +229,8 @@
     "contactWhatsappLabel": "וואטסאפ",
     "contactPhoneLabel": "טלפון",
     "contactZoomLabel": "זום",
-    "contactNoneSet": "{name} עדיין לא הוסיף/ה פרטי התקשרות."
+    "contactNoneSet": "{name} עדיין לא הוסיף/ה פרטי התקשרות.",
+    "fullNameLabel": "שם מלא: {name}"
   },
   "Safety": {
     "report": "דיווח",

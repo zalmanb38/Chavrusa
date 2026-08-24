@@ -45,8 +45,23 @@ export type Level = (typeof LEVELS)[number];
 export const PREFERENCES = ["remote", "in_person", "both"] as const;
 export type Preference = (typeof PREFERENCES)[number];
 
+export const AGE_RANGES = [
+  "18-22", "23-25", "26-30", "31-35", "36-40",
+  "41-50", "51-60", "61-70", "71-80", "81+",
+] as const;
+export type AgeRange = (typeof AGE_RANGES)[number];
+
+export function isAgeRange(value: string): value is AgeRange {
+  return (AGE_RANGES as readonly string[]).includes(value);
+}
+
 export interface Profile {
   id: string;
+  /**
+   * The PUBLIC display name — what Browse shows to everyone. The full
+   * name lives in profile_names, which RLS reveals only to a matched
+   * partner.
+   */
   name: string;
   languages: LanguageCode[];
   topics: TopicKey[];
@@ -59,6 +74,10 @@ export interface Profile {
   meeting_spot: string;
   preference: Preference;
   availability: string;
+  /** "" when the person would rather not say. */
+  age_range: string;
+  /** False while the public name is still the one derived at migration. */
+  display_name_set: boolean;
   is_active: boolean;
 }
 

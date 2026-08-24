@@ -5,6 +5,7 @@ import {
   LANGUAGE_CODES,
   TOPIC_KEYS,
   PREFERENCES,
+  AGE_RANGES,
   preferenceMessageKey,
   type Profile,
 } from "@/lib/profile-options";
@@ -27,6 +28,7 @@ type SearchParams = {
   region?: string;
   city?: string;
   preference?: string;
+  age?: string;
   view?: string;
 };
 
@@ -87,7 +89,7 @@ export default async function BrowsePage({
   let query = supabase
     .from("profiles")
     .select(
-      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, is_active",
+      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, is_active",
     )
     .neq("id", user!.id)
     .eq("is_active", true)
@@ -115,6 +117,11 @@ export default async function BrowsePage({
   }
   if (filters.city) {
     query = query.ilike("city", `%${filters.city}%`);
+  }
+  // Age range is optional, so filtering on it necessarily excludes anyone
+  // who left it blank — there's no honest way to guess where they belong.
+  if (filters.age) {
+    query = query.eq("age_range", filters.age);
   }
   if (filters.preference === "remote" || filters.preference === "in_person") {
     query = query.in("preference", [filters.preference, "both"]);
@@ -216,6 +223,22 @@ export default async function BrowsePage({
           initialRegion={filters.region ?? ""}
           initialCity={filters.city ?? ""}
         />
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("filterAge")}
+          <select
+            name="age"
+            defaultValue={filters.age ?? ""}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {AGE_RANGES.map((range) => (
+              <option key={range} value={range}>
+                {range}
+              </option>
+            ))}
+          </select>
+        </label>
 
         <label className="flex flex-col gap-1 text-sm">
           {t("filterPreference")}

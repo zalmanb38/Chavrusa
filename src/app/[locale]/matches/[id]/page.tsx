@@ -53,6 +53,18 @@ export default async function MatchDetailPage({
 
   const otherName = otherProfile?.name || "";
 
+  // The match itself is what unlocks the full name — RLS on profile_names
+  // enforces that, so an empty result here means "not entitled" or "never
+  // filled in", and either way there's nothing to show.
+  const { data: otherNameRow } = await supabase
+    .from("profile_names")
+    .select("full_name")
+    .eq("id", otherId)
+    .maybeSingle();
+
+  const otherFullName =
+    (otherNameRow as { full_name: string } | null)?.full_name?.trim() || "";
+
   const { data: sessions } = await supabase
     .from("study_sessions")
     .select("id, connect_request_id, proposed_by, scheduled_at, status, note")
@@ -79,6 +91,11 @@ export default async function MatchDetailPage({
     <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-12">
       <div className="flex flex-col gap-2">
         <h1 className="font-serif text-3xl font-medium">{otherName}</h1>
+        {otherFullName && otherFullName !== otherName && (
+          <p className="text-sm text-muted">
+            {t("fullNameLabel", { name: otherFullName })}
+          </p>
+        )}
         {otherProfile?.city && (
           <p className="text-sm text-muted">{otherProfile.city}</p>
         )}

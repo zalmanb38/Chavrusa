@@ -67,6 +67,7 @@ export default function BrowseCard({
           {tProfile(preferenceMessageKey[profile.preference as Preference])}
         </span>
         {profile.level && <span>{tProfile(levelMessageKey[profile.level])}</span>}
+        {profile.age_range && <span>{profile.age_range}</span>}
       </div>
 
       {profile.availability && (

@@ -10,6 +10,7 @@ import {
   LEVELS,
   PREFERENCES,
   OTHER_TOPIC,
+  AGE_RANGES,
   levelMessageKey,
   preferenceMessageKey,
   type Profile,
@@ -34,10 +35,12 @@ function toggle<T>(list: T[], value: T): T[] {
 export default function ProfileForm({
   initialProfile,
   initialContacts,
+  initialFullName,
   userId,
 }: {
   initialProfile: Profile | null;
   initialContacts: ProfileContacts | null;
+  initialFullName: string;
   userId: string;
 }) {
   const t = useTranslations("Profile");
@@ -48,6 +51,7 @@ export default function ProfileForm({
   const router = useRouter();
 
   const [name, setName] = useState(initialProfile?.name ?? "");
+  const [fullName, setFullName] = useState(initialFullName);
   const [languages, setLanguages] = useState<LanguageCode[]>(
     initialProfile?.languages ?? [],
   );
@@ -71,11 +75,23 @@ export default function ProfileForm({
   const [availability, setAvailability] = useState(
     initialProfile?.availability ?? "",
   );
+  const [ageRange, setAgeRange] = useState(initialProfile?.age_range ?? "");
   const [whatsapp, setWhatsapp] = useState(initialContacts?.whatsapp ?? "");
   const [contactPhone, setContactPhone] = useState(
     initialContacts?.contact_phone ?? "",
   );
   const [zoomLink, setZoomLink] = useState(initialContacts?.zoom_link ?? "");
+
+  // Existing profiles had their public name derived from a full name they
+  // never chose, so say so once rather than letting a mangled surname sit
+  // there unexplained.
+  // Only meaningful when there's a derived name sitting there. A brand-new
+  // signup has display_name_set false too, but nothing was shortened for
+  // them, so the explanation would just be confusing.
+  const needsDisplayNamePrompt =
+    initialProfile !== null &&
+    !initialProfile.display_name_set &&
+    (initialProfile.name ?? "").trim() !== "";
 
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -113,11 +129,25 @@ export default function ProfileForm({
       meeting_spot: location.meetingSpot.trim(),
       preference,
       availability,
+      age_range: ageRange,
+      // Saving the form is the person confirming their public name,
+      // whether they edited the derived one or left it as it stands.
+      display_name_set: true,
     });
 
     if (saveError) {
       setSaving(false);
       setError(saveError.message);
+      return;
+    }
+
+    const { error: fullNameError } = await supabase
+      .from("profile_names")
+      .upsert({ id: userId, full_name: fullName.trim() });
+
+    if (fullNameError) {
+      setSaving(false);
+      setError(fullNameError.message);
       return;
     }
 
@@ -150,16 +180,38 @@ export default function ProfileForm({
         <p className="text-sm text-muted">{t("completeYourProfile")}</p>
       )}
 
+      {needsDisplayNamePrompt && (
+        <div className="flex flex-col gap-1 rounded-2xl border border-primary/60 bg-primary/10 p-4">
+          <p className="font-medium">{t("displayNamePromptTitle")}</p>
+          <p className="text-sm text-muted">{t("displayNamePromptBody")}</p>
+        </div>
+      )}
+
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("name")}
+        {t("displayName")}
         <input
           type="text"
           required
+          maxLength={60}
           value={name}
-          placeholder={t("namePlaceholder")}
+          placeholder={t("displayNamePlaceholder")}
           onChange={(e) => setName(e.target.value)}
           className={inputClass}
         />
+        <span className="text-xs text-muted">{t("displayNameHint")}</span>
+      </label>
+
+      <label className="flex flex-col gap-1.5 text-sm">
+        {t("fullName")}
+        <input
+          type="text"
+          maxLength={120}
+          value={fullName}
+          placeholder={t("fullNamePlaceholder")}
+          onChange={(e) => setFullName(e.target.value)}
+          className={inputClass}
+        />
+        <span className="text-xs text-muted">{t("fullNameHint")}</span>
       </label>
 
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
@@ -226,6 +278,23 @@ export default function ProfileForm({
           {LEVELS.map((l) => (
             <option key={l} value={l}>
               {t(levelMessageKey[l])}
+            </option>
+          ))}
+        </select>
+      </label>
+
+      <label className="flex flex-col gap-1.5 text-sm">
+        {t("ageRange")}{" "}
+        <span className="text-xs text-muted">{tLocation("optionalMark")}</span>
+        <select
+          value={ageRange}
+          onChange={(e) => setAgeRange(e.target.value)}
+          className={inputClass}
+        >
+          <option value="">{t("ageRangeUnset")}</option>
+          {AGE_RANGES.map((range) => (
+            <option key={range} value={range}>
+              {range}
             </option>
           ))}
         </select>
