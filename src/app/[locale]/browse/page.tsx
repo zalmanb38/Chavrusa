@@ -15,6 +15,8 @@ import {
 import ConnectButton from "@/components/ConnectButton";
 import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
+import LocationFilter from "@/components/LocationFilter";
+import { formatLocation } from "@/lib/locations";
 import { buildConnectStatusMap, type ConnectRequestRow } from "@/lib/connect";
 
 const selectClass =
@@ -23,6 +25,8 @@ const selectClass =
 type SearchParams = {
   language?: string;
   topic?: string;
+  country?: string;
+  region?: string;
   city?: string;
   preference?: string;
 };
@@ -42,6 +46,8 @@ export default async function BrowsePage({
   const tProfile = await getTranslations("Profile");
   const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
+  const tLocation = await getTranslations("Location");
+  const tLocationName = (code: string) => tLocation(`country_${code}`);
 
   const supabase = await createClient();
   const {
@@ -78,7 +84,7 @@ export default async function BrowsePage({
   let query = supabase
     .from("profiles")
     .select(
-      "id, name, languages, topics, topic_other, level, city, preference, availability, is_active",
+      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, is_active",
     )
     .neq("id", user!.id)
     .eq("is_active", true)
@@ -94,6 +100,15 @@ export default async function BrowsePage({
   }
   if (filters.topic) {
     query = query.contains("topics", [filters.topic]);
+  }
+  // Country and region are picked from fixed lists, so they match
+  // exactly. City can also be free text where the curated list didn't
+  // cover someone, so it stays a partial match.
+  if (filters.country) {
+    query = query.eq("country", filters.country);
+  }
+  if (filters.region) {
+    query = query.eq("region", filters.region);
   }
   if (filters.city) {
     query = query.ilike("city", `%${filters.city}%`);
@@ -166,15 +181,11 @@ export default async function BrowsePage({
           </select>
         </label>
 
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterCity")}
-          <input
-            type="text"
-            name="city"
-            defaultValue={filters.city ?? ""}
-            className={selectClass}
-          />
-        </label>
+        <LocationFilter
+          initialCountry={filters.country ?? ""}
+          initialRegion={filters.region ?? ""}
+          initialCity={filters.city ?? ""}
+        />
 
         <label className="flex flex-col gap-1 text-sm">
           {t("filterPreference")}
@@ -213,8 +224,10 @@ export default async function BrowsePage({
                 <h2 className="font-serif text-lg font-medium">
                   {profile.name}
                 </h2>
-                {profile.city && (
-                  <span className="text-sm text-muted">{profile.city}</span>
+                {formatLocation(profile, tLocationName) && (
+                  <span className="text-sm text-muted">
+                    {formatLocation(profile, tLocationName)}
+                  </span>
                 )}
               </div>
 

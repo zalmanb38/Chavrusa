@@ -53,6 +53,10 @@ export interface Profile {
   topic_other: string;
   level: Level | null;
   city: string;
+  country: string;
+  region: string;
+  neighborhood: string;
+  meeting_spot: string;
   preference: Preference;
   availability: string;
   is_active: boolean;

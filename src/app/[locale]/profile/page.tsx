@@ -26,7 +26,7 @@ export default async function ProfilePage({
   const { data: profile } = await supabase
     .from("profiles")
     .select(
-      "id, name, languages, topics, topic_other, level, city, preference, availability, is_active, phone, phone_verified",
+      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, is_active, phone, phone_verified",
     )
     .eq("id", user!.id)
     .maybeSingle();

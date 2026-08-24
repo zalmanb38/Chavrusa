@@ -12,6 +12,7 @@ import {
   type Level,
   type Preference,
 } from "@/lib/profile-options";
+import { formatLocation } from "@/lib/locations";
 
 interface FullProfile {
   id: string;
@@ -21,6 +22,10 @@ interface FullProfile {
   topic_other: string;
   level: Level | null;
   city: string;
+  country: string;
+  region: string;
+  neighborhood: string;
+  meeting_spot: string;
   preference: Preference;
   availability: string;
   phone: string | null;
@@ -49,6 +54,7 @@ export default async function AdminProfileDetailPage({
   const tProfile = await getTranslations("Profile");
   const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
+  const tLocation = await getTranslations("Location");
 
   const { supabase } = await requireAdmin(locale);
 
@@ -62,7 +68,7 @@ export default async function AdminProfileDetailPage({
     supabase
       .from("profiles")
       .select(
-        "id, name, languages, topics, topic_other, level, city, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
+        "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
       )
       .eq("id", id)
       .maybeSingle(),
@@ -162,8 +168,14 @@ export default async function AdminProfileDetailPage({
           <p>{blockCount ?? 0}</p>
         </div>
         <div>
-          <p className="text-xs text-muted">{tProfile("city")}</p>
-          <p>{p.city || "—"}</p>
+          <p className="text-xs text-muted">{tLocation("sectionTitle")}</p>
+          <p>
+            {formatLocation(p, (code) => tLocation(`country_${code}`)) || "—"}
+          </p>
+        </div>
+        <div>
+          <p className="text-xs text-muted">{tLocation("meetingSpot")}</p>
+          <p>{p.meeting_spot || "—"}</p>
         </div>
         <div>
           <p className="text-xs text-muted">{tProfile("learningLevel")}</p>

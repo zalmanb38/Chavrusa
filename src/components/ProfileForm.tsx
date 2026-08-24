@@ -19,6 +19,8 @@ import {
   type Preference,
 } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
+import LocationFields, { type LocationValue } from "@/components/LocationFields";
+import { locationRequired } from "@/lib/locations";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
@@ -41,6 +43,7 @@ export default function ProfileForm({
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Common");
   const tTopics = useTranslations("Topics");
+  const tLocation = useTranslations("Location");
   const tLanguages = useTranslations("Languages");
   const router = useRouter();
 
@@ -55,7 +58,13 @@ export default function ProfileForm({
     initialProfile?.topic_other ?? "",
   );
   const [level, setLevel] = useState<Level | "">(initialProfile?.level ?? "");
-  const [city, setCity] = useState(initialProfile?.city ?? "");
+  const [location, setLocation] = useState<LocationValue>({
+    country: initialProfile?.country ?? "",
+    region: initialProfile?.region ?? "",
+    city: initialProfile?.city ?? "",
+    neighborhood: initialProfile?.neighborhood ?? "",
+    meetingSpot: initialProfile?.meeting_spot ?? "",
+  });
   const [preference, setPreference] = useState<Preference>(
     initialProfile?.preference ?? "both",
   );
@@ -74,9 +83,20 @@ export default function ProfileForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSaving(true);
     setSuccess(false);
     setError(null);
+
+    // Someone who only meets in person can't be matched without somewhere
+    // to meet, so this is the one case where location is compulsory.
+    if (
+      locationRequired(preference) &&
+      (!location.country || !location.city.trim())
+    ) {
+      setError(tLocation("requiredError"));
+      return;
+    }
+
+    setSaving(true);
 
     const supabase = createClient();
     const { error: saveError } = await supabase.from("profiles").upsert({
@@ -86,7 +106,11 @@ export default function ProfileForm({
       topics,
       topic_other: topics.includes(OTHER_TOPIC) ? topicOther.trim() : "",
       level: level || null,
-      city,
+      city: location.city.trim(),
+      country: location.country,
+      region: location.region,
+      neighborhood: location.neighborhood.trim(),
+      meeting_spot: location.meetingSpot.trim(),
       preference,
       availability,
     });
@@ -207,17 +231,6 @@ export default function ProfileForm({
         </select>
       </label>
 
-      <label className="flex flex-col gap-1.5 text-sm">
-        {t("city")}
-        <input
-          type="text"
-          value={city}
-          placeholder={t("cityPlaceholder")}
-          onChange={(e) => setCity(e.target.value)}
-          className={inputClass}
-        />
-      </label>
-
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
         <legend className="px-1 text-sm font-medium">
           {t("learningPreference")}
@@ -237,6 +250,12 @@ export default function ProfileForm({
           ))}
         </div>
       </fieldset>
+
+      <LocationFields
+        value={location}
+        onChange={setLocation}
+        required={locationRequired(preference)}
+      />
 
       <label className="flex flex-col gap-1.5 text-sm">
         {t("availability")}
