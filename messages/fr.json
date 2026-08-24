@@ -223,7 +223,10 @@
     "withinKm": "Moins de {km} km",
     "nearNeedsCity": "Indiquez votre ville sur votre profil pour effectuer une recherche par distance.",
     "filterKeyword": "Mot-clé",
-    "filterKeywordPlaceholder": "Rechercher ce que les gens recherchent"
+    "filterKeywordPlaceholder": "Rechercher ce que les gens recherchent",
+    "moreFilters": "Plus de filtres",
+    "fewerFilters": "Moins de filtres",
+    "applyFilters": "Appliquer les filtres"
   },
   "Requests": {
     "title": "Demandes de connexion",

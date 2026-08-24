@@ -139,6 +139,24 @@ export function applyLocalFilters(
   });
 }
 
+/**
+ * The filters kept behind "more filters". Counting them drives both the
+ * badge and whether the section starts open — an applied filter should
+ * never be hidden inside a closed panel.
+ */
+export const ADVANCED_FILTER_KEYS = [
+  "studyLanguage",
+  "age",
+  "frequency",
+  "timeOfDay",
+  "sessionLength",
+  "near",
+] as const satisfies readonly (keyof BrowseFilters)[];
+
+export function countAdvancedFilters(filters: BrowseFilters): number {
+  return ADVANCED_FILTER_KEYS.filter((key) => filters[key]).length;
+}
+
 /** Age is shown only when its owner hasn't hidden it. */
 export function visibleAgeRange(profile: Profile): string {
   return isHidden(profile, "age_range") ? "" : profile.age_range;

@@ -223,7 +223,10 @@
     "withinKm": "עד {km} ק״מ",
     "nearNeedsCity": "הגדירו עיר בפרופיל שלכם כדי לחפש לפי מרחק.",
     "filterKeyword": "מילת מפתח",
-    "filterKeywordPlaceholder": "חיפוש במה שאנשים מחפשים"
+    "filterKeywordPlaceholder": "חיפוש במה שאנשים מחפשים",
+    "moreFilters": "עוד מסננים",
+    "fewerFilters": "פחות מסננים",
+    "applyFilters": "החלת הסינון"
   },
   "Requests": {
     "title": "בקשות התחברות",

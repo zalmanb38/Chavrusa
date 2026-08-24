@@ -21,6 +21,7 @@ import {
   applyLocalFilters,
   applyQueryFilters,
   coordsOf,
+  countAdvancedFilters,
   type BrowseFilters,
 } from "@/lib/browse-filters";
 import LocationFilter from "@/components/LocationFilter";
@@ -57,6 +58,7 @@ export default async function BrowsePage({
   // current filters rather than resetting them.
   const { view: _view, ...filterQuery } = filters;
   void _view;
+  const advancedFilterCount = countAdvancedFilters(filters);
 
   const supabase = await createClient();
   const {
@@ -176,159 +178,8 @@ export default async function BrowsePage({
         })}
       </div>
 
-      <form className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border border-border bg-surface p-4 sm:grid-cols-4">
+      <form className="mb-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4">
         <label className="flex flex-col gap-1 text-sm">
-          {t("filterLanguage")}
-          <select
-            name="language"
-            defaultValue={filters.language ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {LANGUAGE_CODES.map((code) => (
-              <option key={code} value={code}>
-                {tLanguages(code)}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterTopic")}
-          <select
-            name="topic"
-            defaultValue={filters.topic ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {TOPIC_KEYS.map((key) => (
-              <option key={key} value={key}>
-                {tTopics(key)}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <LocationFilter
-          initialCountry={filters.country ?? ""}
-          initialRegion={filters.region ?? ""}
-          initialCity={filters.city ?? ""}
-        />
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterStudyLanguage")}
-          <select
-            name="studyLanguage"
-            defaultValue={filters.studyLanguage ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {STUDY_LANGUAGE_CODES.map((code) => (
-              <option key={code} value={code}>
-                {tLanguages(code)}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterAge")}
-          <select
-            name="age"
-            defaultValue={filters.age ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {AGE_RANGES.map((range) => (
-              <option key={range} value={range}>
-                {range}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterPreference")}
-          <select
-            name="preference"
-            defaultValue={filters.preference ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {PREFERENCES.map((p) => (
-              <option key={p} value={p}>
-                {tProfile(preferenceMessageKey[p])}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterFrequency")}
-          <select
-            name="frequency"
-            defaultValue={filters.frequency ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {FREQUENCIES.map((f) => (
-              <option key={f} value={f}>
-                {tProfile(frequencyMessageKey[f])}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterTimeOfDay")}
-          <select
-            name="timeOfDay"
-            defaultValue={filters.timeOfDay ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {TIMES_OF_DAY.map((tod) => (
-              <option key={tod} value={tod}>
-                {tProfile(timeOfDayMessageKey[tod])}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterSessionLength")}
-          <select
-            name="sessionLength"
-            defaultValue={filters.sessionLength ?? ""}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {SESSION_LENGTHS.map((len) => (
-              <option key={len} value={len}>
-                {tProfile("sessionLengthValue", { minutes: Number(len) })}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterNear")}
-          <select
-            name="near"
-            defaultValue={filters.near ?? ""}
-            disabled={!viewerCoords}
-            className={selectClass}
-          >
-            <option value="">{t("all")}</option>
-            {PROXIMITY_RADII.map((km) => (
-              <option key={km} value={km}>
-                {t("withinKm", { km: Number(km) })}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
           {t("filterKeyword")}
           <input
             type="search"
@@ -339,19 +190,193 @@ export default async function BrowsePage({
           />
         </label>
 
-        {!viewerCoords && (
-          <p className="col-span-2 text-xs text-muted sm:col-span-4">
-            {t("nearNeedsCity")}
-          </p>
-        )}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <label className="flex flex-col gap-1 text-sm">
+            {t("filterTopic")}
+            <select
+              name="topic"
+              defaultValue={filters.topic ?? ""}
+              className={selectClass}
+            >
+              <option value="">{t("all")}</option>
+              {TOPIC_KEYS.map((key) => (
+                <option key={key} value={key}>
+                  {tTopics(key)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            {t("filterLanguage")}
+            <select
+              name="language"
+              defaultValue={filters.language ?? ""}
+              className={selectClass}
+            >
+              <option value="">{t("all")}</option>
+              {LANGUAGE_CODES.map((code) => (
+                <option key={code} value={code}>
+                  {tLanguages(code)}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            {t("filterPreference")}
+            <select
+              name="preference"
+              defaultValue={filters.preference ?? ""}
+              className={selectClass}
+            >
+              <option value="">{t("all")}</option>
+              {PREFERENCES.map((p) => (
+                <option key={p} value={p}>
+                  {tProfile(preferenceMessageKey[p])}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <LocationFilter
+            initialCountry={filters.country ?? ""}
+            initialRegion={filters.region ?? ""}
+            initialCity={filters.city ?? ""}
+          />
+        </div>
+
+        {/*
+          A plain <details> rather than a client component: it needs no
+          JavaScript, keeps the GET form intact, and is a disclosure
+          widget the browser already knows how to make accessible.
+
+          Opened by default whenever one of the filters inside is active,
+          so an applied filter is never hidden behind a closed section —
+          that would leave people wondering why their results look odd.
+        */}
+        <details className="group" open={advancedFilterCount > 0}>
+          <summary className="cursor-pointer text-sm font-medium select-none">
+            <span className="group-open:hidden">
+              {t("moreFilters")}
+              {advancedFilterCount > 0 && ` (${advancedFilterCount})`}
+            </span>
+            <span className="hidden group-open:inline">{t("fewerFilters")}</span>
+          </summary>
+
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterStudyLanguage")}
+              <select
+                name="studyLanguage"
+                defaultValue={filters.studyLanguage ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {STUDY_LANGUAGE_CODES.map((code) => (
+                  <option key={code} value={code}>
+                    {tLanguages(code)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterAge")}
+              <select
+                name="age"
+                defaultValue={filters.age ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {AGE_RANGES.map((range) => (
+                  <option key={range} value={range}>
+                    {range}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterFrequency")}
+              <select
+                name="frequency"
+                defaultValue={filters.frequency ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {FREQUENCIES.map((f) => (
+                  <option key={f} value={f}>
+                    {tProfile(frequencyMessageKey[f])}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterTimeOfDay")}
+              <select
+                name="timeOfDay"
+                defaultValue={filters.timeOfDay ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {TIMES_OF_DAY.map((tod) => (
+                  <option key={tod} value={tod}>
+                    {tProfile(timeOfDayMessageKey[tod])}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterSessionLength")}
+              <select
+                name="sessionLength"
+                defaultValue={filters.sessionLength ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {SESSION_LENGTHS.map((len) => (
+                  <option key={len} value={len}>
+                    {tProfile("sessionLengthValue", { minutes: Number(len) })}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterNear")}
+              <select
+                name="near"
+                defaultValue={filters.near ?? ""}
+                disabled={!viewerCoords}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {PROXIMITY_RADII.map((km) => (
+                  <option key={km} value={km}>
+                    {t("withinKm", { km: Number(km) })}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {!viewerCoords && (
+              <p className="col-span-2 text-xs text-muted sm:col-span-4">
+                {t("nearNeedsCity")}
+              </p>
+            )}
+          </div>
+        </details>
 
         {mapView && <input type="hidden" name="view" value="map" />}
 
         <button
           type="submit"
-          className="col-span-2 w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground sm:col-span-4"
+          className="w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
         >
-          {t("title")}
+          {t("applyFilters")}
         </button>
       </form>
 
