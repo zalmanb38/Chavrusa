@@ -197,7 +197,10 @@
     "areaHeading": "{area} · {count, plural, one {לומד אחד} two {# לומדים} other {# לומדים}}",
     "clearSelection": "ניקוי הבחירה",
     "namesHidden": "שמות מוסתרים בתצוגת המפה. תראו אותם ברשימה ולאחר יצירת הקשר.",
-    "fallbackTiles": "אריחי המפה פועלים דרך ספק חלופי."
+    "fallbackTiles": "אריחי המפה פועלים דרך ספק חלופי.",
+    "mapFailedTitle": "לא ניתן להציג את המפה",
+    "mapFailedBody": "תצוגת הרשימה מציגה את אותם לומדים, עם אותו סינון.",
+    "mapFailedDetail": "פרטים"
   },
   "Browse": {
     "title": "עיון בלומדים",

@@ -70,17 +70,25 @@ export default async function BrowsePage({
 
   if (!user) {
     redirect({ href: "/login", locale });
+    // redirect() throws, so this never runs — it's here so TypeScript
+    // narrows `user` below instead of needing a non-null assertion at
+    // every use, which would TypeError rather than redirect if the
+    // throw ever stopped happening.
+    return null;
   }
 
   // RLS only hides profiles from people who blocked *you*; profiles you've
   // blocked yourself are excluded from Browse here at the query level so
   // your own Blocked-users list can still read their name to display it.
-  const [{ data: blocks }, { data: viewer }] = await Promise.all([
-    supabase.from("blocks").select("blocked_id").eq("blocker_id", user!.id),
+  const [
+    { data: blocks, error: blocksError },
+    { data: viewer, error: viewerError },
+  ] = await Promise.all([
+    supabase.from("blocks").select("blocked_id").eq("blocker_id", user.id),
     supabase
       .from("profiles")
       .select("phone_verified, country, region, city")
-      .eq("id", user!.id)
+      .eq("id", user.id)
       .maybeSingle(),
   ]);
   const blockedIds = (blocks ?? []).map((b) => b.blocked_id);
@@ -106,7 +114,7 @@ export default async function BrowsePage({
   let query = supabase
     .from("profiles")
     .select(PROFILE_COLUMNS)
-    .neq("id", user!.id)
+    .neq("id", user.id)
     .eq("is_active", true)
     .eq("phone_verified", true)
     .not("name", "eq", "");
@@ -119,7 +127,7 @@ export default async function BrowsePage({
   // apart — they render the same array, filtered once.
   query = applyQueryFilters(query, filters);
 
-  const { data: rows } = await query.order("created_at", {
+  const { data: rows, error: rowsError } = await query.order("created_at", {
     ascending: false,
   });
 
@@ -131,14 +139,28 @@ export default async function BrowsePage({
     viewerCoords,
   );
 
-  const { data: connectRequests } = await supabase
+  const { data: connectRequests, error: connectError } = await supabase
     .from("connect_requests")
     .select("id, requester_id, recipient_id, status")
-    .or(`requester_id.eq.${user!.id},recipient_id.eq.${user!.id}`);
+    .or(`requester_id.eq.${user.id},recipient_id.eq.${user.id}`);
+
+  // A failed query yields null data, which reads downstream as "nobody
+  // matched" — indistinguishable from an empty result. Log it so a broken
+  // query shows up as a broken query rather than an empty page.
+  for (const [label, queryError] of [
+    ["blocks", blocksError],
+    ["viewer", viewerError],
+    ["profiles", rowsError],
+    ["connect_requests", connectError],
+  ] as const) {
+    if (queryError) {
+      console.error(`Browse: ${label} query failed`, queryError);
+    }
+  }
 
   const connectStatusMap = buildConnectStatusMap(
     (connectRequests ?? []) as ConnectRequestRow[],
-    user!.id,
+    user.id,
   );
 
   // Both views are client components, and a Map doesn't survive the
@@ -406,7 +428,7 @@ export default async function BrowsePage({
       ) : mapView ? (
         <BrowseMapView
           profiles={profiles}
-          currentUserId={user!.id}
+          currentUserId={user.id}
           connectStatuses={connectStatuses}
         />
       ) : (
@@ -415,7 +437,7 @@ export default async function BrowsePage({
             <BrowseCard
               key={profile.id}
               profile={profile}
-              currentUserId={user!.id}
+              currentUserId={user.id}
               connectStatus={connectStatuses[profile.id]?.status ?? "none"}
               requestId={connectStatuses[profile.id]?.requestId ?? null}
               showName

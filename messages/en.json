@@ -197,7 +197,10 @@
     "areaHeading": "{area} · {count, plural, =1 {# learner} other {# learners}}",
     "clearSelection": "Clear selection",
     "namesHidden": "Names are hidden in map view. You'll see them in the list, and after you connect.",
-    "fallbackTiles": "Map tiles are running on a fallback provider."
+    "fallbackTiles": "Map tiles are running on a fallback provider.",
+    "mapFailedTitle": "The map couldn't be displayed",
+    "mapFailedBody": "The list view has the same learners, with the same filters applied.",
+    "mapFailedDetail": "Details"
   },
   "Browse": {
     "title": "Browse Learners",

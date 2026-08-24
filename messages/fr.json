@@ -197,7 +197,10 @@
     "areaHeading": "{area} · {count, plural, one {# apprenant} other {# apprenants}}",
     "clearSelection": "Effacer la sélection",
     "namesHidden": "Les noms sont masqués sur la carte. Vous les verrez dans la liste et après la mise en relation.",
-    "fallbackTiles": "Les tuiles de la carte utilisent un fournisseur de secours."
+    "fallbackTiles": "Les tuiles de la carte utilisent un fournisseur de secours.",
+    "mapFailedTitle": "La carte n'a pas pu s'afficher",
+    "mapFailedBody": "La vue liste contient les mêmes apprenants, avec les mêmes filtres.",
+    "mapFailedDetail": "Détails"
   },
   "Browse": {
     "title": "Parcourir les étudiants",

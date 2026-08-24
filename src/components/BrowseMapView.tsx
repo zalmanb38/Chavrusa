@@ -9,6 +9,7 @@ import { usingFallbackTiles } from "@/lib/map-tiles";
 import type { Profile } from "@/lib/profile-options";
 import type { ConnectStatus } from "@/lib/connect";
 import BrowseCard from "@/components/BrowseCard";
+import MapErrorBoundary from "@/components/MapErrorBoundary";
 
 // Leaflet reaches for `window` as soon as it loads, so the map can only
 // exist in the browser.
@@ -69,12 +70,18 @@ export default function BrowseMapView({
           {t("noClusters")}
         </p>
       ) : (
-        <BrowseMap
-          clusters={clusters}
-          selectedId={selectedId}
-          onSelect={(cluster) => setSelectedId(cluster.id)}
-          labelFor={labelFor}
-        />
+        <MapErrorBoundary
+          title={t("mapFailedTitle")}
+          body={t("mapFailedBody")}
+          detailLabel={t("mapFailedDetail")}
+        >
+          <BrowseMap
+            clusters={clusters}
+            selectedId={selectedId}
+            onSelect={(cluster) => setSelectedId(cluster.id)}
+            labelFor={labelFor}
+          />
+        </MapErrorBoundary>
       )}
 
       {offMapCount > 0 && (

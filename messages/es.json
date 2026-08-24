@@ -197,7 +197,10 @@
     "areaHeading": "{area} · {count, plural, one {# persona} other {# personas}}",
     "clearSelection": "Borrar selección",
     "namesHidden": "Los nombres se ocultan en la vista de mapa. Los verás en la lista y después de conectar.",
-    "fallbackTiles": "Los mosaicos del mapa usan un proveedor alternativo."
+    "fallbackTiles": "Los mosaicos del mapa usan un proveedor alternativo.",
+    "mapFailedTitle": "No se pudo mostrar el mapa",
+    "mapFailedBody": "La vista de lista tiene las mismas personas, con los mismos filtros.",
+    "mapFailedDetail": "Detalles"
   },
   "Browse": {
     "title": "Explorar estudiantes",
