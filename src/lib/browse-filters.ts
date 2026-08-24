@@ -57,14 +57,13 @@ export interface ProximityOption {
 }
 
 /**
- * Miles for the US, kilometres everywhere else.
- *
- * Note that the UK conventionally measures road distance in miles too;
- * it's grouped with kilometres here because that's what was asked for,
- * and it's a one-line change if that turns out to read wrong.
+ * Miles for the US and the UK — both measure road distance that way —
+ * and kilometres everywhere else.
  */
+const MILE_COUNTRIES = new Set(["US", "GB"]);
+
 export function usesMiles(country: string | null | undefined): boolean {
-  return country === "US";
+  return country ? MILE_COUNTRIES.has(country) : false;
 }
 
 export function proximityOptions(
