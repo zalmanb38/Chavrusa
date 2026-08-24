@@ -221,12 +221,14 @@
     "filterSessionLength": "Duración",
     "filterNear": "Cerca de mí",
     "withinKm": "A menos de {km} km",
-    "nearNeedsCity": "Indica tu ciudad en tu perfil para buscar por distancia.",
+    "nearNeedsCity": "Buscar por distancia requiere una ciudad en tu perfil, elegida de la lista.",
     "filterKeyword": "Palabra clave",
     "filterKeywordPlaceholder": "Busca lo que otros están buscando",
     "moreFilters": "Más filtros",
     "fewerFilters": "Menos filtros",
-    "applyFilters": "Aplicar filtros"
+    "applyFilters": "Aplicar filtros",
+    "nearSetCityLink": "Indicar tu ciudad",
+    "nearExcluded": "{count, plural, one {# persona quedó fuera de esta búsqueda por distancia} other {# personas quedaron fuera de esta búsqueda por distancia}} porque su ciudad no se puede ubicar en el mapa."
   },
   "Requests": {
     "title": "Solicitudes de conexión",

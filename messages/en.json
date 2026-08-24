@@ -221,12 +221,14 @@
     "filterSessionLength": "Length",
     "filterNear": "Near me",
     "withinKm": "Within {km} km",
-    "nearNeedsCity": "Set your own city on your profile to search by distance.",
+    "nearNeedsCity": "Searching by distance needs a city on your own profile, picked from the list.",
     "filterKeyword": "Keyword",
     "filterKeywordPlaceholder": "Search what people are looking for",
     "moreFilters": "More filters",
     "fewerFilters": "Fewer filters",
-    "applyFilters": "Apply filters"
+    "applyFilters": "Apply filters",
+    "nearSetCityLink": "Set your city",
+    "nearExcluded": "{count, plural, =1 {# learner was left out of this distance search} other {# learners were left out of this distance search}} because their city isn't one we can place on the map."
   },
   "Requests": {
     "title": "Connect Requests",

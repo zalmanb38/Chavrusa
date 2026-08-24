@@ -221,12 +221,14 @@
     "filterSessionLength": "אורך",
     "filterNear": "בקרבתי",
     "withinKm": "עד {km} ק״מ",
-    "nearNeedsCity": "הגדירו עיר בפרופיל שלכם כדי לחפש לפי מרחק.",
+    "nearNeedsCity": "חיפוש לפי מרחק מחייב עיר בפרופיל שלכם, שנבחרה מתוך הרשימה.",
     "filterKeyword": "מילת מפתח",
     "filterKeywordPlaceholder": "חיפוש במה שאנשים מחפשים",
     "moreFilters": "עוד מסננים",
     "fewerFilters": "פחות מסננים",
-    "applyFilters": "החלת הסינון"
+    "applyFilters": "החלת הסינון",
+    "nearSetCityLink": "הגדרת עיר",
+    "nearExcluded": "{count, plural, one {לומד אחד לא נכלל בחיפוש לפי מרחק} two {# לומדים לא נכללו בחיפוש לפי מרחק} other {# לומדים לא נכללו בחיפוש לפי מרחק}} מכיוון שהעיר שלהם אינה עיר שניתן למקם על המפה."
   },
   "Requests": {
     "title": "בקשות התחברות",

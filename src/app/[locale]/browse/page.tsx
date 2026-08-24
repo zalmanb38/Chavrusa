@@ -22,6 +22,7 @@ import {
   applyQueryFilters,
   coordsOf,
   countAdvancedFilters,
+  toValues,
   type BrowseFilters,
 } from "@/lib/browse-filters";
 import LocationFilter from "@/components/LocationFilter";
@@ -59,6 +60,7 @@ export default async function BrowsePage({
   const { view: _view, ...filterQuery } = filters;
   void _view;
   const advancedFilterCount = countAdvancedFilters(filters);
+  const selectedAges = toValues(filters.age);
 
   const supabase = await createClient();
   const {
@@ -118,7 +120,7 @@ export default async function BrowsePage({
 
   // PROFILE_COLUMNS is a runtime constant, so PostgREST can't infer the
   // row shape from it the way it does for a literal select string.
-  const profiles = applyLocalFilters(
+  const { profiles, unplaceableExcluded } = applyLocalFilters(
     (rows ?? []) as unknown as Profile[],
     filters,
     viewerCoords,
@@ -281,21 +283,28 @@ export default async function BrowsePage({
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterAge")}
-              <select
-                name="age"
-                defaultValue={filters.age ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
+            {/*
+              Several ranges widen the search rather than narrowing it, so
+              this is a checkbox group: each box submits its own `age`
+              parameter and the query matches any of them.
+            */}
+            <fieldset className="col-span-2 flex flex-col gap-2 sm:col-span-4">
+              <legend className="text-sm">{t("filterAge")}</legend>
+              <div className="flex flex-wrap gap-x-4 gap-y-2">
                 {AGE_RANGES.map((range) => (
-                  <option key={range} value={range}>
+                  <label key={range} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      name="age"
+                      value={range}
+                      defaultChecked={selectedAges.includes(range)}
+                      className="accent-primary"
+                    />
                     {range}
-                  </option>
+                  </label>
                 ))}
-              </select>
-            </label>
+              </div>
+            </fieldset>
 
             <label className="flex flex-col gap-1 text-sm">
               {t("filterFrequency")}
@@ -345,27 +354,37 @@ export default async function BrowsePage({
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterNear")}
-              <select
-                name="near"
-                defaultValue={filters.near ?? ""}
-                disabled={!viewerCoords}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {PROXIMITY_RADII.map((km) => (
-                  <option key={km} value={km}>
-                    {t("withinKm", { km: Number(km) })}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            {!viewerCoords && (
-              <p className="col-span-2 text-xs text-muted sm:col-span-4">
-                {t("nearNeedsCity")}
-              </p>
+            {/*
+              With no coordinates for the viewer's own city there is no
+              origin to measure from. Show why, and where to fix it —
+              a disabled dropdown just looks broken.
+            */}
+            {viewerCoords ? (
+              <label className="flex flex-col gap-1 text-sm">
+                {t("filterNear")}
+                <select
+                  name="near"
+                  defaultValue={filters.near ?? ""}
+                  className={selectClass}
+                >
+                  <option value="">{t("all")}</option>
+                  {PROXIMITY_RADII.map((km) => (
+                    <option key={km} value={km}>
+                      {t("withinKm", { km: Number(km) })}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : (
+              <div className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
+                <span>{t("filterNear")}</span>
+                <p className="text-xs text-muted">
+                  {t("nearNeedsCity")}{" "}
+                  <Link href="/profile" className="underline">
+                    {t("nearSetCityLink")}
+                  </Link>
+                </p>
+              </div>
             )}
           </div>
         </details>
@@ -379,6 +398,12 @@ export default async function BrowsePage({
           {t("applyFilters")}
         </button>
       </form>
+
+      {unplaceableExcluded > 0 && (
+        <p className="mb-4 text-xs text-muted">
+          {t("nearExcluded", { count: unplaceableExcluded })}
+        </p>
+      )}
 
       {profiles.length === 0 ? (
         <p className="text-sm text-muted">{t("noResults")}</p>

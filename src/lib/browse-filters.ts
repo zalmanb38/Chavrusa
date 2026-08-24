@@ -21,13 +21,23 @@ export interface BrowseFilters {
   region?: string;
   city?: string;
   near?: string;
-  age?: string;
+  /** Repeatable: several ranges widen the search rather than narrowing it. */
+  age?: string | string[];
   frequency?: string;
   timeOfDay?: string;
   sessionLength?: string;
   q?: string;
   preference?: string;
   view?: string;
+}
+
+/**
+ * A checkbox group submits one parameter per box, so a filter that allows
+ * several values arrives as a string, an array, or nothing at all.
+ */
+export function toValues(value: string | string[] | undefined): string[] {
+  if (!value) return [];
+  return (Array.isArray(value) ? value : [value]).filter(Boolean);
 }
 
 /** Distances offered for "near me", in kilometres. */
@@ -77,8 +87,9 @@ export function applyQueryFilters<T extends FilterableQuery<T>>(
 
   // A hidden field must not be filterable: matching on a value someone
   // chose to hide would answer the very question the toggle refused.
-  if (filters.age) {
-    q = q.eq("age_range", filters.age).not("hidden_fields", "cs", "{age_range}");
+  const ages = toValues(filters.age);
+  if (ages.length > 0) {
+    q = q.in("age_range", ages).not("hidden_fields", "cs", "{age_range}");
   }
 
   if (filters.frequency) q = q.eq("frequency", filters.frequency);
@@ -125,18 +136,37 @@ export function coordsOf(profile: {
  * proximity search rather than kept — "near me" that silently includes
  * unplaceable people isn't answering the question either.
  */
+export interface LocalFilterResult {
+  profiles: Profile[];
+  /**
+   * How many were dropped for having no placeable city. Surfaced rather
+   * than swallowed: a proximity search that quietly discards people looks
+   * identical to one that found nobody.
+   */
+  unplaceableExcluded: number;
+}
+
 export function applyLocalFilters(
   profiles: Profile[],
   filters: BrowseFilters,
   viewerCoords: LatLng | null,
-): Profile[] {
+): LocalFilterResult {
   const radius = filters.near ? Number(filters.near) : 0;
-  if (!radius || !viewerCoords) return profiles;
+  if (!radius || !viewerCoords) {
+    return { profiles, unplaceableExcluded: 0 };
+  }
 
-  return profiles.filter((profile) => {
+  let unplaceableExcluded = 0;
+  const kept = profiles.filter((profile) => {
     const coords = coordsOf(profile);
-    return coords !== null && distanceKm(viewerCoords, coords) <= radius;
+    if (coords === null) {
+      unplaceableExcluded++;
+      return false;
+    }
+    return distanceKm(viewerCoords, coords) <= radius;
   });
+
+  return { profiles: kept, unplaceableExcluded };
 }
 
 /**
@@ -154,7 +184,10 @@ export const ADVANCED_FILTER_KEYS = [
 ] as const satisfies readonly (keyof BrowseFilters)[];
 
 export function countAdvancedFilters(filters: BrowseFilters): number {
-  return ADVANCED_FILTER_KEYS.filter((key) => filters[key]).length;
+  // An empty array is truthy, so multi-value filters need counting by
+  // their contents rather than by whether the key is present.
+  return ADVANCED_FILTER_KEYS.filter((key) => toValues(filters[key]).length > 0)
+    .length;
 }
 
 /** Age is shown only when its owner hasn't hidden it. */
