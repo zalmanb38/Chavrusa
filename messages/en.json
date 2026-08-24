@@ -362,7 +362,7 @@
   },
   "Phone": {
     "title": "Verify phone",
-    "hint": "Verifying your phone number helps keep the community safe.",
+    "hint": "For security purposes, please verify your phone number. Only accounts with a verified phone number are visible to others in Browse and can be matched with a study partner.",
     "phoneLabel": "Phone number",
     "phonePlaceholder": "e.g. 555 123 4567",
     "countryLabel": "Country code",

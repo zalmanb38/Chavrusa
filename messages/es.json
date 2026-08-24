@@ -362,7 +362,7 @@
   },
   "Phone": {
     "title": "Verificar teléfono",
-    "hint": "Verificar tu número de teléfono ayuda a mantener segura a la comunidad.",
+    "hint": "Por motivos de seguridad, verifica tu número de teléfono. Solo las cuentas con un número verificado son visibles para los demás en Explorar y pueden emparejarse con un compañero de estudio.",
     "phoneLabel": "Número de teléfono",
     "phonePlaceholder": "p. ej. 9 11 1234 5678",
     "countryLabel": "Código de país",
