@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations, useFormatter } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notify } from "@/lib/notify";
 import type { StudySession } from "@/lib/sessions";
 
 export default function SessionCard({
@@ -50,6 +51,10 @@ export default function SessionCard({
       setError(updateError.message);
       return;
     }
+
+    // Confirming is what unlocks contact details for both sides, so it's
+    // the moment the other person most needs to hear about.
+    if (patch.status === "confirmed") notify("session_confirmed", session.id);
 
     router.refresh();
   }

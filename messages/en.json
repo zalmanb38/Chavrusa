@@ -315,5 +315,15 @@
     "rateLimited": "You've sent several messages recently. Please try again in an hour.",
     "sendError": "Couldn't send your message. Please try again, or email us directly.",
     "orEmail": "You can also email us at"
+  },
+  "Email": {
+    "someone": "Someone",
+    "connect_requestSubject": "{name} would like to learn with you",
+    "connect_requestBody": "{name} sent you a connect request on Chavrusa Link. You can accept or decline it here:",
+    "request_acceptedSubject": "{name} accepted your connect request",
+    "request_acceptedBody": "{name} accepted your request on Chavrusa Link. You can now agree on a time to learn together:",
+    "session_confirmedSubject": "Your session with {name} is confirmed",
+    "session_confirmedBody": "{name} confirmed your study session on Chavrusa Link. Your contact details are now shared with each other:",
+    "signoff": "— Chavrusa Link"
   }
 }

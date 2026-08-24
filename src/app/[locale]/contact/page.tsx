@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ContactForm from "@/components/ContactForm";
-import { SUPPORT_EMAIL } from "@/components/Footer";
+import { SUPPORT_EMAIL } from "@/lib/site";
 
 // Public by design: no auth check, so anyone — including someone locked
 // out of their account, or suspended — can reach us.

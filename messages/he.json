@@ -315,5 +315,15 @@
     "rateLimited": "שלחתם מספר הודעות לאחרונה. נסו שוב בעוד שעה.",
     "sendError": "לא ניתן היה לשלוח את ההודעה. נסו שוב, או שלחו לנו אימייל ישירות.",
     "orEmail": "אפשר גם לשלוח לנו אימייל לכתובת"
+  },
+  "Email": {
+    "someone": "מישהו",
+    "connect_requestSubject": "{name} רוצה ללמוד איתך",
+    "connect_requestBody": "{name} שלח/ה לך בקשת התחברות ב-Chavrusa Link. אפשר לאשר או לדחות כאן:",
+    "request_acceptedSubject": "{name} אישר/ה את בקשת ההתחברות שלך",
+    "request_acceptedBody": "{name} אישר/ה את בקשתך ב-Chavrusa Link. עכשיו אפשר לסכם זמן ללמוד יחד:",
+    "session_confirmedSubject": "המפגש שלך עם {name} אושר",
+    "session_confirmedBody": "{name} אישר/ה את מפגש הלימוד ב-Chavrusa Link. פרטי ההתקשרות שלכם משותפים כעת:",
+    "signoff": "— Chavrusa Link"
   }
 }

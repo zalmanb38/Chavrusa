@@ -1,8 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
-export const SUPPORT_EMAIL = "info@chavrusalink.com";
-
 export default async function Footer() {
   const t = await getTranslations("Footer");
   const common = await getTranslations("Common");

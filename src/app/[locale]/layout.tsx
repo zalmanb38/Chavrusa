@@ -10,6 +10,7 @@ import { Link } from "@/i18n/navigation";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
+import { SITE_URL } from "@/lib/site";
 
 // Chosen with Hebrew in mind: both have real Hebrew glyphs (unlike the
 // previous Geist fonts), so `/he` renders with matching type instead of
@@ -25,12 +26,6 @@ const frankRuhlLibre = Frank_Ruhl_Libre({
   subsets: ["latin", "hebrew"],
   weight: ["500", "700"],
 });
-
-// The canonical public origin. Auth redirects are all derived from the
-// request's own origin rather than hardcoded, so this is the only place
-// the domain is named — it's what relative URLs in Open Graph tags and
-// canonical links resolve against, which has no request to read.
-export const SITE_URL = "https://chavrusalink.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

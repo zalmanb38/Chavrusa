@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notify } from "@/lib/notify";
 
 export default function RespondButtons({ requestId }: { requestId: string }) {
   const t = useTranslations("Requests");
@@ -27,6 +28,10 @@ export default function RespondButtons({ requestId }: { requestId: string }) {
       setError(updateError.message);
       return;
     }
+
+    // A decline is deliberately silent — telling someone they were turned
+    // down adds nothing they can act on.
+    if (status === "accepted") notify("request_accepted", requestId);
 
     router.refresh();
   }

@@ -2,12 +2,14 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendEmail } from "@/lib/email";
+import { SUPPORT_EMAIL } from "@/lib/site";
 
 const TOPICS = ["general", "safety", "technical", "feedback"] as const;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const MAX_PER_IP_PER_HOUR = 5;
-const CONTACT_TO = "info@chavrusalink.com";
+const CONTACT_TO = SUPPORT_EMAIL;
 
 /**
  * Hashed with a server-side salt so the table holds no reversible record
@@ -30,34 +32,19 @@ async function notifyByEmail(fields: {
   topic: string;
   message: string;
 }) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return { sent: false, reason: "no_api_key" };
-
-  const from = process.env.CONTACT_FROM_EMAIL ?? "noreply@chavrusalink.com";
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: `Chavrusa Link <${from}>`,
-      to: [CONTACT_TO],
-      // So hitting reply in the mail client answers the sender, not us.
-      reply_to: fields.email,
-      subject: `[${fields.topic}] Contact form — ${fields.name}`,
-      text: [
-        `Topic: ${fields.topic}`,
-        `Name: ${fields.name}`,
-        `Email: ${fields.email}`,
-        "",
-        fields.message,
-      ].join("\n"),
-    }),
+  return sendEmail({
+    to: CONTACT_TO,
+    // So hitting reply in the mail client answers the sender, not us.
+    replyTo: fields.email,
+    subject: `[${fields.topic}] Contact form — ${fields.name}`,
+    text: [
+      `Topic: ${fields.topic}`,
+      `Name: ${fields.name}`,
+      `Email: ${fields.email}`,
+      "",
+      fields.message,
+    ].join("\n"),
   });
-
-  return { sent: res.ok, reason: res.ok ? undefined : `resend_${res.status}` };
 }
 
 export async function POST(request: Request) {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notify } from "@/lib/notify";
 import type { ConnectStatus } from "@/lib/connect";
 
 export default function ConnectButton({
@@ -29,9 +30,11 @@ export default function ConnectButton({
     setError(null);
 
     const supabase = createClient();
-    const { error: insertError } = await supabase
+    const { data: inserted, error: insertError } = await supabase
       .from("connect_requests")
-      .insert({ requester_id: currentUserId, recipient_id: recipientId });
+      .insert({ requester_id: currentUserId, recipient_id: recipientId })
+      .select("id")
+      .single();
 
     setSending(false);
 
@@ -39,6 +42,8 @@ export default function ConnectButton({
       setError(insertError.message);
       return;
     }
+
+    if (inserted?.id) notify("connect_request", inserted.id);
 
     setStatus("pending_sent");
     router.refresh();
