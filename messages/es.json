@@ -325,5 +325,16 @@
     "session_confirmedSubject": "Tu sesión con {name} está confirmada",
     "session_confirmedBody": "{name} confirmó tu sesión de estudio en Chavrusa Link. Sus datos de contacto ya están compartidos:",
     "signoff": "— Chavrusa Link"
+  },
+  "ErrorPages": {
+    "notFoundTitle": "Página no encontrada",
+    "notFoundBody": "Esa página no existe, o puede que no tengas acceso a ella. Quizá se movió, o el enlace ya no es válido.",
+    "errorTitle": "Algo salió mal",
+    "errorBody": "Tuvimos un problema inesperado al cargar esta página. Intentarlo de nuevo suele funcionar.",
+    "tryAgain": "Intentar de nuevo",
+    "backHome": "Ir al inicio",
+    "errorPersists": "Si sigue ocurriendo,",
+    "contactUs": "avísanos",
+    "referenceCode": "Referencia"
   }
 }

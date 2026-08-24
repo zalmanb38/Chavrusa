@@ -325,5 +325,16 @@
     "session_confirmedSubject": "המפגש שלך עם {name} אושר",
     "session_confirmedBody": "{name} אישר/ה את מפגש הלימוד ב-Chavrusa Link. פרטי ההתקשרות שלכם משותפים כעת:",
     "signoff": "— Chavrusa Link"
+  },
+  "ErrorPages": {
+    "notFoundTitle": "הדף לא נמצא",
+    "notFoundBody": "הדף אינו קיים, או שאין לך גישה אליו. ייתכן שהוא הועבר או שהקישור אינו עדכני.",
+    "errorTitle": "משהו השתבש",
+    "errorBody": "נתקלנו בבעיה בטעינת הדף. לרוב ניסיון נוסף פותר את זה.",
+    "tryAgain": "נסה/י שוב",
+    "backHome": "חזרה לדף הבית",
+    "errorPersists": "אם זה חוזר על עצמו,",
+    "contactUs": "עדכנו אותנו",
+    "referenceCode": "מזהה"
   }
 }
