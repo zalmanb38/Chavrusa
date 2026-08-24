@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import LegalDocument from "@/components/LegalDocument";
+import ProseDocument from "@/components/ProseDocument";
 import { getLegalContent } from "@/content/legal";
 
 // Public by design: no auth check here, so it renders for signed-out
@@ -25,7 +25,7 @@ export default async function TermsPage({
   const content = getLegalContent(locale);
 
   return (
-    <LegalDocument
+    <ProseDocument
       doc={content.terms}
       translationNote={content.translationNote}
     />

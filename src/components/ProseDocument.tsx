@@ -1,4 +1,4 @@
-import { splitBold, type LegalDoc } from "@/lib/legal";
+import { splitBold, type ProseDoc } from "@/lib/prose";
 
 /** Renders `**bold**` runs as <strong> without dangerouslySetInnerHTML. */
 function RichText({ text }: { text: string }) {
@@ -17,18 +17,20 @@ function RichText({ text }: { text: string }) {
   );
 }
 
-export default function LegalDocument({
+export default function ProseDocument({
   doc,
   translationNote,
 }: {
-  doc: LegalDoc;
+  doc: ProseDoc;
   translationNote?: string;
 }) {
   return (
     <article className="mx-auto flex max-w-2xl flex-col gap-5 px-4 py-12">
       <header className="flex flex-col gap-2">
         <h1 className="font-serif text-3xl font-medium">{doc.title}</h1>
-        <p className="text-sm text-muted">{doc.lastUpdated}</p>
+        {doc.lastUpdated && (
+          <p className="text-sm text-muted">{doc.lastUpdated}</p>
+        )}
       </header>
 
       {translationNote && (

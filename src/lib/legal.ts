@@ -1,17 +1,14 @@
-// Legal documents live here rather than in messages/*.json: they're
-// long-form prose, not interface strings, and mixing them in would bloat
-// the translation files past the point of being reviewable.
+// Legal documents are prose pages with one extra requirement: a named
+// authoritative language, so a translation slip can't change what
+// somebody agreed to.
 
-export type LegalBlock =
-  | { type: "p"; text: string }
-  | { type: "h2"; text: string }
-  | { type: "ul"; items: string[] };
+import type { ProseBlock, ProseDoc } from "@/lib/prose";
 
-export interface LegalDoc {
-  title: string;
-  /** Already formatted for the locale — these are prose, not dates to parse. */
+export type LegalBlock = ProseBlock;
+
+/** Legal documents always carry a revision date, unlike prose generally. */
+export interface LegalDoc extends ProseDoc {
   lastUpdated: string;
-  blocks: LegalBlock[];
 }
 
 export interface LegalContent {
@@ -25,10 +22,4 @@ export interface LegalContent {
   translationNote?: string;
 }
 
-/**
- * Splits `**bold**` runs out of a string so the renderer can emit <strong>
- * without dangerouslySetInnerHTML. Odd indices are the emphasised parts.
- */
-export function splitBold(text: string): string[] {
-  return text.split("**");
-}
+export { splitBold } from "@/lib/prose";
