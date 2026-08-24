@@ -30,6 +30,7 @@ create trigger profile_names_set_updated_at
   for each row
   execute function public.set_updated_at();
 
+drop policy if exists "Users can manage their own full name" on public.profile_names;
 create policy "Users can manage their own full name"
   on public.profile_names for all
   to authenticated
@@ -38,6 +39,7 @@ create policy "Users can manage their own full name"
 
 -- Revealed on an accepted connect request — the moment two people are
 -- matched — not merely on a request having been sent.
+drop policy if exists "Matched users can view full name" on public.profile_names;
 create policy "Matched users can view full name"
   on public.profile_names for select
   to authenticated
@@ -53,6 +55,7 @@ create policy "Matched users can view full name"
     )
   );
 
+drop policy if exists "Admins can view full names" on public.profile_names;
 create policy "Admins can view full names"
   on public.profile_names for select
   to authenticated
@@ -67,7 +70,10 @@ create policy "Admins can view full names"
 -- profile form asks people to check it.
 --
 -- Idempotent by construction: re-deriving "Zalman B." yields "Zalman B."
--- again, so this migration is safe to run twice.
+-- again. Together with the guards elsewhere in this file — if not exists,
+-- on conflict do nothing, drop policy if exists — the whole migration can
+-- be re-run without damage. The backfill in particular will not overwrite
+-- a full name that is already stored.
 
 create or replace function public.derive_display_name(full_name text)
 returns text
