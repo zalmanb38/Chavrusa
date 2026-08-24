@@ -228,7 +228,9 @@
     "fewerFilters": "Fewer filters",
     "applyFilters": "Apply filters",
     "nearSetCityLink": "Set your city",
-    "nearExcluded": "{count, plural, =1 {# learner was left out of this distance search} other {# learners were left out of this distance search}} because their city isn't one we can place on the map."
+    "nearExcluded": "{count, plural, =1 {# learner was left out of this distance search} other {# learners were left out of this distance search}} because their city isn't one we can place on the map.",
+    "withinMiles": "Within {miles} mi",
+    "nSelected": "{count, plural, =1 {# selected} other {# selected}}"
   },
   "Requests": {
     "title": "Connect Requests",

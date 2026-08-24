@@ -40,8 +40,64 @@ export function toValues(value: string | string[] | undefined): string[] {
   return (Array.isArray(value) ? value : [value]).filter(Boolean);
 }
 
-/** Distances offered for "near me", in kilometres. */
-export const PROXIMITY_RADII = ["25", "50", "100", "250", "500"] as const;
+// Distance is always stored in kilometres, whatever the viewer sees.
+// One canonical unit means the maths has no conversions in it and a
+// shared Browse link means the same thing to whoever opens it — a US
+// reader just sees that same distance labelled in miles.
+export const MILES_TO_KM = 1.609344;
+
+const PROXIMITY_KM = [25, 50, 100, 250, 500] as const;
+const PROXIMITY_MILES = [10, 25, 50, 100, 250] as const;
+
+export interface ProximityOption {
+  /** Kilometres — what goes in the URL. */
+  value: string;
+  /** The number to show, in whichever unit the viewer reads. */
+  amount: number;
+}
+
+/**
+ * Miles for the US, kilometres everywhere else.
+ *
+ * Note that the UK conventionally measures road distance in miles too;
+ * it's grouped with kilometres here because that's what was asked for,
+ * and it's a one-line change if that turns out to read wrong.
+ */
+export function usesMiles(country: string | null | undefined): boolean {
+  return country === "US";
+}
+
+export function proximityOptions(
+  country: string | null | undefined,
+  current?: string,
+): { unit: "mi" | "km"; options: ProximityOption[] } {
+  const unit = usesMiles(country) ? "mi" : "km";
+  const options: ProximityOption[] =
+    unit === "mi"
+      ? PROXIMITY_MILES.map((miles) => ({
+          value: String(Math.round(miles * MILES_TO_KM)),
+          amount: miles,
+        }))
+      : PROXIMITY_KM.map((km) => ({ value: String(km), amount: km }));
+
+  // A link shared by someone whose unit differs carries a distance that
+  // isn't on this list. Keep it as an option rather than letting the
+  // control read "Any" while a filter is quietly applied.
+  if (current && !options.some((o) => o.value === current)) {
+    const km = Number(current);
+    if (Number.isFinite(km) && km > 0) {
+      return {
+        unit,
+        options: [
+          { value: current, amount: unit === "mi" ? Math.round(km / MILES_TO_KM) : km },
+          ...options,
+        ],
+      };
+    }
+  }
+
+  return { unit, options };
+}
 
 export const PROFILE_COLUMNS =
   "id, name, languages, study_languages, topics, topic_other, level, city, " +

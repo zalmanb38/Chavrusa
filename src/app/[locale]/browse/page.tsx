@@ -17,7 +17,7 @@ import {
 } from "@/lib/profile-options";
 import {
   PROFILE_COLUMNS,
-  PROXIMITY_RADII,
+  proximityOptions,
   applyLocalFilters,
   applyQueryFilters,
   coordsOf,
@@ -27,6 +27,7 @@ import {
 } from "@/lib/browse-filters";
 import LocationFilter from "@/components/LocationFilter";
 import BrowseCard from "@/components/BrowseCard";
+import MultiSelectFilter from "@/components/MultiSelectFilter";
 import BrowseMapView from "@/components/BrowseMapView";
 import {
   buildConnectStatusMap,
@@ -92,6 +93,10 @@ export default async function BrowsePage({
   // "Near me" is measured from the viewer's own city. Without one there's
   // no origin to measure from, so the option is offered but explained.
   const viewerCoords = viewer ? coordsOf(viewer) : null;
+
+  // Miles for someone in the US, kilometres for everyone else; the URL
+  // carries kilometres either way.
+  const proximity = proximityOptions(viewer?.country, filters.near);
 
   // Only phone-verified people are discoverable, per the safety spec:
   // a verified number is what makes a bad actor costly to replace after
@@ -283,28 +288,17 @@ export default async function BrowsePage({
               </select>
             </label>
 
-            {/*
-              Several ranges widen the search rather than narrowing it, so
-              this is a checkbox group: each box submits its own `age`
-              parameter and the query matches any of them.
-            */}
-            <fieldset className="col-span-2 flex flex-col gap-2 sm:col-span-4">
-              <legend className="text-sm">{t("filterAge")}</legend>
-              <div className="flex flex-wrap gap-x-4 gap-y-2">
-                {AGE_RANGES.map((range) => (
-                  <label key={range} className="flex items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      name="age"
-                      value={range}
-                      defaultChecked={selectedAges.includes(range)}
-                      className="accent-primary"
-                    />
-                    {range}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+<MultiSelectFilter
+              name="age"
+              label={t("filterAge")}
+              options={AGE_RANGES.map((range) => ({
+                value: range,
+                label: range,
+              }))}
+              initialSelected={selectedAges}
+              emptyLabel={t("all")}
+              countLabel={(count) => t("nSelected", { count })}
+            />
 
             <label className="flex flex-col gap-1 text-sm">
               {t("filterFrequency")}
@@ -368,9 +362,11 @@ export default async function BrowsePage({
                   className={selectClass}
                 >
                   <option value="">{t("all")}</option>
-                  {PROXIMITY_RADII.map((km) => (
-                    <option key={km} value={km}>
-                      {t("withinKm", { km: Number(km) })}
+                  {proximity.options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {proximity.unit === "mi"
+                        ? t("withinMiles", { miles: option.amount })
+                        : t("withinKm", { km: option.amount })}
                     </option>
                   ))}
                 </select>

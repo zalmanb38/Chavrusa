@@ -228,7 +228,9 @@
     "fewerFilters": "Menos filtros",
     "applyFilters": "Aplicar filtros",
     "nearSetCityLink": "Indicar tu ciudad",
-    "nearExcluded": "{count, plural, one {# persona quedó fuera de esta búsqueda por distancia} other {# personas quedaron fuera de esta búsqueda por distancia}} porque su ciudad no se puede ubicar en el mapa."
+    "nearExcluded": "{count, plural, one {# persona quedó fuera de esta búsqueda por distancia} other {# personas quedaron fuera de esta búsqueda por distancia}} porque su ciudad no se puede ubicar en el mapa.",
+    "withinMiles": "A menos de {miles} mi",
+    "nSelected": "{count, plural, one {# seleccionado} other {# seleccionados}}"
   },
   "Requests": {
     "title": "Solicitudes de conexión",
