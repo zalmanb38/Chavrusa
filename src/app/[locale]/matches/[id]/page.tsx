@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import SessionCard from "@/components/SessionCard";
 import ProposeSessionForm from "@/components/ProposeSessionForm";
 import ReportButton from "@/components/ReportButton";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import BlockButton from "@/components/BlockButton";
 import type { StudySession } from "@/lib/sessions";
 
@@ -65,6 +67,24 @@ export default async function MatchDetailPage({
   const otherFullName =
     (otherNameRow as { full_name: string } | null)?.full_name?.trim() || "";
 
+  // RLS on profile_photos already requires BOTH an accepted match and an
+  // approved photo, so an empty result here means "not entitled, not
+  // approved, or never uploaded" — all of which render the same way.
+  const { data: partnerPhoto } = await supabase
+    .from("profile_photos")
+    .select("id, storage_path, status")
+    .eq("id", otherId)
+    .maybeSingle();
+
+  const partnerPhotoRow = partnerPhoto as Pick<
+    ProfilePhoto,
+    "id" | "storage_path" | "status"
+  > | null;
+  const partnerPhotoUrl =
+    partnerPhotoRow?.status === "approved"
+      ? await signedPhotoUrl(partnerPhotoRow.storage_path)
+      : null;
+
   const { data: sessions } = await supabase
     .from("study_sessions")
     .select("id, connect_request_id, proposed_by, scheduled_at, status, note")
@@ -89,6 +109,20 @@ export default async function MatchDetailPage({
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-12">
+      <div className="flex items-start gap-4">
+        {partnerPhotoUrl ? (
+          /* Signed Supabase URLs are short-lived and host-specific, so
+             they don't fit next/image's remotePatterns model. */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={partnerPhotoUrl}
+            alt=""
+            className="h-24 w-24 shrink-0 rounded-2xl object-cover"
+          />
+        ) : (
+          <PhotoPlaceholder className="h-24 w-24 shrink-0" />
+        )}
+
       <div className="flex flex-col gap-2">
         <h1 className="font-serif text-3xl font-medium">{otherName}</h1>
         {otherFullName && otherFullName !== otherName && (
@@ -108,6 +142,7 @@ export default async function MatchDetailPage({
             redirectAfter="/requests"
           />
         </div>
+      </div>
       </div>
 
       {hasConfirmedSession && (

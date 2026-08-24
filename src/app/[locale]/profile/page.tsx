@@ -3,6 +3,8 @@ import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
 import PhoneVerification from "@/components/PhoneVerification";
+import PhotoUpload from "@/components/PhotoUpload";
+import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
 
@@ -37,6 +39,22 @@ export default async function ProfilePage({
     .eq("id", user!.id)
     .maybeSingle();
 
+  const { data: photo } = await supabase
+    .from("profile_photos")
+    .select(
+      "id, storage_path, status, moderation_verdict, moderation_detail, uploaded_at, reviewed_by, reviewed_at, review_note",
+    )
+    .eq("id", user!.id)
+    .maybeSingle();
+
+  const photoRow = photo as ProfilePhoto | null;
+  // Rejected photos have had their file deleted, so there is nothing left
+  // to show — only the outcome and the reviewer's note.
+  const photoUrl =
+    photoRow && photoRow.status !== "rejected"
+      ? await signedPhotoUrl(photoRow.storage_path)
+      : null;
+
   const { data: nameRow } = await supabase
     .from("profile_names")
     .select("full_name")
@@ -50,6 +68,11 @@ export default async function ProfilePage({
         initialVerified={
           (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
         }
+      />
+      <PhotoUpload
+        initialStatus={photoRow?.status ?? null}
+        initialUrl={photoUrl}
+        initialNote={photoRow?.review_note ?? ""}
       />
       <ProfileForm
         initialProfile={profile as Profile | null}
