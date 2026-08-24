@@ -5,11 +5,16 @@ import {
   topicLabels,
   preferenceMessageKey,
   levelMessageKey,
+  frequencyMessageKey,
+  timeOfDayMessageKey,
+  type Frequency,
+  type TimeOfDay,
   type Profile,
   type LanguageCode,
   type Preference,
 } from "@/lib/profile-options";
 import { formatLocation } from "@/lib/locations";
+import { visibleAgeRange } from "@/lib/browse-filters";
 import type { ConnectStatus } from "@/lib/connect";
 import ConnectButton from "@/components/ConnectButton";
 import ReportButton from "@/components/ReportButton";
@@ -67,11 +72,44 @@ export default function BrowseCard({
           {tProfile(preferenceMessageKey[profile.preference as Preference])}
         </span>
         {profile.level && <span>{tProfile(levelMessageKey[profile.level])}</span>}
-        {profile.age_range && <span>{profile.age_range}</span>}
+        {visibleAgeRange(profile) && <span>{visibleAgeRange(profile)}</span>}
+        {profile.frequency && (
+          <span>
+            {tProfile(frequencyMessageKey[profile.frequency as Frequency])}
+          </span>
+        )}
+        {profile.time_of_day && (
+          <span>
+            {tProfile(timeOfDayMessageKey[profile.time_of_day as TimeOfDay])}
+          </span>
+        )}
+        {profile.session_length && (
+          <span>
+            {tProfile("sessionLengthValue", {
+              minutes: Number(profile.session_length),
+            })}
+          </span>
+        )}
       </div>
+
+      {profile.study_languages?.length > 0 && (
+        <p className="text-xs text-muted">
+          {tProfile("studyLanguagesShort", {
+            languages: profile.study_languages
+              .map((l) => tLanguages(l))
+              .join(", "),
+          })}
+        </p>
+      )}
 
       {profile.availability && (
         <p className="text-xs text-muted">{profile.availability}</p>
+      )}
+
+      {profile.blurb && (
+        <p className="rounded-xl bg-background/60 p-3 text-sm italic">
+          {profile.blurb}
+        </p>
       )}
 
       <ConnectButton

@@ -71,7 +71,7 @@
   "Profile": {
     "title": "Mi perfil",
     "editTitle": "Editar perfil",
-    "languagesSpoken": "Idiomas que hablas",
+    "languagesSpoken": "Idioma en el que quieres conversar",
     "topicsOfInterest": "Temas de interés",
     "learningLevel": "Nivel de aprendizaje",
     "levelBeginner": "Principiante",
@@ -108,7 +108,28 @@
     "displayNamePromptTitle": "Revisa tu nombre visible",
     "displayNamePromptBody": "Tu nombre visible se acortó automáticamente a partir del nombre que habías puesto, así que puede que no quede como quieres. Edítalo aquí abajo y guarda: tu nombre completo se guarda aparte y sigue siendo privado.",
     "ageRange": "Rango de edad",
-    "ageRangeUnset": "Prefiero no decirlo"
+    "ageRangeUnset": "Prefiero no decirlo",
+    "studyLanguages": "Idioma del texto",
+    "studyLanguagesHint": "El idioma en el que quieres estudiar el texto, que puede no ser el idioma en el que prefieres hablar.",
+    "studyLanguagesShort": "Texto: {languages}",
+    "frequency": "Con qué frecuencia",
+    "freqOnceWeek": "Una vez por semana",
+    "freqTwiceWeek": "Dos días por semana",
+    "freqThreeWeek": "Tres días por semana",
+    "freqDaily": "A diario",
+    "timeOfDay": "Momento del día",
+    "todMorning": "Mañana",
+    "todAfternoon": "Tarde",
+    "todEvening": "Noche",
+    "todFlexible": "Flexible",
+    "sessionLength": "Duración de la sesión",
+    "sessionLengthValue": "{minutes} min",
+    "noPreference": "Sin preferencia",
+    "blurb": "Qué estás buscando",
+    "blurbPlaceholder": "p. ej. Busco estudiar un daf por semana con alguien paciente; vuelvo a la Guemará después de una pausa larga.",
+    "blurbHint": "Se muestra en tu perfil y se incluye en la búsqueda por palabras clave.",
+    "showOnProfile": "Mostrar en mi perfil",
+    "ageRangeVisibilityHint": "Se muestra como rango, nunca como edad exacta. Si lo desactivas, se oculta de tu perfil y de los filtros de edad."
   },
   "Topics": {
     "chumash": "Jumash",
@@ -132,7 +153,9 @@
     "en": "Inglés",
     "he": "Hebreo",
     "fr": "Francés",
-    "es": "Español"
+    "es": "Español",
+    "original": "Hebreo / arameo (original)",
+    "yi": "Yidis"
   },
   "Location": {
     "sectionTitle": "Ubicación",
@@ -191,7 +214,16 @@
     "notVisibleBody": "Puedes explorar libremente, pero tu perfil permanece oculto hasta que verifiques tu número de teléfono. Verificar ayuda a mantener segura a la comunidad.",
     "verifyNow": "Verificar mi teléfono",
     "anonymousLearner": "Alguien de la zona",
-    "filterAge": "Edad"
+    "filterAge": "Edad",
+    "filterStudyLanguage": "Idioma del texto",
+    "filterFrequency": "Frecuencia",
+    "filterTimeOfDay": "Momento",
+    "filterSessionLength": "Duración",
+    "filterNear": "Cerca de mí",
+    "withinKm": "A menos de {km} km",
+    "nearNeedsCity": "Indica tu ciudad en tu perfil para buscar por distancia.",
+    "filterKeyword": "Palabra clave",
+    "filterKeywordPlaceholder": "Busca lo que otros están buscando"
   },
   "Requests": {
     "title": "Solicitudes de conexión",
@@ -315,7 +347,8 @@
     "markHandled": "Marcar como atendido",
     "markUnhandled": "Reabrir",
     "handledBadge": "Atendido",
-    "viewSenderProfile": "Ver perfil del remitente"
+    "viewSenderProfile": "Ver perfil del remitente",
+    "hiddenByUser": "oculto por el usuario"
   },
   "Phone": {
     "title": "Verificar teléfono",

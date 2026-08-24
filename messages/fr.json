@@ -71,7 +71,7 @@
   "Profile": {
     "title": "Mon profil",
     "editTitle": "Modifier le profil",
-    "languagesSpoken": "Langues parlées",
+    "languagesSpoken": "Langue dans laquelle vous souhaitez échanger",
     "topicsOfInterest": "Sujets d'intérêt",
     "learningLevel": "Niveau d'étude",
     "levelBeginner": "Débutant",
@@ -108,7 +108,28 @@
     "displayNamePromptTitle": "Vérifiez votre nom affiché",
     "displayNamePromptBody": "Votre nom affiché a été raccourci automatiquement à partir du nom que vous aviez saisi ; il ne vous convient peut-être pas. Modifiez-le ci-dessous et enregistrez — votre nom complet est conservé séparément et reste privé.",
     "ageRange": "Tranche d'âge",
-    "ageRangeUnset": "Je préfère ne pas le dire"
+    "ageRangeUnset": "Je préfère ne pas le dire",
+    "studyLanguages": "Langue du texte",
+    "studyLanguagesHint": "La langue dans laquelle vous voulez étudier le texte — qui n'est pas forcément celle dans laquelle vous préférez parler.",
+    "studyLanguagesShort": "Texte : {languages}",
+    "frequency": "Fréquence",
+    "freqOnceWeek": "Une fois par semaine",
+    "freqTwiceWeek": "Deux jours par semaine",
+    "freqThreeWeek": "Trois jours par semaine",
+    "freqDaily": "Tous les jours",
+    "timeOfDay": "Moment de la journée",
+    "todMorning": "Matin",
+    "todAfternoon": "Après-midi",
+    "todEvening": "Soir",
+    "todFlexible": "Flexible",
+    "sessionLength": "Durée des séances",
+    "sessionLengthValue": "{minutes} min",
+    "noPreference": "Peu importe",
+    "blurb": "Ce que vous recherchez",
+    "blurbPlaceholder": "ex. Je cherche à étudier un daf par semaine avec quelqu'un de patient — je reviens à la Guemara après une longue pause.",
+    "blurbHint": "Affiché sur votre profil et pris en compte dans la recherche par mots-clés.",
+    "showOnProfile": "Afficher sur mon profil",
+    "ageRangeVisibilityHint": "Affiché sous forme de tranche, jamais d'âge exact. Désactivé, il disparaît de votre profil et des filtres par âge."
   },
   "Topics": {
     "chumash": "Houmach",
@@ -132,7 +153,9 @@
     "en": "Anglais",
     "he": "Hébreu",
     "fr": "Français",
-    "es": "Espagnol"
+    "es": "Espagnol",
+    "original": "Hébreu / araméen (original)",
+    "yi": "Yiddish"
   },
   "Location": {
     "sectionTitle": "Localisation",
@@ -191,7 +214,16 @@
     "notVisibleBody": "Vous pouvez parcourir librement, mais votre profil reste masqué tant que votre numéro n'est pas vérifié. La vérification protège la communauté.",
     "verifyNow": "Vérifier mon téléphone",
     "anonymousLearner": "Un apprenant à proximité",
-    "filterAge": "Âge"
+    "filterAge": "Âge",
+    "filterStudyLanguage": "Langue du texte",
+    "filterFrequency": "Fréquence",
+    "filterTimeOfDay": "Moment",
+    "filterSessionLength": "Durée",
+    "filterNear": "Près de moi",
+    "withinKm": "Moins de {km} km",
+    "nearNeedsCity": "Indiquez votre ville sur votre profil pour effectuer une recherche par distance.",
+    "filterKeyword": "Mot-clé",
+    "filterKeywordPlaceholder": "Rechercher ce que les gens recherchent"
   },
   "Requests": {
     "title": "Demandes de connexion",
@@ -315,7 +347,8 @@
     "markHandled": "Marquer comme traité",
     "markUnhandled": "Rouvrir",
     "handledBadge": "Traité",
-    "viewSenderProfile": "Voir le profil de l'expéditeur"
+    "viewSenderProfile": "Voir le profil de l'expéditeur",
+    "hiddenByUser": "masqué par l'utilisateur"
   },
   "Phone": {
     "title": "Vérifier le téléphone",

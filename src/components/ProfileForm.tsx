@@ -11,6 +11,13 @@ import {
   PREFERENCES,
   OTHER_TOPIC,
   AGE_RANGES,
+  STUDY_LANGUAGE_CODES,
+  FREQUENCIES,
+  TIMES_OF_DAY,
+  SESSION_LENGTHS,
+  frequencyMessageKey,
+  timeOfDayMessageKey,
+  type StudyLanguageCode,
   levelMessageKey,
   preferenceMessageKey,
   type Profile,
@@ -76,6 +83,20 @@ export default function ProfileForm({
     initialProfile?.availability ?? "",
   );
   const [ageRange, setAgeRange] = useState(initialProfile?.age_range ?? "");
+  const [studyLanguages, setStudyLanguages] = useState<StudyLanguageCode[]>(
+    initialProfile?.study_languages ?? [],
+  );
+  const [frequency, setFrequency] = useState(initialProfile?.frequency ?? "");
+  const [timeOfDay, setTimeOfDay] = useState(initialProfile?.time_of_day ?? "");
+  const [sessionLength, setSessionLength] = useState(
+    initialProfile?.session_length ?? "",
+  );
+  const [blurb, setBlurb] = useState(initialProfile?.blurb ?? "");
+  // Sensitive fields default to visible — the point is to let people opt
+  // out, not to make them opt in to being findable.
+  const [hiddenFields, setHiddenFields] = useState<string[]>(
+    initialProfile?.hidden_fields ?? [],
+  );
   const [whatsapp, setWhatsapp] = useState(initialContacts?.whatsapp ?? "");
   const [contactPhone, setContactPhone] = useState(
     initialContacts?.contact_phone ?? "",
@@ -130,6 +151,12 @@ export default function ProfileForm({
       preference,
       availability,
       age_range: ageRange,
+      study_languages: studyLanguages,
+      frequency,
+      time_of_day: timeOfDay,
+      session_length: sessionLength,
+      blurb: blurb.trim(),
+      hidden_fields: hiddenFields,
       // Saving the form is the person confirming their public name,
       // whether they edited the derived one or left it as it stands.
       display_name_set: true,
@@ -298,6 +325,108 @@ export default function ProfileForm({
             </option>
           ))}
         </select>
+        {ageRange && (
+          <span className="flex items-center gap-2 text-xs text-muted">
+            <input
+              type="checkbox"
+              checked={!hiddenFields.includes("age_range")}
+              onChange={() =>
+                setHiddenFields((prev) =>
+                  prev.includes("age_range")
+                    ? prev.filter((f) => f !== "age_range")
+                    : [...prev, "age_range"],
+                )
+              }
+              className="accent-primary"
+            />
+            {t("showOnProfile")}
+          </span>
+        )}
+        <span className="text-xs text-muted">{t("ageRangeVisibilityHint")}</span>
+      </label>
+
+      <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+        <legend className="px-1 text-sm font-medium">
+          {t("studyLanguages")}
+        </legend>
+        <p className="-mt-2 text-xs text-muted">{t("studyLanguagesHint")}</p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {STUDY_LANGUAGE_CODES.map((code) => (
+            <label key={code} className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={studyLanguages.includes(code)}
+                onChange={() => setStudyLanguages((prev) => toggle(prev, code))}
+                className="accent-primary"
+              />
+              {tLanguages(code)}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <label className="flex flex-col gap-1.5 text-sm">
+          {t("frequency")}
+          <select
+            value={frequency}
+            onChange={(e) => setFrequency(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">{t("noPreference")}</option>
+            {FREQUENCIES.map((f) => (
+              <option key={f} value={f}>
+                {t(frequencyMessageKey[f])}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1.5 text-sm">
+          {t("timeOfDay")}
+          <select
+            value={timeOfDay}
+            onChange={(e) => setTimeOfDay(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">{t("noPreference")}</option>
+            {TIMES_OF_DAY.map((tod) => (
+              <option key={tod} value={tod}>
+                {t(timeOfDayMessageKey[tod])}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1.5 text-sm">
+          {t("sessionLength")}
+          <select
+            value={sessionLength}
+            onChange={(e) => setSessionLength(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">{t("noPreference")}</option>
+            {SESSION_LENGTHS.map((len) => (
+              <option key={len} value={len}>
+                {t("sessionLengthValue", { minutes: Number(len) })}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <label className="flex flex-col gap-1.5 text-sm">
+        {t("blurb")}{" "}
+        <span className="text-xs text-muted">{tLocation("optionalMark")}</span>
+        <textarea
+          value={blurb}
+          maxLength={400}
+          rows={3}
+          placeholder={t("blurbPlaceholder")}
+          onChange={(e) => setBlurb(e.target.value)}
+          className={inputClass}
+        />
+        <span className="text-xs text-muted">{t("blurbHint")}</span>
       </label>
 
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">

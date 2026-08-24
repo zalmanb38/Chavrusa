@@ -1,0 +1,145 @@
+// One definition of "who matches these filters", used once per request.
+//
+// The list and the map are two renderings of a single filtered array, so
+// they cannot disagree by construction — there is no second query to keep
+// in step. This module exists so that stays true as filters are added:
+// anything new goes in here, not into one view.
+//
+// Filtering happens in two passes because it has to. Most of it is a
+// database query. Proximity isn't: city coordinates are static data in
+// the app, not columns in Postgres, so distance is computed here over the
+// rows the query returned. Both passes run before either view renders.
+
+import { CITY_COORDS, coordKey, type LatLng } from "@/lib/city-coords";
+import { isHidden, type Profile } from "@/lib/profile-options";
+
+export interface BrowseFilters {
+  language?: string;
+  studyLanguage?: string;
+  topic?: string;
+  country?: string;
+  region?: string;
+  city?: string;
+  near?: string;
+  age?: string;
+  frequency?: string;
+  timeOfDay?: string;
+  sessionLength?: string;
+  q?: string;
+  preference?: string;
+  view?: string;
+}
+
+/** Distances offered for "near me", in kilometres. */
+export const PROXIMITY_RADII = ["25", "50", "100", "250", "500"] as const;
+
+export const PROFILE_COLUMNS =
+  "id, name, languages, study_languages, topics, topic_other, level, city, " +
+  "country, region, neighborhood, meeting_spot, preference, availability, " +
+  "age_range, frequency, time_of_day, session_length, blurb, hidden_fields, " +
+  "is_active";
+
+/**
+ * The chainable subset of the Supabase query builder this module uses.
+ * Declared structurally so the accumulation below stays type-checked
+ * without importing the builder's full generic signature.
+ */
+interface FilterableQuery<Self> {
+  eq(column: string, value: unknown): Self;
+  in(column: string, values: unknown[]): Self;
+  ilike(column: string, pattern: string): Self;
+  contains(column: string, value: unknown): Self;
+  not(column: string, operator: string, value: unknown): Self;
+}
+
+/**
+ * Everything Postgres can answer. Only phone-verified, active, unblocked
+ * profiles are discoverable — see the safety note in the Browse page.
+ */
+export function applyQueryFilters<T extends FilterableQuery<T>>(
+  query: T,
+  filters: BrowseFilters,
+): T {
+  let q = query;
+
+  if (filters.language) q = q.contains("languages", [filters.language]);
+  if (filters.studyLanguage) {
+    q = q.contains("study_languages", [filters.studyLanguage]);
+  }
+  if (filters.topic) q = q.contains("topics", [filters.topic]);
+
+  // Country and region come from fixed lists so they match exactly. City
+  // can also be free text where the curated list didn't cover someone, so
+  // it stays a partial match.
+  if (filters.country) q = q.eq("country", filters.country);
+  if (filters.region) q = q.eq("region", filters.region);
+  if (filters.city) q = q.ilike("city", `%${filters.city}%`);
+
+  // A hidden field must not be filterable: matching on a value someone
+  // chose to hide would answer the very question the toggle refused.
+  if (filters.age) {
+    q = q.eq("age_range", filters.age).not("hidden_fields", "cs", "{age_range}");
+  }
+
+  if (filters.frequency) q = q.eq("frequency", filters.frequency);
+  if (filters.timeOfDay) q = q.eq("time_of_day", filters.timeOfDay);
+  if (filters.sessionLength) q = q.eq("session_length", filters.sessionLength);
+  if (filters.q) q = q.ilike("blurb", `%${filters.q}%`);
+
+  if (filters.preference === "remote" || filters.preference === "in_person") {
+    q = q.in("preference", [filters.preference, "both"]);
+  }
+
+  return q;
+}
+
+/** Great-circle distance in kilometres. */
+export function distanceKm(a: LatLng, b: LatLng): number {
+  const R = 6371;
+  const toRad = (x: number) => (x * Math.PI) / 180;
+  const dLat = toRad(b[0] - a[0]);
+  const dLng = toRad(b[1] - a[1]);
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(a[0])) * Math.cos(toRad(b[0])) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+export function coordsOf(profile: {
+  country?: string | null;
+  region?: string | null;
+  city?: string | null;
+}): LatLng | null {
+  if (!profile.country || !profile.city) return null;
+  return (
+    CITY_COORDS[
+      coordKey(profile.country, profile.region ?? "", profile.city)
+    ] ?? null
+  );
+}
+
+/**
+ * The pass the database can't do: distance from the viewer's own city.
+ *
+ * Someone whose city we have no coordinates for is dropped from a
+ * proximity search rather than kept — "near me" that silently includes
+ * unplaceable people isn't answering the question either.
+ */
+export function applyLocalFilters(
+  profiles: Profile[],
+  filters: BrowseFilters,
+  viewerCoords: LatLng | null,
+): Profile[] {
+  const radius = filters.near ? Number(filters.near) : 0;
+  if (!radius || !viewerCoords) return profiles;
+
+  return profiles.filter((profile) => {
+    const coords = coordsOf(profile);
+    return coords !== null && distanceKm(viewerCoords, coords) <= radius;
+  });
+}
+
+/** Age is shown only when its owner hasn't hidden it. */
+export function visibleAgeRange(profile: Profile): string {
+  return isHidden(profile, "age_range") ? "" : profile.age_range;
+}

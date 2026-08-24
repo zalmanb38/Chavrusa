@@ -71,7 +71,7 @@
   "Profile": {
     "title": "My Profile",
     "editTitle": "Edit Profile",
-    "languagesSpoken": "Languages spoken",
+    "languagesSpoken": "Language you'd like to talk in",
     "topicsOfInterest": "Topics of interest",
     "learningLevel": "Learning level",
     "levelBeginner": "Beginner",
@@ -108,7 +108,28 @@
     "displayNamePromptTitle": "Check your display name",
     "displayNamePromptBody": "Your display name was shortened automatically from the name you'd entered, so it may not read the way you'd like. Edit it below and save — your full name is kept separately and stays private.",
     "ageRange": "Age range",
-    "ageRangeUnset": "Prefer not to say"
+    "ageRangeUnset": "Prefer not to say",
+    "studyLanguages": "Language of the text",
+    "studyLanguagesHint": "The language you want to learn the text in — which may not be the language you'd rather talk in.",
+    "studyLanguagesShort": "Text: {languages}",
+    "frequency": "How often",
+    "freqOnceWeek": "Once a week",
+    "freqTwiceWeek": "Two days a week",
+    "freqThreeWeek": "Three days a week",
+    "freqDaily": "Daily",
+    "timeOfDay": "Time of day",
+    "todMorning": "Morning",
+    "todAfternoon": "Afternoon",
+    "todEvening": "Evening",
+    "todFlexible": "Flexible",
+    "sessionLength": "Session length",
+    "sessionLengthValue": "{minutes} min",
+    "noPreference": "No preference",
+    "blurb": "What you're looking for",
+    "blurbPlaceholder": "e.g. Looking to learn a daf a week with someone patient — I'm coming back to Gemara after a long break.",
+    "blurbHint": "Shown on your profile, and searched when someone types keywords into Browse.",
+    "showOnProfile": "Show on my profile",
+    "ageRangeVisibilityHint": "Shown as a range, never an exact age. Turn it off and it's hidden from your profile and from age filters."
   },
   "Topics": {
     "chumash": "Chumash",
@@ -132,7 +153,9 @@
     "en": "English",
     "he": "Hebrew",
     "fr": "French",
-    "es": "Spanish"
+    "es": "Spanish",
+    "original": "Hebrew / Aramaic (original)",
+    "yi": "Yiddish"
   },
   "Location": {
     "sectionTitle": "Location",
@@ -191,7 +214,16 @@
     "notVisibleBody": "You can browse freely, but your profile stays hidden until you verify your phone number. Verifying keeps the community safe.",
     "verifyNow": "Verify my phone",
     "anonymousLearner": "A learner nearby",
-    "filterAge": "Age"
+    "filterAge": "Age",
+    "filterStudyLanguage": "Text language",
+    "filterFrequency": "How often",
+    "filterTimeOfDay": "Time of day",
+    "filterSessionLength": "Length",
+    "filterNear": "Near me",
+    "withinKm": "Within {km} km",
+    "nearNeedsCity": "Set your own city on your profile to search by distance.",
+    "filterKeyword": "Keyword",
+    "filterKeywordPlaceholder": "Search what people are looking for"
   },
   "Requests": {
     "title": "Connect Requests",
@@ -315,7 +347,8 @@
     "markHandled": "Mark handled",
     "markUnhandled": "Reopen",
     "handledBadge": "Handled",
-    "viewSenderProfile": "View sender profile"
+    "viewSenderProfile": "View sender profile",
+    "hiddenByUser": "hidden by user"
   },
   "Phone": {
     "title": "Verify phone",

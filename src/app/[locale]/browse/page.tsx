@@ -3,12 +3,26 @@ import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   LANGUAGE_CODES,
+  STUDY_LANGUAGE_CODES,
   TOPIC_KEYS,
   PREFERENCES,
   AGE_RANGES,
+  FREQUENCIES,
+  TIMES_OF_DAY,
+  SESSION_LENGTHS,
   preferenceMessageKey,
+  frequencyMessageKey,
+  timeOfDayMessageKey,
   type Profile,
 } from "@/lib/profile-options";
+import {
+  PROFILE_COLUMNS,
+  PROXIMITY_RADII,
+  applyLocalFilters,
+  applyQueryFilters,
+  coordsOf,
+  type BrowseFilters,
+} from "@/lib/browse-filters";
 import LocationFilter from "@/components/LocationFilter";
 import BrowseCard from "@/components/BrowseCard";
 import BrowseMapView from "@/components/BrowseMapView";
@@ -21,23 +35,13 @@ import {
 const selectClass =
   "rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
 
-type SearchParams = {
-  language?: string;
-  topic?: string;
-  country?: string;
-  region?: string;
-  city?: string;
-  preference?: string;
-  age?: string;
-  view?: string;
-};
 
 export default async function BrowsePage({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<BrowseFilters>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -70,7 +74,7 @@ export default async function BrowsePage({
     supabase.from("blocks").select("blocked_id").eq("blocker_id", user!.id),
     supabase
       .from("profiles")
-      .select("phone_verified")
+      .select("phone_verified, country, region, city")
       .eq("id", user!.id)
       .maybeSingle(),
   ]);
@@ -81,6 +85,10 @@ export default async function BrowsePage({
   // ever arrive.
   const viewerVerified = viewer?.phone_verified ?? false;
 
+  // "Near me" is measured from the viewer's own city. Without one there's
+  // no origin to measure from, so the option is offered but explained.
+  const viewerCoords = viewer ? coordsOf(viewer) : null;
+
   // Only phone-verified people are discoverable, per the safety spec:
   // a verified number is what makes a bad actor costly to replace after
   // being blocked or suspended. phone_verified can only be set by the
@@ -88,9 +96,7 @@ export default async function BrowsePage({
   // a user's own write to it — so this can't be self-granted.
   let query = supabase
     .from("profiles")
-    .select(
-      "id, name, languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, is_active",
-    )
+    .select(PROFILE_COLUMNS)
     .neq("id", user!.id)
     .eq("is_active", true)
     .eq("phone_verified", true)
@@ -100,36 +106,21 @@ export default async function BrowsePage({
     query = query.not("id", "in", `(${blockedIds.join(",")})`);
   }
 
-  if (filters.language) {
-    query = query.contains("languages", [filters.language]);
-  }
-  if (filters.topic) {
-    query = query.contains("topics", [filters.topic]);
-  }
-  // Country and region are picked from fixed lists, so they match
-  // exactly. City can also be free text where the curated list didn't
-  // cover someone, so it stays a partial match.
-  if (filters.country) {
-    query = query.eq("country", filters.country);
-  }
-  if (filters.region) {
-    query = query.eq("region", filters.region);
-  }
-  if (filters.city) {
-    query = query.ilike("city", `%${filters.city}%`);
-  }
-  // Age range is optional, so filtering on it necessarily excludes anyone
-  // who left it blank — there's no honest way to guess where they belong.
-  if (filters.age) {
-    query = query.eq("age_range", filters.age);
-  }
-  if (filters.preference === "remote" || filters.preference === "in_person") {
-    query = query.in("preference", [filters.preference, "both"]);
-  }
+  // Every filter lives in one module so the list and the map cannot drift
+  // apart — they render the same array, filtered once.
+  query = applyQueryFilters(query, filters);
 
-  const { data: profiles } = await query.order("created_at", {
+  const { data: rows } = await query.order("created_at", {
     ascending: false,
   });
+
+  // PROFILE_COLUMNS is a runtime constant, so PostgREST can't infer the
+  // row shape from it the way it does for a literal select string.
+  const profiles = applyLocalFilters(
+    (rows ?? []) as unknown as Profile[],
+    filters,
+    viewerCoords,
+  );
 
   const { data: connectRequests } = await supabase
     .from("connect_requests")
@@ -225,6 +216,22 @@ export default async function BrowsePage({
         />
 
         <label className="flex flex-col gap-1 text-sm">
+          {t("filterStudyLanguage")}
+          <select
+            name="studyLanguage"
+            defaultValue={filters.studyLanguage ?? ""}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {STUDY_LANGUAGE_CODES.map((code) => (
+              <option key={code} value={code}>
+                {tLanguages(code)}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
           {t("filterAge")}
           <select
             name="age"
@@ -256,6 +263,88 @@ export default async function BrowsePage({
           </select>
         </label>
 
+        <label className="flex flex-col gap-1 text-sm">
+          {t("filterFrequency")}
+          <select
+            name="frequency"
+            defaultValue={filters.frequency ?? ""}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {FREQUENCIES.map((f) => (
+              <option key={f} value={f}>
+                {tProfile(frequencyMessageKey[f])}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("filterTimeOfDay")}
+          <select
+            name="timeOfDay"
+            defaultValue={filters.timeOfDay ?? ""}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {TIMES_OF_DAY.map((tod) => (
+              <option key={tod} value={tod}>
+                {tProfile(timeOfDayMessageKey[tod])}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("filterSessionLength")}
+          <select
+            name="sessionLength"
+            defaultValue={filters.sessionLength ?? ""}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {SESSION_LENGTHS.map((len) => (
+              <option key={len} value={len}>
+                {tProfile("sessionLengthValue", { minutes: Number(len) })}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          {t("filterNear")}
+          <select
+            name="near"
+            defaultValue={filters.near ?? ""}
+            disabled={!viewerCoords}
+            className={selectClass}
+          >
+            <option value="">{t("all")}</option>
+            {PROXIMITY_RADII.map((km) => (
+              <option key={km} value={km}>
+                {t("withinKm", { km: Number(km) })}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
+          {t("filterKeyword")}
+          <input
+            type="search"
+            name="q"
+            defaultValue={filters.q ?? ""}
+            placeholder={t("filterKeywordPlaceholder")}
+            className={selectClass}
+          />
+        </label>
+
+        {!viewerCoords && (
+          <p className="col-span-2 text-xs text-muted sm:col-span-4">
+            {t("nearNeedsCity")}
+          </p>
+        )}
+
         {mapView && <input type="hidden" name="view" value="map" />}
 
         <button
@@ -266,17 +355,17 @@ export default async function BrowsePage({
         </button>
       </form>
 
-      {!profiles || profiles.length === 0 ? (
+      {profiles.length === 0 ? (
         <p className="text-sm text-muted">{t("noResults")}</p>
       ) : mapView ? (
         <BrowseMapView
-          profiles={profiles as Profile[]}
+          profiles={profiles}
           currentUserId={user!.id}
           connectStatuses={connectStatuses}
         />
       ) : (
         <ul className="flex flex-col gap-4">
-          {(profiles as Profile[]).map((profile) => (
+          {profiles.map((profile) => (
             <BrowseCard
               key={profile.id}
               profile={profile}

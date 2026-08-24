@@ -55,6 +55,63 @@ export function isAgeRange(value: string): value is AgeRange {
   return (AGE_RANGES as readonly string[]).includes(value);
 }
 
+/**
+ * The language of the text itself, as distinct from the language two
+ * people talk in. "original" means Hebrew/Aramaic as printed — someone
+ * may want to learn Gemara in the original while discussing it in
+ * English, which is why these are two separate fields.
+ */
+export const STUDY_LANGUAGE_CODES = [
+  "original", "en", "he", "yi", "fr", "es",
+] as const;
+export type StudyLanguageCode = (typeof STUDY_LANGUAGE_CODES)[number];
+
+export const FREQUENCIES = [
+  "once_week", "twice_week", "three_week", "daily",
+] as const;
+export type Frequency = (typeof FREQUENCIES)[number];
+
+export const TIMES_OF_DAY = [
+  "morning", "afternoon", "evening", "flexible",
+] as const;
+export type TimeOfDay = (typeof TIMES_OF_DAY)[number];
+
+/** Minutes, stored as strings so "" can mean "no preference". */
+export const SESSION_LENGTHS = ["30", "45", "60", "90", "120"] as const;
+export type SessionLength = (typeof SESSION_LENGTHS)[number];
+
+export const frequencyMessageKey: Record<Frequency, string> = {
+  once_week: "freqOnceWeek",
+  twice_week: "freqTwiceWeek",
+  three_week: "freqThreeWeek",
+  daily: "freqDaily",
+};
+
+export const timeOfDayMessageKey: Record<TimeOfDay, string> = {
+  morning: "todMorning",
+  afternoon: "todAfternoon",
+  evening: "todEvening",
+  flexible: "todFlexible",
+};
+
+/**
+ * Fields a person may hide from their public profile. Hiding one removes
+ * it from display AND from the matching filters — a filter that still
+ * matched a hidden value would answer the question the toggle refused.
+ *
+ * Full name is not here on purpose: it's governed by the match-reveal
+ * rule, which is a safety property rather than a preference.
+ */
+export const HIDEABLE_FIELDS = ["age_range"] as const;
+export type HideableField = (typeof HIDEABLE_FIELDS)[number];
+
+export function isHidden(
+  profile: { hidden_fields?: string[] | null },
+  field: HideableField,
+): boolean {
+  return (profile.hidden_fields ?? []).includes(field);
+}
+
 export interface Profile {
   id: string;
   /**
@@ -76,6 +133,15 @@ export interface Profile {
   availability: string;
   /** "" when the person would rather not say. */
   age_range: string;
+  /** The language of the text; `languages` is the language they talk in. */
+  study_languages: StudyLanguageCode[];
+  frequency: string;
+  time_of_day: string;
+  session_length: string;
+  /** Free text: what they're hoping to find in a partner. */
+  blurb: string;
+  /** Field names this person has chosen to keep off their public profile. */
+  hidden_fields: string[];
   /** False while the public name is still the one derived at migration. */
   display_name_set: boolean;
   is_active: boolean;

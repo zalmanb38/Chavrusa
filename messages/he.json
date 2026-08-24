@@ -71,7 +71,7 @@
   "Profile": {
     "title": "הפרופיל שלי",
     "editTitle": "עריכת פרופיל",
-    "languagesSpoken": "שפות מדוברות",
+    "languagesSpoken": "השפה שבה תרצו לשוחח",
     "topicsOfInterest": "נושאי עניין",
     "learningLevel": "רמת לימוד",
     "levelBeginner": "מתחיל/ה",
@@ -108,7 +108,28 @@
     "displayNamePromptTitle": "בדקו את שם התצוגה שלכם",
     "displayNamePromptBody": "שם התצוגה שלכם קוצר אוטומטית מהשם שהזנתם, וייתכן שאינו נראה כפי שהייתם רוצים. ערכו אותו כאן ושמרו — השם המלא נשמר בנפרד ונשאר פרטי.",
     "ageRange": "טווח גילים",
-    "ageRangeUnset": "מעדיף/ה לא לציין"
+    "ageRangeUnset": "מעדיף/ה לא לציין",
+    "studyLanguages": "שפת הטקסט",
+    "studyLanguagesHint": "השפה שבה תרצו ללמוד את הטקסט — ייתכן שאינה השפה שבה תעדיפו לשוחח.",
+    "studyLanguagesShort": "טקסט: {languages}",
+    "frequency": "תדירות",
+    "freqOnceWeek": "פעם בשבוע",
+    "freqTwiceWeek": "יומיים בשבוע",
+    "freqThreeWeek": "שלושה ימים בשבוע",
+    "freqDaily": "כל יום",
+    "timeOfDay": "שעות ביום",
+    "todMorning": "בוקר",
+    "todAfternoon": "צהריים",
+    "todEvening": "ערב",
+    "todFlexible": "גמיש",
+    "sessionLength": "אורך המפגש",
+    "sessionLengthValue": "{minutes} דק׳",
+    "noPreference": "אין העדפה",
+    "blurb": "מה אתם מחפשים",
+    "blurbPlaceholder": "לדוגמה: מחפש ללמוד דף בשבוע עם חברותא סבלנית — חוזר לגמרא אחרי הפסקה ארוכה.",
+    "blurbHint": "מוצג בפרופיל שלכם, ונכלל בחיפוש מילות מפתח בעמוד העיון.",
+    "showOnProfile": "להציג בפרופיל שלי",
+    "ageRangeVisibilityHint": "מוצג כטווח, לעולם לא כגיל מדויק. בכיבוי, מוסתר מהפרופיל ומסינון לפי גיל."
   },
   "Topics": {
     "chumash": "חומש",
@@ -132,7 +153,9 @@
     "en": "אנגלית",
     "he": "עברית",
     "fr": "צרפתית",
-    "es": "ספרדית"
+    "es": "ספרדית",
+    "original": "עברית / ארמית (במקור)",
+    "yi": "יידיש"
   },
   "Location": {
     "sectionTitle": "מיקום",
@@ -191,7 +214,16 @@
     "notVisibleBody": "אפשר לעיין בחופשיות, אבל הפרופיל שלך מוסתר עד לאימות מספר הטלפון. האימות עוזר לשמור על קהילה בטוחה.",
     "verifyNow": "אימות הטלפון שלי",
     "anonymousLearner": "לומד/ת באזור",
-    "filterAge": "גיל"
+    "filterAge": "גיל",
+    "filterStudyLanguage": "שפת הטקסט",
+    "filterFrequency": "תדירות",
+    "filterTimeOfDay": "שעות",
+    "filterSessionLength": "אורך",
+    "filterNear": "בקרבתי",
+    "withinKm": "עד {km} ק״מ",
+    "nearNeedsCity": "הגדירו עיר בפרופיל שלכם כדי לחפש לפי מרחק.",
+    "filterKeyword": "מילת מפתח",
+    "filterKeywordPlaceholder": "חיפוש במה שאנשים מחפשים"
   },
   "Requests": {
     "title": "בקשות התחברות",
@@ -315,7 +347,8 @@
     "markHandled": "סימון כטופל",
     "markUnhandled": "פתיחה מחדש",
     "handledBadge": "טופל",
-    "viewSenderProfile": "צפייה בפרופיל השולח"
+    "viewSenderProfile": "צפייה בפרופיל השולח",
+    "hiddenByUser": "הוסתר על ידי המשתמש"
   },
   "Phone": {
     "title": "אימות טלפון",

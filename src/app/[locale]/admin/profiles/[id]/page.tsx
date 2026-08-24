@@ -22,6 +22,8 @@ interface FullProfile {
   topic_other: string;
   level: Level | null;
   age_range: string;
+  hidden_fields: string[];
+  blurb: string;
   city: string;
   country: string;
   region: string;
@@ -70,7 +72,7 @@ export default async function AdminProfileDetailPage({
     supabase
       .from("profiles")
       .select(
-        "id, name, languages, topics, topic_other, level, age_range, city, country, region, neighborhood, meeting_spot, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
+        "id, name, languages, study_languages, topics, topic_other, level, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, city, country, region, neighborhood, meeting_spot, preference, availability, phone, phone_verified, is_active, suspended, is_admin, created_at",
       )
       .eq("id", id)
       .maybeSingle(),
@@ -192,7 +194,12 @@ export default async function AdminProfileDetailPage({
         </div>
         <div>
           <p className="text-xs text-muted">{tProfile("ageRange")}</p>
-          <p>{p.age_range || "—"}</p>
+          <p>
+            {p.age_range || "—"}
+            {p.age_range && (p.hidden_fields ?? []).includes("age_range") && (
+              <span className="text-muted"> · {t("hiddenByUser")}</span>
+            )}
+          </p>
         </div>
         <div>
           <p className="text-xs text-muted">{tProfile("learningLevel")}</p>
@@ -219,6 +226,10 @@ export default async function AdminProfileDetailPage({
         <div className="col-span-2 sm:col-span-3">
           <p className="text-xs text-muted">{tProfile("availability")}</p>
           <p>{p.availability || "—"}</p>
+        </div>
+        <div className="col-span-2 sm:col-span-3">
+          <p className="text-xs text-muted">{tProfile("blurb")}</p>
+          <p>{p.blurb || "—"}</p>
         </div>
       </section>
 
