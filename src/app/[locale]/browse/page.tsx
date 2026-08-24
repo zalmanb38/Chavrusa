@@ -319,7 +319,6 @@ export default async function BrowsePage({
               }))}
               initialSelected={selectedAges}
               emptyLabel={t("all")}
-              countLabel={(count) => t("nSelected", { count })}
             />
 
             <label className="flex flex-col gap-1 text-sm">

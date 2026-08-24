@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export interface MultiSelectOption {
   value: string;
@@ -20,16 +21,18 @@ export default function MultiSelectFilter({
   options,
   initialSelected,
   emptyLabel,
-  countLabel,
 }: {
   name: string;
   label: string;
   options: MultiSelectOption[];
   initialSelected: string[];
   emptyLabel: string;
-  /** Rendered with the number once more than two are picked. */
-  countLabel: (count: number) => string;
 }) {
+  // The "3 selected" summary is translated here rather than passed in as
+  // a formatter. Only serializable values cross the server/client
+  // boundary, and handing a Server Component's `t` to a Client Component
+  // throws at render — it can't go in the RSC payload.
+  const t = useTranslations("Browse");
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>(initialSelected);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +65,7 @@ export default function MultiSelectFilter({
             .filter((o) => selected.includes(o.value))
             .map((o) => o.label)
             .join(", ")
-        : countLabel(selected.length);
+        : t("nSelected", { count: selected.length });
 
   return (
     <div ref={containerRef} className="relative flex flex-col gap-1 text-sm">

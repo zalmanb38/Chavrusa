@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check:rsc": "node scripts/check-server-props.mjs",
+    "verify": "tsc --noEmit && npm run lint && npm run check:rsc && npm run build"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",
