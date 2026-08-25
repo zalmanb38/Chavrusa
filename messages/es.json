@@ -1,4 +1,28 @@
 {
+  "Home": {
+    "heroTitle": "Encuentra con quién estudiar.",
+    "heroLead": "Cuéntanos qué estudias, cuándo tienes tiempo y cómo prefieres aprender: en persona, por teléfono o por videollamada. Te emparejamos con un javruta que encaje, y a partir de ahí seguís vosotros.",
+    "heroReassurance": "Explorar está abierto a todos. Solo te registras cuando quieres escribir a alguien.",
+    "heroImageDirection": "Guemará abierta sobre un shtender",
+    "getStarted": "Empezar",
+    "browseChavrusas": "Explorar javrutas",
+    "howTitle": "Cómo funciona el emparejamiento",
+    "howLabel": "Cuatro pasos, unos diez minutos",
+    "step1Title": "Di qué estudias",
+    "step1Body": "Masejet, sefer o seder, y el nivel al que estudias: desde tu primera Guemará hasta un blatt diario.",
+    "step2Title": "Marca tus horarios",
+    "step2Body": "Señala los huecos que de verdad te sirven: primera hora de la mañana, entre minjá y maariv, el jueves por la noche, Shabbos por la tarde.",
+    "step3Title": "Mira quién encaja",
+    "step3Body": "Ordenamos a las personas por coincidencia de tema, nivel, disponibilidad y forma de estudiar. Consulta la lista o el mapa.",
+    "step4Title": "Escribe y empieza",
+    "step4Body": "Envía una nota breve a través del sitio. Cuando ambos aceptáis, recibís vuestros datos y fijáis el primer seder.",
+    "subjectsTitle": "Qué se estudia aquí",
+    "seeAllSubjects": "Ver todos los temas",
+    "ctaTitle": "¿Listo para empezar?",
+    "ctaBody": "Crea un perfil en unos diez minutos y descubre quién cerca de ti busca el mismo seder.",
+    "ctaEmailLabel": "Correo electrónico",
+    "ctaEmailPlaceholder": "tu@ejemplo.com"
+  },
   "Common": {
     "appName": "Chavrusa Link",
     "loading": "Cargando…",
@@ -21,20 +45,6 @@
     "logout": "Cerrar sesión",
     "requests": "Solicitudes",
     "admin": "Admin"
-  },
-  "Landing": {
-    "title": "Encuentra tu próximo chavrusa",
-    "subtitle": "Una forma sencilla y acogedora de conectar con otros estudiantes de Torá — a distancia o en persona.",
-    "ctaSignup": "Comenzar",
-    "ctaBrowse": "Explorar estudiantes",
-    "howItWorksTitle": "Cómo funciona",
-    "step1Title": "Crea un perfil",
-    "step1Body": "Comparte lo que te gustaría estudiar, tus idiomas y tu disponibilidad.",
-    "step2Title": "Explora y conecta",
-    "step2Body": "Encuentra estudiantes que coincidan con tus intereses y envía una solicitud de conexión.",
-    "step3Title": "Programa y estudia",
-    "step3Body": "Una vez conectados, acuerden un horario y comiencen a estudiar juntos.",
-    "freeNotice": "Unirse a Chavrusa Link es gratis. Las donaciones opcionales ayudan a mantener el servicio."
   },
   "Auth": {
     "loginTitle": "Bienvenido de nuevo",

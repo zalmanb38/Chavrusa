@@ -1,4 +1,28 @@
 {
+  "Home": {
+    "heroTitle": "Trouvez avec qui étudier.",
+    "heroLead": "Dites-nous ce que vous étudiez, quand vous êtes disponible et comment vous aimez apprendre — en personne, par téléphone ou en visio. Nous vous mettons en relation avec un 'havrouta qui vous correspond, et vous prenez le relais.",
+    "heroReassurance": "La consultation est ouverte à tous. Vous ne créez un compte que pour écrire à quelqu'un.",
+    "heroImageDirection": "Guemara ouverte sur un shtender",
+    "getStarted": "Commencer",
+    "browseChavrusas": "Parcourir les 'havrousos",
+    "howTitle": "Comment fonctionne la mise en relation",
+    "howLabel": "Quatre étapes, environ dix minutes",
+    "step1Title": "Dites ce que vous étudiez",
+    "step1Body": "Massekhet, sefer ou seder, et le niveau auquel vous étudiez — de la toute première Guemara au blatt quotidien.",
+    "step2Title": "Indiquez vos horaires",
+    "step2Body": "Marquez les créneaux qui marchent vraiment — tôt le matin, entre min'ha et maariv, le jeudi soir, Shabbos après-midi.",
+    "step3Title": "Voyez qui vous correspond",
+    "step3Body": "Nous classons les apprenants selon le recoupement de sujet, de niveau, de disponibilité et de mode d'étude. Parcourez la liste ou la carte.",
+    "step4Title": "Écrivez et commencez",
+    "step4Body": "Envoyez un court message via le site. Dès que vous êtes tous deux d'accord, vous recevez vos coordonnées respectives et fixez votre premier seder.",
+    "subjectsTitle": "Ce que l'on étudie ici",
+    "seeAllSubjects": "Voir tous les sujets",
+    "ctaTitle": "Prêt à commencer ?",
+    "ctaBody": "Créez un profil en une dizaine de minutes et voyez qui, près de chez vous, cherche le même seder.",
+    "ctaEmailLabel": "Adresse e-mail",
+    "ctaEmailPlaceholder": "vous@exemple.com"
+  },
   "Common": {
     "appName": "Chavrusa Link",
     "loading": "Chargement…",
@@ -21,20 +45,6 @@
     "logout": "Déconnexion",
     "requests": "Demandes",
     "admin": "Admin"
-  },
-  "Landing": {
-    "title": "Trouvez votre prochain chavrusa",
-    "subtitle": "Un moyen simple et accueillant de vous connecter avec d'autres étudiants pour l'étude de la Torah — à distance ou en personne.",
-    "ctaSignup": "Commencer",
-    "ctaBrowse": "Parcourir les étudiants",
-    "howItWorksTitle": "Comment ça marche",
-    "step1Title": "Créez un profil",
-    "step1Body": "Partagez ce que vous souhaitez étudier, vos langues et vos disponibilités.",
-    "step2Title": "Parcourez et connectez-vous",
-    "step2Body": "Trouvez des étudiants qui correspondent à vos centres d'intérêt et envoyez une demande de connexion.",
-    "step3Title": "Planifiez et étudiez",
-    "step3Body": "Une fois mis en relation, convenez d'un horaire et commencez à étudier ensemble.",
-    "freeNotice": "L'inscription à Chavrusa Link est gratuite. Les dons facultatifs aident à faire fonctionner le service."
   },
   "Auth": {
     "loginTitle": "Content de vous revoir",

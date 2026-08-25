@@ -105,6 +105,29 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
 
+  /* The ramps, exposed as utilities. Without this, border-neutral-400 and
+     friends fall through to Tailwind's own grey ramp rather than the warm
+     one this design specifies — silently, and only visible to the eye. */
+  --color-neutral-100: var(--color-neutral-100);
+  --color-neutral-200: var(--color-neutral-200);
+  --color-neutral-300: var(--color-neutral-300);
+  --color-neutral-400: var(--color-neutral-400);
+  --color-neutral-500: var(--color-neutral-500);
+  --color-neutral-600: var(--color-neutral-600);
+  --color-neutral-700: var(--color-neutral-700);
+  --color-neutral-800: var(--color-neutral-800);
+  --color-neutral-900: var(--color-neutral-900);
+
+  --color-slate-100: var(--color-accent-100);
+  --color-slate-200: var(--color-accent-200);
+  --color-slate-300: var(--color-accent-300);
+  --color-slate-400: var(--color-accent-400);
+  --color-slate-500: var(--color-accent-500);
+  --color-slate-600: var(--color-accent-600);
+  --color-slate-700: var(--color-accent-700);
+  --color-slate-800: var(--color-accent-800);
+  --color-slate-900: var(--color-accent-900);
+
   --color-clay: var(--color-accent-2);
   --color-clay-tint: var(--color-accent-2-100);
   --color-clay-text: var(--color-accent-2-800);
@@ -157,4 +180,19 @@ a {
 [disabled],
 :disabled {
   opacity: 0.45;
+}
+
+/* Newsprint dot screen for photography, per the design system. Applied by
+   ImageSlot once a real image exists; harmless on an empty slot. */
+.halftone {
+  filter: grayscale(0.35) contrast(1.08);
+}
+
+@supports (mask-image: radial-gradient(#000 0.5px, transparent 0.5px)) {
+  .halftone {
+    -webkit-mask-image: radial-gradient(#000 0.62px, transparent 0.66px);
+    mask-image: radial-gradient(#000 0.62px, transparent 0.66px);
+    -webkit-mask-size: 3px 3px;
+    mask-size: 3px 3px;
+  }
 }

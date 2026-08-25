@@ -1,4 +1,28 @@
 {
+  "Home": {
+    "heroTitle": "Find someone to learn with.",
+    "heroLead": "Tell us what you learn, when you are free and how you like to learn — in person, by phone or over video. We match you with a chavrusa who fits, and you take it from there.",
+    "heroReassurance": "Browsing is open to everyone. You only sign up when you want to reach out.",
+    "heroImageDirection": "Open Gemara on a shtender",
+    "getStarted": "Get started",
+    "browseChavrusas": "Browse chavrusas",
+    "howTitle": "How the matching works",
+    "howLabel": "Four steps, about ten minutes",
+    "step1Title": "Say what you learn",
+    "step1Body": "Masechta, sefer or seder, and the level you are learning at — from first-time Gemara to a daily blatt.",
+    "step2Title": "Set your times",
+    "step2Body": "Mark the windows that actually work — early morning, between mincha and maariv, Thursday night, Shabbos afternoon.",
+    "step3Title": "See who fits",
+    "step3Body": "We rank learners by overlap in subject, level, availability and how you want to learn. Browse the list or the map.",
+    "step4Title": "Reach out and begin",
+    "step4Body": "Send a short note through the site. Once you both agree, you get each other's details and set your first seder.",
+    "subjectsTitle": "What people are learning",
+    "seeAllSubjects": "See all subjects",
+    "ctaTitle": "Ready to start learning?",
+    "ctaBody": "Set up a profile in about ten minutes and see who near you is looking for the same seder.",
+    "ctaEmailLabel": "Email address",
+    "ctaEmailPlaceholder": "you@example.com"
+  },
   "Common": {
     "appName": "Chavrusa Link",
     "loading": "Loading…",
@@ -21,20 +45,6 @@
     "logout": "Log Out",
     "requests": "Requests",
     "admin": "Admin"
-  },
-  "Landing": {
-    "title": "Find your next chavrusa",
-    "subtitle": "A simple, welcoming way to connect with fellow learners for Torah study — remote or in person.",
-    "ctaSignup": "Get Started",
-    "ctaBrowse": "Browse Learners",
-    "howItWorksTitle": "How it works",
-    "step1Title": "Create a profile",
-    "step1Body": "Share what you'd like to learn, your languages, and your availability.",
-    "step2Title": "Browse & connect",
-    "step2Body": "Find learners who match your interests and send a connect request.",
-    "step3Title": "Schedule & learn",
-    "step3Body": "Once matched, agree on a time and start learning together.",
-    "freeNotice": "Chavrusa Link is free to join. Optional donations help keep it running."
   },
   "Auth": {
     "loginTitle": "Welcome back",
