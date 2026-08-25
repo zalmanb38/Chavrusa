@@ -6,6 +6,7 @@ import SessionCard from "@/components/SessionCard";
 import ProposeSessionForm from "@/components/ProposeSessionForm";
 import ReportButton from "@/components/ReportButton";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import UnmatchButton from "@/components/UnmatchButton";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import BlockButton from "@/components/BlockButton";
 import type { StudySession } from "@/lib/sessions";
@@ -142,6 +143,11 @@ export default async function MatchDetailPage({
             redirectAfter="/requests"
           />
         </div>
+        <UnmatchButton
+          requestId={id}
+          partnerName={otherName}
+          redirectAfter="/requests"
+        />
       </div>
       </div>
 

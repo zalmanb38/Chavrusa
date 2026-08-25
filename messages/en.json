@@ -369,7 +369,18 @@
     "photoReject": "Reject",
     "photoNotePlaceholder": "Optional note to the person (shown if rejected)",
     "photoActionFailed": "That didn't go through. Please try again.",
-    "photosQueryFailed": "Couldn't load the photo queue. The error is in the server logs — this is not the same as the queue being empty."
+    "photosQueryFailed": "Couldn't load the photo queue. The error is in the server logs — this is not the same as the queue being empty.",
+    "matchesTitle": "Matches",
+    "matchesIntro": "Ending a match here does the same thing as either person ending it themselves.",
+    "activeMatches": "Active matches",
+    "noActiveMatches": "No active matches.",
+    "matchesQueryFailed": "Couldn't load matches. The error is in the server logs — this is not the same as there being none.",
+    "matchedSince": "Matched",
+    "recentUnmatches": "Recently ended",
+    "unmatchLogIntro": "Kept so that repeated matching and unmatching — which would otherwise reveal a name and photo each time, leaving no trace — is visible.",
+    "noUnmatches": "Nothing ended yet.",
+    "endedByAdmin": "ended by an admin",
+    "endedByParticipant": "ended by {name}"
   },
   "Phone": {
     "title": "Verify phone",
@@ -467,5 +478,16 @@
     "errorPersists": "If this keeps happening,",
     "contactUs": "let us know",
     "referenceCode": "Reference"
+  },
+  "Match": {
+    "unmatch": "End this match",
+    "unmatchAdmin": "End this match",
+    "unmatchConfirm": "End your match with {name}?",
+    "unmatchAdminConfirm": "End this match on both users' behalf?",
+    "unmatchConsequences": "Any scheduled sessions are removed, and each of you goes back to seeing only what you saw before matching — no full name, no photo. Either of you can send a new request later.",
+    "unmatchYes": "Yes, end it",
+    "unmatchCancel": "Keep the match",
+    "unmatching": "Ending…",
+    "unmatchFailed": "Couldn't end the match. Please try again."
   }
 }

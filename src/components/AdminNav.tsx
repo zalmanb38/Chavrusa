@@ -7,6 +7,7 @@ const TABS = [
   { href: "/admin", key: "dashboardTitle" },
   { href: "/admin/reports", key: "reportsTitle" },
   { href: "/admin/photos", key: "photosTitle" },
+  { href: "/admin/matches", key: "matchesTitle" },
   { href: "/admin/messages", key: "messagesTitle" },
   { href: "/admin/users", key: "usersTitle" },
   { href: "/admin/blocks", key: "blocksTitle" },

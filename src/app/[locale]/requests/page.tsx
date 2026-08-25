@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import RespondButtons from "@/components/RespondButtons";
 import UnblockButton from "@/components/UnblockButton";
 import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButton";
+import UnmatchButton from "@/components/UnmatchButton";
 import ProfileDetails, {
   ProfileLocation,
   type ProfileDetailFields,
@@ -220,12 +221,18 @@ export default async function RequestsPage({
                       <p className="text-sm text-muted">{other.city}</p>
                     )}
                   </div>
-                  <Link
-                    href={`/matches/${row.id}`}
-                    className="rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
-                  >
-                    {t("matched")}
-                  </Link>
+                  <div className="flex flex-col items-end gap-2">
+                    <Link
+                      href={`/matches/${row.id}`}
+                      className="rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
+                    >
+                      {t("matched")}
+                    </Link>
+                    <UnmatchButton
+                      requestId={row.id}
+                      partnerName={other.name}
+                    />
+                  </div>
                 </li>
               );
             })}

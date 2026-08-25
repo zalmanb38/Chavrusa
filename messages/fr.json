@@ -369,7 +369,18 @@
     "photoReject": "Refuser",
     "photoNotePlaceholder": "Remarque facultative (affichée en cas de refus)",
     "photoActionFailed": "L'action n'a pas abouti. Veuillez réessayer.",
-    "photosQueryFailed": "Impossible de charger la file des photos. L'erreur figure dans les journaux du serveur — ce n'est pas la même chose qu'une file vide."
+    "photosQueryFailed": "Impossible de charger la file des photos. L'erreur figure dans les journaux du serveur — ce n'est pas la même chose qu'une file vide.",
+    "matchesTitle": "Mises en relation",
+    "matchesIntro": "Y mettre fin ici revient exactement à ce que l'un des deux le fasse lui-même.",
+    "activeMatches": "Mises en relation actives",
+    "noActiveMatches": "Aucune mise en relation active.",
+    "matchesQueryFailed": "Impossible de charger les mises en relation. L'erreur figure dans les journaux du serveur — ce n'est pas la même chose qu'une absence de résultats.",
+    "matchedSince": "Mis en relation le",
+    "recentUnmatches": "Terminées récemment",
+    "unmatchLogIntro": "Conservé pour rendre visible un cycle répété de mise en relation et de rupture, qui révélerait chaque fois un nom et une photo sans laisser de trace.",
+    "noUnmatches": "Aucune n'a encore pris fin.",
+    "endedByAdmin": "terminée par un administrateur",
+    "endedByParticipant": "terminée par {name}"
   },
   "Phone": {
     "title": "Vérifier le téléphone",
@@ -467,5 +478,16 @@
     "errorPersists": "Si cela se reproduit,",
     "contactUs": "dites-le nous",
     "referenceCode": "Référence"
+  },
+  "Match": {
+    "unmatch": "Mettre fin à cette mise en relation",
+    "unmatchAdmin": "Mettre fin à cette mise en relation",
+    "unmatchConfirm": "Mettre fin à votre mise en relation avec {name} ?",
+    "unmatchAdminConfirm": "Mettre fin à cette mise en relation pour les deux utilisateurs ?",
+    "unmatchConsequences": "Les séances programmées seront supprimées, et chacun de vous ne verra plus que ce qu'il voyait avant la mise en relation — ni nom complet, ni photo. L'un comme l'autre pourra envoyer une nouvelle demande plus tard.",
+    "unmatchYes": "Oui, y mettre fin",
+    "unmatchCancel": "Conserver la mise en relation",
+    "unmatching": "En cours…",
+    "unmatchFailed": "Impossible de mettre fin à la mise en relation. Veuillez réessayer."
   }
 }

@@ -369,7 +369,18 @@
     "photoReject": "Rechazar",
     "photoNotePlaceholder": "Nota opcional para la persona (se muestra si se rechaza)",
     "photoActionFailed": "La acción no se completó. Inténtalo de nuevo.",
-    "photosQueryFailed": "No se pudo cargar la cola de fotos. El error está en los registros del servidor; no es lo mismo que una cola vacía."
+    "photosQueryFailed": "No se pudo cargar la cola de fotos. El error está en los registros del servidor; no es lo mismo que una cola vacía.",
+    "matchesTitle": "Matches",
+    "matchesIntro": "Terminarlo aquí hace exactamente lo mismo que si lo terminara cualquiera de los dos.",
+    "activeMatches": "Matches activos",
+    "noActiveMatches": "No hay matches activos.",
+    "matchesQueryFailed": "No se pudieron cargar los matches. El error está en los registros del servidor; no es lo mismo que no haya ninguno.",
+    "matchedSince": "Match desde",
+    "recentUnmatches": "Terminados recientemente",
+    "unmatchLogIntro": "Se conserva para que un ciclo repetido de hacer y deshacer match — que revelaría un nombre y una foto cada vez sin dejar rastro — sea visible.",
+    "noUnmatches": "Todavía no ha terminado ninguno.",
+    "endedByAdmin": "terminado por un administrador",
+    "endedByParticipant": "terminado por {name}"
   },
   "Phone": {
     "title": "Verificar teléfono",
@@ -467,5 +478,16 @@
     "errorPersists": "Si sigue ocurriendo,",
     "contactUs": "avísanos",
     "referenceCode": "Referencia"
+  },
+  "Match": {
+    "unmatch": "Terminar este match",
+    "unmatchAdmin": "Terminar este match",
+    "unmatchConfirm": "¿Terminar tu match con {name}?",
+    "unmatchAdminConfirm": "¿Terminar este match en nombre de ambos usuarios?",
+    "unmatchConsequences": "Se eliminarán las sesiones programadas y cada uno volverá a ver solo lo que veía antes del match: sin nombre completo ni foto. Cualquiera de los dos podrá enviar una nueva solicitud más adelante.",
+    "unmatchYes": "Sí, terminar",
+    "unmatchCancel": "Mantener el match",
+    "unmatching": "Terminando…",
+    "unmatchFailed": "No se pudo terminar el match. Inténtalo de nuevo."
   }
 }
