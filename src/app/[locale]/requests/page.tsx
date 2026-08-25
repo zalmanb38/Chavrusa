@@ -5,6 +5,7 @@ import RespondButtons from "@/components/RespondButtons";
 import UnblockButton from "@/components/UnblockButton";
 import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButton";
 import UnmatchButton from "@/components/UnmatchButton";
+import { MESSAGE_COLUMNS, unreadCount, type Message } from "@/lib/messages";
 import ProfileDetails, {
   ProfileLocation,
   type ProfileDetailFields,
@@ -126,6 +127,25 @@ export default async function RequestsPage({
     (row) => row.blocked,
   );
 
+  // Unread counts per match. One query for every thread rather than one
+  // per row: a handful of matches shouldn't cost a handful of round trips.
+  const matchIds = matchedRows.map((row) => row.id);
+  const { data: threadMessages } = matchIds.length
+    ? await supabase
+        .from("messages")
+        .select(MESSAGE_COLUMNS)
+        .in("connect_request_id", matchIds)
+        .is("read_at", null)
+    : { data: [] };
+
+  const unreadByMatch = new Map<string, number>();
+  for (const row of matchedRows) {
+    const forThread = ((threadMessages ?? []) as unknown as Message[]).filter(
+      (m) => m.connect_request_id === row.id,
+    );
+    unreadByMatch.set(row.id, unreadCount(forThread, userId));
+  }
+
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-12">
       <h1 className="font-serif text-3xl font-medium">{t("title")}</h1>
@@ -232,6 +252,13 @@ export default async function RequestsPage({
                     >
                       {t("viewProfile")}
                     </Link>
+                    {(unreadByMatch.get(row.id) ?? 0) > 0 && (
+                      <span className="bg-brass-tint px-2 py-0.5 text-[12px] text-brass-deep">
+                        {t("unreadCount", {
+                          count: unreadByMatch.get(row.id) ?? 0,
+                        })}
+                      </span>
+                    )}
                     <UnmatchButton
                       requestId={row.id}
                       partnerName={other.name}

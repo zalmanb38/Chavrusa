@@ -46,7 +46,8 @@
     "requests": "Requests",
     "admin": "Admin",
     "howItWorks": "How it works",
-    "about": "About"
+    "about": "About",
+    "unreadMessages": "{count, plural, =1 {# unread message} other {# unread messages}}"
   },
   "Auth": {
     "loginTitle": "Welcome back",
@@ -265,7 +266,8 @@
     "matched": "Matched",
     "adminResolved": "Resolved — dismissed by site administrator",
     "removeResolved": "Remove",
-    "viewProfile": "View profile"
+    "viewProfile": "View profile",
+    "unreadCount": "{count, plural, =1 {# new message} other {# new messages}}"
   },
   "Schedule": {
     "proposeTitle": "Propose a time",
@@ -514,5 +516,15 @@
   },
   "Notice": {
     "menOnly": "Chavrusa Link is currently for men only. If you're a woman looking for a study partner, please <link>reach out via our contact form</link> for more information."
+  },
+  "Messages": {
+    "title": "Messages",
+    "hint": "Only the two of you can read this. Phone and contact details stay hidden until you confirm a session together.",
+    "empty": "No messages yet. Say hello to {name} and suggest a time to learn.",
+    "composerLabel": "Write a message",
+    "composerPlaceholder": "Suggest a time, or say what you'd like to learn…",
+    "send": "Send",
+    "sending": "Sending…",
+    "sendFailed": "That message didn't send. If you're no longer matched, the conversation has ended."
   }
 }

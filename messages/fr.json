@@ -46,7 +46,8 @@
     "requests": "Demandes",
     "admin": "Admin",
     "howItWorks": "Comment ça marche",
-    "about": "À propos"
+    "about": "À propos",
+    "unreadMessages": "{count, plural, one {# message non lu} other {# messages non lus}}"
   },
   "Auth": {
     "loginTitle": "Content de vous revoir",
@@ -265,7 +266,8 @@
     "matched": "Mis en relation",
     "adminResolved": "Résolu — rejeté par l'administrateur du site",
     "removeResolved": "Supprimer",
-    "viewProfile": "Voir le profil"
+    "viewProfile": "Voir le profil",
+    "unreadCount": "{count, plural, one {# nouveau message} other {# nouveaux messages}}"
   },
   "Schedule": {
     "proposeTitle": "Proposer un horaire",
@@ -514,5 +516,15 @@
   },
   "Notice": {
     "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
+  },
+  "Messages": {
+    "title": "Messages",
+    "hint": "Vous seuls pouvez lire ceci. Les coordonnées restent masquées jusqu'à ce que vous confirmiez une séance ensemble.",
+    "empty": "Aucun message pour l'instant. Dites bonjour à {name} et proposez un moment pour étudier.",
+    "composerLabel": "Écrire un message",
+    "composerPlaceholder": "Proposez un horaire, ou dites ce que vous aimeriez étudier…",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "sendFailed": "Ce message n'est pas parti. Si vous n'êtes plus en relation, la conversation est terminée."
   }
 }

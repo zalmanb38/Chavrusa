@@ -69,6 +69,7 @@ export default async function LocaleLayout({
 
   let isAdmin = false;
   let suspended = false;
+  let unreadMessages = 0;
   if (user) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -77,6 +78,16 @@ export default async function LocaleLayout({
       .maybeSingle();
     isAdmin = profile?.is_admin ?? false;
     suspended = profile?.suspended ?? false;
+
+    // A head count, so the nav badge costs a count rather than the rows.
+    // RLS already limits this to threads on the reader's own accepted
+    // matches, so there is nothing further to scope it by here.
+    const { count } = await supabase
+      .from("messages")
+      .select("id", { count: "exact", head: true })
+      .neq("sender_id", user.id)
+      .is("read_at", null);
+    unreadMessages = count ?? 0;
   }
 
   const t = await getTranslations("Common");
@@ -89,7 +100,11 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <NextIntlClientProvider locale={locale as Locale}>
-          <NavBar signedIn={Boolean(user)} isAdmin={isAdmin} />
+          <NavBar
+            signedIn={Boolean(user)}
+            isAdmin={isAdmin}
+            unreadMessages={unreadMessages}
+          />
           <main className="flex-1">
             {suspended ? (
               <div className="mx-auto flex max-w-md flex-col gap-3 px-4 py-24 text-center">

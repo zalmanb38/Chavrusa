@@ -7,6 +7,8 @@ import ProposeSessionForm from "@/components/ProposeSessionForm";
 import ReportButton from "@/components/ReportButton";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import UnmatchButton from "@/components/UnmatchButton";
+import MessageThread from "@/components/MessageThread";
+import { MESSAGE_COLUMNS, type Message } from "@/lib/messages";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import BlockButton from "@/components/BlockButton";
 import type { StudySession } from "@/lib/sessions";
@@ -86,6 +88,14 @@ export default async function MatchDetailPage({
       ? await signedPhotoUrl(partnerPhotoRow.storage_path)
       : null;
 
+  const { data: messages, error: messagesError } = await supabase
+    .from("messages")
+    .select(MESSAGE_COLUMNS)
+    .eq("connect_request_id", id)
+    .order("created_at", { ascending: true });
+
+  if (messagesError) console.error("Message thread query failed", messagesError);
+
   const { data: sessions } = await supabase
     .from("study_sessions")
     .select("id, connect_request_id, proposed_by, scheduled_at, status, note")
@@ -150,6 +160,13 @@ export default async function MatchDetailPage({
         />
       </div>
       </div>
+
+      <MessageThread
+        requestId={id}
+        initialMessages={(messages ?? []) as unknown as Message[]}
+        viewerId={userId}
+        partnerName={otherName}
+      />
 
       {hasConfirmedSession && (
         <section className="flex flex-col gap-2 rounded-2xl border border-accent/25 bg-accent/10 p-5">

@@ -9,9 +9,11 @@ import Logo from "./Logo";
 export default async function NavBar({
   signedIn,
   isAdmin,
+  unreadMessages,
 }: {
   signedIn: boolean;
   isAdmin: boolean;
+  unreadMessages: number;
 }) {
   const t = await getTranslations("Nav");
   const common = await getTranslations("Common");
@@ -36,8 +38,16 @@ export default async function NavBar({
 
           {signedIn ? (
             <>
-              <Link href="/requests" className={linkClass}>
+              <Link href="/requests" className={`${linkClass} flex items-center gap-2`}>
                 {t("requests")}
+                {unreadMessages > 0 && (
+                  <span
+                    className="bg-brass-tint px-1.5 text-[12px] text-brass-deep"
+                    aria-label={t("unreadMessages", { count: unreadMessages })}
+                  >
+                    {unreadMessages}
+                  </span>
+                )}
               </Link>
               <Link href="/profile" className={linkClass}>
                 {t("profile")}
