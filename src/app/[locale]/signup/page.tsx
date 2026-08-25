@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import ErrorNote from "@/components/ErrorNote";
+import MenOnlyNotice from "@/components/MenOnlyNotice";
 
 export default function SignupPage() {
   const t = useTranslations("Auth");
@@ -55,6 +56,8 @@ export default function SignupPage() {
   return (
     <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16 sm:py-24">
       <h1 className="font-serif text-3xl font-medium">{t("signupTitle")}</h1>
+
+      <MenOnlyNotice />
 
       <div className="flex flex-col gap-6 rounded-2xl border border-border bg-surface p-6 shadow-sm">
         <GoogleSignInButton />

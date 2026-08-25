@@ -511,5 +511,8 @@
   "Account": {
     "emailLabel": "E-mail du compte",
     "emailHint": "Vous seul le voyez. Le modifier revient à changer le compte de connexion, ce n'est donc pas fait ici."
+  },
+  "Notice": {
+    "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
   }
 }

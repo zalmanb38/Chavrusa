@@ -511,5 +511,8 @@
   "Account": {
     "emailLabel": "Correo de la cuenta",
     "emailHint": "Solo tú lo ves. Cambiarlo significa cambiar la cuenta con la que inicias sesión, así que no se edita aquí."
+  },
+  "Notice": {
+    "menOnly": "Chavrusa Link es por ahora solo para hombres. Si eres una mujer que busca compañero de estudio, <link>escríbenos a través del formulario de contacto</link> para más información."
   }
 }
