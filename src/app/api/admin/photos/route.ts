@@ -58,7 +58,11 @@ export async function POST(request: Request) {
     }
   }
 
-  const { error } = await admin
+  // .select() so the response says which row changed. An UPDATE matching
+  // nothing is not an error in PostgREST — it returns success with an
+  // empty result — so without this a review that quietly hit no rows
+  // would report success and leave the photo exactly where it was.
+  const { data: updated, error } = await admin
     .from("profile_photos")
     .update({
       status: action === "approve" ? "approved" : "rejected",
@@ -66,12 +70,18 @@ export async function POST(request: Request) {
       reviewed_at: new Date().toISOString(),
       review_note: note,
     })
-    .eq("id", photoId);
+    .eq("id", photoId)
+    .select("id, status");
 
   if (error) {
     console.error("Photo review failed", error);
     return NextResponse.json({ error: "update_failed" }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true });
+  if (!updated || updated.length === 0) {
+    console.error("Photo review matched no row", { photoId, action });
+    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ ok: true, status: updated[0].status });
 }

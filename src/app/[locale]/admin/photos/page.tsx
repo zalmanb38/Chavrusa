@@ -58,6 +58,26 @@ export default async function AdminPhotosPage({
 
   if (ownersError) console.error("Admin photo owner lookup failed", ownersError);
 
+  // Counts for every status, not just the one being viewed. An empty tab
+  // is ambiguous on its own — it can't distinguish "none rejected" from
+  // "the row didn't end up rejected" — and the totals settle that at a
+  // glance rather than needing a database query to find out.
+  const [pendingCount, approvedCount, rejectedCount] = await Promise.all(
+    (["pending", "approved", "rejected"] as const).map(async (s) => {
+      const { count } = await supabase
+        .from("profile_photos")
+        .select("id", { count: "exact", head: true })
+        .eq("status", s);
+      return count ?? 0;
+    }),
+  );
+
+  const countFor = {
+    pending: pendingCount,
+    approved: approvedCount,
+    rejected: rejectedCount,
+  } as const;
+
   const nameById = new Map(
     ((owners ?? []) as { id: string; name: string }[]).map((o) => [o.id, o.name]),
   );
@@ -93,7 +113,7 @@ export default async function AdminPhotosPage({
                 : "rounded-full border border-border px-4 py-1.5 text-sm"
             }
           >
-            {tPhoto(`status_${tab}`)}
+            {tPhoto(`status_${tab}`)} ({countFor[tab]})
           </Link>
         ))}
       </div>
