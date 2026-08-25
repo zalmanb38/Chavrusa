@@ -142,7 +142,16 @@
     "blurbPlaceholder": "p. ej. Busco estudiar un daf por semana con alguien paciente; vuelvo a la Guemará después de una pausa larga.",
     "blurbHint": "Se muestra en tu perfil y se incluye en la búsqueda por palabras clave.",
     "showOnProfile": "Mostrar en mi perfil",
-    "ageRangeVisibilityHint": "Se muestra como rango, nunca como edad exacta. Si lo desactivas, se oculta de tu perfil y de los filtros de edad."
+    "ageRangeVisibilityHint": "Se muestra como rango, nunca como edad exacta. Si lo desactivas, se oculta de tu perfil y de los filtros de edad.",
+    "topicsShort": "Temas",
+    "levelShort": "Nivel",
+    "formatShort": "Formato",
+    "ageShort": "Edad",
+    "speaksShort": "Habla",
+    "studiesInShort": "Estudia en",
+    "availableShort": "Disponible",
+    "aboutShort": "Nivel, formato y edad",
+    "languagesShort": "Idiomas"
   },
   "Topics": {
     "chumash": "Jumash",

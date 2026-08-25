@@ -142,7 +142,16 @@
     "blurbPlaceholder": "e.g. Looking to learn a daf a week with someone patient — I'm coming back to Gemara after a long break.",
     "blurbHint": "Shown on your profile, and searched when someone types keywords into Browse.",
     "showOnProfile": "Show on my profile",
-    "ageRangeVisibilityHint": "Shown as a range, never an exact age. Turn it off and it's hidden from your profile and from age filters."
+    "ageRangeVisibilityHint": "Shown as a range, never an exact age. Turn it off and it's hidden from your profile and from age filters.",
+    "topicsShort": "Topics",
+    "levelShort": "Level",
+    "formatShort": "Format",
+    "ageShort": "Age",
+    "speaksShort": "Speaks",
+    "studiesInShort": "Studies in",
+    "availableShort": "Available",
+    "aboutShort": "Level, format and age",
+    "languagesShort": "Languages"
   },
   "Topics": {
     "chumash": "Chumash",

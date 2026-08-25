@@ -142,7 +142,16 @@
     "blurbPlaceholder": "לדוגמה: מחפש ללמוד דף בשבוע עם חברותא סבלנית — חוזר לגמרא אחרי הפסקה ארוכה.",
     "blurbHint": "מוצג בפרופיל שלכם, ונכלל בחיפוש מילות מפתח בעמוד העיון.",
     "showOnProfile": "להציג בפרופיל שלי",
-    "ageRangeVisibilityHint": "מוצג כטווח, לעולם לא כגיל מדויק. בכיבוי, מוסתר מהפרופיל ומסינון לפי גיל."
+    "ageRangeVisibilityHint": "מוצג כטווח, לעולם לא כגיל מדויק. בכיבוי, מוסתר מהפרופיל ומסינון לפי גיל.",
+    "topicsShort": "נושאים",
+    "levelShort": "רמה",
+    "formatShort": "אופן",
+    "ageShort": "גיל",
+    "speaksShort": "מדבר",
+    "studiesInShort": "לומד ב",
+    "availableShort": "זמינות",
+    "aboutShort": "רמה, אופן וגיל",
+    "languagesShort": "שפות"
   },
   "Topics": {
     "chumash": "חומש",

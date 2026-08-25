@@ -34,16 +34,16 @@ export default function BrowseCard({
     // A hairline row, not a card: "no boxes for layout — sections are
     // separated by whitespace and, where a boundary is needed, a single
     // 1px rule." The hover tint is the row's own, per the design.
-    <li className="grid gap-9 border-t border-border py-7 transition-colors hover:bg-surface lg:grid-cols-[1fr_210px]">
+    <li className="grid gap-6 border-t border-border py-5 transition-colors hover:bg-surface lg:grid-cols-[1fr_200px]">
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h2 className="text-[26px] font-semibold">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          <h2 className="text-[22px] leading-tight font-semibold">
             {showName ? profile.name : t("anonymousLearner")}
           </h2>
           <ProfileLocation profile={profile} />
         </div>
 
-        <ProfileDetails profile={profile} />
+        <ProfileDetails profile={profile} compact />
       </div>
 
       {/* Right rail, opened by a hairline on the inline-start edge so it

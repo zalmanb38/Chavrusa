@@ -142,7 +142,16 @@
     "blurbPlaceholder": "ex. Je cherche à étudier un daf par semaine avec quelqu'un de patient — je reviens à la Guemara après une longue pause.",
     "blurbHint": "Affiché sur votre profil et pris en compte dans la recherche par mots-clés.",
     "showOnProfile": "Afficher sur mon profil",
-    "ageRangeVisibilityHint": "Affiché sous forme de tranche, jamais d'âge exact. Désactivé, il disparaît de votre profil et des filtres par âge."
+    "ageRangeVisibilityHint": "Affiché sous forme de tranche, jamais d'âge exact. Désactivé, il disparaît de votre profil et des filtres par âge.",
+    "topicsShort": "Sujets",
+    "levelShort": "Niveau",
+    "formatShort": "Format",
+    "ageShort": "Âge",
+    "speaksShort": "Parle",
+    "studiesInShort": "Étudie en",
+    "availableShort": "Disponible",
+    "aboutShort": "Niveau, format et âge",
+    "languagesShort": "Langues"
   },
   "Topics": {
     "chumash": "Houmach",
