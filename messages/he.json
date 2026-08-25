@@ -144,14 +144,14 @@
     "showOnProfile": "להציג בפרופיל שלי",
     "ageRangeVisibilityHint": "מוצג כטווח, לעולם לא כגיל מדויק. בכיבוי, מוסתר מהפרופיל ומסינון לפי גיל.",
     "topicsShort": "נושאים",
-    "levelShort": "רמה",
-    "formatShort": "אופן",
-    "ageShort": "גיל",
-    "speaksShort": "מדבר",
-    "studiesInShort": "לומד ב",
     "availableShort": "זמינות",
-    "aboutShort": "רמה, אופן וגיל",
-    "languagesShort": "שפות"
+    "aboutShort": "פרטים",
+    "languagesShort": "שפות",
+    "speaksValue": "מדבר {languages}",
+    "studiesInValue": "לומד ב{languages}",
+    "prefRemoteList": "מרחוק בלבד",
+    "prefInPersonList": "פנים אל פנים בלבד",
+    "prefBothList": "פנים אל פנים או מרחוק"
   },
   "Topics": {
     "chumash": "חומש",

@@ -80,6 +80,17 @@ export type TimeOfDay = (typeof TIMES_OF_DAY)[number];
 export const SESSION_LENGTHS = ["30", "45", "60", "90", "120"] as const;
 export type SessionLength = (typeof SESSION_LENGTHS)[number];
 
+/**
+ * Format as it reads in a list, where there is no field label beside it.
+ * "Both" is fine under a "Learning preference" heading and meaningless on
+ * its own line.
+ */
+export const preferenceListKey: Record<Preference, string> = {
+  remote: "prefRemoteList",
+  in_person: "prefInPersonList",
+  both: "prefBothList",
+};
+
 export const frequencyMessageKey: Record<Frequency, string> = {
   once_week: "freqOnceWeek",
   twice_week: "freqTwiceWeek",

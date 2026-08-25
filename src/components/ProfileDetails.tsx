@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import {
   topicLabels,
-  preferenceMessageKey,
+  preferenceListKey,
   levelMessageKey,
   frequencyMessageKey,
   timeOfDayMessageKey,
@@ -50,43 +50,36 @@ export function ProfileLocation({ profile }: { profile: ProfileDetailFields }) {
   return location ? <span className="text-sm text-muted">{location}</span> : null;
 }
 
-/** A label/value pair on its own line. */
+/**
+ * One labelled line.
+ *
+ * Every row here has a real, visible label. An earlier version hid the
+ * label on combined rows with `sr-only` — which is `position: absolute`,
+ * so those rows dropped out of the grid flow, landed in the narrow label
+ * column and rendered on top of each other. A grid row needs both its
+ * cells present.
+ */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <>
       <dt className="pt-px text-[11px] tracking-[0.14em] text-muted uppercase">
         {label}
       </dt>
-      <dd className="text-[15px]">{children}</dd>
+      <dd className="text-[15px] leading-snug">{children}</dd>
     </>
   );
 }
 
 /**
- * A label/value pair that sits inline with others on a shared line.
+ * Everything about a person that is safe to show before a match, in four
+ * labelled lines.
  *
- * Used where several facts are each a word or two: three rows holding
- * "Advanced", "Both" and "18-22" cost three lines to say almost nothing,
- * but dropping their labels to compress them would leave values like
- * "Both" with no way to tell what they answer.
- */
-function Pair({ label, value }: { label: string; value: string }) {
-  return (
-    <span className="flex items-baseline gap-1.5">
-      <span className="text-[11px] tracking-[0.14em] text-muted uppercase">
-        {label}
-      </span>
-      <span className="text-[15px]">{value}</span>
-    </span>
-  );
-}
-
-/**
- * Everything about a person that is safe to show before a match.
+ * Values are joined into one string per line rather than composed from
+ * nested flex boxes — a row of small pairs looks tidy until a long value
+ * wraps, and there is nothing here that a middot can't separate.
  *
  * `compact` is for lists, where the job is scanning many people rather
- * than reading one: tighter leading, and a blurb clipped to two lines
- * instead of running to its 400-character cap.
+ * than reading one.
  */
 export default function ProfileDetails({
   profile,
@@ -102,7 +95,31 @@ export default function ProfileDetails({
   const topics = topicLabels(profile.topics, profile.topic_other, tTopics);
   const age = visibleAgeRange(profile);
 
-  const rhythm = [
+  // Level, format and age — each a word or two, so one line between them.
+  // Format uses its own list wording: "Both" alone answers a question the
+  // reader can no longer see once the label is gone.
+  const about = [
+    profile.level && tProfile(levelMessageKey[profile.level]),
+    tProfile(preferenceListKey[profile.preference as Preference]),
+    age,
+  ].filter(Boolean) as string[];
+
+  const languages = [
+    profile.languages?.length > 0 &&
+      tProfile("speaksValue", {
+        languages: profile.languages
+          .map((l: LanguageCode) => tLanguages(l))
+          .join(" · "),
+      }),
+    profile.study_languages?.length > 0 &&
+      tProfile("studiesInValue", {
+        languages: profile.study_languages
+          .map((l) => tLanguages(l))
+          .join(" · "),
+      }),
+  ].filter(Boolean) as string[];
+
+  const available = [
     profile.frequency &&
       tProfile(frequencyMessageKey[profile.frequency as Frequency]),
     profile.time_of_day &&
@@ -111,74 +128,34 @@ export default function ProfileDetails({
       tProfile("sessionLengthValue", {
         minutes: Number(profile.session_length),
       }),
+    profile.availability?.trim(),
   ].filter(Boolean) as string[];
 
   return (
-    <div className={`flex flex-col ${compact ? "gap-2" : "gap-3"}`}>
+    <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-3"}`}>
       <dl
-        className={`grid gap-x-4 sm:grid-cols-[5.5rem_1fr] ${
-          compact ? "gap-y-1" : "gap-y-2"
+        className={`grid gap-x-4 sm:grid-cols-[5rem_1fr] ${
+          compact ? "gap-y-0.5" : "gap-y-1.5"
         }`}
       >
         {topics.length > 0 && (
           <Row label={tProfile("topicsShort")}>{topics.join(" · ")}</Row>
         )}
-
-        {/* Level, format and age: one line, each still labelled. */}
-        <dt className="sr-only">{tProfile("aboutShort")}</dt>
-        <dd className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-          {profile.level && (
-            <Pair
-              label={tProfile("levelShort")}
-              value={tProfile(levelMessageKey[profile.level])}
-            />
-          )}
-          <Pair
-            label={tProfile("formatShort")}
-            value={tProfile(preferenceMessageKey[profile.preference as Preference])}
-          />
-          {age && <Pair label={tProfile("ageShort")} value={age} />}
-        </dd>
-
-        {/* Both languages describe the same thing from two sides. */}
-        {(profile.languages?.length > 0 ||
-          profile.study_languages?.length > 0) && (
-          <>
-            <dt className="sr-only">{tProfile("languagesShort")}</dt>
-            <dd className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              {profile.languages?.length > 0 && (
-                <Pair
-                  label={tProfile("speaksShort")}
-                  value={profile.languages
-                    .map((l: LanguageCode) => tLanguages(l))
-                    .join(" · ")}
-                />
-              )}
-              {profile.study_languages?.length > 0 && (
-                <Pair
-                  label={tProfile("studiesInShort")}
-                  value={profile.study_languages
-                    .map((l) => tLanguages(l))
-                    .join(" · ")}
-                />
-              )}
-            </dd>
-          </>
+        {about.length > 0 && (
+          <Row label={tProfile("aboutShort")}>{about.join(" · ")}</Row>
         )}
-
-        {(rhythm.length > 0 || profile.availability) && (
-          <Row label={tProfile("availableShort")}>
-            {[rhythm.join(" · "), profile.availability]
-              .filter(Boolean)
-              .join(" — ")}
-          </Row>
+        {languages.length > 0 && (
+          <Row label={tProfile("languagesShort")}>{languages.join(" · ")}</Row>
+        )}
+        {available.length > 0 && (
+          <Row label={tProfile("availableShort")}>{available.join(" · ")}</Row>
         )}
       </dl>
 
       {profile.blurb && (
         <p
           className={`max-w-[46em] border-s-2 border-brass ps-3 text-[15px] italic ${
-            compact ? "line-clamp-2" : ""
+            compact ? "line-clamp-1" : ""
           }`}
         >
           {profile.blurb}

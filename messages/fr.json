@@ -144,14 +144,14 @@
     "showOnProfile": "Afficher sur mon profil",
     "ageRangeVisibilityHint": "Affiché sous forme de tranche, jamais d'âge exact. Désactivé, il disparaît de votre profil et des filtres par âge.",
     "topicsShort": "Sujets",
-    "levelShort": "Niveau",
-    "formatShort": "Format",
-    "ageShort": "Âge",
-    "speaksShort": "Parle",
-    "studiesInShort": "Étudie en",
     "availableShort": "Disponible",
-    "aboutShort": "Niveau, format et âge",
-    "languagesShort": "Langues"
+    "aboutShort": "Profil",
+    "languagesShort": "Langues",
+    "speaksValue": "Parle {languages}",
+    "studiesInValue": "Étudie en {languages}",
+    "prefRemoteList": "À distance uniquement",
+    "prefInPersonList": "En personne uniquement",
+    "prefBothList": "En personne ou à distance"
   },
   "Topics": {
     "chumash": "Houmach",

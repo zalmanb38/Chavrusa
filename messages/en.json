@@ -144,14 +144,14 @@
     "showOnProfile": "Show on my profile",
     "ageRangeVisibilityHint": "Shown as a range, never an exact age. Turn it off and it's hidden from your profile and from age filters.",
     "topicsShort": "Topics",
-    "levelShort": "Level",
-    "formatShort": "Format",
-    "ageShort": "Age",
-    "speaksShort": "Speaks",
-    "studiesInShort": "Studies in",
     "availableShort": "Available",
-    "aboutShort": "Level, format and age",
-    "languagesShort": "Languages"
+    "aboutShort": "About",
+    "languagesShort": "Languages",
+    "speaksValue": "Speaks {languages}",
+    "studiesInValue": "Studies in {languages}",
+    "prefRemoteList": "Remote only",
+    "prefInPersonList": "In person only",
+    "prefBothList": "In person or remote"
   },
   "Topics": {
     "chumash": "Chumash",
