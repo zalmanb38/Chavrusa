@@ -44,7 +44,9 @@
     "signup": "Inscription",
     "logout": "Déconnexion",
     "requests": "Demandes",
-    "admin": "Admin"
+    "admin": "Admin",
+    "howItWorks": "Comment ça marche",
+    "about": "À propos"
   },
   "Auth": {
     "loginTitle": "Content de vous revoir",
@@ -243,7 +245,11 @@
     "nearSetCityLink": "Indiquer votre ville",
     "nearExcluded": "{count, plural, one {# apprenant n'a pas été inclus dans cette recherche par distance} other {# apprenants n'ont pas été inclus dans cette recherche par distance}} car leur ville ne peut pas être située sur la carte.",
     "withinMiles": "Moins de {miles} mi",
-    "nSelected": "{count, plural, one {# sélectionné} other {# sélectionnés}}"
+    "nSelected": "{count, plural, one {# sélectionné} other {# sélectionnés}}",
+    "resultCount": "{count, plural, one {# apprenant correspond à vos filtres} other {# apprenants correspondent à vos filtres}}",
+    "filteringBy": "Filtré par",
+    "removeFilter": "Retirer ce filtre",
+    "clearAll": "Tout effacer"
   },
   "Requests": {
     "title": "Demandes de connexion",
@@ -446,7 +452,8 @@
     "about": "À propos",
     "privacy": "Confidentialité",
     "terms": "Conditions",
-    "contact": "Contact"
+    "contact": "Contact",
+    "browse": "Parcourir"
   },
   "Contact": {
     "title": "Nous contacter",

@@ -16,41 +16,34 @@ export default async function NavBar({
   const t = await getTranslations("Nav");
   const common = await getTranslations("Common");
 
+  const linkClass = "text-[15px] hover:text-slate-600 hover:underline";
+
   return (
-    <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
-      <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-4">
-        <Link href="/" className="flex items-center gap-2 font-serif text-lg font-medium">
-          <Logo className="size-7" />
+    // A hairline, not a shadow or a tinted bar: the design uses elevation
+    // only for the modal layer.
+    <header className="sticky top-0 z-10 border-b border-border bg-background">
+      <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center gap-8 px-6 py-5 sm:px-14">
+        {/* Wordmark pushed left, everything else trailing it. */}
+        <Link href="/" className="me-auto flex items-center gap-2.5 text-[21px]">
+          <Logo className="size-[34px]" />
           {common("appName")}
         </Link>
 
-        <div className="flex flex-wrap items-center gap-5">
-          <Link
-            href="/browse"
-            className="text-sm text-foreground/80 hover:text-foreground"
-          >
+        <div className="flex flex-wrap items-center gap-6">
+          <Link href="/browse" className={linkClass}>
             {t("browse")}
           </Link>
 
           {signedIn ? (
             <>
-              <Link
-                href="/requests"
-                className="text-sm text-foreground/80 hover:text-foreground"
-              >
+              <Link href="/requests" className={linkClass}>
                 {t("requests")}
               </Link>
-              <Link
-                href="/profile"
-                className="text-sm text-foreground/80 hover:text-foreground"
-              >
+              <Link href="/profile" className={linkClass}>
                 {t("profile")}
               </Link>
               {isAdmin && (
-                <Link
-                  href="/admin"
-                  className="text-sm text-foreground/80 hover:text-foreground"
-                >
+                <Link href="/admin" className={linkClass}>
                   {t("admin")}
                 </Link>
               )}
@@ -58,15 +51,19 @@ export default async function NavBar({
             </>
           ) : (
             <>
-              <Link
-                href="/login"
-                className="text-sm text-foreground/80 hover:text-foreground"
-              >
+              {/* "How it works" is a homepage section, not a route. */}
+              <Link href="/#how" className={linkClass}>
+                {t("howItWorks")}
+              </Link>
+              <Link href="/about" className={linkClass}>
+                {t("about")}
+              </Link>
+              <Link href="/login" className={linkClass}>
                 {t("login")}
               </Link>
               <Link
                 href="/signup"
-                className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground hover:opacity-90"
+                className="bg-primary px-5 py-2.5 text-[15px] font-semibold text-primary-foreground hover:bg-slate-600"
               >
                 {t("signup")}
               </Link>

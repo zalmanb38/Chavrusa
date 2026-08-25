@@ -81,7 +81,7 @@ export default async function HomePage({
       </section>
 
       {/* ── How the matching works ───────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
+      <section id="how" className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
         <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-border pt-6">
           <h2 className="text-[30px] font-semibold">{t("howTitle")}</h2>
           <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">

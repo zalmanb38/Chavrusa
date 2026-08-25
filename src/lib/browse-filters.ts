@@ -252,3 +252,54 @@ export function visibleAgeRange(profile: {
 }): string {
   return isHidden(profile, "age_range") ? "" : profile.age_range;
 }
+
+
+/** One removable chip in the "Filtering by" row above the results. */
+export interface FilterChip {
+  key: string;
+  value: string;
+  label: string;
+  /** The same query with this one filter dropped — the chip's "×" target. */
+  without: Record<string, string | string[]>;
+}
+
+/**
+ * Turns the active filters into chips.
+ *
+ * Every filter that narrows the results gets one, so the row is a true
+ * account of why a result set looks the way it does — which matters most
+ * when it looks emptier than expected. `view` is excluded: it changes how
+ * results are drawn, not which ones there are.
+ */
+export function activeFilterChips(
+  filters: BrowseFilters,
+  labellers: Partial<Record<keyof BrowseFilters, (value: string) => string>>,
+): FilterChip[] {
+  const chips: FilterChip[] = [];
+
+  for (const [key, raw] of Object.entries(filters)) {
+    if (key === "view" || !raw) continue;
+
+    const values = toValues(raw as string | string[]);
+    for (const value of values) {
+      const label =
+        labellers[key as keyof BrowseFilters]?.(value) ?? value;
+
+      // Dropping one value of a multi-value filter leaves the rest in place.
+      const remaining = values.filter((v) => v !== value);
+      const without: Record<string, string | string[]> = {};
+      for (const [k, v] of Object.entries(filters)) {
+        if (!v) continue;
+        if (k === key) {
+          if (remaining.length > 0) without[k] = remaining;
+        } else {
+          without[k] = v as string | string[];
+        }
+      }
+
+      chips.push({ key, value, label, without });
+    }
+  }
+
+  return chips;
+}

@@ -14,10 +14,14 @@ import {
   frequencyMessageKey,
   timeOfDayMessageKey,
   type Profile,
+  type Preference,
+  type Frequency,
+  type TimeOfDay,
 } from "@/lib/profile-options";
 import {
   PROFILE_COLUMNS,
   proximityOptions,
+  activeFilterChips,
   applyLocalFilters,
   applyQueryFilters,
   coordsOf,
@@ -55,6 +59,7 @@ export default async function BrowsePage({
   const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
   const tMap = await getTranslations("Map");
+  const tLocation = await getTranslations("Location");
   const mapView = filters.view === "map";
   // Everything except the view itself, so each toggle link carries the
   // current filters rather than resetting them.
@@ -170,139 +175,107 @@ export default async function BrowsePage({
     { status: ConnectStatus; requestId: string | null }
   > = Object.fromEntries(connectStatusMap);
 
+  const filterChips = activeFilterChips(filters, {
+    topic: (v: string) => tTopics(v),
+    language: (v: string) => tLanguages(v),
+    studyLanguage: (v: string) => tLanguages(v),
+    preference: (v: string) => tProfile(preferenceMessageKey[v as Preference]),
+    frequency: (v: string) => tProfile(frequencyMessageKey[v as Frequency]),
+    timeOfDay: (v: string) => tProfile(timeOfDayMessageKey[v as TimeOfDay]),
+    sessionLength: (v: string) => tProfile("sessionLengthValue", { minutes: Number(v) }),
+    country: (v: string) => tLocation(`country_${v}`),
+  });
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-6 font-serif text-3xl font-medium">{t("title")}</h1>
+    <div className="mx-auto w-full max-w-[1240px] px-6 sm:px-11">
+      {/* ── Header block ───────────────────────────────────────────── */}
+      <div className="flex flex-wrap items-end justify-between gap-4 pt-9 pb-5">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-[2rem] font-semibold sm:text-[40px]">
+            {t("title")}
+          </h1>
+          <p className="text-[13.5px] text-muted">
+            {t("resultCount", { count: profiles.length })}
+          </p>
+        </div>
+
+        {/* List / Map as a segmented control on a hairline. */}
+        <div className="flex border border-border">
+          {(["list", "map"] as const).map((view) => {
+            const active = (view === "map") === mapView;
+            const query = view === "map" ? { ...filterQuery, view } : filterQuery;
+            return (
+              <Link
+                key={view}
+                href={{ pathname: "/browse", query }}
+                aria-current={active ? "page" : undefined}
+                className={
+                  active
+                    ? "bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+                    : "px-4 py-2 text-sm hover:bg-surface"
+                }
+              >
+                {tMap(view === "map" ? "mapView" : "listView")}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
 
       {!viewerVerified && (
-        <div className="mb-6 flex flex-col gap-2 rounded-2xl border border-primary/60 bg-primary/10 p-4">
-          <p className="font-medium">{t("notVisibleTitle")}</p>
+        <div className="mb-6 flex flex-col gap-2 border-s-2 border-brass bg-surface p-4">
+          <p className="font-semibold">{t("notVisibleTitle")}</p>
           <p className="text-sm text-muted">{t("notVisibleBody")}</p>
           <Link
             href="/profile"
-            className="w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+            className="w-fit bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
           >
             {t("verifyNow")}
           </Link>
         </div>
       )}
 
-      <div className="mb-4 flex gap-2">
-        {(["list", "map"] as const).map((view) => {
-          const active = (view === "map") === mapView;
-          const query = view === "map" ? { ...filterQuery, view } : filterQuery;
-          return (
-            <Link
-              key={view}
-              href={{ pathname: "/browse", query }}
-              className={
-                active
-                  ? "rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground"
-                  : "rounded-full border border-border px-4 py-1.5 text-sm"
-              }
-            >
-              {tMap(view === "map" ? "mapView" : "listView")}
-            </Link>
-          );
-        })}
-      </div>
-
-      <form className="mb-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4">
-        <label className="flex flex-col gap-1 text-sm">
-          {t("filterKeyword")}
-          <input
-            type="search"
-            name="q"
-            defaultValue={filters.q ?? ""}
-            placeholder={t("filterKeywordPlaceholder")}
-            className={selectClass}
-          />
-        </label>
-
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* ── Sidebar + results ──────────────────────────────────────── */}
+      <div className="grid gap-10 pb-16 lg:grid-cols-[272px_1fr]">
+        <aside className="border-t border-border pt-6">
+        <form className="mb-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4">
           <label className="flex flex-col gap-1 text-sm">
-            {t("filterTopic")}
-            <select
-              name="topic"
-              defaultValue={filters.topic ?? ""}
+            {t("filterKeyword")}
+            <input
+              type="search"
+              name="q"
+              defaultValue={filters.q ?? ""}
+              placeholder={t("filterKeywordPlaceholder")}
               className={selectClass}
-            >
-              <option value="">{t("all")}</option>
-              {TOPIC_KEYS.map((key) => (
-                <option key={key} value={key}>
-                  {tTopics(key)}
-                </option>
-              ))}
-            </select>
+            />
           </label>
 
-          <label className="flex flex-col gap-1 text-sm">
-            {t("filterLanguage")}
-            <select
-              name="language"
-              defaultValue={filters.language ?? ""}
-              className={selectClass}
-            >
-              <option value="">{t("all")}</option>
-              {LANGUAGE_CODES.map((code) => (
-                <option key={code} value={code}>
-                  {tLanguages(code)}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label className="flex flex-col gap-1 text-sm">
-            {t("filterPreference")}
-            <select
-              name="preference"
-              defaultValue={filters.preference ?? ""}
-              className={selectClass}
-            >
-              <option value="">{t("all")}</option>
-              {PREFERENCES.map((p) => (
-                <option key={p} value={p}>
-                  {tProfile(preferenceMessageKey[p])}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <LocationFilter
-            initialCountry={filters.country ?? ""}
-            initialRegion={filters.region ?? ""}
-            initialCity={filters.city ?? ""}
-          />
-        </div>
-
-        {/*
-          A plain <details> rather than a client component: it needs no
-          JavaScript, keeps the GET form intact, and is a disclosure
-          widget the browser already knows how to make accessible.
-
-          Opened by default whenever one of the filters inside is active,
-          so an applied filter is never hidden behind a closed section —
-          that would leave people wondering why their results look odd.
-        */}
-        <details className="group" open={advancedFilterCount > 0}>
-          <summary className="cursor-pointer text-sm font-medium select-none">
-            <span className="group-open:hidden">
-              {t("moreFilters")}
-              {advancedFilterCount > 0 && ` (${advancedFilterCount})`}
-            </span>
-            <span className="hidden group-open:inline">{t("fewerFilters")}</span>
-          </summary>
-
-          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <label className="flex flex-col gap-1 text-sm">
-              {t("filterStudyLanguage")}
+              {t("filterTopic")}
               <select
-                name="studyLanguage"
-                defaultValue={filters.studyLanguage ?? ""}
+                name="topic"
+                defaultValue={filters.topic ?? ""}
                 className={selectClass}
               >
                 <option value="">{t("all")}</option>
-                {STUDY_LANGUAGE_CODES.map((code) => (
+                {TOPIC_KEYS.map((key) => (
+                  <option key={key} value={key}>
+                    {tTopics(key)}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterLanguage")}
+              <select
+                name="language"
+                defaultValue={filters.language ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {LANGUAGE_CODES.map((code) => (
                   <option key={code} value={code}>
                     {tLanguages(code)}
                   </option>
@@ -310,140 +283,227 @@ export default async function BrowsePage({
               </select>
             </label>
 
-<MultiSelectFilter
-              name="age"
-              label={t("filterAge")}
-              options={AGE_RANGES.map((range) => ({
-                value: range,
-                label: range,
-              }))}
-              initialSelected={selectedAges}
-              emptyLabel={t("all")}
+            <label className="flex flex-col gap-1 text-sm">
+              {t("filterPreference")}
+              <select
+                name="preference"
+                defaultValue={filters.preference ?? ""}
+                className={selectClass}
+              >
+                <option value="">{t("all")}</option>
+                {PREFERENCES.map((p) => (
+                  <option key={p} value={p}>
+                    {tProfile(preferenceMessageKey[p])}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <LocationFilter
+              initialCountry={filters.country ?? ""}
+              initialRegion={filters.region ?? ""}
+              initialCity={filters.city ?? ""}
             />
+          </div>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterFrequency")}
-              <select
-                name="frequency"
-                defaultValue={filters.frequency ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {FREQUENCIES.map((f) => (
-                  <option key={f} value={f}>
-                    {tProfile(frequencyMessageKey[f])}
-                  </option>
-                ))}
-              </select>
-            </label>
+          {/*
+            A plain <details> rather than a client component: it needs no
+            JavaScript, keeps the GET form intact, and is a disclosure
+            widget the browser already knows how to make accessible.
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterTimeOfDay")}
-              <select
-                name="timeOfDay"
-                defaultValue={filters.timeOfDay ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {TIMES_OF_DAY.map((tod) => (
-                  <option key={tod} value={tod}>
-                    {tProfile(timeOfDayMessageKey[tod])}
-                  </option>
-                ))}
-              </select>
-            </label>
+            Opened by default whenever one of the filters inside is active,
+            so an applied filter is never hidden behind a closed section —
+            that would leave people wondering why their results look odd.
+          */}
+          <details className="group" open={advancedFilterCount > 0}>
+            <summary className="cursor-pointer text-sm font-medium select-none">
+              <span className="group-open:hidden">
+                {t("moreFilters")}
+                {advancedFilterCount > 0 && ` (${advancedFilterCount})`}
+              </span>
+              <span className="hidden group-open:inline">{t("fewerFilters")}</span>
+            </summary>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterSessionLength")}
-              <select
-                name="sessionLength"
-                defaultValue={filters.sessionLength ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {SESSION_LENGTHS.map((len) => (
-                  <option key={len} value={len}>
-                    {tProfile("sessionLengthValue", { minutes: Number(len) })}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            {/*
-              With no coordinates for the viewer's own city there is no
-              origin to measure from. Show why, and where to fix it —
-              a disabled dropdown just looks broken.
-            */}
-            {viewerCoords ? (
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <label className="flex flex-col gap-1 text-sm">
-                {t("filterNear")}
+                {t("filterStudyLanguage")}
                 <select
-                  name="near"
-                  defaultValue={filters.near ?? ""}
+                  name="studyLanguage"
+                  defaultValue={filters.studyLanguage ?? ""}
                   className={selectClass}
                 >
                   <option value="">{t("all")}</option>
-                  {proximity.options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {proximity.unit === "mi"
-                        ? t("withinMiles", { miles: option.amount })
-                        : t("withinKm", { km: option.amount })}
+                  {STUDY_LANGUAGE_CODES.map((code) => (
+                    <option key={code} value={code}>
+                      {tLanguages(code)}
                     </option>
                   ))}
                 </select>
               </label>
-            ) : (
-              <div className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
-                <span>{t("filterNear")}</span>
-                <p className="text-xs text-muted">
-                  {t("nearNeedsCity")}{" "}
-                  <Link href="/profile" className="underline">
-                    {t("nearSetCityLink")}
-                  </Link>
-                </p>
-              </div>
-            )}
-          </div>
-        </details>
 
-        {mapView && <input type="hidden" name="view" value="map" />}
+  <MultiSelectFilter
+                name="age"
+                label={t("filterAge")}
+                options={AGE_RANGES.map((range) => ({
+                  value: range,
+                  label: range,
+                }))}
+                initialSelected={selectedAges}
+                emptyLabel={t("all")}
+              />
 
-        <button
-          type="submit"
-          className="w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
-        >
-          {t("applyFilters")}
-        </button>
-      </form>
+              <label className="flex flex-col gap-1 text-sm">
+                {t("filterFrequency")}
+                <select
+                  name="frequency"
+                  defaultValue={filters.frequency ?? ""}
+                  className={selectClass}
+                >
+                  <option value="">{t("all")}</option>
+                  {FREQUENCIES.map((f) => (
+                    <option key={f} value={f}>
+                      {tProfile(frequencyMessageKey[f])}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-      {unplaceableExcluded > 0 && (
-        <p className="mb-4 text-xs text-muted">
-          {t("nearExcluded", { count: unplaceableExcluded })}
-        </p>
-      )}
+              <label className="flex flex-col gap-1 text-sm">
+                {t("filterTimeOfDay")}
+                <select
+                  name="timeOfDay"
+                  defaultValue={filters.timeOfDay ?? ""}
+                  className={selectClass}
+                >
+                  <option value="">{t("all")}</option>
+                  {TIMES_OF_DAY.map((tod) => (
+                    <option key={tod} value={tod}>
+                      {tProfile(timeOfDayMessageKey[tod])}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-      {profiles.length === 0 ? (
-        <p className="text-sm text-muted">{t("noResults")}</p>
-      ) : mapView ? (
-        <BrowseMapView
-          profiles={profiles}
-          currentUserId={user.id}
-          connectStatuses={connectStatuses}
-        />
-      ) : (
-        <ul className="flex flex-col gap-4">
-          {profiles.map((profile) => (
-            <BrowseCard
-              key={profile.id}
-              profile={profile}
+              <label className="flex flex-col gap-1 text-sm">
+                {t("filterSessionLength")}
+                <select
+                  name="sessionLength"
+                  defaultValue={filters.sessionLength ?? ""}
+                  className={selectClass}
+                >
+                  <option value="">{t("all")}</option>
+                  {SESSION_LENGTHS.map((len) => (
+                    <option key={len} value={len}>
+                      {tProfile("sessionLengthValue", { minutes: Number(len) })}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {/*
+                With no coordinates for the viewer's own city there is no
+                origin to measure from. Show why, and where to fix it —
+                a disabled dropdown just looks broken.
+              */}
+              {viewerCoords ? (
+                <label className="flex flex-col gap-1 text-sm">
+                  {t("filterNear")}
+                  <select
+                    name="near"
+                    defaultValue={filters.near ?? ""}
+                    className={selectClass}
+                  >
+                    <option value="">{t("all")}</option>
+                    {proximity.options.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {proximity.unit === "mi"
+                          ? t("withinMiles", { miles: option.amount })
+                          : t("withinKm", { km: option.amount })}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ) : (
+                <div className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
+                  <span>{t("filterNear")}</span>
+                  <p className="text-xs text-muted">
+                    {t("nearNeedsCity")}{" "}
+                    <Link href="/profile" className="underline">
+                      {t("nearSetCityLink")}
+                    </Link>
+                  </p>
+                </div>
+              )}
+            </div>
+          </details>
+
+          {mapView && <input type="hidden" name="view" value="map" />}
+
+          <button
+            type="submit"
+            className="w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
+          >
+            {t("applyFilters")}
+          </button>
+        </form>
+        </aside>
+
+        <main className="flex flex-col gap-5 border-t border-border pt-6">
+          {filterChips.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[12.5px] text-muted">
+                {t("filteringBy")}
+              </span>
+              {filterChips.map((chip) => (
+                <Link
+                  key={`${chip.key}-${chip.value}`}
+                  href={{ pathname: "/browse", query: chip.without }}
+                  className="flex items-center gap-2 bg-slate-100 px-2.5 py-1 text-[13px] text-slate-700 hover:bg-slate-200"
+                >
+                  {chip.label}
+                  <span aria-hidden>×</span>
+                  <span className="sr-only">{t("removeFilter")}</span>
+                </Link>
+              ))}
+              <Link
+                href="/browse"
+                className="text-[13px] text-slate-600 underline hover:text-brass"
+              >
+                {t("clearAll")}
+              </Link>
+            </div>
+          )}
+
+          {unplaceableExcluded > 0 && (
+            <p className="text-xs text-muted">
+              {t("nearExcluded", { count: unplaceableExcluded })}
+            </p>
+          )}
+
+          {profiles.length === 0 ? (
+            <p className="text-sm text-muted">{t("noResults")}</p>
+          ) : mapView ? (
+            <BrowseMapView
+              profiles={profiles}
               currentUserId={user.id}
-              connectStatus={connectStatuses[profile.id]?.status ?? "none"}
-              requestId={connectStatuses[profile.id]?.requestId ?? null}
-              showName
+              connectStatuses={connectStatuses}
             />
-          ))}
-        </ul>
-      )}
+          ) : (
+            <ul className="flex flex-col">
+              {profiles.map((profile) => (
+                <BrowseCard
+                  key={profile.id}
+                  profile={profile}
+                  currentUserId={user.id}
+                  connectStatus={connectStatuses[profile.id]?.status ?? "none"}
+                  requestId={connectStatuses[profile.id]?.requestId ?? null}
+                  showName
+                />
+              ))}
+            </ul>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

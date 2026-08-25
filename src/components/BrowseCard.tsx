@@ -31,24 +31,31 @@ export default function BrowseCard({
   const t = useTranslations("Browse");
 
   return (
-    <li className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5 shadow-sm">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-serif text-lg font-medium">
-          {showName ? profile.name : t("anonymousLearner")}
-        </h2>
-        <ProfileLocation profile={profile} />
+    // A hairline row, not a card: "no boxes for layout — sections are
+    // separated by whitespace and, where a boundary is needed, a single
+    // 1px rule." The hover tint is the row's own, per the design.
+    <li className="grid gap-9 border-t border-border py-6 transition-colors hover:bg-surface sm:grid-cols-[1fr_210px]">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <h2 className="text-[26px] font-semibold">
+            {showName ? profile.name : t("anonymousLearner")}
+          </h2>
+          <ProfileLocation profile={profile} />
+        </div>
+
+        <ProfileDetails profile={profile} />
       </div>
 
-      <ProfileDetails profile={profile} />
+      {/* Right rail, opened by a hairline on the inline-start edge so it
+          mirrors correctly in Hebrew. */}
+      <div className="flex flex-col items-start gap-3 sm:border-s sm:border-border sm:ps-6">
+        <ConnectButton
+          currentUserId={currentUserId}
+          recipientId={profile.id}
+          initialStatus={connectStatus}
+          requestId={requestId}
+        />
 
-      <ConnectButton
-        currentUserId={currentUserId}
-        recipientId={profile.id}
-        initialStatus={connectStatus}
-        requestId={requestId}
-      />
-
-      <div className="flex flex-col items-start gap-2 pt-1">
         <div className="flex gap-3">
           <ReportButton currentUserId={currentUserId} reportedId={profile.id} />
           <BlockButton

@@ -44,7 +44,9 @@
     "signup": "הרשמה",
     "logout": "התנתקות",
     "requests": "בקשות",
-    "admin": "ניהול"
+    "admin": "ניהול",
+    "howItWorks": "איך זה עובד",
+    "about": "אודות"
   },
   "Auth": {
     "loginTitle": "ברוכים השבים",
@@ -243,7 +245,11 @@
     "nearSetCityLink": "הגדרת עיר",
     "nearExcluded": "{count, plural, one {לומד אחד לא נכלל בחיפוש לפי מרחק} two {# לומדים לא נכללו בחיפוש לפי מרחק} other {# לומדים לא נכללו בחיפוש לפי מרחק}} מכיוון שהעיר שלהם אינה עיר שניתן למקם על המפה.",
     "withinMiles": "עד {miles} מייל",
-    "nSelected": "{count, plural, one {נבחר #} two {נבחרו #} other {נבחרו #}}"
+    "nSelected": "{count, plural, one {נבחר #} two {נבחרו #} other {נבחרו #}}",
+    "resultCount": "{count, plural, one {לומד אחד תואם לסינון} two {# לומדים תואמים לסינון} other {# לומדים תואמים לסינון}}",
+    "filteringBy": "מסננים לפי",
+    "removeFilter": "הסרת המסנן",
+    "clearAll": "ניקוי הכול"
   },
   "Requests": {
     "title": "בקשות התחברות",
@@ -446,7 +452,8 @@
     "about": "אודות",
     "privacy": "פרטיות",
     "terms": "תנאי שימוש",
-    "contact": "יצירת קשר"
+    "contact": "יצירת קשר",
+    "browse": "עיון"
   },
   "Contact": {
     "title": "יצירת קשר",

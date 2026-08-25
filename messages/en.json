@@ -44,7 +44,9 @@
     "signup": "Sign Up",
     "logout": "Log Out",
     "requests": "Requests",
-    "admin": "Admin"
+    "admin": "Admin",
+    "howItWorks": "How it works",
+    "about": "About"
   },
   "Auth": {
     "loginTitle": "Welcome back",
@@ -243,7 +245,11 @@
     "nearSetCityLink": "Set your city",
     "nearExcluded": "{count, plural, =1 {# learner was left out of this distance search} other {# learners were left out of this distance search}} because their city isn't one we can place on the map.",
     "withinMiles": "Within {miles} mi",
-    "nSelected": "{count, plural, =1 {# selected} other {# selected}}"
+    "nSelected": "{count, plural, =1 {# selected} other {# selected}}",
+    "resultCount": "{count, plural, =1 {# learner matches your filters} other {# learners match your filters}}",
+    "filteringBy": "Filtering by",
+    "removeFilter": "Remove this filter",
+    "clearAll": "Clear all"
   },
   "Requests": {
     "title": "Connect Requests",
@@ -446,7 +452,8 @@
     "about": "About",
     "privacy": "Privacy",
     "terms": "Terms",
-    "contact": "Contact"
+    "contact": "Contact",
+    "browse": "Browse"
   },
   "Contact": {
     "title": "Contact us",
