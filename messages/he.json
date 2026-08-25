@@ -368,7 +368,8 @@
     "photoApprove": "אישור",
     "photoReject": "דחייה",
     "photoNotePlaceholder": "הערה למשתמש (רשות, מוצגת אם נדחתה)",
-    "photoActionFailed": "הפעולה לא בוצעה. נסו שוב."
+    "photoActionFailed": "הפעולה לא בוצעה. נסו שוב.",
+    "photosQueryFailed": "לא ניתן היה לטעון את תור התמונות. פרטי השגיאה ביומני השרת — אין זה זהה לתור ריק."
   },
   "Phone": {
     "title": "אימות טלפון",

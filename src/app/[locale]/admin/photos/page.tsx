@@ -6,7 +6,7 @@ import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import { Link } from "@/i18n/navigation";
 
-type QueueRow = ProfilePhoto & { profiles: { name: string } | null };
+type QueueRow = ProfilePhoto;
 
 export default async function AdminPhotosPage({
   params,
@@ -30,10 +30,14 @@ export default async function AdminPhotosPage({
       ? statusFilter
       : "pending";
 
+  // Names are fetched separately rather than embedded. profile_photos has
+  // two foreign keys to profiles — `id` and `reviewed_by` — so a bare
+  // `profiles(name)` embed is ambiguous and PostgREST rejects it outright
+  // (PGRST201). A second query sidesteps relationship inference entirely.
   const { data, error } = await supabase
     .from("profile_photos")
     .select(
-      "id, storage_path, status, moderation_verdict, moderation_detail, uploaded_at, reviewed_by, reviewed_at, review_note, profiles(name)",
+      "id, storage_path, status, moderation_verdict, moderation_detail, uploaded_at, reviewed_by, reviewed_at, review_note",
     )
     .eq("status", status)
     .order("uploaded_at", { ascending: true });
@@ -41,6 +45,22 @@ export default async function AdminPhotosPage({
   if (error) console.error("Admin photo queue query failed", error);
 
   const rows = (data ?? []) as unknown as QueueRow[];
+
+  const { data: owners, error: ownersError } = rows.length
+    ? await supabase
+        .from("profiles")
+        .select("id, name")
+        .in(
+          "id",
+          rows.map((row) => row.id),
+        )
+    : { data: [], error: null };
+
+  if (ownersError) console.error("Admin photo owner lookup failed", ownersError);
+
+  const nameById = new Map(
+    ((owners ?? []) as { id: string; name: string }[]).map((o) => [o.id, o.name]),
+  );
 
   // Rejected rows have had their file removed, so there is nothing to sign.
   const withUrls = await Promise.all(
@@ -78,7 +98,16 @@ export default async function AdminPhotosPage({
         ))}
       </div>
 
-      {withUrls.length === 0 ? (
+      {/*
+        A failed query and an empty queue are not the same thing, and
+        showing "nothing here" for both is how this bug hid in the first
+        place. Say which one it is.
+      */}
+      {error ? (
+        <p className="rounded-2xl border border-border bg-surface p-5 text-sm">
+          {t("photosQueryFailed")}
+        </p>
+      ) : withUrls.length === 0 ? (
         <p className="text-sm text-muted">{t("photosEmpty")}</p>
       ) : (
         <ul className="flex flex-col gap-4">
@@ -105,7 +134,7 @@ export default async function AdminPhotosPage({
                   href={`/admin/profiles/${row.id}`}
                   className="font-medium underline"
                 >
-                  {row.profiles?.name || t("unknownUser")}
+                  {nameById.get(row.id) || t("unknownUser")}
                 </Link>
 
                 <p className="text-xs text-muted">

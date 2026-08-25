@@ -368,7 +368,8 @@
     "photoApprove": "Approve",
     "photoReject": "Reject",
     "photoNotePlaceholder": "Optional note to the person (shown if rejected)",
-    "photoActionFailed": "That didn't go through. Please try again."
+    "photoActionFailed": "That didn't go through. Please try again.",
+    "photosQueryFailed": "Couldn't load the photo queue. The error is in the server logs — this is not the same as the queue being empty."
   },
   "Phone": {
     "title": "Verify phone",

@@ -368,7 +368,8 @@
     "photoApprove": "Aprobar",
     "photoReject": "Rechazar",
     "photoNotePlaceholder": "Nota opcional para la persona (se muestra si se rechaza)",
-    "photoActionFailed": "La acción no se completó. Inténtalo de nuevo."
+    "photoActionFailed": "La acción no se completó. Inténtalo de nuevo.",
+    "photosQueryFailed": "No se pudo cargar la cola de fotos. El error está en los registros del servidor; no es lo mismo que una cola vacía."
   },
   "Phone": {
     "title": "Verificar teléfono",

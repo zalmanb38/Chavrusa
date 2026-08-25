@@ -368,7 +368,8 @@
     "photoApprove": "Approuver",
     "photoReject": "Refuser",
     "photoNotePlaceholder": "Remarque facultative (affichée en cas de refus)",
-    "photoActionFailed": "L'action n'a pas abouti. Veuillez réessayer."
+    "photoActionFailed": "L'action n'a pas abouti. Veuillez réessayer.",
+    "photosQueryFailed": "Impossible de charger la file des photos. L'erreur figure dans les journaux du serveur — ce n'est pas la même chose qu'une file vide."
   },
   "Phone": {
     "title": "Vérifier le téléphone",
