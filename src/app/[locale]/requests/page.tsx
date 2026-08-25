@@ -4,6 +4,10 @@ import { createClient } from "@/lib/supabase/server";
 import RespondButtons from "@/components/RespondButtons";
 import UnblockButton from "@/components/UnblockButton";
 import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButton";
+import ProfileDetails, {
+  ProfileLocation,
+  type ProfileDetailFields,
+} from "@/components/ProfileDetails";
 
 interface ProfileSummary {
   id: string;
@@ -11,11 +15,19 @@ interface ProfileSummary {
   city: string;
 }
 
+/**
+ * An incoming request shows the requester's whole public profile, not
+ * just a name — the recipient hasn't browsed to them, so this is their
+ * only chance to judge the fit before answering. Full name and photo stay
+ * out of it: those are governed by the match-reveal rule.
+ */
+type RequesterProfile = ProfileSummary & ProfileDetailFields;
+
 interface IncomingRow {
   id: string;
   created_at: string;
   status: string;
-  requester: ProfileSummary;
+  requester: RequesterProfile;
 }
 
 interface OutgoingRow {
@@ -38,6 +50,11 @@ interface BlockedRow {
 }
 
 const PROFILE_SUMMARY_FIELDS = "id, name, city";
+
+const PROFILE_DETAIL_FIELDS =
+  "id, name, city, country, region, neighborhood, languages, study_languages, " +
+  "topics, topic_other, level, preference, availability, age_range, " +
+  "frequency, time_of_day, session_length, blurb, hidden_fields";
 
 export default async function RequestsPage({
   params,
@@ -64,7 +81,9 @@ export default async function RequestsPage({
     await Promise.all([
       supabase
         .from("connect_requests")
-        .select(`id, created_at, status, requester:requester_id(${PROFILE_SUMMARY_FIELDS})`)
+        .select(
+          `id, created_at, status, requester:requester_id(${PROFILE_DETAIL_FIELDS})`,
+        )
         .eq("recipient_id", userId)
         .in("status", ["pending", "admin_resolved"])
         .order("created_at", { ascending: false }),
@@ -119,16 +138,19 @@ export default async function RequestsPage({
             {incomingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+                className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 shadow-sm"
               >
-                <div>
-                  <p className="font-medium">{row.requester.name}</p>
-                  {row.requester.city && (
-                    <p className="text-sm text-muted">{row.requester.city}</p>
-                  )}
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <p className="font-serif text-lg font-medium">
+                    {row.requester.name}
+                  </p>
+                  <ProfileLocation profile={row.requester} />
                 </div>
+
+                <ProfileDetails profile={row.requester} />
+
                 {row.status === "admin_resolved" ? (
-                  <div className="flex flex-col items-end gap-1">
+                  <div className="flex flex-col items-start gap-1">
                     <span className="text-sm text-muted">
                       {t("adminResolved")}
                     </span>

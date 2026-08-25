@@ -246,6 +246,9 @@ export function countAdvancedFilters(filters: BrowseFilters): number {
 }
 
 /** Age is shown only when its owner hasn't hidden it. */
-export function visibleAgeRange(profile: Profile): string {
+export function visibleAgeRange(profile: {
+  age_range: string;
+  hidden_fields?: string[] | null;
+}): string {
   return isHidden(profile, "age_range") ? "" : profile.age_range;
 }
