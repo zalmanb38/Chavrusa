@@ -10,7 +10,10 @@ import {
 } from "@/lib/locations";
 
 const selectClass =
-  "rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
+  "w-full border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:outline-none";
+
+// Matches the label voice used by the rest of the filter bar.
+const labelClass = "text-[11.5px] tracking-[0.14em] text-muted uppercase";
 
 /**
  * The Browse-side cascade. Filters only on country, region and city — the
@@ -42,8 +45,8 @@ export default function LocationFilter({
 
   return (
     <>
-      <label className="flex flex-col gap-1 text-sm">
-        {t("country")}
+      <label className="flex flex-col gap-1.5">
+        <span className={labelClass}>{t("country")}</span>
         <select
           name="country"
           value={country}
@@ -64,8 +67,8 @@ export default function LocationFilter({
       </label>
 
       {showRegion && (
-        <label className="flex flex-col gap-1 text-sm">
-          {t("region")}
+        <label className="flex flex-col gap-1.5">
+          <span className={labelClass}>{t("region")}</span>
           <select
             name="region"
             value={region}
@@ -85,8 +88,8 @@ export default function LocationFilter({
         </label>
       )}
 
-      <label className="flex flex-col gap-1 text-sm">
-        {t("city")}
+      <label className="flex flex-col gap-1.5">
+        <span className={labelClass}>{t("city")}</span>
         {cities.length > 0 ? (
           <select
             name="city"

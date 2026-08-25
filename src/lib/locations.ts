@@ -175,7 +175,32 @@ export function locationRequired(preference: string): boolean {
   return preference === "in_person";
 }
 
-/** Assembles the stored parts into one line for display. */
+/**
+ * The short form shown beside a learner's name: neighbourhood, city and
+ * state. Country is left off — it added a fourth clause to every row for
+ * information that is the same for nearly everyone reading it, and state
+ * already says where someone is.
+ *
+ * Needs no translator, since region and city names are proper nouns kept
+ * as written.
+ */
+export function formatLocationShort(parts: {
+  city?: string | null;
+  region?: string | null;
+  country?: string | null;
+  neighborhood?: string | null;
+}): string {
+  const regionName = parts.region
+    ? (regionsFor(parts.country ?? "").find((r) => r.code === parts.region)
+        ?.name ?? parts.region)
+    : "";
+
+  return [parts.neighborhood?.trim(), parts.city?.trim(), regionName]
+    .filter((piece): piece is string => Boolean(piece && piece.length > 0))
+    .join(", ");
+}
+
+/** The full form, country included — used where precision matters. */
 export function formatLocation(
   parts: {
     city?: string | null;

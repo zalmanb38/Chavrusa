@@ -39,8 +39,12 @@ import {
   type ConnectStatus,
 } from "@/lib/connect";
 
+// "Label — the only chrome voice": 11.5px, wide tracking, uppercase.
+const filterLabelClass =
+  "text-[11.5px] tracking-[0.14em] text-muted uppercase";
+
 const selectClass =
-  "rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
+  "w-full border border-border bg-transparent px-3 py-2 text-sm focus:border-primary focus:outline-none";
 
 
 export default async function BrowsePage({
@@ -236,11 +240,10 @@ export default async function BrowsePage({
       )}
 
       {/* ── Sidebar + results ──────────────────────────────────────── */}
-      <div className="grid gap-10 pb-16 lg:grid-cols-[272px_1fr]">
-        <aside className="border-t border-border pt-6">
-        <form className="mb-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4">
-          <label className="flex flex-col gap-1 text-sm">
-            {t("filterKeyword")}
+      <div className="flex flex-col pb-16">
+<form className="flex flex-col gap-5 border-t border-border py-6">
+          <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterKeyword")}</span>
             <input
               type="search"
               name="q"
@@ -250,9 +253,9 @@ export default async function BrowsePage({
             />
           </label>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterTopic")}
+          <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+            <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterTopic")}</span>
               <select
                 name="topic"
                 defaultValue={filters.topic ?? ""}
@@ -267,8 +270,8 @@ export default async function BrowsePage({
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterLanguage")}
+            <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterLanguage")}</span>
               <select
                 name="language"
                 defaultValue={filters.language ?? ""}
@@ -283,8 +286,8 @@ export default async function BrowsePage({
               </select>
             </label>
 
-            <label className="flex flex-col gap-1 text-sm">
-              {t("filterPreference")}
+            <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterPreference")}</span>
               <select
                 name="preference"
                 defaultValue={filters.preference ?? ""}
@@ -315,7 +318,7 @@ export default async function BrowsePage({
             so an applied filter is never hidden behind a closed section —
             that would leave people wondering why their results look odd.
           */}
-          <details className="group" open={advancedFilterCount > 0}>
+          <details className="group border-t border-border pt-4" open={advancedFilterCount > 0}>
             <summary className="cursor-pointer text-sm font-medium select-none">
               <span className="group-open:hidden">
                 {t("moreFilters")}
@@ -324,9 +327,9 @@ export default async function BrowsePage({
               <span className="hidden group-open:inline">{t("fewerFilters")}</span>
             </summary>
 
-            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <label className="flex flex-col gap-1 text-sm">
-                {t("filterStudyLanguage")}
+            <div className="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+              <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterStudyLanguage")}</span>
                 <select
                   name="studyLanguage"
                   defaultValue={filters.studyLanguage ?? ""}
@@ -352,8 +355,8 @@ export default async function BrowsePage({
                 emptyLabel={t("all")}
               />
 
-              <label className="flex flex-col gap-1 text-sm">
-                {t("filterFrequency")}
+              <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterFrequency")}</span>
                 <select
                   name="frequency"
                   defaultValue={filters.frequency ?? ""}
@@ -368,8 +371,8 @@ export default async function BrowsePage({
                 </select>
               </label>
 
-              <label className="flex flex-col gap-1 text-sm">
-                {t("filterTimeOfDay")}
+              <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterTimeOfDay")}</span>
                 <select
                   name="timeOfDay"
                   defaultValue={filters.timeOfDay ?? ""}
@@ -384,8 +387,8 @@ export default async function BrowsePage({
                 </select>
               </label>
 
-              <label className="flex flex-col gap-1 text-sm">
-                {t("filterSessionLength")}
+              <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterSessionLength")}</span>
                 <select
                   name="sessionLength"
                   defaultValue={filters.sessionLength ?? ""}
@@ -406,8 +409,8 @@ export default async function BrowsePage({
                 a disabled dropdown just looks broken.
               */}
               {viewerCoords ? (
-                <label className="flex flex-col gap-1 text-sm">
-                  {t("filterNear")}
+                <label className="flex flex-col gap-1.5">
+            <span className={filterLabelClass}>{t("filterNear")}</span>
                   <select
                     name="near"
                     defaultValue={filters.near ?? ""}
@@ -424,7 +427,7 @@ export default async function BrowsePage({
                   </select>
                 </label>
               ) : (
-                <div className="col-span-2 flex flex-col gap-1 text-sm sm:col-span-4">
+                <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-4">
                   <span>{t("filterNear")}</span>
                   <p className="text-xs text-muted">
                     {t("nearNeedsCity")}{" "}
@@ -446,7 +449,6 @@ export default async function BrowsePage({
             {t("applyFilters")}
           </button>
         </form>
-        </aside>
 
         <main className="flex flex-col gap-5 border-t border-border pt-6">
           {filterChips.length > 0 && (

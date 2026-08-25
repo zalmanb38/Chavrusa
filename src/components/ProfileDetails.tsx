@@ -13,7 +13,7 @@ import {
   type Frequency,
   type TimeOfDay,
 } from "@/lib/profile-options";
-import { formatLocation } from "@/lib/locations";
+import { formatLocationShort } from "@/lib/locations";
 import { visibleAgeRange } from "@/lib/browse-filters";
 
 /**
@@ -46,13 +46,34 @@ export type ProfileDetailFields = Pick<
 >;
 
 export function ProfileLocation({ profile }: { profile: ProfileDetailFields }) {
-  const tLocation = useTranslations("Location");
-  const location = formatLocation(profile, (code) =>
-    tLocation(`country_${code}`),
-  );
+  const location = formatLocationShort(profile);
   return location ? <span className="text-sm text-muted">{location}</span> : null;
 }
 
+/**
+ * One labelled row. The label is the design system's "only chrome voice":
+ * 11.5px, wide tracking, uppercase, in neutral-700.
+ */
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <>
+      <dt className="pt-0.5 text-[11.5px] tracking-[0.14em] text-muted uppercase">
+        {label}
+      </dt>
+      <dd className="text-[15px]">{children}</dd>
+    </>
+  );
+}
+
+/**
+ * Everything about a person that is safe to show before a match, as
+ * labelled rows rather than a paragraph.
+ *
+ * Running these together — topics, then level, then languages, then
+ * availability — made a row read as one block of prose that had to be
+ * read in full to find anything. Each kind of fact now sits against its
+ * own label, so a reader can look down the column they care about.
+ */
 export default function ProfileDetails({
   profile,
 }: {
@@ -65,60 +86,65 @@ export default function ProfileDetails({
   const topics = topicLabels(profile.topics, profile.topic_other, tTopics);
   const age = visibleAgeRange(profile);
 
+  // Frequency, time of day and session length describe one thing — when
+  // and how often — so they read better as a single line than as three
+  // rows each holding two words.
+  const rhythm = [
+    profile.frequency &&
+      tProfile(frequencyMessageKey[profile.frequency as Frequency]),
+    profile.time_of_day &&
+      tProfile(timeOfDayMessageKey[profile.time_of_day as TimeOfDay]),
+    profile.session_length &&
+      tProfile("sessionLengthValue", {
+        minutes: Number(profile.session_length),
+      }),
+  ].filter(Boolean) as string[];
+
   return (
-    <div className="flex flex-col gap-2">
-      {topics.length > 0 && <p className="text-sm">{topics.join(", ")}</p>}
-
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
-        {profile.languages?.length > 0 && (
-          <span>
-            {profile.languages
-              .map((l: LanguageCode) => tLanguages(l))
-              .join(", ")}
-          </span>
+    <div className="flex flex-col gap-3">
+      <dl className="grid gap-x-5 gap-y-2 sm:grid-cols-[8.5rem_1fr]">
+        {topics.length > 0 && (
+          <Row label={tProfile("topicsOfInterest")}>{topics.join(" · ")}</Row>
         )}
-        <span>
-          {tProfile(preferenceMessageKey[profile.preference as Preference])}
-        </span>
+
         {profile.level && (
-          <span>{tProfile(levelMessageKey[profile.level])}</span>
+          <Row label={tProfile("learningLevel")}>
+            {tProfile(levelMessageKey[profile.level])}
+          </Row>
         )}
-        {age && <span>{age}</span>}
-        {profile.frequency && (
-          <span>
-            {tProfile(frequencyMessageKey[profile.frequency as Frequency])}
-          </span>
-        )}
-        {profile.time_of_day && (
-          <span>
-            {tProfile(timeOfDayMessageKey[profile.time_of_day as TimeOfDay])}
-          </span>
-        )}
-        {profile.session_length && (
-          <span>
-            {tProfile("sessionLengthValue", {
-              minutes: Number(profile.session_length),
-            })}
-          </span>
-        )}
-      </div>
 
-      {profile.study_languages?.length > 0 && (
-        <p className="text-xs text-muted">
-          {tProfile("studyLanguagesShort", {
-            languages: profile.study_languages
-              .map((l) => tLanguages(l))
-              .join(", "),
-          })}
-        </p>
-      )}
+        <Row label={tProfile("learningPreference")}>
+          {tProfile(preferenceMessageKey[profile.preference as Preference])}
+        </Row>
 
-      {profile.availability && (
-        <p className="text-xs text-muted">{profile.availability}</p>
-      )}
+        {age && <Row label={tProfile("ageRange")}>{age}</Row>}
+
+        {profile.languages?.length > 0 && (
+          <Row label={tProfile("languagesSpoken")}>
+            {profile.languages.map((l: LanguageCode) => tLanguages(l)).join(" · ")}
+          </Row>
+        )}
+
+        {profile.study_languages?.length > 0 && (
+          <Row label={tProfile("studyLanguages")}>
+            {profile.study_languages.map((l) => tLanguages(l)).join(" · ")}
+          </Row>
+        )}
+
+        {(rhythm.length > 0 || profile.availability) && (
+          <Row label={tProfile("availability")}>
+            <span className="flex flex-col gap-0.5">
+              {rhythm.length > 0 && <span>{rhythm.join(" · ")}</span>}
+              {profile.availability && (
+                <span className="text-muted">{profile.availability}</span>
+              )}
+            </span>
+          </Row>
+        )}
+      </dl>
 
       {profile.blurb && (
-        <p className="rounded-xl bg-background/60 p-3 text-sm italic">
+        <p className="max-w-[40em] border-s-2 border-brass ps-3 text-[15px] italic">
           {profile.blurb}
         </p>
       )}
