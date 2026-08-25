@@ -39,8 +39,10 @@ export function tileConfig(dark: boolean): { url: string; attribution: string } 
  * to read against both the light and dark basemaps.
  */
 export const MARKER_COLORS = {
-  selected: { stroke: "#8a6626", fill: "#b3893c" },
-  base: { stroke: "#1b3f2c", fill: "#2f7a55" },
+  // Gold for the selected cluster, slate blue for the rest — the palette's
+  // two roles, kept apart: fill versus fill, never mixed in one marker.
+  selected: { stroke: "#7a5713", fill: "#c48f2a" },
+  base: { stroke: "#12305c", fill: "#1c4b8f" },
 } as const;
 
 export const usingFallbackTiles = !MAPTILER_KEY;

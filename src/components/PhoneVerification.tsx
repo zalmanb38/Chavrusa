@@ -8,6 +8,7 @@ import {
   splitPhone,
   type CountryCode,
 } from "@/lib/country-codes";
+import ErrorNote from "@/components/ErrorNote";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none disabled:opacity-60";
@@ -251,7 +252,7 @@ export default function PhoneVerification({
 
       {error && (
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-red-600">{error}</p>
+          <ErrorNote>{error}</ErrorNote>
           {showContact && (
             <Link
               href="/contact"

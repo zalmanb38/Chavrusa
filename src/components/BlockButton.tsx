@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function BlockButton({
   currentUserId,
@@ -64,7 +65,7 @@ export default function BlockButton({
         {t("blockConfirmQuestion", { name: blockedName })}
       </p>
 
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
 
       <div className="flex gap-2">
         <button

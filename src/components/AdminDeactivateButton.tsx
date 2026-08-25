@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function AdminDeactivateButton({
   profileId,
@@ -48,7 +49,7 @@ export default function AdminDeactivateButton({
       >
         {isActive ? t("deactivateProfile") : t("reactivateProfile")}
       </button>
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
     </div>
   );
 }

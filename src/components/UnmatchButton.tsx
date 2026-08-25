@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import ErrorNote from "@/components/ErrorNote";
 
 /**
  * Ends a match. Two-step rather than one click: unmatching deletes the
@@ -92,7 +93,7 @@ export default function UnmatchButton({
         </button>
       </div>
 
-      {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 const buttonClass =
   "rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50";
@@ -104,7 +105,7 @@ export default function AdminUserActions({
           className={
             isSuspended
               ? buttonClass
-              : `${buttonClass} border-red-600/40 text-red-600 hover:bg-red-600/5`
+              : `${buttonClass} border-clay/40 text-clay hover:bg-clay/5`
           }
         >
           {isSuspended ? t("unsuspendUser") : t("suspendUser")}
@@ -114,13 +115,13 @@ export default function AdminUserActions({
       <div className="flex flex-col gap-2 border-t border-border pt-3">
         {confirmingDelete ? (
           <div className="flex flex-col gap-2">
-            <p className="text-xs text-red-600">{t("deleteConfirmQuestion")}</p>
+            <ErrorNote size="xs">{t("deleteConfirmQuestion")}</ErrorNote>
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={handleDelete}
                 disabled={loading !== null}
-                className="rounded-full bg-red-600 px-3.5 py-1.5 text-sm font-semibold text-white disabled:opacity-50"
+                className="rounded-full bg-clay px-3.5 py-1.5 text-sm font-semibold text-ivory disabled:opacity-50"
               >
                 {t("deleteConfirmButton")}
               </button>
@@ -138,7 +139,7 @@ export default function AdminUserActions({
             type="button"
             onClick={() => setConfirmingDelete(true)}
             disabled={loading !== null || isAdminUser}
-            className="w-fit text-xs text-red-600 underline disabled:opacity-50"
+            className="w-fit text-xs text-clay underline disabled:opacity-50"
           >
             {t("deleteProfile")}
           </button>
@@ -146,7 +147,7 @@ export default function AdminUserActions({
         <p className="text-xs text-muted">{t("deleteHint")}</p>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
     </div>
   );
 }

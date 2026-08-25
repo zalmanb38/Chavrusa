@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function ReportButton({
   currentUserId,
@@ -76,7 +77,7 @@ export default function ReportButton({
         />
       </label>
 
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
 
       <div className="flex gap-2">
         <button

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
@@ -81,7 +82,7 @@ export default function LoginPage() {
             {t("forgotPassword")}
           </Link>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <ErrorNote>{error}</ErrorNote>}
 
           <button
             type="submit"

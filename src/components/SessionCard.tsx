@@ -6,6 +6,7 @@ import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { notify } from "@/lib/notify";
 import type { StudySession } from "@/lib/sessions";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function SessionCard({
   session,
@@ -101,7 +102,7 @@ export default function SessionCard({
 
       {session.note && <p className="text-sm text-muted">{session.note}</p>}
 
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
 
       {isMyTurn && !showCounter && (
         <div className="flex flex-wrap gap-2 pt-1">

@@ -80,7 +80,7 @@ export default async function AdminMessagesPage({
                 <span
                   className={`rounded-full border px-2 py-0.5 ${
                     m.topic === "safety"
-                      ? "border-red-600/40 text-red-600"
+                      ? "border-clay/40 text-clay"
                       : "border-border text-muted"
                   }`}
                 >

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("Auth");
@@ -65,7 +66,7 @@ export default function ForgotPasswordPage() {
               />
             </label>
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <ErrorNote>{error}</ErrorNote>}
 
             <button
               type="submit"

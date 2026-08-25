@@ -23,8 +23,8 @@ export default function GlobalError({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#f2ead9",
-          color: "#223526",
+          background: "#f8f6f0",
+          color: "#1b2430",
           fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif",
           padding: "1.5rem",
         }}
@@ -40,10 +40,10 @@ export default function GlobalError({
           >
             Something went wrong
           </h1>
-          <p style={{ margin: 0, color: "#5c6b58", lineHeight: 1.6 }}>
+          <p style={{ margin: 0, color: "#59544c", lineHeight: 1.6 }}>
             Chavrusa Link hit an unexpected problem. Trying again often
             works — if it doesn&apos;t, please let us know at{" "}
-            <a href="mailto:info@chavrusalink.com" style={{ color: "#9d7530" }}>
+            <a href="mailto:info@chavrusalink.com" style={{ color: "#173d75" }}>
               info@chavrusalink.com
             </a>
             .
@@ -56,8 +56,8 @@ export default function GlobalError({
                 border: "none",
                 borderRadius: "100px",
                 padding: "0.65rem 1.25rem",
-                background: "#b3893c",
-                color: "#223526",
+                background: "#1c4b8f",
+                color: "#faf8f3",
                 fontWeight: 600,
                 fontSize: "0.875rem",
                 cursor: "pointer",
@@ -75,8 +75,8 @@ export default function GlobalError({
               style={{
                 borderRadius: "100px",
                 padding: "0.65rem 1.25rem",
-                border: "1px solid #ddc99e",
-                color: "#223526",
+                border: "1px solid rgba(27, 36, 48, 0.16)",
+                color: "#1b2430",
                 fontWeight: 500,
                 fontSize: "0.875rem",
                 textDecoration: "none",
@@ -86,7 +86,7 @@ export default function GlobalError({
             </a>
           </div>
           {error.digest && (
-            <p style={{ margin: 0, fontSize: "0.75rem", color: "#5c6b58" }}>
+            <p style={{ margin: 0, fontSize: "0.75rem", color: "#59544c" }}>
               Reference: {error.digest}
             </p>
           )}

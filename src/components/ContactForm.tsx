@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import ErrorNote from "@/components/ErrorNote";
 
 const TOPICS = ["general", "safety", "technical", "feedback"] as const;
 
@@ -134,7 +135,7 @@ export default function ContactForm() {
         </label>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
 
       <button
         type="submit"

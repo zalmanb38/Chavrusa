@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { notify } from "@/lib/notify";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function RespondButtons({ requestId }: { requestId: string }) {
   const t = useTranslations("Requests");
@@ -56,7 +57,7 @@ export default function RespondButtons({ requestId }: { requestId: string }) {
           {t("decline")}
         </button>
       </div>
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
     </div>
   );
 }

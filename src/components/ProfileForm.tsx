@@ -29,6 +29,7 @@ import {
 import type { ProfileContacts } from "@/lib/contacts";
 import LocationFields, { type LocationValue } from "@/components/LocationFields";
 import { locationRequired } from "@/lib/locations";
+import ErrorNote from "@/components/ErrorNote";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
@@ -506,7 +507,7 @@ export default function ProfileForm({
         </label>
       </fieldset>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
       {success && <p className="text-sm text-accent">{t("saveSuccess")}</p>}
 
       <button

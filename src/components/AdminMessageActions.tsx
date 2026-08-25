@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function AdminMessageActions({
   messageId,
@@ -46,7 +47,7 @@ export default function AdminMessageActions({
       >
         {handled ? t("markUnhandled") : t("markHandled")}
       </button>
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
     </div>
   );
 }

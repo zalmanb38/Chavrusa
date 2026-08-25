@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Assistant, Frank_Ruhl_Libre } from "next/font/google";
+import { Source_Serif_4, Frank_Ruhl_Libre } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -12,19 +12,26 @@ import Footer from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/site";
 
-// Chosen with Hebrew in mind: both have real Hebrew glyphs (unlike the
-// previous Geist fonts), so `/he` renders with matching type instead of
-// silently falling back to a mismatched system font.
-const assistant = Assistant({
-  variable: "--font-sans",
-  subsets: ["latin", "hebrew"],
-  weight: ["400", "500", "600", "700"],
+// "One serif for everything, including UI chrome." Source Serif 4 carries
+// Latin; it has no Hebrew glyphs, so Frank Ruhl Libre sits behind it in
+// the stack rather than being applied separately.
+//
+// That ordering does two jobs at once. In the Hebrew locale the whole
+// interface falls through to Frank Ruhl Libre automatically. And in a
+// mixed run like "Gemara · בבא מציעא" each script picks up its own face
+// within the same element — which is exactly what the handoff asks for,
+// without needing a span around every Hebrew word.
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
 });
 
 const frankRuhlLibre = Frank_Ruhl_Libre({
-  variable: "--font-serif",
+  variable: "--font-frank-ruhl",
   subsets: ["latin", "hebrew"],
-  weight: ["500", "700"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -78,7 +85,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={isRtl(locale) ? "rtl" : "ltr"}
-      className={`${assistant.variable} ${frankRuhlLibre.variable} h-full antialiased`}
+      className={`${sourceSerif.variable} ${frankRuhlLibre.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         <NextIntlClientProvider locale={locale as Locale}>

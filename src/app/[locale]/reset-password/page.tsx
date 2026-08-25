@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function ResetPasswordPage() {
   const t = useTranslations("Auth");
@@ -152,12 +153,12 @@ export default function ResetPasswordPage() {
           <p className="text-sm text-muted">{t("verifyingLink")}</p>
         ) : verifyError ? (
           <div className="flex flex-col gap-2">
-            <p className="text-sm text-red-600">
+            <ErrorNote>
               {verifyError}{" "}
               <Link href="/forgot-password" className="underline">
                 {t("requestNewLink")}
               </Link>
-            </p>
+            </ErrorNote>
             {errorDetail && (
               <p className="text-xs text-muted" dir="ltr">
                 {errorDetail}
@@ -195,12 +196,12 @@ export default function ResetPasswordPage() {
             </label>
 
             {error && (
-              <p className="text-sm text-red-600">
+              <ErrorNote>
                 {error}{" "}
                 <Link href="/forgot-password" className="underline">
                   {t("requestNewLink")}
                 </Link>
-              </p>
+              </ErrorNote>
             )}
 
             <button

@@ -9,6 +9,7 @@ import {
   MAX_PHOTO_BYTES,
   type PhotoStatus,
 } from "@/lib/photos";
+import ErrorNote from "@/components/ErrorNote";
 
 /**
  * The owner's view of their own photo.
@@ -172,7 +173,7 @@ export default function PhotoUpload({
         }}
       />
 
-      {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
     </section>
   );
 }

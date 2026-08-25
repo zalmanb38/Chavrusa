@@ -129,7 +129,7 @@ export default async function AdminProfileDetailPage({
           {p.phone_verified ? t("badgeVerified") : t("badgeUnverified")}
         </span>
         {p.suspended && (
-          <span className="rounded-full border border-red-600/40 px-2 py-0.5 text-red-600">
+          <span className="rounded-full border border-clay/40 px-2 py-0.5 text-clay">
             {t("badgeSuspended")}
           </span>
         )}

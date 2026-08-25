@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import type { PhotoStatus } from "@/lib/photos";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function AdminPhotoActions({
   photoId,
@@ -74,7 +75,7 @@ export default function AdminPhotoActions({
         )}
       </div>
 
-      {error && <p className="text-sm text-red-700 dark:text-red-400">{error}</p>}
+      {error && <ErrorNote>{error}</ErrorNote>}
     </div>
   );
 }

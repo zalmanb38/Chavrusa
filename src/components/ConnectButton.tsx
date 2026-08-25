@@ -6,6 +6,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { notify } from "@/lib/notify";
 import type { ConnectStatus } from "@/lib/connect";
+import ErrorNote from "@/components/ErrorNote";
 
 export default function ConnectButton({
   currentUserId,
@@ -97,7 +98,7 @@ export default function ConnectButton({
       >
         {t("connect")}
       </button>
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <ErrorNote size="xs">{error}</ErrorNote>}
     </div>
   );
 }
