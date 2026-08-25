@@ -37,10 +37,14 @@ export default function BrowseCard({
     <li className="grid gap-6 border-t border-border py-4 transition-colors hover:bg-surface lg:grid-cols-[1fr_200px]">
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-          <h2 className="text-[20px] leading-tight font-semibold">
+          <h2 className="text-[21px] leading-tight font-semibold">
             {showName ? profile.name : t("anonymousLearner")}
           </h2>
-          <ProfileLocation profile={profile} />
+          {/* Meta voice: smaller, quieter, and clearly not part of the
+              name it sits beside. */}
+          <span className="text-[13.5px] text-muted">
+            <ProfileLocation profile={profile} />
+          </span>
         </div>
 
         <ProfileDetails profile={profile} compact />

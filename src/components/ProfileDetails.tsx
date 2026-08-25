@@ -47,36 +47,59 @@ export type ProfileDetailFields = Pick<
 
 export function ProfileLocation({ profile }: { profile: ProfileDetailFields }) {
   const location = formatLocationShort(profile);
-  return location ? <span className="text-sm text-muted">{location}</span> : null;
+  return location ? <span>{location}</span> : null;
 }
 
 /**
- * One labelled line.
+ * A tag.
  *
- * Every row here has a real, visible label. An earlier version hid the
- * label on combined rows with `sr-only` — which is `position: absolute`,
- * so those rows dropped out of the grid flow, landed in the narrow label
- * column and rendered on top of each other. A grid row needs both its
- * cells present.
+ * The handoff calls for these on result rows — "slate-blue tags for
+ * subjects, neutral tags for level and languages" — and they do the job a
+ * middot list couldn't: a subject is findable at a glance, because it has
+ * an edge, rather than being a word inside a sentence of other words.
  */
+function Tag({
+  children,
+  tone = "neutral",
+  lang,
+}: {
+  children: React.ReactNode;
+  tone?: "subject" | "neutral";
+  lang?: string;
+}) {
+  return (
+    <span
+      lang={lang}
+      className={`px-2 py-0.5 text-[13px] leading-snug ${
+        tone === "subject"
+          ? "bg-slate-100 text-slate-700"
+          : "bg-neutral-200 text-neutral-800"
+      }`}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** One labelled line, for the values that read as prose rather than tags. */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <>
-      <dt className="pt-px text-[11px] tracking-[0.14em] text-muted uppercase">
+    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+      <span className="text-[11px] tracking-[0.14em] text-muted uppercase">
         {label}
-      </dt>
-      <dd className="text-[15px] leading-snug">{children}</dd>
-    </>
+      </span>
+      <span className="text-[14.5px] text-muted">{children}</span>
+    </div>
   );
 }
 
 /**
- * Everything about a person that is safe to show before a match, in four
- * labelled lines.
+ * Everything about a person that is safe to show before a match.
  *
- * Values are joined into one string per line rather than composed from
- * nested flex boxes — a row of small pairs looks tidy until a long value
- * wraps, and there is nothing here that a middot can't separate.
+ * Two bands of tags, then availability as a line. Tags carry the facts
+ * that get scanned — what someone learns, at what level, in which
+ * language — and the label/value grid is gone: it cost a fixed column of
+ * width on every row to repeat words the tags now say for themselves.
  *
  * `compact` is for lists, where the job is scanning many people rather
  * than reading one.
@@ -95,27 +118,21 @@ export default function ProfileDetails({
   const topics = topicLabels(profile.topics, profile.topic_other, tTopics);
   const age = visibleAgeRange(profile);
 
-  // Level, format and age — each a word or two, so one line between them.
-  // Format uses its own list wording: "Both" alone answers a question the
-  // reader can no longer see once the label is gone.
-  const about = [
+  const facts = [
     profile.level && tProfile(levelMessageKey[profile.level]),
     tProfile(preferenceListKey[profile.preference as Preference]),
     age,
-  ].filter(Boolean) as string[];
-
-  const languages = [
     profile.languages?.length > 0 &&
       tProfile("speaksValue", {
         languages: profile.languages
           .map((l: LanguageCode) => tLanguages(l))
-          .join(" · "),
+          .join(", "),
       }),
     profile.study_languages?.length > 0 &&
       tProfile("studiesInValue", {
         languages: profile.study_languages
           .map((l) => tLanguages(l))
-          .join(" · "),
+          .join(", "),
       }),
   ].filter(Boolean) as string[];
 
@@ -132,29 +149,32 @@ export default function ProfileDetails({
   ].filter(Boolean) as string[];
 
   return (
-    <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-3"}`}>
-      <dl
-        className={`grid gap-x-4 sm:grid-cols-[5rem_1fr] ${
-          compact ? "gap-y-0.5" : "gap-y-1.5"
-        }`}
-      >
-        {topics.length > 0 && (
-          <Row label={tProfile("topicsShort")}>{topics.join(" · ")}</Row>
-        )}
-        {about.length > 0 && (
-          <Row label={tProfile("aboutShort")}>{about.join(" · ")}</Row>
-        )}
-        {languages.length > 0 && (
-          <Row label={tProfile("languagesShort")}>{languages.join(" · ")}</Row>
-        )}
-        {available.length > 0 && (
-          <Row label={tProfile("availableShort")}>{available.join(" · ")}</Row>
-        )}
-      </dl>
+    <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-2.5"}`}>
+      {topics.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {topics.map((topic) => (
+            <Tag key={topic} tone="subject">
+              {topic}
+            </Tag>
+          ))}
+        </div>
+      )}
+
+      {facts.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {facts.map((fact) => (
+            <Tag key={fact}>{fact}</Tag>
+          ))}
+        </div>
+      )}
+
+      {available.length > 0 && (
+        <Row label={tProfile("availableShort")}>{available.join(" · ")}</Row>
+      )}
 
       {profile.blurb && (
         <p
-          className={`max-w-[46em] border-s-2 border-brass ps-3 text-[15px] italic ${
+          className={`max-w-[46em] border-s-2 border-brass ps-3 text-[14.5px] text-muted italic ${
             compact ? "line-clamp-1" : ""
           }`}
         >
