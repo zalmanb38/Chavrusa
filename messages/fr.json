@@ -264,7 +264,8 @@
     "pending": "En attente",
     "matched": "Mis en relation",
     "adminResolved": "Résolu — rejeté par l'administrateur du site",
-    "removeResolved": "Supprimer"
+    "removeResolved": "Supprimer",
+    "viewProfile": "Voir le profil"
   },
   "Schedule": {
     "proposeTitle": "Proposer un horaire",
@@ -506,5 +507,9 @@
     "unmatchCancel": "Conserver la mise en relation",
     "unmatching": "En cours…",
     "unmatchFailed": "Impossible de mettre fin à la mise en relation. Veuillez réessayer."
+  },
+  "Account": {
+    "emailLabel": "E-mail du compte",
+    "emailHint": "Vous seul le voyez. Le modifier revient à changer le compte de connexion, ce n'est donc pas fait ici."
   }
 }

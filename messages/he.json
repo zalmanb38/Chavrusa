@@ -264,7 +264,8 @@
     "pending": "ממתין",
     "matched": "הותאמתם",
     "adminResolved": "טופל — נסגר על ידי מנהל האתר",
-    "removeResolved": "הסרה"
+    "removeResolved": "הסרה",
+    "viewProfile": "צפייה בפרופיל"
   },
   "Schedule": {
     "proposeTitle": "הצע/י זמן",
@@ -506,5 +507,9 @@
     "unmatchCancel": "להשאיר את ההתאמה",
     "unmatching": "מסיים…",
     "unmatchFailed": "לא ניתן היה לסיים את ההתאמה. נסו שוב."
+  },
+  "Account": {
+    "emailLabel": "אימייל החשבון",
+    "emailHint": "רק אתם רואים זאת. שינוי הכתובת פירושו שינוי החשבון שאיתו נכנסים, ולכן אינו נעשה כאן."
   }
 }

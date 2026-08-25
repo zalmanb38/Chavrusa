@@ -222,11 +222,15 @@ export default async function RequestsPage({
                     )}
                   </div>
                   <div className="flex flex-col items-end gap-2">
+                    {/* This was a "Matched" pill, which read as a status
+                        badge rather than the way through to the person —
+                        so the one place their full name, photo and
+                        scheduling live was easy to miss. */}
                     <Link
                       href={`/matches/${row.id}`}
-                      className="rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
+                      className="bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
                     >
-                      {t("matched")}
+                      {t("viewProfile")}
                     </Link>
                     <UnmatchButton
                       requestId={row.id}

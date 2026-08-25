@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
@@ -15,6 +15,7 @@ export default async function ProfilePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const tAccount = await getTranslations("Account");
 
   const supabase = await createClient();
   const {
@@ -23,6 +24,10 @@ export default async function ProfilePage({
 
   if (!user) {
     redirect({ href: "/login", locale });
+    // redirect() throws; this narrows `user` below without an assertion
+    // at every use, which would TypeError rather than redirect if that
+    // ever stopped being true.
+    return null;
   }
 
   const { data: profile } = await supabase
@@ -30,13 +35,13 @@ export default async function ProfilePage({
     .select(
       "id, name, languages, study_languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, display_name_set, is_active, phone, phone_verified",
     )
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   const { data: contacts } = await supabase
     .from("profile_contacts")
     .select("id, whatsapp, contact_phone, zoom_link")
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   const { data: photo } = await supabase
@@ -44,7 +49,7 @@ export default async function ProfilePage({
     .select(
       "id, storage_path, status, moderation_verdict, moderation_detail, uploaded_at, reviewed_by, reviewed_at, review_note",
     )
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   const photoRow = photo as ProfilePhoto | null;
@@ -58,7 +63,7 @@ export default async function ProfilePage({
   const { data: nameRow } = await supabase
     .from("profile_names")
     .select("full_name")
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .maybeSingle();
 
   return (
@@ -69,6 +74,20 @@ export default async function ProfilePage({
           (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
         }
       />
+      {/* Read-only: the address is the account's identity, changing it is
+          an auth operation rather than a profile edit. Shown because
+          people forget which address they signed up with — and it is only
+          ever your own, never anyone else's, at any match status. */}
+      <section className="flex flex-col gap-1 border-t border-border pt-5">
+        <h2 className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
+          {tAccount("emailLabel")}
+        </h2>
+        <p dir="ltr" className="text-[15px]">
+          {user.email}
+        </p>
+        <p className="text-xs text-muted">{tAccount("emailHint")}</p>
+      </section>
+
       <PhotoUpload
         initialStatus={photoRow?.status ?? null}
         initialUrl={photoUrl}
@@ -78,7 +97,7 @@ export default async function ProfilePage({
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}
         initialFullName={(nameRow as { full_name: string } | null)?.full_name ?? ""}
-        userId={user!.id}
+        userId={user.id}
       />
     </div>
   );

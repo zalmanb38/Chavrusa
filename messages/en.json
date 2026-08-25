@@ -264,7 +264,8 @@
     "pending": "Pending",
     "matched": "Matched",
     "adminResolved": "Resolved — dismissed by site administrator",
-    "removeResolved": "Remove"
+    "removeResolved": "Remove",
+    "viewProfile": "View profile"
   },
   "Schedule": {
     "proposeTitle": "Propose a time",
@@ -506,5 +507,9 @@
     "unmatchCancel": "Keep the match",
     "unmatching": "Ending…",
     "unmatchFailed": "Couldn't end the match. Please try again."
+  },
+  "Account": {
+    "emailLabel": "Account email",
+    "emailHint": "Only you can see this. Changing it means changing the account it signs in with, so it isn't edited here."
   }
 }

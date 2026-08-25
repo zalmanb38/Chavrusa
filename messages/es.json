@@ -264,7 +264,8 @@
     "pending": "Pendiente",
     "matched": "Conectados",
     "adminResolved": "Resuelto — descartado por el administrador del sitio",
-    "removeResolved": "Quitar"
+    "removeResolved": "Quitar",
+    "viewProfile": "Ver perfil"
   },
   "Schedule": {
     "proposeTitle": "Proponer un horario",
@@ -506,5 +507,9 @@
     "unmatchCancel": "Mantener el match",
     "unmatching": "Terminando…",
     "unmatchFailed": "No se pudo terminar el match. Inténtalo de nuevo."
+  },
+  "Account": {
+    "emailLabel": "Correo de la cuenta",
+    "emailHint": "Solo tú lo ves. Cambiarlo significa cambiar la cuenta con la que inicias sesión, así que no se edita aquí."
   }
 }
