@@ -104,24 +104,30 @@ export default async function HomePage({
       </section>
 
       {/* ── How the matching works ───────────────────────────────────── */}
-      <section id="how" className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
-        <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-border pt-6">
+      <section id="how" className="mx-auto w-full max-w-[1240px] px-6 pb-20 sm:px-14">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-border pt-6">
           <h2 className="text-[30px] font-semibold">{t("howTitle")}</h2>
           <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
             {t("howLabel")}
           </span>
         </div>
 
-        <div className="mt-10 grid gap-[34px] sm:grid-cols-2 lg:grid-cols-4">
+        {/* Row gap is the larger one: once the grid folds to two columns and
+            then one, the steps stack, and the space that reads as "between
+            columns" horizontally is far too tight vertically. */}
+        <div className="mt-12 grid items-start gap-x-[34px] gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((numeral, i) => (
-            <div key={numeral} className="flex flex-col gap-2 border-t-2 border-brass pt-4">
-              <span className="text-[34px] leading-none text-brass">
+            <div key={numeral} className="flex flex-col border-t-2 border-brass pt-4">
+              <span className="mb-3 text-[34px] leading-none text-brass">
                 {numeral}
               </span>
-              <h3 className="text-[21px] font-semibold">
+              {/* Two lines' worth of floor: titles run to one or two lines
+                  depending on the language, and without it the bodies start
+                  at different heights across the four columns. */}
+              <h3 className="mb-2 text-[21px] font-semibold text-balance lg:min-h-[3em]">
                 {t(`step${i + 1}Title`)}
               </h3>
-              <p className="text-[15px] leading-relaxed text-muted">
+              <p className="text-[15px] leading-[1.7] text-muted text-pretty">
                 {t(`step${i + 1}Body`)}
               </p>
             </div>
