@@ -35,10 +35,11 @@ export default function SignupPage() {
       return;
     }
 
-    // Mirrors the Auth policy (letters + digits). Checked here so the
-    // rejection arrives while someone is still looking at the field,
-    // rather than after a round-trip.
-    if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+    // Mirrors the Auth policy (a letter and a digit), checked here so the
+    // rejection arrives while someone is still looking at the field rather
+    // than after a round-trip. The letter test is Unicode-aware: on a site
+    // read in Hebrew and French, a letter is not only a-z.
+    if (!/\p{L}/u.test(password) || !/[0-9]/.test(password)) {
       setError(t("passwordNeedsLetterAndDigit"));
       return;
     }
