@@ -2,7 +2,7 @@
   "Home": {
     "heroTitle": "Trouvez avec qui étudier.",
     "heroLead": "Dites-nous ce que vous étudiez, quand vous êtes disponible et comment vous aimez apprendre — en personne, par téléphone ou en visio. Nous vous mettons en relation avec un 'havrouta qui vous correspond, et vous prenez le relais.",
-    "heroReassurance": "La consultation est ouverte à tous. Vous ne créez un compte que pour écrire à quelqu'un.",
+    "heroReassurance": "Un compte gratuit prend une minute et vous montre tous les apprenants près de chez vous.",
     "heroImageDirection": "Guemara ouverte sur un shtender",
     "getStarted": "Commencer",
     "browseChavrusas": "Parcourir les 'havrousos",
@@ -21,7 +21,8 @@
     "ctaTitle": "Prêt à commencer ?",
     "ctaBody": "Créez un profil en une dizaine de minutes et voyez qui, près de chez vous, cherche le même seder.",
     "ctaEmailLabel": "Adresse e-mail",
-    "ctaEmailPlaceholder": "vous@exemple.com"
+    "ctaEmailPlaceholder": "vous@exemple.com",
+    "subjectLearners": "{count, plural, one {# apprenant} other {# apprenants}}"
   },
   "Common": {
     "appName": "Chavrusa Link",

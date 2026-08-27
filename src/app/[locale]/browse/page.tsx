@@ -31,6 +31,7 @@ import {
 } from "@/lib/browse-filters";
 import LocationFilter from "@/components/LocationFilter";
 import BrowseCard from "@/components/BrowseCard";
+import ImageSlot from "@/components/ImageSlot";
 import MultiSelectFilter from "@/components/MultiSelectFilter";
 import BrowseMapView from "@/components/BrowseMapView";
 import {
@@ -503,7 +504,13 @@ export default async function BrowsePage({
               and exactly one action — the design's rule for empty states.
               No illustration, no apology.
             */
-            <div className="flex max-w-[34em] flex-col items-start gap-3 py-6">
+            <div className="flex max-w-[34em] flex-col items-start gap-4 py-6">
+              <ImageSlot
+                direction="A chumash with a bookmark ribbon"
+                src="/photos/p5-chumash-ribbon.jpg"
+                alt=""
+                height={200}
+              />
               <h2 className="text-[24px] font-semibold">
                 {filterChips.length > 0
                   ? t("emptyFilteredTitle")

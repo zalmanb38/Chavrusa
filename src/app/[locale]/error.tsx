@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import ImageSlot from "@/components/ImageSlot";
 
 /**
  * Catches render failures below the locale layout, so the nav and footer
@@ -28,6 +29,12 @@ export default function Error({
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-start gap-4 px-4 py-24">
+      <ImageSlot
+        direction="A well-worn siddur"
+        src="/photos/p8-worn-siddur.jpg"
+        alt=""
+        height={200}
+      />
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("errorTitle")}</h1>
       <p className="text-muted">{t("errorBody")}</p>
 

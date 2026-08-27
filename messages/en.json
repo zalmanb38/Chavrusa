@@ -2,7 +2,7 @@
   "Home": {
     "heroTitle": "Find someone to learn with.",
     "heroLead": "Tell us what you learn, when you are free and how you like to learn — in person, by phone or over video. We match you with a chavrusa who fits, and you take it from there.",
-    "heroReassurance": "Browsing is open to everyone. You only sign up when you want to reach out.",
+    "heroReassurance": "A free account takes a minute and shows you everyone learning nearby.",
     "heroImageDirection": "Open Gemara on a shtender",
     "getStarted": "Get started",
     "browseChavrusas": "Browse chavrusas",
@@ -21,7 +21,8 @@
     "ctaTitle": "Ready to start learning?",
     "ctaBody": "Set up a profile in about ten minutes and see who near you is looking for the same seder.",
     "ctaEmailLabel": "Email address",
-    "ctaEmailPlaceholder": "you@example.com"
+    "ctaEmailPlaceholder": "you@example.com",
+    "subjectLearners": "{count, plural, =1 {# learner} other {# learners}}"
   },
   "Common": {
     "appName": "Chavrusa Link",

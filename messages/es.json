@@ -2,7 +2,7 @@
   "Home": {
     "heroTitle": "Encuentra con quién estudiar.",
     "heroLead": "Cuéntanos qué estudias, cuándo tienes tiempo y cómo prefieres aprender: en persona, por teléfono o por videollamada. Te emparejamos con un javruta que encaje, y a partir de ahí seguís vosotros.",
-    "heroReassurance": "Explorar está abierto a todos. Solo te registras cuando quieres escribir a alguien.",
+    "heroReassurance": "Una cuenta gratuita se crea en un minuto y te muestra a todos los que estudian cerca.",
     "heroImageDirection": "Guemará abierta sobre un shtender",
     "getStarted": "Empezar",
     "browseChavrusas": "Explorar javrutas",
@@ -21,7 +21,8 @@
     "ctaTitle": "¿Listo para empezar?",
     "ctaBody": "Crea un perfil en unos diez minutos y descubre quién cerca de ti busca el mismo seder.",
     "ctaEmailLabel": "Correo electrónico",
-    "ctaEmailPlaceholder": "tu@ejemplo.com"
+    "ctaEmailPlaceholder": "tu@ejemplo.com",
+    "subjectLearners": "{count, plural, one {# persona} other {# personas}}"
   },
   "Common": {
     "appName": "Chavrusa Link",

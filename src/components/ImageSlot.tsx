@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 /**
  * A reserved photograph slot, standing in until real photography exists.
  *
@@ -17,6 +19,7 @@ export default function ImageSlot({
   src,
   alt,
   className,
+  priority = false,
 }: {
   /** Art direction for this slot, shown while empty. */
   direction: string;
@@ -25,18 +28,28 @@ export default function ImageSlot({
   src?: string;
   alt?: string;
   className?: string;
+  /** Set on the homepage hero, which is the page's largest paint. */
+  priority?: boolean;
 }) {
   if (src) {
     return (
-      /* Signed and remote URLs vary by host, so next/image's
-         remotePatterns model doesn't fit these. */
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={src}
-        alt={alt ?? ""}
+      // next/image rather than a bare <img>: these files are 250-675KB
+      // each as shot, and serving them unresized would cost more than the
+      // rest of the page put together. fill + sizes lets it pick a width
+      // per breakpoint and re-encode to AVIF/WebP.
+      <div
         style={{ height }}
-        className={`halftone w-full object-cover ${className ?? ""}`}
-      />
+        className={`relative w-full overflow-hidden ${className ?? ""}`}
+      >
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1240px) 50vw, 620px"
+          className="halftone object-cover"
+          priority={priority}
+        />
+      </div>
     );
   }
 

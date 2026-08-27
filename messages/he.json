@@ -2,7 +2,7 @@
   "Home": {
     "heroTitle": "מצאו עם מי ללמוד.",
     "heroLead": "ספרו לנו מה אתם לומדים, מתי אתם פנויים וכיצד אתם אוהבים ללמוד — פנים אל פנים, בטלפון או בווידאו. אנחנו נתאים לכם חברותא שמתאימה, ומשם זה בידיים שלכם.",
-    "heroReassurance": "העיון באתר פתוח לכולם. נרשמים רק כשרוצים ליצור קשר.",
+    "heroReassurance": "חשבון חינמי נפתח בדקה ומראה לכם את כל הלומדים באזור.",
     "heroImageDirection": "גמרא פתוחה על שטנדר",
     "getStarted": "התחלה",
     "browseChavrusas": "עיון בחברותות",
@@ -21,7 +21,8 @@
     "ctaTitle": "מוכנים להתחיל ללמוד?",
     "ctaBody": "הקימו פרופיל בערך בעשר דקות וראו מי בסביבתכם מחפש את אותו הסדר.",
     "ctaEmailLabel": "כתובת אימייל",
-    "ctaEmailPlaceholder": "you@example.com"
+    "ctaEmailPlaceholder": "you@example.com",
+    "subjectLearners": "{count, plural, one {לומד אחד} two {# לומדים} other {# לומדים}}"
   },
   "Common": {
     "appName": "Chavrusa Link",

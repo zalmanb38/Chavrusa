@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * The homepage, rebuilt to the Broadsheet handoff.
@@ -31,6 +32,22 @@ export default async function HomePage({
 
   const t = await getTranslations("Home");
   const tTopics = await getTranslations("Topics");
+
+  // Real counts, not the design's sample figures. Comes from a
+  // security-definer function because this page is public and profiles
+  // are not — it returns counts and nothing else.
+  const supabase = await createClient();
+  const { data: counts, error: countsError } = await supabase.rpc(
+    "subject_counts",
+  );
+  if (countsError) console.error("Subject counts unavailable", countsError);
+
+  const learnersByTopic = new Map(
+    ((counts ?? []) as { topic: string; learners: number }[]).map((row) => [
+      row.topic,
+      Number(row.learners),
+    ]),
+  );
 
   return (
     <div className="flex flex-col">
@@ -77,7 +94,13 @@ export default async function HomePage({
           <p className="text-[13.5px] text-muted">{t("heroReassurance")}</p>
         </div>
 
-        <ImageSlot direction={t("heroImageDirection")} height={400} />
+        <ImageSlot
+          direction={t("heroImageDirection")}
+          src="/photos/p1-gemara-shtender.jpg"
+          alt=""
+          height={400}
+          priority
+        />
       </section>
 
       {/* ── How the matching works ───────────────────────────────────── */}
@@ -131,6 +154,16 @@ export default async function HomePage({
                 {subject.hebrew}
               </span>
               <span className="text-[17px]">{tTopics(subject.key)}</span>
+              {/* Omitted rather than shown as zero: a card reading "0
+                  learners" is worse than one that simply doesn't claim a
+                  number yet. */}
+              {(learnersByTopic.get(subject.key) ?? 0) > 0 && (
+                <span className="text-[12.5px] text-muted">
+                  {t("subjectLearners", {
+                    count: learnersByTopic.get(subject.key) ?? 0,
+                  })}
+                </span>
+              )}
             </Link>
           ))}
         </div>

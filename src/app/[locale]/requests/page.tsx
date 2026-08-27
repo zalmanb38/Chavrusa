@@ -5,6 +5,7 @@ import RespondButtons from "@/components/RespondButtons";
 import UnblockButton from "@/components/UnblockButton";
 import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButton";
 import UnmatchButton from "@/components/UnmatchButton";
+import ImageSlot from "@/components/ImageSlot";
 import { MESSAGE_COLUMNS, unreadCount, type Message } from "@/lib/messages";
 import ProfileDetails, {
   ProfileLocation,
@@ -148,6 +149,13 @@ export default async function RequestsPage({
 
   return (
     <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-10 px-6 py-12 sm:px-11">
+      <ImageSlot
+        direction="Two chavrusas' seforim, side by side"
+        src="/photos/p4-two-seforim.jpg"
+        alt=""
+        height={180}
+      />
+
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("title")}</h1>
 
       <section className="flex flex-col gap-3">
