@@ -18,6 +18,7 @@ interface ReportRow {
   id: string;
   reason: string;
   created_at: string;
+  connect_request_id: string | null;
   reporter: ProfileSummary | null;
   reported: ReportedProfile | null;
 }
@@ -37,11 +38,52 @@ export default async function AdminReportsPage({
   const { data: reports } = await supabase
     .from("reports")
     .select(
-      "id, reason, created_at, reporter:reporter_id(id, name), reported:reported_id(id, name, is_active)",
+      "id, reason, created_at, connect_request_id, reporter:reporter_id(id, name), reported:reported_id(id, name, is_active)",
     )
     .order("created_at", { ascending: false });
 
   const reportRows = (reports ?? []) as unknown as ReportRow[];
+
+  // Only the threads that reports actually name. The RLS policy grants
+  // exactly this and no more, so a query for anything else comes back
+  // empty rather than being quietly allowed.
+  const reportedThreadIds = [
+    ...new Set(
+      reportRows
+      .map((r) => r.connect_request_id)
+      .filter((id): id is string => Boolean(id)),
+    ),
+  ];
+
+  const { data: threadMessages } = reportedThreadIds.length
+    ? await supabase
+        .from("messages")
+        .select("id, connect_request_id, sender_id, body, created_at")
+        .in("connect_request_id", reportedThreadIds)
+        .order("created_at", { ascending: true })
+    : { data: [] };
+
+  const threadsByRequest = new Map<
+    string,
+    { id: string; sender_id: string; body: string; created_at: string }[]
+  >();
+  for (const message of (threadMessages ?? []) as {
+    id: string;
+    connect_request_id: string;
+    sender_id: string;
+    body: string;
+    created_at: string;
+  }[]) {
+    const list = threadsByRequest.get(message.connect_request_id) ?? [];
+    list.push(message);
+    threadsByRequest.set(message.connect_request_id, list);
+  }
+
+  const nameById = new Map<string, string>();
+  for (const row of reportRows) {
+    if (row.reporter) nameById.set(row.reporter.id, row.reporter.name);
+    if (row.reported) nameById.set(row.reported.id, row.reported.name);
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
@@ -97,6 +139,35 @@ export default async function AdminReportsPage({
                 </time>
               </div>
               <p className="text-sm">{row.reason}</p>
+
+              {row.connect_request_id && (
+                <details className="border-t border-border pt-3">
+                  <summary className="cursor-pointer text-sm font-medium select-none">
+                    {t("reportedConversation")}
+                  </summary>
+                  <ol className="mt-3 flex flex-col gap-2">
+                    {(threadsByRequest.get(row.connect_request_id) ?? []).map(
+                      (message) => (
+                        <li key={message.id} className="text-sm">
+                          <span className="text-[11px] tracking-[0.14em] text-muted uppercase">
+                            {nameById.get(message.sender_id) ?? t("unknownUser")}
+                            {" · "}
+                            {new Date(message.created_at).toLocaleString(locale)}
+                          </span>
+                          <p className="whitespace-pre-wrap">{message.body}</p>
+                        </li>
+                      ),
+                    )}
+                    {(threadsByRequest.get(row.connect_request_id) ?? [])
+                      .length === 0 && (
+                      <li className="text-sm text-muted">
+                        {t("conversationEmpty")}
+                      </li>
+                    )}
+                  </ol>
+                </details>
+              )}
+
               <div className="flex flex-wrap items-center gap-3 pt-1">
                 {row.reported && (
                   <AdminDeactivateButton

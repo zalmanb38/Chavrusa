@@ -17,11 +17,14 @@ export async function sendEmail({
   to,
   subject,
   text,
+  html,
   replyTo,
 }: {
   to: string;
   subject: string;
+  /** Always required: some clients show this instead of the HTML. */
   text: string;
+  html?: string;
   replyTo?: string;
 }): Promise<SendEmailResult> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -42,6 +45,7 @@ export async function sendEmail({
         reply_to: replyTo ?? SUPPORT_EMAIL,
         subject,
         text,
+        ...(html ? { html } : {}),
       }),
     });
 

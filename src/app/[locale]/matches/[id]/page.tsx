@@ -145,7 +145,11 @@ export default async function MatchDetailPage({
           <p className="text-sm text-muted">{otherProfile.city}</p>
         )}
         <div className="flex gap-3">
-          <ReportButton currentUserId={userId} reportedId={otherId} />
+          <ReportButton
+            currentUserId={userId}
+            reportedId={otherId}
+            connectRequestId={id}
+          />
           <BlockButton
             currentUserId={userId}
             blockedId={otherId}

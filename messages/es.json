@@ -259,7 +259,12 @@
     "resultCount": "{count, plural, one {# persona coincide con tus filtros} other {# personas coinciden con tus filtros}}",
     "filteringBy": "Filtrando por",
     "removeFilter": "Quitar este filtro",
-    "clearAll": "Borrar todo"
+    "clearAll": "Borrar todo",
+    "emptyFilteredTitle": "Nadie coincide con todo eso.",
+    "emptyFilteredBody": "{count, plural, =0 {Borrar los filtros mostraría a todos.} one {Borrar los filtros mostraría # persona.} other {Borrar los filtros mostraría # personas.}}",
+    "widenSearch": "Ampliar la búsqueda",
+    "emptyTitle": "Todavía no hay nadie que mostrar.",
+    "emptyBody": "Aquí solo aparecen quienes han verificado un número de teléfono. La lista se irá llenando conforme se una más gente."
   },
   "Requests": {
     "title": "Solicitudes de conexión",
@@ -408,7 +413,9 @@
     "unmatchLogIntro": "Se conserva para que un ciclo repetido de hacer y deshacer match — que revelaría un nombre y una foto cada vez sin dejar rastro — sea visible.",
     "noUnmatches": "Todavía no ha terminado ninguno.",
     "endedByAdmin": "terminado por un administrador",
-    "endedByParticipant": "terminado por {name}"
+    "endedByParticipant": "terminado por {name}",
+    "reportedConversation": "Conversación denunciada",
+    "conversationEmpty": "No hay mensajes en esta conversación."
   },
   "Phone": {
     "title": "Verificar teléfono",
@@ -534,6 +541,14 @@
     "composerPlaceholder": "Propón un horario o cuenta qué te gustaría estudiar…",
     "send": "Enviar",
     "sending": "Enviando…",
-    "sendFailed": "Ese mensaje no se envió. Si ya no hay match, la conversación ha terminado."
+    "sendFailed": "Ese mensaje no se envió. Si ya no hay match, la conversación ha terminado.",
+    "rateLimited": "Has enviado muchos mensajes en la última hora. Inténtalo de nuevo en un rato."
+  },
+  "Emails": {
+    "newMessageSubject": "{name} te ha escrito",
+    "newMessageHeading": "Un mensaje de {name}",
+    "newMessageBody": "{name} te ha escrito en Chavrusa Link. Puedes leerlo y responder en el sitio; no volveremos a escribirte sobre esta conversación hasta que lo hayas leído.",
+    "newMessageAction": "Leer el mensaje",
+    "newMessageFootnote": "Recibes esto porque tienes match con esta persona. Si terminas el match, dejan de llegar estos correos."
   }
 }

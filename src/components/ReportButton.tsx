@@ -8,9 +8,17 @@ import ErrorNote from "@/components/ErrorNote";
 export default function ReportButton({
   currentUserId,
   reportedId,
+  connectRequestId,
 }: {
   currentUserId: string;
   reportedId: string;
+  /**
+   * Set when reporting from inside a match, so the report names the
+   * conversation. Reporting a profile and reporting something written in
+   * a thread are different acts, and an admin can't judge the second
+   * without seeing what was said.
+   */
+  connectRequestId?: string;
 }) {
   const t = useTranslations("Safety");
 
@@ -30,6 +38,7 @@ export default function ReportButton({
       reporter_id: currentUserId,
       reported_id: reportedId,
       reason,
+      ...(connectRequestId ? { connect_request_id: connectRequestId } : {}),
     });
 
     setSubmitting(false);

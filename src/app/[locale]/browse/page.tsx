@@ -179,6 +179,21 @@ export default async function BrowsePage({
     { status: ConnectStatus; requestId: string | null }
   > = Object.fromEntries(connectStatusMap);
 
+  // The design's empty state quantifies the way out — "widening the
+  // search finds N learners" — which needs the unfiltered total, not just
+  // the knowledge that this query found nothing.
+  let totalDiscoverable = profiles.length;
+  if (profiles.length === 0) {
+    const { count } = await supabase
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .neq("id", user.id)
+      .eq("is_active", true)
+      .eq("phone_verified", true)
+      .not("name", "eq", "");
+    totalDiscoverable = count ?? 0;
+  }
+
   const filterChips = activeFilterChips(filters, {
     topic: (v: string) => tTopics(v),
     language: (v: string) => tLanguages(v),
@@ -483,7 +498,31 @@ export default async function BrowsePage({
           )}
 
           {profiles.length === 0 ? (
-            <p className="text-sm text-muted">{t("noResults")}</p>
+            /*
+              One sentence saying what happened, one saying what fixes it,
+              and exactly one action — the design's rule for empty states.
+              No illustration, no apology.
+            */
+            <div className="flex max-w-[34em] flex-col items-start gap-3 py-6">
+              <h2 className="text-[24px] font-semibold">
+                {filterChips.length > 0
+                  ? t("emptyFilteredTitle")
+                  : t("emptyTitle")}
+              </h2>
+              <p className="text-[15px] text-muted">
+                {filterChips.length > 0
+                  ? t("emptyFilteredBody", { count: totalDiscoverable })
+                  : t("emptyBody")}
+              </p>
+              {filterChips.length > 0 && (
+                <Link
+                  href="/browse"
+                  className="bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
+                >
+                  {t("widenSearch")}
+                </Link>
+              )}
+            </div>
           ) : mapView ? (
             <BrowseMapView
               profiles={profiles}

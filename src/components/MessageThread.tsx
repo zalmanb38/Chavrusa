@@ -72,7 +72,9 @@ export default function MessageThread({
       });
 
       if (!response.ok) {
-        setError(t("sendFailed"));
+        // The cap and a lost match need different explanations: one is
+        // "wait a moment", the other is "this conversation is over".
+        setError(response.status === 429 ? t("rateLimited") : t("sendFailed"));
         return;
       }
 

@@ -259,7 +259,12 @@
     "resultCount": "{count, plural, =1 {# learner matches your filters} other {# learners match your filters}}",
     "filteringBy": "Filtering by",
     "removeFilter": "Remove this filter",
-    "clearAll": "Clear all"
+    "clearAll": "Clear all",
+    "emptyFilteredTitle": "Nobody matches all of those.",
+    "emptyFilteredBody": "{count, plural, =0 {Clearing your filters would show everyone here.} =1 {Clearing your filters would show # learner.} other {Clearing your filters would show # learners.}}",
+    "widenSearch": "Widen the search",
+    "emptyTitle": "Nobody to show yet.",
+    "emptyBody": "Only learners who have verified a phone number appear here. As more people join, this fills up."
   },
   "Requests": {
     "title": "Connect Requests",
@@ -408,7 +413,9 @@
     "unmatchLogIntro": "Kept so that repeated matching and unmatching — which would otherwise reveal a name and photo each time, leaving no trace — is visible.",
     "noUnmatches": "Nothing ended yet.",
     "endedByAdmin": "ended by an admin",
-    "endedByParticipant": "ended by {name}"
+    "endedByParticipant": "ended by {name}",
+    "reportedConversation": "Reported conversation",
+    "conversationEmpty": "No messages in this conversation."
   },
   "Phone": {
     "title": "Verify phone",
@@ -534,6 +541,14 @@
     "composerPlaceholder": "Suggest a time, or say what you'd like to learn…",
     "send": "Send",
     "sending": "Sending…",
-    "sendFailed": "That message didn't send. If you're no longer matched, the conversation has ended."
+    "sendFailed": "That message didn't send. If you're no longer matched, the conversation has ended.",
+    "rateLimited": "You have sent a lot of messages in the last hour. Please try again shortly."
+  },
+  "Emails": {
+    "newMessageSubject": "{name} sent you a message",
+    "newMessageHeading": "A message from {name}",
+    "newMessageBody": "{name} has written to you on Chavrusa Link. You can read it and reply on the site — we will not email you again about this conversation until you have read it.",
+    "newMessageAction": "Read the message",
+    "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match ends these emails."
   }
 }

@@ -259,7 +259,12 @@
     "resultCount": "{count, plural, one {# apprenant correspond à vos filtres} other {# apprenants correspondent à vos filtres}}",
     "filteringBy": "Filtré par",
     "removeFilter": "Retirer ce filtre",
-    "clearAll": "Tout effacer"
+    "clearAll": "Tout effacer",
+    "emptyFilteredTitle": "Personne ne correspond à tout cela.",
+    "emptyFilteredBody": "{count, plural, =0 {Effacer vos filtres afficherait tout le monde.} one {Effacer vos filtres afficherait # apprenant.} other {Effacer vos filtres afficherait # apprenants.}}",
+    "widenSearch": "Élargir la recherche",
+    "emptyTitle": "Personne à afficher pour l'instant.",
+    "emptyBody": "Seuls les apprenants ayant vérifié un numéro de téléphone apparaissent ici. La liste se remplira à mesure que d'autres nous rejoignent."
   },
   "Requests": {
     "title": "Demandes de connexion",
@@ -408,7 +413,9 @@
     "unmatchLogIntro": "Conservé pour rendre visible un cycle répété de mise en relation et de rupture, qui révélerait chaque fois un nom et une photo sans laisser de trace.",
     "noUnmatches": "Aucune n'a encore pris fin.",
     "endedByAdmin": "terminée par un administrateur",
-    "endedByParticipant": "terminée par {name}"
+    "endedByParticipant": "terminée par {name}",
+    "reportedConversation": "Conversation signalée",
+    "conversationEmpty": "Aucun message dans cette conversation."
   },
   "Phone": {
     "title": "Vérifier le téléphone",
@@ -534,6 +541,14 @@
     "composerPlaceholder": "Proposez un horaire, ou dites ce que vous aimeriez étudier…",
     "send": "Envoyer",
     "sending": "Envoi…",
-    "sendFailed": "Ce message n'est pas parti. Si vous n'êtes plus en relation, la conversation est terminée."
+    "sendFailed": "Ce message n'est pas parti. Si vous n'êtes plus en relation, la conversation est terminée.",
+    "rateLimited": "Vous avez envoyé beaucoup de messages dans la dernière heure. Réessayez sous peu."
+  },
+  "Emails": {
+    "newMessageSubject": "{name} vous a écrit",
+    "newMessageHeading": "Un message de {name}",
+    "newMessageBody": "{name} vous a écrit sur Chavrusa Link. Vous pouvez le lire et répondre sur le site — nous ne vous enverrons pas d'autre e-mail à propos de cette conversation avant que vous ne l'ayez lu.",
+    "newMessageAction": "Lire le message",
+    "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met fin à ces e-mails."
   }
 }
