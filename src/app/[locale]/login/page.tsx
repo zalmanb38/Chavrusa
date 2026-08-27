@@ -38,10 +38,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="mx-auto flex max-w-sm flex-col gap-6 px-4 py-16 sm:py-24">
-      <h1 className="font-serif text-3xl font-medium">{t("loginTitle")}</h1>
+    <div className="mx-auto flex w-full max-w-[420px] flex-col gap-6 px-6 py-16 sm:py-24">
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("loginTitle")}</h1>
 
-      <div className="flex flex-col gap-6 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+      <div className="flex flex-col gap-6">
         <GoogleSignInButton />
 
         <div className="flex items-center gap-3 text-xs text-muted">
@@ -87,7 +87,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+            className="rounded-sm bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("loginButton")}
           </button>

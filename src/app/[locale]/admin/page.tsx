@@ -25,7 +25,7 @@ function StatTile({
   attention?: boolean;
 }) {
   const base =
-    "flex flex-col justify-between gap-3 rounded-2xl border p-4 shadow-sm transition-colors";
+    "flex flex-col justify-between gap-3 rounded-2xl border p-4 transition-colors";
   const tone = attention
     ? "border-primary/60 bg-primary/10"
     : "border-border bg-surface";
@@ -74,9 +74,9 @@ export default async function AdminDashboardPage({
   ];
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-8 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-8 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
-        <h1 className="font-serif text-3xl font-medium">
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">
           {t("dashboardTitle")}
         </h1>
         <AdminNav />

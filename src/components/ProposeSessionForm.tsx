@@ -51,7 +51,7 @@ export default function ProposeSessionForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 shadow-sm"
+      className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5"
     >
       <h3 className="font-serif text-lg font-medium">{t("proposeTitle")}</h3>
 
@@ -82,7 +82,7 @@ export default function ProposeSessionForm({
       <button
         type="submit"
         disabled={saving}
-        className="w-fit rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+        className="w-fit rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
       >
         {t("proposeSubmit")}
       </button>

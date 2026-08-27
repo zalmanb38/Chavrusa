@@ -54,12 +54,12 @@ export default function ConnectButton({
     return requestId ? (
       <Link
         href={`/matches/${requestId}`}
-        className="mt-1 w-fit rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
+        className="mt-1 w-fit rounded-sm bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent hover:bg-accent/25"
       >
         {t("matched")}
       </Link>
     ) : (
-      <span className="mt-1 w-fit rounded-full bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent">
+      <span className="mt-1 w-fit rounded-sm bg-accent/15 px-3.5 py-1.5 text-sm font-medium text-accent">
         {t("matched")}
       </span>
     );
@@ -67,7 +67,7 @@ export default function ConnectButton({
 
   if (status === "pending_sent") {
     return (
-      <span className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
+      <span className="mt-1 w-fit rounded-sm border border-border px-3.5 py-1.5 text-sm text-muted">
         {t("requestSent")}
       </span>
     );
@@ -77,7 +77,7 @@ export default function ConnectButton({
     return (
       <Link
         href="/requests"
-        className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5"
+        className="mt-1 w-fit rounded-sm border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5"
       >
         {t("respond")}
       </Link>
@@ -94,7 +94,7 @@ export default function ConnectButton({
         type="button"
         onClick={handleConnect}
         disabled={sending}
-        className="mt-1 w-fit rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
+        className="mt-1 w-fit rounded-sm border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
       >
         {t("connect")}
       </button>

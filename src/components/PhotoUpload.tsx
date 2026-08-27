@@ -142,7 +142,7 @@ export default function PhotoUpload({
               type="button"
               disabled={busy}
               onClick={() => inputRef.current?.click()}
-              className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+              className="rounded-sm bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-60"
             >
               {busy ? t("uploading") : status ? t("replace") : t("choose")}
             </button>
@@ -152,7 +152,7 @@ export default function PhotoUpload({
                 type="button"
                 disabled={busy}
                 onClick={remove}
-                className="rounded-full border border-border px-4 py-2 text-sm disabled:opacity-60"
+                className="rounded-sm border border-border px-4 py-2 text-sm disabled:opacity-60"
               >
                 {t("remove")}
               </button>

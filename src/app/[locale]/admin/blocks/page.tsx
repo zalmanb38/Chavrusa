@@ -36,9 +36,9 @@ export default async function AdminBlocksPage({
   const blocks = (data ?? []) as unknown as BlockRow[];
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
-        <h1 className="font-serif text-3xl font-medium">{t("blocksTitle")}</h1>
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("blocksTitle")}</h1>
         <AdminNav />
       </div>
 
@@ -49,7 +49,7 @@ export default async function AdminBlocksPage({
           {blocks.map((row) => (
             <li
               key={row.id}
-              className="flex flex-wrap items-baseline justify-between gap-2 rounded-2xl border border-border bg-surface p-4 text-sm shadow-sm"
+              className="flex flex-wrap items-baseline justify-between gap-2 rounded-2xl border border-border bg-surface p-4 text-sm"
             >
               <p>
                 {row.blocker ? (

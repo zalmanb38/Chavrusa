@@ -83,14 +83,14 @@ export default function ReportButton({
         <button
           type="submit"
           disabled={submitting}
-          className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50"
+          className="rounded-sm bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50"
         >
           {t("reportSubmit")}
         </button>
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-full px-3 py-1 text-xs text-muted"
+          className="rounded-sm px-3 py-1 text-xs text-muted"
         >
           {t("reportCancel")}
         </button>

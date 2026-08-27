@@ -58,7 +58,7 @@ export default function AdminPhotoActions({
             type="button"
             disabled={busy}
             onClick={() => review("approve")}
-            className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+            className="rounded-sm bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
           >
             {t("photoApprove")}
           </button>
@@ -68,7 +68,7 @@ export default function AdminPhotoActions({
             type="button"
             disabled={busy}
             onClick={() => review("reject")}
-            className="rounded-full border border-border px-4 py-1.5 text-sm disabled:opacity-60"
+            className="rounded-sm border border-border px-4 py-1.5 text-sm disabled:opacity-60"
           >
             {t("photoReject")}
           </button>

@@ -61,7 +61,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6 shadow-sm"
+      className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6"
     >
       <label className="flex flex-col gap-1.5 text-sm">
         {t("nameLabel")}
@@ -140,7 +140,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={sending}
-        className="w-fit rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+        className="w-fit rounded-sm bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
       >
         {sending ? t("sending") : t("submit")}
       </button>

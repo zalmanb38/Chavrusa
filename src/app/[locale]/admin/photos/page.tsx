@@ -96,8 +96,8 @@ export default async function AdminPhotosPage({
   const TABS = ["pending", "approved", "rejected"] as const;
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("photosTitle")}</h1>
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("photosTitle")}</h1>
       <AdminNav />
 
       <p className="text-sm text-muted">{t("photosIntro")}</p>
@@ -109,8 +109,8 @@ export default async function AdminPhotosPage({
             href={{ pathname: "/admin/photos", query: { status: tab } }}
             className={
               tab === status
-                ? "rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground"
-                : "rounded-full border border-border px-4 py-1.5 text-sm"
+                ? "rounded-sm bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground"
+                : "rounded-sm border border-border px-4 py-1.5 text-sm"
             }
           >
             {tPhoto(`status_${tab}`)} ({countFor[tab]})

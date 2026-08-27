@@ -72,14 +72,14 @@ export default function BlockButton({
           type="button"
           onClick={handleConfirm}
           disabled={blocking}
-          className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50"
+          className="rounded-sm bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground disabled:opacity-50"
         >
           {t("blockConfirmButton")}
         </button>
         <button
           type="button"
           onClick={() => setConfirming(false)}
-          className="rounded-full px-3 py-1 text-xs text-muted"
+          className="rounded-sm px-3 py-1 text-xs text-muted"
         >
           {t("blockCancelButton")}
         </button>

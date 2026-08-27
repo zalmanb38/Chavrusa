@@ -27,7 +27,9 @@ export default function ProseDocument({
   return (
     <article className="mx-auto flex max-w-2xl flex-col gap-5 px-4 py-12">
       <header className="flex flex-col gap-2">
-        <h1 className="font-serif text-3xl font-medium">{doc.title}</h1>
+        <h1 className="border-b-[3px] border-primary pb-3 text-[2.25rem] font-semibold sm:text-[40px]">
+          {doc.title}
+        </h1>
         {doc.lastUpdated && (
           <p className="text-sm text-muted">{doc.lastUpdated}</p>
         )}

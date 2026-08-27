@@ -54,9 +54,9 @@ export default async function AdminUsersPage({
   const users = (data ?? []) as AdminUserRow[];
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
-        <h1 className="font-serif text-3xl font-medium">{t("usersTitle")}</h1>
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("usersTitle")}</h1>
         <AdminNav />
       </div>
 
@@ -114,7 +114,7 @@ export default async function AdminUsersPage({
 
         <button
           type="submit"
-          className="col-span-2 w-fit self-end rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
+          className="col-span-2 w-fit self-end rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
         >
           {t("applyFilters")}
         </button>
@@ -131,7 +131,7 @@ export default async function AdminUsersPage({
           {users.map((user) => (
             <li
               key={user.id}
-              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2">
                 <Link
@@ -152,7 +152,7 @@ export default async function AdminUsersPage({
 
               <div className="flex flex-wrap gap-2 text-xs">
                 <span
-                  className={`rounded-full border px-2 py-0.5 ${
+                  className={`rounded-sm border px-2 py-0.5 ${
                     user.phone_verified
                       ? "border-accent/40 text-accent"
                       : "border-border text-muted"
@@ -163,27 +163,27 @@ export default async function AdminUsersPage({
                     : t("badgeUnverified")}
                 </span>
                 {user.suspended && (
-                  <span className="rounded-full border border-clay/40 px-2 py-0.5 text-clay">
+                  <span className="rounded-sm border border-clay/40 px-2 py-0.5 text-clay">
                     {t("badgeSuspended")}
                   </span>
                 )}
                 {!user.is_active && !user.suspended && (
-                  <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+                  <span className="rounded-sm border border-border px-2 py-0.5 text-muted">
                     {t("inactiveBadge")}
                   </span>
                 )}
                 {user.is_admin && (
-                  <span className="rounded-full border border-primary/50 px-2 py-0.5 text-primary">
+                  <span className="rounded-sm border border-primary/50 px-2 py-0.5 text-primary">
                     {t("badgeAdmin")}
                   </span>
                 )}
                 {user.report_count > 0 && (
-                  <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+                  <span className="rounded-sm border border-border px-2 py-0.5 text-muted">
                     {t("badgeReports", { count: user.report_count })}
                   </span>
                 )}
                 {user.city && (
-                  <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+                  <span className="rounded-sm border border-border px-2 py-0.5 text-muted">
                     {user.city}
                   </span>
                 )}

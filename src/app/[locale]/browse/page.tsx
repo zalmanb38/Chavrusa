@@ -444,7 +444,7 @@ export default async function BrowsePage({
 
           <button
             type="submit"
-            className="w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
+            className="w-fit rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
           >
             {t("applyFilters")}
           </button>

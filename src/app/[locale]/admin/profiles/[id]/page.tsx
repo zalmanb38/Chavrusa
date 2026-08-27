@@ -105,10 +105,10 @@ export default async function AdminProfileDetailPage({
   const c = contact as ContactInfo | null;
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
-          <h1 className="font-serif text-3xl font-medium">
+          <h1 className="text-[2rem] font-semibold sm:text-[34px]">
             {p.name || t("unknownUser")}
           </h1>
           <p className="text-sm text-muted" dir="ltr">
@@ -120,7 +120,7 @@ export default async function AdminProfileDetailPage({
 
       <div className="-mt-2 flex flex-wrap gap-2 text-xs">
         <span
-          className={`rounded-full border px-2 py-0.5 ${
+          className={`rounded-sm border px-2 py-0.5 ${
             p.phone_verified
               ? "border-accent/40 text-accent"
               : "border-border text-muted"
@@ -129,17 +129,17 @@ export default async function AdminProfileDetailPage({
           {p.phone_verified ? t("badgeVerified") : t("badgeUnverified")}
         </span>
         {p.suspended && (
-          <span className="rounded-full border border-clay/40 px-2 py-0.5 text-clay">
+          <span className="rounded-sm border border-clay/40 px-2 py-0.5 text-clay">
             {t("badgeSuspended")}
           </span>
         )}
         {!p.is_active && !p.suspended && (
-          <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+          <span className="rounded-sm border border-border px-2 py-0.5 text-muted">
             {t("inactiveBadge")}
           </span>
         )}
         {p.is_admin && (
-          <span className="rounded-full border border-primary/50 px-2 py-0.5 text-primary">
+          <span className="rounded-sm border border-primary/50 px-2 py-0.5 text-primary">
             {t("badgeAdmin")}
           </span>
         )}

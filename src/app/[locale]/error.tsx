@@ -28,20 +28,20 @@ export default function Error({
 
   return (
     <div className="mx-auto flex max-w-md flex-col items-start gap-4 px-4 py-24">
-      <h1 className="font-serif text-3xl font-medium">{t("errorTitle")}</h1>
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("errorTitle")}</h1>
       <p className="text-muted">{t("errorBody")}</p>
 
       <div className="flex flex-wrap gap-3">
         <button
           type="button"
           onClick={reset}
-          className="rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
+          className="rounded-sm bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground"
         >
           {t("tryAgain")}
         </button>
         <Link
           href="/"
-          className="rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-foreground/5"
+          className="rounded-sm border border-border px-5 py-2.5 text-sm font-medium hover:bg-foreground/5"
         >
           {t("backHome")}
         </Link>

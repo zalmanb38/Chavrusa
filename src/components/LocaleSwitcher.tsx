@@ -28,7 +28,7 @@ export default function LocaleSwitcher() {
         value={locale}
         onChange={handleChange}
         aria-label={t("language")}
-        className="rounded-full border border-border bg-transparent px-3 py-1 text-sm text-foreground/80"
+        className="rounded-sm border border-border bg-transparent px-3 py-1 text-sm text-foreground/80"
       >
         {locales.map((l) => (
           <option key={l} value={l}>

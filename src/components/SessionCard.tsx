@@ -89,7 +89,7 @@ export default function SessionCard({
         : "text-muted";
 
   return (
-    <li className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5 shadow-sm">
+    <li className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <span className="font-medium">
           {format.dateTime(new Date(session.scheduled_at), {
@@ -110,7 +110,7 @@ export default function SessionCard({
             type="button"
             onClick={() => updateSession("confirm", { status: "confirmed" })}
             disabled={loading !== null}
-            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+            className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("confirm")}
           </button>
@@ -118,7 +118,7 @@ export default function SessionCard({
             type="button"
             onClick={() => setShowCounter(true)}
             disabled={loading !== null}
-            className="rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
+            className="rounded-sm border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
           >
             {t("suggestDifferentTime")}
           </button>
@@ -126,7 +126,7 @@ export default function SessionCard({
             type="button"
             onClick={() => updateSession("cancel", { status: "cancelled" })}
             disabled={loading !== null}
-            className="rounded-full px-3.5 py-1.5 text-sm text-muted disabled:opacity-50"
+            className="rounded-sm px-3.5 py-1.5 text-sm text-muted disabled:opacity-50"
           >
             {t("cancel")}
           </button>
@@ -151,14 +151,14 @@ export default function SessionCard({
           <button
             type="submit"
             disabled={loading !== null}
-            className="rounded-full bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+            className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
           >
             {t("proposeSubmit")}
           </button>
           <button
             type="button"
             onClick={() => setShowCounter(false)}
-            className="rounded-full px-3.5 py-1.5 text-sm text-muted"
+            className="rounded-sm px-3.5 py-1.5 text-sm text-muted"
           >
             {t("cancel")}
           </button>
@@ -170,7 +170,7 @@ export default function SessionCard({
           type="button"
           onClick={() => updateSession("cancel", { status: "cancelled" })}
           disabled={loading !== null}
-          className="w-fit rounded-full px-3.5 py-1.5 text-sm text-muted disabled:opacity-50"
+          className="w-fit rounded-sm px-3.5 py-1.5 text-sm text-muted disabled:opacity-50"
         >
           {t("withdraw")}
         </button>

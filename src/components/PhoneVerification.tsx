@@ -197,7 +197,7 @@ export default function PhoneVerification({
           type="button"
           onClick={handleSendCode}
           disabled={sending || !national.trim()}
-          className="w-fit rounded-full border border-border px-4 py-2 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
+          className="w-fit rounded-sm border border-border px-4 py-2 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
         >
           {sending ? t("sending") : t("sendCode")}
         </button>
@@ -223,7 +223,7 @@ export default function PhoneVerification({
               type="button"
               onClick={handleVerifyCode}
               disabled={verifying || !code}
-              className="w-fit rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+              className="w-fit rounded-sm bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50"
             >
               {verifying ? t("verifying") : t("verifyCode")}
             </button>

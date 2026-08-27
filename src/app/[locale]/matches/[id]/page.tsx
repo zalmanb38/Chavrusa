@@ -119,7 +119,7 @@ export default async function MatchDetailPage({
     !!contacts && (contacts.whatsapp || contacts.contact_phone || contacts.zoom_link);
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-12 sm:px-8">
       <div className="flex items-start gap-4">
         {partnerPhotoUrl ? (
           /* Signed Supabase URLs are short-lived and host-specific, so
@@ -135,7 +135,7 @@ export default async function MatchDetailPage({
         )}
 
       <div className="flex flex-col gap-2">
-        <h1 className="font-serif text-3xl font-medium">{otherName}</h1>
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">{otherName}</h1>
         {otherFullName && otherFullName !== otherName && (
           <p className="text-sm text-muted">
             {t("fullNameLabel", { name: otherFullName })}

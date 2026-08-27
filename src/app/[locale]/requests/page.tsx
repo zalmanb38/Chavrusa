@@ -147,8 +147,8 @@ export default async function RequestsPage({
   }
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("title")}</h1>
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-10 px-6 py-12 sm:px-11">
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("title")}</h1>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-medium">{t("incomingTitle")}</h2>
@@ -159,7 +159,7 @@ export default async function RequestsPage({
             {incomingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 shadow-sm"
+                className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <p className="font-serif text-lg font-medium">
@@ -195,7 +195,7 @@ export default async function RequestsPage({
             {outgoingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
               >
                 <div>
                   <p className="font-medium">{row.recipient.name}</p>
@@ -205,13 +205,13 @@ export default async function RequestsPage({
                 </div>
                 {row.status === "admin_resolved" ? (
                   <div className="flex flex-col items-end gap-1">
-                    <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
+                    <span className="rounded-sm border border-border px-3.5 py-1.5 text-sm text-muted">
                       {t("adminResolved")}
                     </span>
                     <RemoveResolvedRequestButton requestId={row.id} />
                   </div>
                 ) : (
-                  <span className="rounded-full border border-border px-3.5 py-1.5 text-sm text-muted">
+                  <span className="rounded-sm border border-border px-3.5 py-1.5 text-sm text-muted">
                     {t("pending")}
                   </span>
                 )}
@@ -233,7 +233,7 @@ export default async function RequestsPage({
               return (
                 <li
                   key={row.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
                 >
                   <div>
                     <p className="font-medium">{other.name}</p>
@@ -282,7 +282,7 @@ export default async function RequestsPage({
             {blockedRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
               >
                 <div>
                   <p className="font-medium">{row.blocked.name}</p>

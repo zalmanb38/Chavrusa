@@ -114,7 +114,7 @@ export default async function LocaleLayout({
                 <p className="text-sm text-muted">{t("suspendedBody")}</p>
                 <Link
                   href="/contact"
-                  className="mx-auto w-fit rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
+                  className="mx-auto w-fit rounded-sm bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground"
                 >
                   {t("suspendedContact")}
                 </Link>

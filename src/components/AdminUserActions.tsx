@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import ErrorNote from "@/components/ErrorNote";
 
 const buttonClass =
-  "rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50";
+  "rounded-sm border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50";
 
 export default function AdminUserActions({
   profileId,
@@ -121,14 +121,14 @@ export default function AdminUserActions({
                 type="button"
                 onClick={handleDelete}
                 disabled={loading !== null}
-                className="rounded-full bg-clay px-3.5 py-1.5 text-sm font-semibold text-ivory disabled:opacity-50"
+                className="rounded-sm bg-clay px-3.5 py-1.5 text-sm font-semibold text-ivory disabled:opacity-50"
               >
                 {t("deleteConfirmButton")}
               </button>
               <button
                 type="button"
                 onClick={() => setConfirmingDelete(false)}
-                className="rounded-full px-3.5 py-1.5 text-sm text-muted"
+                className="rounded-sm px-3.5 py-1.5 text-sm text-muted"
               >
                 {t("cancelButton")}
               </button>

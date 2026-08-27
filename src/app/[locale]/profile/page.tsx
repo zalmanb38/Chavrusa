@@ -67,7 +67,7 @@ export default async function ProfilePage({
     .maybeSingle();
 
   return (
-    <div className="mx-auto flex max-w-lg flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-6 py-12 sm:px-8">
       <PhoneVerification
         initialPhone={(profile as { phone: string | null } | null)?.phone ?? null}
         initialVerified={

@@ -44,9 +44,9 @@ export default async function AdminReportsPage({
   const reportRows = (reports ?? []) as unknown as ReportRow[];
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
-        <h1 className="font-serif text-3xl font-medium">{t("reportsTitle")}</h1>
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("reportsTitle")}</h1>
         <AdminNav />
       </div>
 
@@ -57,7 +57,7 @@ export default async function AdminReportsPage({
           {reportRows.map((row) => (
             <li
               key={row.id}
-              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4 shadow-sm"
+              className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4"
             >
               <div className="flex flex-wrap items-baseline justify-between gap-2 text-sm">
                 <p>
@@ -87,7 +87,7 @@ export default async function AdminReportsPage({
                     )}
                   </span>
                   {row.reported && !row.reported.is_active && (
-                    <span className="ms-2 rounded-full border border-border px-2 py-0.5 text-xs text-muted">
+                    <span className="ms-2 rounded-sm border border-border px-2 py-0.5 text-xs text-muted">
                       {t("inactiveBadge")}
                     </span>
                   )}

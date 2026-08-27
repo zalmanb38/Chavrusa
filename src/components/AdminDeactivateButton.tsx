@@ -45,7 +45,7 @@ export default function AdminDeactivateButton({
         type="button"
         onClick={handleToggle}
         disabled={loading}
-        className="rounded-full border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
+        className="rounded-sm border border-border px-3.5 py-1.5 text-sm font-medium hover:bg-foreground/5 disabled:opacity-50"
       >
         {isActive ? t("deactivateProfile") : t("reactivateProfile")}
       </button>

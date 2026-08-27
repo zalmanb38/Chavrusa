@@ -89,7 +89,7 @@ export default function MultiSelectFilter({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute top-full z-20 mt-1 flex max-h-64 w-max min-w-full flex-col gap-2 overflow-y-auto rounded-xl border border-border bg-surface p-3 shadow-lg"
+        className="absolute top-full z-20 mt-1 flex max-h-64 w-max min-w-full flex-col gap-2 overflow-y-auto rounded-xl border border-border bg-surface p-3"
       >
         {options.map((option) => (
           <label key={option.value} className="flex items-center gap-2 text-sm">

@@ -79,7 +79,7 @@ export default function UnmatchButton({
           type="button"
           disabled={busy}
           onClick={unmatch}
-          className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
+          className="rounded-sm bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground disabled:opacity-60"
         >
           {busy ? t("unmatching") : t("unmatchYes")}
         </button>
@@ -87,7 +87,7 @@ export default function UnmatchButton({
           type="button"
           disabled={busy}
           onClick={() => setConfirming(false)}
-          className="rounded-full border border-border px-4 py-1.5 text-sm disabled:opacity-60"
+          className="rounded-sm border border-border px-4 py-1.5 text-sm disabled:opacity-60"
         >
           {t("unmatchCancel")}
         </button>

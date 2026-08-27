@@ -201,7 +201,7 @@ export default function ProfileForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <h1 className="font-serif text-3xl font-medium">
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">
         {initialProfile?.name ? t("editTitle") : t("title")}
       </h1>
       {!initialProfile?.name && (
@@ -242,7 +242,7 @@ export default function ProfileForm({
         <span className="text-xs text-muted">{t("fullNameHint")}</span>
       </label>
 
-      <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+      <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
           {t("languagesSpoken")}
         </legend>
@@ -261,7 +261,7 @@ export default function ProfileForm({
         </div>
       </fieldset>
 
-      <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+      <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
           {t("topicsOfInterest")}
         </legend>
@@ -346,7 +346,7 @@ export default function ProfileForm({
         <span className="text-xs text-muted">{t("ageRangeVisibilityHint")}</span>
       </label>
 
-      <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+      <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
           {t("studyLanguages")}
         </legend>
@@ -430,7 +430,7 @@ export default function ProfileForm({
         <span className="text-xs text-muted">{t("blurbHint")}</span>
       </label>
 
-      <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
+      <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
           {t("learningPreference")}
         </legend>
@@ -467,7 +467,7 @@ export default function ProfileForm({
         />
       </label>
 
-      <fieldset className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-5">
+      <fieldset className="flex flex-col gap-4 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
           {t("contactSectionTitle")}
         </legend>
@@ -513,7 +513,7 @@ export default function ProfileForm({
       <button
         type="submit"
         disabled={saving}
-        className="w-fit rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+        className="w-fit rounded-sm bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
       >
         {tCommon("save")}
       </button>

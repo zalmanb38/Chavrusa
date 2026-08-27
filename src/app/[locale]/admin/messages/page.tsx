@@ -39,9 +39,9 @@ export default async function AdminMessagesPage({
   const openCount = messages.filter((m) => !m.handled).length;
 
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-12">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
       <div className="flex flex-col gap-4">
-        <h1 className="font-serif text-3xl font-medium">{t("messagesTitle")}</h1>
+        <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("messagesTitle")}</h1>
         <AdminNav />
       </div>
 
@@ -56,7 +56,7 @@ export default async function AdminMessagesPage({
           {messages.map((m) => (
             <li
               key={m.id}
-              className={`flex flex-col gap-2 rounded-2xl border bg-surface p-4 shadow-sm ${
+              className={`flex flex-col gap-2 rounded-2xl border bg-surface p-4 ${
                 m.handled ? "border-border opacity-60" : "border-primary/50"
               }`}
             >
@@ -78,7 +78,7 @@ export default async function AdminMessagesPage({
 
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 <span
-                  className={`rounded-full border px-2 py-0.5 ${
+                  className={`rounded-sm border px-2 py-0.5 ${
                     m.topic === "safety"
                       ? "border-clay/40 text-clay"
                       : "border-border text-muted"
@@ -87,14 +87,14 @@ export default async function AdminMessagesPage({
                   {tContact(`topic_${m.topic}`)}
                 </span>
                 {m.handled && (
-                  <span className="rounded-full border border-border px-2 py-0.5 text-muted">
+                  <span className="rounded-sm border border-border px-2 py-0.5 text-muted">
                     {t("handledBadge")}
                   </span>
                 )}
                 {m.user_id && (
                   <Link
                     href={`/admin/profiles/${m.user_id}`}
-                    className="rounded-full border border-border px-2 py-0.5 text-muted underline"
+                    className="rounded-sm border border-border px-2 py-0.5 text-muted underline"
                   >
                     {t("viewSenderProfile")}
                   </Link>

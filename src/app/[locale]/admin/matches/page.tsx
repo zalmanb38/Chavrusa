@@ -73,8 +73,8 @@ export default async function AdminMatchesPage({
   const nameOf = (id: string) => nameById.get(id) || t("unknownUser");
 
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-12">
-      <h1 className="font-serif text-3xl font-medium">{t("matchesTitle")}</h1>
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
+      <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("matchesTitle")}</h1>
       <AdminNav />
 
       <section className="flex flex-col gap-3">
