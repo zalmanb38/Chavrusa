@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import ProseDocument from "@/components/ProseDocument";
-import MenOnlyNotice from "@/components/MenOnlyNotice";
 import ImageSlot from "@/components/ImageSlot";
 import { getAboutContent } from "@/content/about";
 
@@ -35,10 +34,7 @@ export default async function AboutPage({
         />
       </div>
 
-      <ProseDocument
-        doc={getAboutContent(locale)}
-        interlude={{ afterBlock: 0, node: <MenOnlyNotice variant="about" /> }}
-      />
+      <ProseDocument doc={getAboutContent(locale)} />
 
       <div className="mx-auto grid w-full max-w-2xl gap-4 px-4 sm:grid-cols-2">
         <ImageSlot

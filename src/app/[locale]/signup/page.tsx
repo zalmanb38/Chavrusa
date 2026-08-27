@@ -78,7 +78,7 @@ export default function SignupPage() {
       />
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("signupTitle")}</h1>
 
-      <MenOnlyNotice variant="signup" />
+      <MenOnlyNotice />
 
 
       <div className="flex flex-col gap-6">

@@ -20,17 +20,9 @@ function RichText({ text }: { text: string }) {
 export default function ProseDocument({
   doc,
   translationNote,
-  interlude,
 }: {
   doc: ProseDoc;
   translationNote?: string;
-  /**
-   * Rendered after the block at `afterBlock`. Exists so About can put
-   * "who the site is for" above the fold — the point of 3E is that it is
-   * read before anyone invests ten minutes, which an appended section
-   * cannot do.
-   */
-  interlude?: { afterBlock: number; node: React.ReactNode };
 }) {
   return (
     <article className="mx-auto flex max-w-2xl flex-col gap-5 px-4 py-12">
@@ -50,8 +42,6 @@ export default function ProseDocument({
       )}
 
       {doc.blocks.map((block, i) => {
-        const after =
-          interlude && interlude.afterBlock === i ? interlude.node : null;
         if (block.type === "h2") {
           return (
             <h2 key={i} className="mt-3 font-serif text-xl font-medium">
@@ -71,12 +61,9 @@ export default function ProseDocument({
           );
         }
         return (
-          <div key={i} className="flex flex-col gap-5">
-            <p className="leading-relaxed">
-              <RichText text={block.text} />
-            </p>
-            {after}
-          </div>
+          <p key={i} className="leading-relaxed">
+            <RichText text={block.text} />
+          </p>
         );
       })}
     </article>

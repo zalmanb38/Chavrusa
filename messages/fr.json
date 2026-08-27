@@ -536,10 +536,7 @@
     "emailHint": "Vous seul le voyez. Le modifier revient à changer le compte de connexion, ce n'est donc pas fait ici."
   },
   "Notice": {
-    "menOnlyLabel": "À qui ce site s'adresse",
-    "menOnlyAbout": "Chavrusa Link s'adresse aux hommes. Chaque profil, chaque mise en relation et chaque présentation sur le site se fait entre hommes.",
-    "menOnlyAboutAfter": "Tout ce qui suit explique comment fonctionne la mise en relation.",
-    "menOnlySignup": "Chavrusa Link met en relation des hommes avec des hommes. Si ce n'est pas ce que vous cherchez, ce site n'est pas le bon."
+    "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
   },
   "Messages": {
     "title": "Messages",

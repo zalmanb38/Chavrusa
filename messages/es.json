@@ -536,10 +536,7 @@
     "emailHint": "Solo tú lo ves. Cambiarlo significa cambiar la cuenta con la que inicias sesión, así que no se edita aquí."
   },
   "Notice": {
-    "menOnlyLabel": "A quién está dirigido el sitio",
-    "menOnlyAbout": "Chavrusa Link es para hombres. Cada perfil, cada match y cada presentación en el sitio son entre hombres.",
-    "menOnlyAboutAfter": "Todo lo que sigue explica cómo funciona el emparejamiento.",
-    "menOnlySignup": "Chavrusa Link empareja hombres con hombres. Si no es lo que buscas, este no es el sitio adecuado."
+    "menOnly": "Chavrusa Link es por ahora solo para hombres. Si eres una mujer que busca compañero de estudio, <link>escríbenos a través del formulario de contacto</link> para más información."
   },
   "Messages": {
     "title": "Mensajes",

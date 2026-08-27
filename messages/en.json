@@ -536,10 +536,7 @@
     "emailHint": "Only you can see this. Changing it means changing the account it signs in with, so it isn't edited here."
   },
   "Notice": {
-    "menOnlyLabel": "Who the site is for",
-    "menOnlyAbout": "Chavrusa Link is for men. Every listing, every match and every introduction on the site is between men.",
-    "menOnlyAboutAfter": "Everything below is about how the matching works.",
-    "menOnlySignup": "Chavrusa Link matches men with men. If that is not what you are looking for, this isn't the right site."
+    "menOnly": "Chavrusa Link is currently for men only. If you're a woman looking for a study partner, please <link>reach out via our contact form</link> for more information."
   },
   "Messages": {
     "title": "Messages",

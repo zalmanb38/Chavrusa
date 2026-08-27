@@ -1,43 +1,37 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 /**
- * Who the site is for, said early and once per place.
+ * States plainly who the site is for at the moment.
  *
- * Two placements, two shapes, per 3E: on About it sits above the fold
- * between two gold rules; on sign-up it sits under the heading on a gold
- * left rule, before anyone types anything. Both are stated plainly, with
- * no apology and no justification nobody asked for.
+ * Placed beside sign-up, where the answer is needed before someone
+ * invests effort, rather than buried in terms. The site has no gender
+ * field and no gender-aware matching, so this is the only thing saying
+ * so.
+ *
+ * The contact link is a rich-text placeholder inside the sentence rather
+ * than a separate key, so each translation can place it where its own
+ * grammar wants it.
  */
-export default function MenOnlyNotice({
-  variant,
-  className,
-}: {
-  variant: "about" | "signup";
-  className?: string;
-}) {
+// A client component so it can sit on the sign-up page, which is one
+// itself. It takes no props that cross the boundary.
+export default function MenOnlyNotice({ className }: { className?: string }) {
   const t = useTranslations("Notice");
 
-  if (variant === "signup") {
-    return (
-      <p
-        className={`border-s-2 border-brass ps-3 text-sm ${className ?? ""}`}
-      >
-        {t("menOnlySignup")}
-      </p>
-    );
-  }
-
   return (
-    <section
-      className={`flex flex-col gap-2 border-y-2 border-brass py-5 ${className ?? ""}`}
-    >
-      <h2 className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
-        {t("menOnlyLabel")}
-      </h2>
-      <p className="text-[17px]">{t("menOnlyAbout")}</p>
-      <p className="text-sm text-muted">{t("menOnlyAboutAfter")}</p>
-    </section>
+    <p className={`border-s-2 border-brass ps-3 text-sm ${className ?? ""}`}>
+      {t.rich("menOnly", {
+        link: (chunks) => (
+          <Link
+            href="/contact"
+            className="text-slate-600 underline hover:text-brass"
+          >
+            {chunks}
+          </Link>
+        ),
+      })}
+    </p>
   );
 }
