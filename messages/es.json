@@ -561,5 +561,9 @@
     "body": "Inicia sesión para ver quiénes son, qué estudian y cuándo tienen tiempo. No cuesta nada, y tu propia ficha permanece oculta hasta que la publiques.",
     "createAccount": "Crear una cuenta gratuita",
     "signIn": "Iniciar sesión"
+  },
+  "Share": {
+    "shareLabel": "Comparte el sitio",
+    "copied": "Enlace copiado"
   }
 }

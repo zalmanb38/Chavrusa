@@ -561,5 +561,9 @@
     "body": "Sign in to see who they are, what they learn and when they are free. Nothing to pay, and your own listing stays hidden until you publish it.",
     "createAccount": "Create a free account",
     "signIn": "Sign in"
+  },
+  "Share": {
+    "shareLabel": "Share this site",
+    "copied": "Link copied"
   }
 }

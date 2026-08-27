@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
+import ShareButton from "@/components/ShareButton";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -209,6 +210,13 @@ export default async function HomePage({
               {t("getStarted")}
             </button>
           </form>
+        </div>
+
+        {/* Below the sign-up rather than beside it: passing the site on is
+            the thing you do once you have read the case for it, and on a
+            narrow screen this column order is the reading order. */}
+        <div className="mx-auto w-full max-w-[1240px] px-6 pb-14 sm:px-14">
+          <ShareButton className="border-t border-ivory/20 pt-5" />
         </div>
       </section>
     </div>

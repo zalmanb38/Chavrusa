@@ -561,5 +561,9 @@
     "body": "Connectez-vous pour voir qui ils sont, ce qu'ils étudient et quand ils sont disponibles. Rien à payer, et votre propre fiche reste masquée jusqu'à ce que vous la publiiez.",
     "createAccount": "Créer un compte gratuit",
     "signIn": "Se connecter"
+  },
+  "Share": {
+    "shareLabel": "Partager le site",
+    "copied": "Lien copié"
   }
 }
