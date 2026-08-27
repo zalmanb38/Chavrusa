@@ -67,6 +67,7 @@
     "checkEmail": "בדוק/י את תיבת הדואר שלך כדי לאשר את החשבון לפני ההתחברות.",
     "genericError": "משהו השתבש. נסה/י שוב.",
     "passwordMismatch": "הסיסמאות אינן תואמות.",
+    "passwordNeedsLetterAndDigit": "הסיסמה חייבת לכלול לפחות אות אחת וספרה אחת.",
     "forgotPassword": "שכחת סיסמה?",
     "forgotPasswordTitle": "איפוס סיסמה",
     "forgotPasswordSubtitle": "הזן/י את האימייל שלך ונשלח לך קישור לאיפוס הסיסמה.",

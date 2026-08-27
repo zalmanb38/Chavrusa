@@ -67,6 +67,7 @@
     "checkEmail": "Check your email to confirm your account before logging in.",
     "genericError": "Something went wrong. Please try again.",
     "passwordMismatch": "Passwords do not match.",
+    "passwordNeedsLetterAndDigit": "Password must contain at least one letter and one number.",
     "forgotPassword": "Forgot password?",
     "forgotPasswordTitle": "Reset your password",
     "forgotPasswordSubtitle": "Enter your email and we'll send you a link to reset your password.",

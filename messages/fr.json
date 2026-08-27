@@ -67,6 +67,7 @@
     "checkEmail": "Consultez votre e-mail pour confirmer votre compte avant de vous connecter.",
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
     "passwordMismatch": "Les mots de passe ne correspondent pas.",
+    "passwordNeedsLetterAndDigit": "Le mot de passe doit contenir au moins une lettre et un chiffre.",
     "forgotPassword": "Mot de passe oublié ?",
     "forgotPasswordTitle": "Réinitialiser votre mot de passe",
     "forgotPasswordSubtitle": "Entrez votre e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",

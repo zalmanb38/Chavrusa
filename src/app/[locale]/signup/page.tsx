@@ -35,6 +35,14 @@ export default function SignupPage() {
       return;
     }
 
+    // Mirrors the Auth policy (letters + digits). Checked here so the
+    // rejection arrives while someone is still looking at the field,
+    // rather than after a round-trip.
+    if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+      setError(t("passwordNeedsLetterAndDigit"));
+      return;
+    }
+
     setLoading(true);
     const supabase = createClient();
     const { data, error: signUpError } = await supabase.auth.signUp({
@@ -99,7 +107,7 @@ export default function SignupPage() {
             <input
               type="password"
               required
-              minLength={6}
+              minLength={8}
               autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -112,7 +120,7 @@ export default function SignupPage() {
             <input
               type="password"
               required
-              minLength={6}
+              minLength={8}
               autoComplete="new-password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

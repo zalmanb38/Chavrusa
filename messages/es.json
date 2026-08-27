@@ -67,6 +67,7 @@
     "checkEmail": "Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.",
     "genericError": "Algo salió mal. Inténtalo de nuevo.",
     "passwordMismatch": "Las contraseñas no coinciden.",
+    "passwordNeedsLetterAndDigit": "La contraseña debe contener al menos una letra y un número.",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "forgotPasswordTitle": "Restablece tu contraseña",
     "forgotPasswordSubtitle": "Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.",
