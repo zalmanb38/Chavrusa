@@ -188,10 +188,19 @@ a {
   filter: grayscale(0.35) contrast(1.08);
 }
 
+/* The dot has to survive a 1x display, which is what the first version of
+   this got wrong: a 0.62px radius on a 3px tile left ~13% of each tile
+   opaque, so most of the photograph was masked away, and a sub-pixel dot
+   anti-aliased into haze rather than resolving. Radius is now 1.3px of a
+   1.5px maximum (dots meet at half the tile), which keeps ~69% of the
+   image and prints as an actual dot at 1x. Enlarging the tile instead
+   looks like a coarser screen but costs the photograph its detail, so the
+   tile stays at 3px. Check any change to these numbers at 1x, not only on
+   a Retina screen. */
 @supports (mask-image: radial-gradient(#000 0.5px, transparent 0.5px)) {
   .halftone {
-    -webkit-mask-image: radial-gradient(#000 0.62px, transparent 0.66px);
-    mask-image: radial-gradient(#000 0.62px, transparent 0.66px);
+    -webkit-mask-image: radial-gradient(#000 1.3px, transparent 1.5px);
+    mask-image: radial-gradient(#000 1.3px, transparent 1.5px);
     -webkit-mask-size: 3px 3px;
     mask-size: 3px 3px;
   }
