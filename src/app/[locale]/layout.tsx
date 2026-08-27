@@ -38,6 +38,25 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Chavrusa Link",
   description: "Find a Torah study partner — remote or in person.",
+  // The share card is typographic rather than photographic, because feeds
+  // crop and downscale it. English only for now: BRAND-ASSETS.md §3 asks
+  // for approval on each locale's wording before localised cards exist,
+  // so every locale shares this one rather than getting a machine
+  // translation of it.
+  openGraph: {
+    type: "website",
+    title: "Chavrusa Link — find someone to learn with",
+    description:
+      "Post what you learn and when you are free. See everyone doing the same nearby.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chavrusa Link — find someone to learn with",
+    description:
+      "Post what you learn and when you are free. See everyone doing the same nearby.",
+    images: ["/og-image.png"],
+  },
 };
 
 export function generateStaticParams() {

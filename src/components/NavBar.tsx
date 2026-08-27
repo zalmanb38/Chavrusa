@@ -26,7 +26,7 @@ export default async function NavBar({
     <header className="sticky top-0 z-10 border-b border-border bg-background">
       <nav className="mx-auto flex max-w-[1240px] flex-wrap items-center gap-8 px-6 py-5 sm:px-14">
         {/* Wordmark pushed left, everything else trailing it. */}
-        <Link href="/" className="me-auto flex items-center gap-2.5 text-[21px]">
+        <Link href="/" className="me-auto flex items-center gap-3 text-[21px]">
           <Logo className="size-[34px]" />
           {common("appName")}
         </Link>
