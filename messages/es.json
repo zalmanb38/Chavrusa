@@ -80,7 +80,10 @@
     "resetPasswordSuccess": "Contraseña actualizada. Redirigiendo a tu perfil…",
     "requestNewLink": "Solicitar un nuevo enlace",
     "verifyingLink": "Verificando tu enlace de restablecimiento…",
-    "resetLinkInvalid": "Este enlace para restablecer la contraseña no es válido o ha expirado."
+    "resetLinkInvalid": "Este enlace para restablecer la contraseña no es válido o ha expirado.",
+    "googleDataNote": "Recibimos tu nombre y tu correo electrónico. No publicamos nada en tu cuenta de Google y nunca vemos tus contactos.",
+    "orUseEmail": "o usa un correo",
+    "accountLinked": "Ya puedes entrar con Google o con tu contraseña: ambos llegan a esta cuenta."
   },
   "Profile": {
     "title": "Mi perfil",
@@ -473,7 +476,8 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "contact": "Contacto",
-    "browse": "Explorar"
+    "browse": "Explorar",
+    "tagline": "Un sitio para hombres que estudian con hombres"
   },
   "Contact": {
     "title": "Contáctanos",
@@ -532,7 +536,10 @@
     "emailHint": "Solo tú lo ves. Cambiarlo significa cambiar la cuenta con la que inicias sesión, así que no se edita aquí."
   },
   "Notice": {
-    "menOnly": "Chavrusa Link es por ahora solo para hombres. Si eres una mujer que busca compañero de estudio, <link>escríbenos a través del formulario de contacto</link> para más información."
+    "menOnlyLabel": "A quién está dirigido el sitio",
+    "menOnlyAbout": "Chavrusa Link es para hombres. Cada perfil, cada match y cada presentación en el sitio son entre hombres.",
+    "menOnlyAboutAfter": "Todo lo que sigue explica cómo funciona el emparejamiento.",
+    "menOnlySignup": "Chavrusa Link empareja hombres con hombres. Si no es lo que buscas, este no es el sitio adecuado."
   },
   "Messages": {
     "title": "Mensajes",
@@ -551,5 +558,11 @@
     "newMessageBody": "{name} te ha escrito en Chavrusa Link. Puedes leerlo y responder en el sitio; no volveremos a escribirte sobre esta conversación hasta que lo hayas leído.",
     "newMessageAction": "Leer el mensaje",
     "newMessageFootnote": "Recibes esto porque tienes match con esta persona. Si terminas el match, dejan de llegar estos correos."
+  },
+  "BrowseWall": {
+    "count": "{count, plural, =0 {Ahora mismo se están uniendo personas.} one {Hay # persona aquí.} other {Hay # personas aquí.}}",
+    "body": "Inicia sesión para ver quiénes son, qué estudian y cuándo tienen tiempo. No cuesta nada, y tu propia ficha permanece oculta hasta que la publiques.",
+    "createAccount": "Crear una cuenta gratuita",
+    "signIn": "Iniciar sesión"
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
@@ -12,6 +13,10 @@ import ImageSlot from "@/components/ImageSlot";
 export default function SignupPage() {
   const t = useTranslations("Auth");
   const router = useRouter();
+  // The browse wall sends people here with where they were going; without
+  // this they'd sign in and land somewhere they never asked for.
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/profile";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +41,7 @@ export default function SignupPage() {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/profile`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
       },
     });
     setLoading(false);
@@ -47,7 +52,7 @@ export default function SignupPage() {
     }
 
     if (data.session) {
-      router.push("/profile");
+      router.push(next);
       router.refresh();
     } else {
       setInfo(t("checkEmail"));
@@ -64,14 +69,15 @@ export default function SignupPage() {
       />
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("signupTitle")}</h1>
 
-      <MenOnlyNotice />
+      <MenOnlyNotice variant="signup" />
+
 
       <div className="flex flex-col gap-6">
-        <GoogleSignInButton />
+        <GoogleSignInButton next={next} />
 
         <div className="flex items-center gap-3 text-xs text-muted">
           <span className="h-px flex-1 bg-border" />
-          {t("or")}
+          {t("orUseEmail")}
           <span className="h-px flex-1 bg-border" />
         </div>
 

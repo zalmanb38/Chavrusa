@@ -80,7 +80,10 @@
     "resetPasswordSuccess": "Password updated. Taking you to your profile…",
     "requestNewLink": "Request a new link",
     "verifyingLink": "Verifying your reset link…",
-    "resetLinkInvalid": "This password reset link is invalid or has expired."
+    "resetLinkInvalid": "This password reset link is invalid or has expired.",
+    "googleDataNote": "We receive your name and email address. Nothing is posted to your Google account, and we never see your contacts.",
+    "orUseEmail": "or use an email",
+    "accountLinked": "You can now sign in with Google or with your password — both reach this account."
   },
   "Profile": {
     "title": "My Profile",
@@ -473,7 +476,8 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "contact": "Contact",
-    "browse": "Browse"
+    "browse": "Browse",
+    "tagline": "A site for men learning with men"
   },
   "Contact": {
     "title": "Contact us",
@@ -532,7 +536,10 @@
     "emailHint": "Only you can see this. Changing it means changing the account it signs in with, so it isn't edited here."
   },
   "Notice": {
-    "menOnly": "Chavrusa Link is currently for men only. If you're a woman looking for a study partner, please <link>reach out via our contact form</link> for more information."
+    "menOnlyLabel": "Who the site is for",
+    "menOnlyAbout": "Chavrusa Link is for men. Every listing, every match and every introduction on the site is between men.",
+    "menOnlyAboutAfter": "Everything below is about how the matching works.",
+    "menOnlySignup": "Chavrusa Link matches men with men. If that is not what you are looking for, this isn't the right site."
   },
   "Messages": {
     "title": "Messages",
@@ -551,5 +558,11 @@
     "newMessageBody": "{name} has written to you on Chavrusa Link. You can read it and reply on the site — we will not email you again about this conversation until you have read it.",
     "newMessageAction": "Read the message",
     "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match ends these emails."
+  },
+  "BrowseWall": {
+    "count": "{count, plural, =0 {Learners are joining now.} =1 {# learner is here.} other {# learners are here.}}",
+    "body": "Sign in to see who they are, what they learn and when they are free. Nothing to pay, and your own listing stays hidden until you publish it.",
+    "createAccount": "Create a free account",
+    "signIn": "Sign in"
   }
 }

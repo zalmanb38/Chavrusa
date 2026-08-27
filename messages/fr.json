@@ -80,7 +80,10 @@
     "resetPasswordSuccess": "Mot de passe mis à jour. Redirection vers votre profil…",
     "requestNewLink": "Demander un nouveau lien",
     "verifyingLink": "Vérification de votre lien de réinitialisation…",
-    "resetLinkInvalid": "Ce lien de réinitialisation du mot de passe est invalide ou a expiré."
+    "resetLinkInvalid": "Ce lien de réinitialisation du mot de passe est invalide ou a expiré.",
+    "googleDataNote": "Nous recevons votre nom et votre adresse e-mail. Rien n'est publié sur votre compte Google, et nous ne voyons jamais vos contacts.",
+    "orUseEmail": "ou utiliser un e-mail",
+    "accountLinked": "Vous pouvez désormais vous connecter avec Google ou avec votre mot de passe — les deux mènent à ce compte."
   },
   "Profile": {
     "title": "Mon profil",
@@ -473,7 +476,8 @@
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "contact": "Contact",
-    "browse": "Parcourir"
+    "browse": "Parcourir",
+    "tagline": "Un site pour des hommes qui étudient avec des hommes"
   },
   "Contact": {
     "title": "Nous contacter",
@@ -532,7 +536,10 @@
     "emailHint": "Vous seul le voyez. Le modifier revient à changer le compte de connexion, ce n'est donc pas fait ici."
   },
   "Notice": {
-    "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
+    "menOnlyLabel": "À qui ce site s'adresse",
+    "menOnlyAbout": "Chavrusa Link s'adresse aux hommes. Chaque profil, chaque mise en relation et chaque présentation sur le site se fait entre hommes.",
+    "menOnlyAboutAfter": "Tout ce qui suit explique comment fonctionne la mise en relation.",
+    "menOnlySignup": "Chavrusa Link met en relation des hommes avec des hommes. Si ce n'est pas ce que vous cherchez, ce site n'est pas le bon."
   },
   "Messages": {
     "title": "Messages",
@@ -551,5 +558,11 @@
     "newMessageBody": "{name} vous a écrit sur Chavrusa Link. Vous pouvez le lire et répondre sur le site — nous ne vous enverrons pas d'autre e-mail à propos de cette conversation avant que vous ne l'ayez lu.",
     "newMessageAction": "Lire le message",
     "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met fin à ces e-mails."
+  },
+  "BrowseWall": {
+    "count": "{count, plural, =0 {Des apprenants nous rejoignent en ce moment.} one {# apprenant est ici.} other {# apprenants sont ici.}}",
+    "body": "Connectez-vous pour voir qui ils sont, ce qu'ils étudient et quand ils sont disponibles. Rien à payer, et votre propre fiche reste masquée jusqu'à ce que vous la publiiez.",
+    "createAccount": "Créer un compte gratuit",
+    "signIn": "Se connecter"
   }
 }

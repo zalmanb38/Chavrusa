@@ -35,7 +35,10 @@ export default async function AboutPage({
         />
       </div>
 
-      <ProseDocument doc={getAboutContent(locale)} />
+      <ProseDocument
+        doc={getAboutContent(locale)}
+        interlude={{ afterBlock: 0, node: <MenOnlyNotice variant="about" /> }}
+      />
 
       <div className="mx-auto grid w-full max-w-2xl gap-4 px-4 sm:grid-cols-2">
         <ImageSlot
@@ -50,9 +53,6 @@ export default async function AboutPage({
           alt=""
           height={220}
         />
-      </div>
-      <div className="mx-auto w-full max-w-2xl px-4 pb-12">
-        <MenOnlyNotice />
       </div>
     </>
   );

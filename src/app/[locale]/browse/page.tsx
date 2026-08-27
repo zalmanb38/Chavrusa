@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import {
   LANGUAGE_CODES,
@@ -32,6 +32,7 @@ import {
 import LocationFilter from "@/components/LocationFilter";
 import BrowseCard from "@/components/BrowseCard";
 import ImageSlot from "@/components/ImageSlot";
+import BrowseWall from "@/components/BrowseWall";
 import MultiSelectFilter from "@/components/MultiSelectFilter";
 import BrowseMapView from "@/components/BrowseMapView";
 import {
@@ -78,13 +79,19 @@ export default async function BrowsePage({
     data: { user },
   } = await supabase.auth.getUser();
 
+  // A signed-out visitor gets the wall rather than a redirect: being
+  // bounced to a login form says nothing about what is behind it, and the
+  // real count is the most honest argument the page has.
   if (!user) {
-    redirect({ href: "/login", locale });
-    // redirect() throws, so this never runs — it's here so TypeScript
-    // narrows `user` below instead of needing a non-null assertion at
-    // every use, which would TypeError rather than redirect if the
-    // throw ever stopped happening.
-    return null;
+    // Through a function, not the table: a signed-out visitor cannot read
+    // profiles under RLS, so a direct count here would always be zero —
+    // and a wall whose whole argument is a real number must not invent it.
+    const { data: count, error: countError } = await supabase.rpc(
+      "discoverable_learner_count",
+    );
+    if (countError) console.error("Browse wall count failed", countError);
+
+    return <BrowseWall learnerCount={Number(count ?? 0)} />;
   }
 
   // RLS only hides profiles from people who blocked *you*; profiles you've

@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
 import PhoneVerification from "@/components/PhoneVerification";
 import PhotoUpload from "@/components/PhotoUpload";
+import AccountLinkedBanner from "@/components/AccountLinkedBanner";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
@@ -74,6 +76,12 @@ export default async function ProfilePage({
           (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
         }
       />
+      {/* The next screen after an OAuth round-trip, so this is where the
+          one-time linking notice lands. */}
+      <Suspense fallback={null}>
+        <AccountLinkedBanner />
+      </Suspense>
+
       {/* Read-only: the address is the account's identity, changing it is
           an auth operation rather than a profile edit. Shown because
           people forget which address they signed up with — and it is only
