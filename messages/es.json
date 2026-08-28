@@ -126,6 +126,8 @@
     "displayNamePromptBody": "Tu nombre visible se acortó automáticamente a partir del nombre que habías puesto, así que puede que no quede como quieres. Edítalo aquí abajo y guarda: tu nombre completo se guarda aparte y sigue siendo privado.",
     "ageRange": "Rango de edad",
     "ageRangeUnset": "Prefiero no decirlo",
+    "ageRangeBeisMedrash": "Beis Medrash",
+    "ageRangeKollel": "Kollel",
     "studyLanguages": "Idioma del texto",
     "studyLanguagesHint": "El idioma en el que quieres estudiar el texto, que puede no ser el idioma en el que prefieres hablar.",
     "studyLanguagesShort": "Texto: {languages}",

@@ -7,6 +7,7 @@ import {
   TOPIC_KEYS,
   PREFERENCES,
   AGE_RANGES,
+  ageRangeLabel,
   FREQUENCIES,
   TIMES_OF_DAY,
   SESSION_LENGTHS,
@@ -372,7 +373,7 @@ export default async function BrowsePage({
                 label={t("filterAge")}
                 options={AGE_RANGES.map((range) => ({
                   value: range,
-                  label: range,
+                  label: ageRangeLabel(range, tProfile),
                 }))}
                 initialSelected={selectedAges}
                 emptyLabel={t("all")}

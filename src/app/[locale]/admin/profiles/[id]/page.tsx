@@ -4,6 +4,7 @@ import { requireAdmin } from "@/lib/admin";
 import AdminNav from "@/components/AdminNav";
 import AdminUserActions from "@/components/AdminUserActions";
 import {
+  ageRangeLabel,
   preferenceMessageKey,
   levelMessageKey,
   topicLabels,
@@ -195,7 +196,7 @@ export default async function AdminProfileDetailPage({
         <div>
           <p className="text-xs text-muted">{tProfile("ageRange")}</p>
           <p>
-            {p.age_range || "—"}
+            {p.age_range ? ageRangeLabel(p.age_range, tProfile) : "—"}
             {p.age_range && (p.hidden_fields ?? []).includes("age_range") && (
               <span className="text-muted"> · {t("hiddenByUser")}</span>
             )}

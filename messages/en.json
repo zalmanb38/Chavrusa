@@ -126,6 +126,8 @@
     "displayNamePromptBody": "Your display name was shortened automatically from the name you'd entered, so it may not read the way you'd like. Edit it below and save — your full name is kept separately and stays private.",
     "ageRange": "Age range",
     "ageRangeUnset": "Prefer not to say",
+    "ageRangeBeisMedrash": "Beis Medrash",
+    "ageRangeKollel": "Kollel",
     "studyLanguages": "Language of the text",
     "studyLanguagesHint": "The language you want to learn the text in — which may not be the language you'd rather talk in.",
     "studyLanguagesShort": "Text: {languages}",

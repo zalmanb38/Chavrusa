@@ -11,6 +11,8 @@ import {
   PREFERENCES,
   OTHER_TOPIC,
   AGE_RANGES,
+  ageRangeLabel,
+  isAgeRange,
   STUDY_LANGUAGE_CODES,
   FREQUENCIES,
   TIMES_OF_DAY,
@@ -320,9 +322,16 @@ export default function ProfileForm({
           className={inputClass}
         >
           <option value="">{t("ageRangeUnset")}</option>
+          {/* A value saved under an older set of ranges is kept as its own
+              option. Without it the select would show no match, quietly
+              reset to "unset", and save that over the person's answer the
+              next time they edited anything else on the page. */}
+          {ageRange && !isAgeRange(ageRange) && (
+            <option value={ageRange}>{ageRange}</option>
+          )}
           {AGE_RANGES.map((range) => (
             <option key={range} value={range}>
-              {range}
+              {ageRangeLabel(range, t)}
             </option>
           ))}
         </select>

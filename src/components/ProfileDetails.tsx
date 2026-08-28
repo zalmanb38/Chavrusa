@@ -12,6 +12,7 @@ import {
   type Preference,
   type Frequency,
   type TimeOfDay,
+  ageRangeLabel,
 } from "@/lib/profile-options";
 import { formatLocationShort } from "@/lib/locations";
 import { visibleAgeRange } from "@/lib/browse-filters";
@@ -116,7 +117,8 @@ export default function ProfileDetails({
   const tLanguages = useTranslations("Languages");
 
   const topics = topicLabels(profile.topics, profile.topic_other, tTopics);
-  const age = visibleAgeRange(profile);
+  const storedAge = visibleAgeRange(profile);
+  const age = storedAge ? ageRangeLabel(storedAge, tProfile) : "";
 
   const facts = [
     profile.level && tProfile(levelMessageKey[profile.level]),

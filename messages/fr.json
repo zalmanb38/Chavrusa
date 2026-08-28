@@ -126,6 +126,8 @@
     "displayNamePromptBody": "Votre nom affiché a été raccourci automatiquement à partir du nom que vous aviez saisi ; il ne vous convient peut-être pas. Modifiez-le ci-dessous et enregistrez — votre nom complet est conservé séparément et reste privé.",
     "ageRange": "Tranche d'âge",
     "ageRangeUnset": "Je préfère ne pas le dire",
+    "ageRangeBeisMedrash": "Beis Medrash",
+    "ageRangeKollel": "Kollel",
     "studyLanguages": "Langue du texte",
     "studyLanguagesHint": "La langue dans laquelle vous voulez étudier le texte — qui n'est pas forcément celle dans laquelle vous préférez parler.",
     "studyLanguagesShort": "Texte : {languages}",

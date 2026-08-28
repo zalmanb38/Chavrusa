@@ -45,14 +45,41 @@ export type Level = (typeof LEVELS)[number];
 export const PREFERENCES = ["remote", "in_person", "both"] as const;
 export type Preference = (typeof PREFERENCES)[number];
 
+// The first two are stages rather than ages: someone in beis medrash or
+// kollel is telling you where they are up to, which is more use to a
+// prospective chavrusa than the year they were born.
 export const AGE_RANGES = [
-  "18-22", "23-25", "26-30", "31-35", "36-40",
+  "beis_medrash", "kollel",
+  "18-20", "21-23", "24-26", "27-30", "31-35", "36-40",
   "41-50", "51-60", "61-70", "71-80", "81+",
 ] as const;
 export type AgeRange = (typeof AGE_RANGES)[number];
 
 export function isAgeRange(value: string): value is AgeRange {
   return (AGE_RANGES as readonly string[]).includes(value);
+}
+
+/**
+ * Only the two named entries need translating; a numeric span reads the
+ * same in every language and is shown exactly as stored.
+ *
+ * Deliberately tolerant of values that are no longer in the list. Ranges
+ * have been re-bucketed once already, so a profile saved under an older
+ * set still holds something like "26-30" — which is perfectly readable,
+ * and printing it beats blanking a person's answer because the options
+ * moved underneath them.
+ */
+const AGE_RANGE_MESSAGE_KEY: Record<string, string> = {
+  beis_medrash: "ageRangeBeisMedrash",
+  kollel: "ageRangeKollel",
+};
+
+export function ageRangeLabel(
+  range: string,
+  t: (key: string) => string,
+): string {
+  const key = AGE_RANGE_MESSAGE_KEY[range];
+  return key ? t(key) : range;
 }
 
 /**

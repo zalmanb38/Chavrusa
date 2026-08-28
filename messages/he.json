@@ -126,6 +126,8 @@
     "displayNamePromptBody": "שם התצוגה שלכם קוצר אוטומטית מהשם שהזנתם, וייתכן שאינו נראה כפי שהייתם רוצים. ערכו אותו כאן ושמרו — השם המלא נשמר בנפרד ונשאר פרטי.",
     "ageRange": "טווח גילים",
     "ageRangeUnset": "מעדיף/ה לא לציין",
+    "ageRangeBeisMedrash": "בית מדרש",
+    "ageRangeKollel": "כולל",
     "studyLanguages": "שפת הטקסט",
     "studyLanguagesHint": "השפה שבה תרצו ללמוד את הטקסט — ייתכן שאינה השפה שבה תעדיפו לשוחח.",
     "studyLanguagesShort": "טקסט: {languages}",
