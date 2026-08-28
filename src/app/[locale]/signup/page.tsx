@@ -8,7 +8,6 @@ import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import ErrorNote from "@/components/ErrorNote";
 import MenOnlyNotice from "@/components/MenOnlyNotice";
-import ImageSlot from "@/components/ImageSlot";
 
 export default function SignupPage() {
   const t = useTranslations("Auth");
@@ -70,12 +69,6 @@ export default function SignupPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-[420px] flex-col gap-6 px-6 py-16 sm:py-24">
-      <ImageSlot
-        direction="Stack of seforim with reading glasses on top"
-        src="/photos/p9-stack-glasses.jpg"
-        alt=""
-        height={160}
-      />
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("signupTitle")}</h1>
 
       <MenOnlyNotice />

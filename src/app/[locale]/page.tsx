@@ -21,7 +21,7 @@ const SUBJECTS = [
   { key: "chassidus", hebrew: "חסידות" },
 ] as const;
 
-const STEPS = ["01", "02", "03", "04"] as const;
+const STEPS = ["1", "2", "3", "4"] as const;
 
 export default async function HomePage({
   params,
@@ -106,11 +106,8 @@ export default async function HomePage({
 
       {/* ── How the matching works ───────────────────────────────────── */}
       <section id="how" className="mx-auto w-full max-w-[1240px] px-6 pb-20 sm:px-14">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-border pt-6">
+        <div className="border-t border-border pt-6">
           <h2 className="text-[30px] font-semibold">{t("howTitle")}</h2>
-          <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
-            {t("howLabel")}
-          </span>
         </div>
 
         {/* Row gap is the larger one: once the grid folds to two columns and
