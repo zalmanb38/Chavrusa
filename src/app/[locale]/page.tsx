@@ -14,11 +14,17 @@ import { createClient } from "@/lib/supabase/server";
  * exactly one full-bleed colour band per page — here, the closing CTA.
  */
 
+// Two full rows of four. Every key here is a real TOPIC_KEY, so each tile
+// links to a Browse filter that can actually return people.
 const SUBJECTS = [
   { key: "gemara", hebrew: "גמרא" },
   { key: "chumash", hebrew: "חומש" },
   { key: "mishnah", hebrew: "משנה" },
   { key: "chassidus", hebrew: "חסידות" },
+  { key: "tanya", hebrew: "תניא" },
+  { key: "halacha", hebrew: "הלכה" },
+  { key: "shaarHabitachon", hebrew: "שער הביטחון" },
+  { key: "musar", hebrew: "מוסר" },
 ] as const;
 
 const STEPS = ["1", "2", "3", "4"] as const;
