@@ -36,18 +36,16 @@ export default async function AboutPage({
 
       <ProseDocument doc={getAboutContent(locale)} />
 
-      <div className="mx-auto grid w-full max-w-2xl gap-4 px-4 sm:grid-cols-2">
-        <ImageSlot
-          direction="A hand turning a page of Tanya"
-          src="/photos/p3-hand-tanya.jpg"
-          alt=""
-          height={220}
-        />
+      {/* One image, full width. The shelf photograph is a 3.7:1 panorama,
+          so a half-column showed barely a third of the row of spines; at
+          full width it shows most of it, which is the whole point of the
+          shot. */}
+      <div className="mx-auto w-full max-w-2xl px-4">
         <ImageSlot
           direction="A set of seforim on a shelf"
           src="/photos/p2-seforim-shelf.jpg"
           alt=""
-          height={220}
+          height={240}
         />
       </div>
     </>

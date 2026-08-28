@@ -188,19 +188,31 @@ a {
   filter: grayscale(0.35) contrast(1.08);
 }
 
-/* The dot has to survive a 1x display, which is what the first version of
-   this got wrong: a 0.62px radius on a 3px tile left ~13% of each tile
-   opaque, so most of the photograph was masked away, and a sub-pixel dot
-   anti-aliased into haze rather than resolving. Radius is now 1.3px of a
-   1.5px maximum (dots meet at half the tile), which keeps ~69% of the
-   image and prints as an actual dot at 1x. Enlarging the tile instead
-   looks like a coarser screen but costs the photograph its detail, so the
-   tile stays at 3px. Check any change to these numbers at 1x, not only on
-   a Retina screen. */
+/* Two things this has already got wrong, both worth keeping in mind before
+   touching the numbers again.
+
+   First, the dot must survive a 1x display: the original 0.62px radius on
+   a 3px tile left only ~13% of each tile opaque, so most of the
+   photograph was masked away and a sub-pixel dot anti-aliased into haze.
+
+   Second, 1.3px was still too aggressive. It reads acceptably on a photo
+   of one large subject, but on a detail-dense one — rows of chairs,
+   shelved seforim, window mullions — it turned fine repeating detail into
+   noise, which looked like the photograph itself was blurry. 1.4px of the
+   1.5px maximum (dots meet at half the tile) takes coverage from ~68% to
+   ~73%, and just as importantly narrows the soft falloff from 0.2px to
+   0.1px, so each dot resolves crisply instead of smearing.
+
+   The tile stays at 3px: 4-6px is a more visibly deliberate screen but
+   coarsens past the point where the photograph survives underneath.
+
+   Check any change here at 1x AND at fractional scaling (125%/150%, which
+   Windows commonly runs), not only on a Retina screen — the tile lands on
+   3.75 and 4.5 device pixels there and cannot align to the pixel grid. */
 @supports (mask-image: radial-gradient(#000 0.5px, transparent 0.5px)) {
   .halftone {
-    -webkit-mask-image: radial-gradient(#000 1.3px, transparent 1.5px);
-    mask-image: radial-gradient(#000 1.3px, transparent 1.5px);
+    -webkit-mask-image: radial-gradient(#000 1.4px, transparent 1.5px);
+    mask-image: radial-gradient(#000 1.4px, transparent 1.5px);
     -webkit-mask-size: 3px 3px;
     mask-size: 3px 3px;
   }
