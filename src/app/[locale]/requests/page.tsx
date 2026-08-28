@@ -7,6 +7,7 @@ import RemoveResolvedRequestButton from "@/components/RemoveResolvedRequestButto
 import UnmatchButton from "@/components/UnmatchButton";
 import ImageSlot from "@/components/ImageSlot";
 import { MESSAGE_COLUMNS, unreadCount, type Message } from "@/lib/messages";
+import { PROFILE_DETAIL_FIELDS } from "@/lib/browse-filters";
 import ProfileDetails, {
   ProfileLocation,
   type ProfileDetailFields,
@@ -54,10 +55,6 @@ interface BlockedRow {
 
 const PROFILE_SUMMARY_FIELDS = "id, name, city";
 
-const PROFILE_DETAIL_FIELDS =
-  "id, name, city, country, region, neighborhood, languages, study_languages, " +
-  "topics, topic_other, level, preference, availability, age_range, " +
-  "frequency, time_of_day, session_length, blurb, hidden_fields";
 
 export default async function RequestsPage({
   params,

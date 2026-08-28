@@ -105,6 +105,20 @@ export const PROFILE_COLUMNS =
   "is_active";
 
 /**
+ * Exactly what `ProfileDetails` renders, and the one place it is written.
+ *
+ * Browse, an incoming request and a confirmed match all show the same
+ * component, so all three must select the same columns — and when this
+ * lived separately in each of them, the match page fell behind to
+ * `id, name, city` and showed a matched partner less than a stranger on
+ * Browse could see.
+ */
+export const PROFILE_DETAIL_FIELDS =
+  "id, name, city, country, region, neighborhood, languages, study_languages, " +
+  "topics, topic_other, level, preference, availability, age_range, " +
+  "frequency, time_of_day, session_length, blurb, hidden_fields";
+
+/**
  * The chainable subset of the Supabase query builder this module uses.
  * Declared structurally so the accumulation below stays type-checked
  * without importing the builder's full generic signature.

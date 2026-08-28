@@ -9,6 +9,10 @@ import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 import UnmatchButton from "@/components/UnmatchButton";
 import MessageThread from "@/components/MessageThread";
 import { MESSAGE_COLUMNS, type Message } from "@/lib/messages";
+import { PROFILE_DETAIL_FIELDS } from "@/lib/browse-filters";
+import ProfileDetails, {
+  type ProfileDetailFields,
+} from "@/components/ProfileDetails";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import BlockButton from "@/components/BlockButton";
 import type { StudySession } from "@/lib/sessions";
@@ -50,11 +54,21 @@ export default async function MatchDetailPage({
   const otherId =
     match.requester_id === userId ? match.recipient_id : match.requester_id;
 
-  const { data: otherProfile } = await supabase
+  // The same columns Browse and an incoming request select. A match should
+  // show more of someone than a stranger can see, and this page was
+  // showing less.
+  const { data: otherProfileRow } = await supabase
     .from("profiles")
-    .select("id, name, city")
+    .select(PROFILE_DETAIL_FIELDS)
     .eq("id", otherId)
     .maybeSingle();
+
+  // A select built from a shared constant is not a string literal, so the
+  // client cannot infer the row shape from it — the same cast the requests
+  // page makes for the same reason.
+  const otherProfile = otherProfileRow as unknown as
+    | (ProfileDetailFields & { id: string; name: string })
+    | null;
 
   const otherName = otherProfile?.name || "";
 
@@ -144,6 +158,11 @@ export default async function MatchDetailPage({
         {otherProfile?.city && (
           <p className="text-sm text-muted">{otherProfile.city}</p>
         )}
+
+        {otherProfile && (
+          <ProfileDetails profile={otherProfile} />
+        )}
+
         <div className="flex gap-3">
           <ReportButton
             currentUserId={userId}
