@@ -159,8 +159,15 @@ export default async function HomePage({
               className="flex flex-col gap-1 bg-surface px-6 py-[22px] hover:bg-neutral-200"
             >
               {/* Hebrew as an accent inside an English interface — its own
-                  direction, not the tile's. */}
-              <span lang="he" dir="rtl" className="text-[26px] leading-tight">
+                  direction, not the tile's. dir stays for correct shaping,
+                  but the alignment is overridden: left to itself, rtl put
+                  this line in the tile's opposite corner from the English
+                  one below it. */}
+              <span
+                lang="he"
+                dir="rtl"
+                className="text-left text-[26px] leading-tight"
+              >
                 {subject.hebrew}
               </span>
               <span className="text-[17px]">{tTopics(subject.key)}</span>
