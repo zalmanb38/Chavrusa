@@ -122,7 +122,7 @@ export default async function HomePage({
         <div className="mt-12 grid items-start gap-x-[34px] gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((numeral, i) => (
             <div key={numeral} className="flex flex-col border-t-2 border-brass pt-4">
-              <span className="mb-3 text-[34px] leading-none text-brass">
+              <span className="mb-3 text-[48px] leading-none text-brass">
                 {numeral}
               </span>
               {/* Two lines' worth of floor: titles run to one or two lines
