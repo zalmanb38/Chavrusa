@@ -451,14 +451,14 @@
   },
   "Photo": {
     "title": "Photo de profil",
-    "hint": "Facultatif. Votre photo n'est montrée qu'aux personnes avec lesquelles vous êtes mis en relation, et seulement après vérification.",
+    "hint": "Facultatif. Votre photo reste privée jusqu'à ce que vous soyez mis en relation avec un Chavrusa.",
     "choose": "Ajouter une photo",
-    "replace": "Remplacer la photo",
-    "remove": "Supprimer",
+    "replace": "Changer la photo",
+    "remove": "Supprimer la photo",
     "uploading": "Envoi…",
     "yourPhotoAlt": "Votre photo de profil",
     "statusPending": "En attente de vérification. Elle n'est visible par personne pour l'instant.",
-    "statusApproved": "Approuvée. Visible par les personnes avec lesquelles vous êtes en relation.",
+    "statusApproved": "Approuvée. Visible par les Chavrusas avec lesquels vous êtes en relation.",
     "statusRejected": "Cette photo n'a pas été approuvée. Vous pouvez en envoyer une autre.",
     "reviewNote": "Remarque",
     "badType": "Choisissez une image JPEG, PNG ou WebP.",
@@ -534,7 +534,7 @@
   },
   "Account": {
     "emailLabel": "E-mail du compte",
-    "emailHint": "Vous seul le voyez. Le modifier revient à changer le compte de connexion, ce n'est donc pas fait ici."
+    "emailHint": "Privé — vous seul le voyez. C'est aussi l'adresse avec laquelle vous vous connectez. Écrivez-nous si elle doit être modifiée."
   },
   "Notice": {
     "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
