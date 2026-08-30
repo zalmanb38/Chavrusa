@@ -453,12 +453,12 @@
     "title": "Profile photo",
     "hint": "Optional. Your photo is only shown to someone once the two of you are matched, and only after it's been reviewed.",
     "choose": "Add a photo",
-    "replace": "Replace photo",
-    "remove": "Remove",
+    "replace": "Change photo",
+    "remove": "Remove photo",
     "uploading": "Uploading…",
     "yourPhotoAlt": "Your profile photo",
     "statusPending": "Waiting for review. It isn't visible to anyone yet.",
-    "statusApproved": "Approved. Shown to people you're matched with.",
+    "statusApproved": "Approved. Visible to chavrusas you're matched with.",
     "statusRejected": "This photo wasn't approved. You're welcome to upload a different one.",
     "reviewNote": "Note",
     "badType": "Please choose a JPEG, PNG or WebP image.",
@@ -534,7 +534,7 @@
   },
   "Account": {
     "emailLabel": "Account email",
-    "emailHint": "Only you can see this. Changing it means changing the account it signs in with, so it isn't edited here."
+    "emailHint": "Private — only you can see this. It's also the email you sign in with. Contact us if you need it updated."
   },
   "Notice": {
     "menOnly": "Chavrusa Link is currently for men only. If you're a woman looking for a study partner, please <link>reach out via our contact form</link> for more information."
