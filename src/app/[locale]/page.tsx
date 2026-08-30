@@ -166,7 +166,7 @@ export default async function HomePage({
               <span
                 lang="he"
                 dir="rtl"
-                className="text-left text-[26px] leading-tight"
+                className="text-left text-[26px] leading-tight text-brass-deep"
               >
                 {subject.hebrew}
               </span>
