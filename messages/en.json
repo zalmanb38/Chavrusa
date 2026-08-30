@@ -290,13 +290,13 @@
     "unreadCount": "{count, plural, =1 {# new message} other {# new messages}}"
   },
   "Schedule": {
-    "proposeTitle": "Propose a time",
+    "proposeTitle": "Suggest a time",
     "dateTimeLabel": "Date & time",
     "noteLabel": "Note (optional)",
     "notePlaceholder": "e.g. Let's start with Perek 3",
-    "proposeSubmit": "Propose",
+    "proposeSubmit": "Suggest",
     "sessionsTitle": "Sessions",
-    "noSessions": "No sessions scheduled yet — propose a time below.",
+    "noSessions": "No sessions scheduled yet — suggest a time below.",
     "statusConfirmed": "Confirmed",
     "statusCancelled": "Cancelled",
     "statusYourTurn": "Your turn to respond",
