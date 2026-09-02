@@ -534,7 +534,13 @@
   },
   "Account": {
     "emailLabel": "E-mail du compte",
-    "emailHint": "Privé — vous seul le voyez. C'est aussi l'adresse avec laquelle vous vous connectez. Écrivez-nous si elle doit être modifiée."
+    "emailHint": "Privé — vous seul le voyez. C'est aussi l'adresse avec laquelle vous vous connectez.",
+    "changeEmailLink": "Cliquez ici si vous souhaitez la modifier.",
+    "changeEmailLabel": "Nouvelle adresse e-mail",
+    "changeEmailButton": "Mettre à jour l'e-mail",
+    "changeEmailCancel": "Annuler",
+    "changeEmailSent": "Consultez {email} pour confirmer le changement.",
+    "emailUpdated": "L'adresse e-mail de votre compte a été mise à jour."
   },
   "Notice": {
     "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."

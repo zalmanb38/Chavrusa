@@ -6,6 +6,8 @@ import ProfileForm from "@/components/ProfileForm";
 import PhoneVerification from "@/components/PhoneVerification";
 import PhotoUpload from "@/components/PhotoUpload";
 import AccountLinkedBanner from "@/components/AccountLinkedBanner";
+import EmailUpdatedBanner from "@/components/EmailUpdatedBanner";
+import ChangeEmailForm from "@/components/ChangeEmailForm";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
@@ -82,10 +84,16 @@ export default async function ProfilePage({
         <AccountLinkedBanner />
       </Suspense>
 
-      {/* Read-only: the address is the account's identity, changing it is
-          an auth operation rather than a profile edit. Shown because
-          people forget which address they signed up with — and it is only
-          ever your own, never anyone else's, at any match status. */}
+      {/* Where the confirmation link lands after an email change. */}
+      <Suspense fallback={null}>
+        <EmailUpdatedBanner />
+      </Suspense>
+
+      {/* The address is the account's identity, so changing it is an auth
+          operation, not a profile edit — it lives in auth.users and moves
+          only after the confirmation link is clicked. Shown because people
+          forget which address they signed up with, and it is only ever
+          your own, never anyone else's, at any match status. */}
       <section className="flex flex-col gap-1 border-t border-border pt-5">
         <h2 className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
           {tAccount("emailLabel")}
@@ -94,6 +102,7 @@ export default async function ProfilePage({
           {user.email}
         </p>
         <p className="text-xs text-muted">{tAccount("emailHint")}</p>
+        <ChangeEmailForm locale={locale} />
       </section>
 
       <PhotoUpload
