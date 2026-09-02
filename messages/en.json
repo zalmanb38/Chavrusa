@@ -482,12 +482,11 @@
   },
   "Contact": {
     "title": "Contact us",
-    "subtitle": "Questions, safety concerns, or feedback — we read every message.",
     "nameLabel": "Your name",
     "emailLabel": "Your email",
     "topicLabel": "Topic",
     "topic_general": "General question",
-    "topic_safety": "Report a safety issue",
+    "topic_safety": "Report an issue",
     "topic_technical": "Technical problem",
     "topic_feedback": "Feedback",
     "messageLabel": "Message",

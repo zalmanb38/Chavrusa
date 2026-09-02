@@ -482,7 +482,6 @@
   },
   "Contact": {
     "title": "Contáctanos",
-    "subtitle": "Preguntas, problemas de seguridad o comentarios — leemos todos los mensajes.",
     "nameLabel": "Tu nombre",
     "emailLabel": "Tu correo electrónico",
     "topicLabel": "Tema",
