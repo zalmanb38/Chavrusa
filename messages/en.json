@@ -539,7 +539,7 @@
     "changeEmailLabel": "New email address",
     "changeEmailButton": "Update email",
     "changeEmailCancel": "Cancel",
-    "changeEmailSent": "Check {email} to confirm the change.",
+    "changeEmailSent": "Check both {email} and your current address to confirm the change.",
     "emailUpdated": "Your account email has been updated."
   },
   "Notice": {

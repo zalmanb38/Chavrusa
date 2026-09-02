@@ -539,7 +539,7 @@
     "changeEmailLabel": "כתובת אימייל חדשה",
     "changeEmailButton": "עדכון אימייל",
     "changeEmailCancel": "ביטול",
-    "changeEmailSent": "בדקו את {email} כדי לאשר את השינוי.",
+    "changeEmailSent": "בדקו גם את {email} וגם את הכתובת הנוכחית שלכם כדי לאשר את השינוי.",
     "emailUpdated": "כתובת האימייל של החשבון עודכנה."
   },
   "Notice": {

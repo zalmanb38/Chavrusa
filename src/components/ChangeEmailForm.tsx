@@ -18,6 +18,12 @@ const inputClass =
  * do instead, and the real swap shows up on the next load after the
  * round-trip.
  *
+ * That round-trip is a double one: the project has Supabase's "Secure
+ * email change" enabled, so a link goes to both the old address and the
+ * new one and the change only lands once both are clicked. The
+ * changeEmailSent copy says so in all four locales — if the setting is
+ * ever turned off, that copy is what has to change with it.
+ *
  * `locale` is passed in rather than read from a hook because the redirect
  * has to name the path the callback returns to, and this is a client
  * component reached from a server one — a string crosses that boundary,
