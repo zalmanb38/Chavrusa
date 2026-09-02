@@ -2,7 +2,7 @@
   "Home": {
     "heroTitle": "Find the right Chavrusa.",
     "heroLead": "Tell us what you'd like to learn, when you're available, and how you prefer to learn — in person, by phone, or by video. Chavrusa Link helps you find someone whose learning interests, schedule, and preferences fit yours.",
-    "heroReassurance": "Creating an account is free and takes about a minute. Find Chavrusas nearby or connect with someone anywhere.",
+    "heroReassurance": "Creating an account is free and takes about a minute.",
     "heroImageDirection": "Open Gemara on a shtender",
     "getStarted": "Create your profile",
     "browseChavrusas": "Browse Chavrusas",
@@ -12,7 +12,7 @@
     "step2Title": "Set your availability",
     "step2Body": "Choose the days and times that work best for you — mornings, evenings, or whenever fits your schedule.",
     "step3Title": "Find a suitable Chavrusa",
-    "step3Body": "We'll show you potential Chavrusas based on what you want to learn, your availability, and your preferences. Browse the results and see who looks like a good fit.",
+    "step3Body": "We'll show you potential Chavrusas. You can browse the list based on your preferences and see who looks like a good fit.",
     "step4Title": "Connect and start learning",
     "step4Body": "Connect and communicate through Chavrusa Link. Once you both agree to proceed, exchange contact information and begin learning together.",
     "subjectsTitle": "What people are learning",
