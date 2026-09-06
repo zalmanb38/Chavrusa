@@ -233,8 +233,13 @@ function planDeliveries(
  * translations would send someone an email subject reading
  * "AuthEmail.signupSubject". Add a locale to this list in the same commit
  * that adds its strings, never before.
+ *
+ * All four are translated today, so this currently rejects nothing. It
+ * stays anyway: the next locale added to routing will pass hasLocale long
+ * before anyone writes its email copy, and this is what stands between
+ * that and a confirmation email nobody can read.
  */
-const TRANSLATED: readonly string[] = ["en"];
+const TRANSLATED: readonly string[] = ["en", "he", "fr", "es"];
 
 /**
  * Recorded on the user at sign-up. Anyone who signed up before that

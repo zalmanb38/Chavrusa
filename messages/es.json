@@ -571,5 +571,28 @@
   "Share": {
     "shareLabel": "Comparte el sitio",
     "copied": "Enlace copiado"
+  },
+  "AuthEmail": {
+    "signupSubject": "Confirma tu correo electrónico",
+    "signupHeading": "Confirma tu correo electrónico",
+    "signupBody": "Te damos la bienvenida a Chavrusa Link. Confirma esta dirección para terminar de crear tu cuenta y empezar a buscar una Chavrusa.",
+    "signupAction": "Confirmar mi correo",
+    "signupFootnote": "Si no creaste una cuenta en Chavrusa Link, puedes ignorar este correo.",
+    "recoverySubject": "Restablece tu contraseña",
+    "recoveryHeading": "Restablece tu contraseña",
+    "recoveryBody": "Usa el enlace de abajo para elegir una nueva contraseña para tu cuenta de Chavrusa Link. Solo se puede usar una vez.",
+    "recoveryAction": "Elegir una nueva contraseña",
+    "recoveryFootnote": "Si no pediste restablecer tu contraseña, puedes ignorar este correo — tu contraseña actual sigue funcionando.",
+    "emailChangeCurrentSubject": "Confirma el cambio de tu correo electrónico",
+    "emailChangeCurrentHeading": "Confirma el cambio de tu correo electrónico",
+    "emailChangeCurrentBody": "Se solicitó cambiar el correo electrónico de tu cuenta de Chavrusa Link. Confírmalo aquí, y confírmalo también desde la nueva dirección: el cambio solo se aplica cuando ambas confirmaciones están hechas.",
+    "emailChangeCurrentAction": "Confirmar el cambio",
+    "emailChangeCurrentFootnote": "Si no pediste cambiar tu correo electrónico, ignora este mensaje y el cambio no se realizará. Tu cuenta no se ve afectada.",
+    "emailChangeNewSubject": "Confirma tu nuevo correo electrónico",
+    "emailChangeNewHeading": "Confirma tu nuevo correo electrónico",
+    "emailChangeNewBody": "Esta dirección se indicó como el nuevo correo electrónico de una cuenta de Chavrusa Link. Confírmala aquí, y confírmala también desde la dirección actual: el cambio solo se aplica cuando ambas confirmaciones están hechas.",
+    "emailChangeNewAction": "Confirmar esta dirección",
+    "emailChangeNewFootnote": "Si no esperabas este correo, puedes ignorarlo y no cambiará nada.",
+    "emailChangeAddresses": "Cambio de {current} a {next}."
   }
 }

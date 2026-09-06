@@ -571,5 +571,28 @@
   "Share": {
     "shareLabel": "שיתוף האתר",
     "copied": "הקישור הועתק"
+  },
+  "AuthEmail": {
+    "signupSubject": "אישור כתובת האימייל שלכם",
+    "signupHeading": "אישור כתובת האימייל שלכם",
+    "signupBody": "ברוכים הבאים ל-Chavrusa Link. אשרו את הכתובת הזו כדי לסיים את הגדרת החשבון ולהתחיל לחפש חברותא.",
+    "signupAction": "אישור האימייל",
+    "signupFootnote": "אם לא פתחתם חשבון ב-Chavrusa Link, אפשר להתעלם מהודעה זו.",
+    "recoverySubject": "איפוס הסיסמה שלכם",
+    "recoveryHeading": "איפוס הסיסמה שלכם",
+    "recoveryBody": "השתמשו בקישור שלמטה כדי לבחור סיסמה חדשה לחשבון שלכם ב-Chavrusa Link. אפשר להשתמש בו פעם אחת בלבד.",
+    "recoveryAction": "בחירת סיסמה חדשה",
+    "recoveryFootnote": "אם לא ביקשתם לאפס את הסיסמה, אפשר להתעלם מהודעה זו — הסיסמה הנוכחית שלכם ממשיכה לעבוד.",
+    "emailChangeCurrentSubject": "אישור שינוי כתובת האימייל שלכם",
+    "emailChangeCurrentHeading": "אישור שינוי כתובת האימייל שלכם",
+    "emailChangeCurrentBody": "התקבלה בקשה לשנות את כתובת האימייל של החשבון שלכם ב-Chavrusa Link. אשרו אותה כאן, ואשרו גם מהכתובת החדשה — השינוי ייכנס לתוקף רק לאחר שני האישורים.",
+    "emailChangeCurrentAction": "אישור השינוי",
+    "emailChangeCurrentFootnote": "אם לא ביקשתם לשנות את כתובת האימייל, התעלמו מהודעה זו והשינוי לא יתבצע. החשבון שלכם אינו מושפע.",
+    "emailChangeNewSubject": "אישור כתובת האימייל החדשה שלכם",
+    "emailChangeNewHeading": "אישור כתובת האימייל החדשה שלכם",
+    "emailChangeNewBody": "כתובת זו נמסרה ככתובת האימייל החדשה של חשבון ב-Chavrusa Link. אשרו אותה כאן, ואשרו גם מהכתובת הנוכחית — השינוי ייכנס לתוקף רק לאחר שני האישורים.",
+    "emailChangeNewAction": "אישור הכתובת",
+    "emailChangeNewFootnote": "אם לא ציפיתם להודעה זו, אפשר להתעלם ממנה ושום דבר לא ישתנה.",
+    "emailChangeAddresses": "שינוי מ-{current} ל-{next}."
   }
 }
