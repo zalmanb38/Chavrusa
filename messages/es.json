@@ -593,6 +593,6 @@
     "emailChangeNewBody": "Esta dirección se indicó como el nuevo correo electrónico de una cuenta de Chavrusa Link. Confírmala aquí, y confírmala también desde la dirección actual: el cambio solo se aplica cuando ambas confirmaciones están hechas.",
     "emailChangeNewAction": "Confirmar esta dirección",
     "emailChangeNewFootnote": "Si no esperabas este correo, puedes ignorarlo y no cambiará nada.",
-    "emailChangeAddresses": "Cambio de {current} a {next}."
+    "emailChangeAddresses": "Dirección actual: {current}\nNueva dirección: {next}"
   }
 }
