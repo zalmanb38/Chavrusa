@@ -502,12 +502,21 @@
   "Email": {
     "someone": "Someone",
     "connect_requestSubject": "{name} would like to learn with you",
-    "connect_requestBody": "{name} sent you a connect request on Chavrusa Link. You can accept or decline it here:",
+    "connect_requestBody": "{name} sent you a connect request on Chavrusa Link. You can accept or decline it from your requests page.",
     "request_acceptedSubject": "{name} accepted your connect request",
-    "request_acceptedBody": "{name} accepted your request on Chavrusa Link. You can now agree on a time to learn together:",
+    "request_acceptedBody": "{name} accepted your request on Chavrusa Link. You can now agree on a time to learn together.",
     "session_confirmedSubject": "Your session with {name} is confirmed",
-    "session_confirmedBody": "{name} confirmed your study session on Chavrusa Link. Your contact details are now shared with each other:",
-    "signoff": "— Chavrusa Link"
+    "session_confirmedBody": "{name} confirmed your study session on Chavrusa Link. Your contact details are now shared with each other.",
+    "signoff": "— Chavrusa Link",
+    "connect_requestHeading": "{name} would like to learn with you.",
+    "connect_requestAction": "View the request.",
+    "connect_requestFootnote": "You're receiving this because someone asked to connect with you on Chavrusa Link.",
+    "request_acceptedHeading": "{name} accepted your connect request.",
+    "request_acceptedAction": "Connect with your Chavrusa.",
+    "request_acceptedFootnote": "You're receiving this because your connect request was accepted.",
+    "session_confirmedHeading": "Your session with {name} is confirmed.",
+    "session_confirmedAction": "View the details.",
+    "session_confirmedFootnote": "You're receiving this because a study session you scheduled was just confirmed."
   },
   "ErrorPages": {
     "notFoundTitle": "Page not found",
@@ -560,7 +569,7 @@
     "newMessageHeading": "A message from {name}",
     "newMessageBody": "{name} has written to you on Chavrusa Link. You can read it and reply on the site — we will not email you again about this conversation until you have read it.",
     "newMessageAction": "Read the message",
-    "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match ends these emails."
+    "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match also ends these emails."
   },
   "BrowseWall": {
     "count": "{count, plural, =0 {Learners are joining now.} =1 {# learner is here.} other {# learners are here.}}",
@@ -575,7 +584,7 @@
   "AuthEmail": {
     "signupSubject": "Confirm your email address",
     "signupHeading": "Confirm your email address",
-    "signupBody": "Welcome to Chavrusa Link. Confirm this address to finish setting up your account and start looking for a Chavrusa.",
+    "signupBody": "Welcome to Chavrusa Link. Please confirm your email address to finish setting up your account.",
     "signupAction": "Confirm my email",
     "signupFootnote": "If you didn't create an account on Chavrusa Link, you can ignore this email.",
     "recoverySubject": "Reset your password",

@@ -4,7 +4,7 @@ import { hasLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail } from "@/lib/email";
-import { SITE_URL } from "@/lib/site";
+import { renderEmailHtml, renderEmailText } from "@/lib/email-template";
 import { routing } from "@/i18n/routing";
 
 const TYPES = ["connect_request", "request_accepted", "session_confirmed"] as const;
@@ -172,12 +172,21 @@ export async function POST(request: Request) {
   const locale = preferredLocale(recipientProfile?.languages);
   const t = await getTranslations({ locale, namespace: "Email" });
   const name = target.senderName || t("someone");
-  const link = `${SITE_URL}/${locale}${target.path}`;
+
+  // The same shell the new-message email uses. The path stays relative:
+  // the template is what turns it into a locale-prefixed absolute URL.
+  const content = {
+    heading: t(`${type}Heading`, { name }),
+    paragraphs: [t(`${type}Body`, { name })],
+    action: { label: t(`${type}Action`), path: target.path },
+    footnote: t(`${type}Footnote`),
+  };
 
   const result = await sendEmail({
     to,
     subject: t(`${type}Subject`, { name }),
-    text: `${t(`${type}Body`, { name })}\n\n${link}\n\n${t("signoff")}`,
+    text: renderEmailText(content, locale),
+    html: renderEmailHtml(content, locale),
   });
 
   if (!result.sent) {

@@ -502,12 +502,21 @@
   "Email": {
     "someone": "מישהו",
     "connect_requestSubject": "{name} רוצה ללמוד איתך",
-    "connect_requestBody": "{name} שלח/ה לך בקשת התחברות ב-Chavrusa Link. אפשר לאשר או לדחות כאן:",
+    "connect_requestBody": "{name} שלח/ה לך בקשת התחברות ב-Chavrusa Link. אפשר לאשר או לדחות אותה בעמוד הבקשות שלך.",
     "request_acceptedSubject": "{name} אישר/ה את בקשת ההתחברות שלך",
-    "request_acceptedBody": "{name} אישר/ה את בקשתך ב-Chavrusa Link. עכשיו אפשר לסכם זמן ללמוד יחד:",
+    "request_acceptedBody": "{name} אישר/ה את בקשתך ב-Chavrusa Link. עכשיו אפשר לסכם זמן ללמוד יחד.",
     "session_confirmedSubject": "המפגש שלך עם {name} אושר",
-    "session_confirmedBody": "{name} אישר/ה את מפגש הלימוד ב-Chavrusa Link. פרטי ההתקשרות שלכם משותפים כעת:",
-    "signoff": "— Chavrusa Link"
+    "session_confirmedBody": "{name} אישר/ה את מפגש הלימוד ב-Chavrusa Link. פרטי ההתקשרות שלכם משותפים כעת.",
+    "signoff": "— Chavrusa Link",
+    "connect_requestHeading": "{name} רוצה ללמוד איתך.",
+    "connect_requestAction": "צפייה בבקשה.",
+    "connect_requestFootnote": "קיבלת הודעה זו משום שמישהו ביקש להתחבר אליך ב-Chavrusa Link.",
+    "request_acceptedHeading": "{name} אישר/ה את בקשת ההתחברות שלך.",
+    "request_acceptedAction": "התחברות עם החברותא שלך.",
+    "request_acceptedFootnote": "קיבלת הודעה זו משום שבקשת ההתחברות שלך אושרה.",
+    "session_confirmedHeading": "המפגש שלך עם {name} אושר.",
+    "session_confirmedAction": "צפייה בפרטים.",
+    "session_confirmedFootnote": "קיבלת הודעה זו משום שמפגש לימוד שקבעת אושר זה עתה."
   },
   "ErrorPages": {
     "notFoundTitle": "הדף לא נמצא",
@@ -575,7 +584,7 @@
   "AuthEmail": {
     "signupSubject": "אישור כתובת האימייל שלכם",
     "signupHeading": "אישור כתובת האימייל שלכם",
-    "signupBody": "ברוכים הבאים ל-Chavrusa Link. אשרו את הכתובת הזו כדי לסיים את הגדרת החשבון ולהתחיל לחפש חברותא.",
+    "signupBody": "ברוכים הבאים ל-Chavrusa Link. אנא אשרו את כתובת האימייל שלכם כדי לסיים את הגדרת החשבון.",
     "signupAction": "אישור האימייל",
     "signupFootnote": "אם לא פתחתם חשבון ב-Chavrusa Link, אפשר להתעלם מהודעה זו.",
     "recoverySubject": "איפוס הסיסמה שלכם",

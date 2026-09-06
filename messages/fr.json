@@ -502,12 +502,21 @@
   "Email": {
     "someone": "Quelqu'un",
     "connect_requestSubject": "{name} souhaite étudier avec vous",
-    "connect_requestBody": "{name} vous a envoyé une demande de connexion sur Chavrusa Link. Vous pouvez l'accepter ou la refuser ici :",
+    "connect_requestBody": "{name} vous a envoyé une demande de connexion sur Chavrusa Link. Vous pouvez l'accepter ou la refuser depuis votre page de demandes.",
     "request_acceptedSubject": "{name} a accepté votre demande",
-    "request_acceptedBody": "{name} a accepté votre demande sur Chavrusa Link. Vous pouvez maintenant convenir d'un horaire pour étudier ensemble :",
+    "request_acceptedBody": "{name} a accepté votre demande sur Chavrusa Link. Vous pouvez maintenant convenir d'un horaire pour étudier ensemble.",
     "session_confirmedSubject": "Votre séance avec {name} est confirmée",
-    "session_confirmedBody": "{name} a confirmé votre séance d'étude sur Chavrusa Link. Vos coordonnées sont désormais partagées :",
-    "signoff": "— Chavrusa Link"
+    "session_confirmedBody": "{name} a confirmé votre séance d'étude sur Chavrusa Link. Vos coordonnées sont désormais partagées.",
+    "signoff": "— Chavrusa Link",
+    "connect_requestHeading": "{name} souhaite étudier avec vous.",
+    "connect_requestAction": "Voir la demande.",
+    "connect_requestFootnote": "Vous recevez cet e-mail parce que quelqu'un a demandé à entrer en relation avec vous sur Chavrusa Link.",
+    "request_acceptedHeading": "{name} a accepté votre demande de connexion.",
+    "request_acceptedAction": "Rejoindre votre Chavrusa.",
+    "request_acceptedFootnote": "Vous recevez cet e-mail parce que votre demande de connexion a été acceptée.",
+    "session_confirmedHeading": "Votre séance avec {name} est confirmée.",
+    "session_confirmedAction": "Voir les détails.",
+    "session_confirmedFootnote": "Vous recevez cet e-mail parce qu'une séance d'étude que vous avez planifiée vient d'être confirmée."
   },
   "ErrorPages": {
     "notFoundTitle": "Page introuvable",
@@ -575,7 +584,7 @@
   "AuthEmail": {
     "signupSubject": "Confirmez votre adresse e-mail",
     "signupHeading": "Confirmez votre adresse e-mail",
-    "signupBody": "Bienvenue sur Chavrusa Link. Confirmez cette adresse pour terminer la création de votre compte et commencer à chercher un Chavrusa.",
+    "signupBody": "Bienvenue sur Chavrusa Link. Veuillez confirmer votre adresse e-mail pour terminer la création de votre compte.",
     "signupAction": "Confirmer mon e-mail",
     "signupFootnote": "Si vous n'avez pas créé de compte sur Chavrusa Link, vous pouvez ignorer cet e-mail.",
     "recoverySubject": "Réinitialisez votre mot de passe",

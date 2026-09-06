@@ -9,9 +9,11 @@ import { SITE_URL } from "@/lib/site";
  * reach here, which means a palette change has to be repeated in this
  * file by hand.
  *
- * The header photograph ships untreated: the halftone is a CSS mask, and
- * no mail client will run it. Many clients also block remote images by
- * default, so nothing the reader needs is in it.
+ * There is no header image. Many clients block remote images by default,
+ * so one would be missing for a good share of readers anyway — and the
+ * halftone that carries the photography elsewhere on the site is a CSS
+ * mask no mail client will run, so what did arrive looked like a
+ * different brand.
  *
  * Every message also goes out as plain text. Some clients show that
  * instead, and a notification that only exists as HTML is a notification
@@ -89,9 +91,7 @@ export function renderEmailHtml(content: EmailContent, locale: string): string {
 <html lang="${locale}" dir="${dir}">
   <body style="margin:0;padding:0;background:${PAPER};">
     <div style="max-width:560px;margin:0 auto;padding:32px 24px 40px;font-family:Georgia,'Times New Roman',serif;">
-      <img src="${SITE_URL}/photos/p7-tefillin-bag.jpg" alt="" width="512" style="display:block;width:100%;max-width:512px;height:140px;object-fit:cover;margin-bottom:16px;" />
-
-      <div style="border-bottom:2px solid ${GOLD};padding-bottom:12px;margin-bottom:28px;">
+      <div style="border-bottom:2px solid ${GOLD};padding-top:8px;padding-bottom:12px;margin-bottom:28px;">
         <span style="font-size:20px;color:${INK};">Chavrusa Link</span>
       </div>
 
