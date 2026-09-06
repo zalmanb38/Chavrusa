@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -11,6 +11,7 @@ import MenOnlyNotice from "@/components/MenOnlyNotice";
 
 export default function SignupPage() {
   const t = useTranslations("Auth");
+  const locale = useLocale();
   const router = useRouter();
   // The browse wall sends people here with where they were going; without
   // this they'd sign in and land somewhere they never asked for.
@@ -50,6 +51,12 @@ export default function SignupPage() {
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        // The only place a language preference gets recorded. It rides
+        // along on the user from here on, which is what lets the send-email
+        // hook write a password reset or an email change in the language
+        // someone signed up in — neither of those flows has a locale of
+        // its own to read.
+        data: { locale },
       },
     });
     setLoading(false);

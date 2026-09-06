@@ -30,9 +30,23 @@ export interface EmailContent {
   heading: string;
   /** One or more paragraphs. */
   paragraphs: string[];
-  action?: { label: string; path: string };
+  /**
+   * `path` is relative to the site and picks up the locale prefix; `url`
+   * is absolute and used exactly as given. The auth emails need the
+   * second kind: their links point at Supabase's verify endpoint, which
+   * is not a page on this site.
+   */
+  action?: { label: string; path: string } | { label: string; url: string };
   /** Quiet line under the action — context, not instruction. */
   footnote?: string;
+}
+
+function resolveActionUrl(
+  action: EmailContent["action"],
+  locale: string,
+): string | null {
+  if (!action) return null;
+  return "url" in action ? action.url : `${SITE_URL}/${locale}${action.path}`;
 }
 
 function escapeHtml(value: string): string {
@@ -44,9 +58,7 @@ function escapeHtml(value: string): string {
 }
 
 export function renderEmailHtml(content: EmailContent, locale: string): string {
-  const url = content.action
-    ? `${SITE_URL}/${locale}${content.action.path}`
-    : null;
+  const url = resolveActionUrl(content.action, locale);
 
   const paragraphs = content.paragraphs
     .map(
@@ -58,7 +70,7 @@ export function renderEmailHtml(content: EmailContent, locale: string): string {
   const action =
     content.action && url
       ? `<p style="margin:24px 0 0;">
-           <a href="${url}" style="display:inline-block;background:${SLATE};color:${PAPER};text-decoration:none;padding:12px 24px;font-size:16px;font-weight:600;border-radius:2px;">${escapeHtml(content.action.label)}</a>
+           <a href="${escapeHtml(url)}" style="display:inline-block;background:${SLATE};color:${PAPER};text-decoration:none;padding:12px 24px;font-size:16px;font-weight:600;border-radius:2px;">${escapeHtml(content.action.label)}</a>
          </p>`
       : "";
 
@@ -98,9 +110,14 @@ export function renderEmailHtml(content: EmailContent, locale: string): string {
 
 /** The same content as plain text, for clients that show that instead. */
 export function renderEmailText(content: EmailContent, locale: string): string {
-  const lines = [content.heading, "", ...content.paragraphs];
+  // Paragraphs are separated by a blank line, not a newline: run together,
+  // two of them read as one wrapped sentence in a plain-text client.
+  const lines = [content.heading, "", content.paragraphs.join("\n\n")];
   if (content.action) {
-    lines.push("", `${content.action.label}: ${SITE_URL}/${locale}${content.action.path}`);
+    lines.push(
+      "",
+      `${content.action.label}: ${resolveActionUrl(content.action, locale)}`,
+    );
   }
   if (content.footnote) lines.push("", content.footnote);
   lines.push("", `${SITE_URL}/${locale}`);

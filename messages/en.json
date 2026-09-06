@@ -571,5 +571,28 @@
   "Share": {
     "shareLabel": "Share this site",
     "copied": "Link copied"
+  },
+  "AuthEmail": {
+    "signupSubject": "Confirm your email address",
+    "signupHeading": "Confirm your email address",
+    "signupBody": "Welcome to Chavrusa Link. Confirm this address to finish setting up your account and start looking for a Chavrusa.",
+    "signupAction": "Confirm my email",
+    "signupFootnote": "If you didn't create an account on Chavrusa Link, you can ignore this email.",
+    "recoverySubject": "Reset your password",
+    "recoveryHeading": "Reset your password",
+    "recoveryBody": "Use the link below to choose a new password for your Chavrusa Link account. It can only be used once.",
+    "recoveryAction": "Choose a new password",
+    "recoveryFootnote": "If you didn't ask to reset your password, you can ignore this email — your current password still works.",
+    "emailChangeCurrentSubject": "Confirm the change to your email address",
+    "emailChangeCurrentHeading": "Confirm the change to your email address",
+    "emailChangeCurrentBody": "A request was made to change the email address on your Chavrusa Link account. Confirm it here, and confirm from the new address as well — the change only takes effect once both are done.",
+    "emailChangeCurrentAction": "Confirm the change",
+    "emailChangeCurrentFootnote": "If you didn't ask to change your email address, ignore this email and the change will not go through. Your account is unaffected.",
+    "emailChangeNewSubject": "Confirm your new email address",
+    "emailChangeNewHeading": "Confirm your new email address",
+    "emailChangeNewBody": "This address was given as the new email for a Chavrusa Link account. Confirm it here, and confirm from the current address as well — the change only takes effect once both are done.",
+    "emailChangeNewAction": "Confirm this address",
+    "emailChangeNewFootnote": "If you weren't expecting this, you can ignore this email and nothing will change.",
+    "emailChangeAddresses": "Changing from {current} to {next}."
   }
 }
