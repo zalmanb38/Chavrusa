@@ -60,10 +60,13 @@ function escapeHtml(value: string): string {
 export function renderEmailHtml(content: EmailContent, locale: string): string {
   const url = resolveActionUrl(content.action, locale);
 
+  // A newline inside a paragraph is a deliberate line break, and HTML
+  // would otherwise collapse it. Applied after escaping, never before, so
+  // the break is the only markup a message string can introduce.
   const paragraphs = content.paragraphs
     .map(
       (p) =>
-        `<p style="margin:0 0 16px;font-size:16px;line-height:1.55;color:${INK};">${escapeHtml(p)}</p>`,
+        `<p style="margin:0 0 16px;font-size:16px;line-height:1.55;color:${INK};">${escapeHtml(p).replace(/\n/g, "<br />")}</p>`,
     )
     .join("");
 

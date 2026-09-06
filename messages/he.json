@@ -593,6 +593,6 @@
     "emailChangeNewBody": "כתובת זו נמסרה ככתובת האימייל החדשה של חשבון ב-Chavrusa Link. אשרו אותה כאן, ואשרו גם מהכתובת הנוכחית — השינוי ייכנס לתוקף רק לאחר שני האישורים.",
     "emailChangeNewAction": "אישור הכתובת",
     "emailChangeNewFootnote": "אם לא ציפיתם להודעה זו, אפשר להתעלם ממנה ושום דבר לא ישתנה.",
-    "emailChangeAddresses": "שינוי מ-{current} ל-{next}."
+    "emailChangeAddresses": "הכתובת הנוכחית: {current}\nהכתובת החדשה: {next}"
   }
 }
