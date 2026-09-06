@@ -507,15 +507,14 @@
     "request_acceptedBody": "{name} accepted your request on Chavrusa Link. You can now agree on a time to learn together.",
     "session_confirmedSubject": "Your session with {name} is confirmed",
     "session_confirmedBody": "{name} confirmed your study session on Chavrusa Link. Your contact details are now shared with each other.",
-    "signoff": "— Chavrusa Link",
     "connect_requestHeading": "{name} would like to learn with you.",
-    "connect_requestAction": "View the request.",
+    "connect_requestAction": "View the request",
     "connect_requestFootnote": "You're receiving this because someone asked to connect with you on Chavrusa Link.",
     "request_acceptedHeading": "{name} accepted your connect request.",
-    "request_acceptedAction": "Connect with your Chavrusa.",
+    "request_acceptedAction": "Connect with your Chavrusa",
     "request_acceptedFootnote": "You're receiving this because your connect request was accepted.",
     "session_confirmedHeading": "Your session with {name} is confirmed.",
-    "session_confirmedAction": "View the details.",
+    "session_confirmedAction": "View the details",
     "session_confirmedFootnote": "You're receiving this because a study session you scheduled was just confirmed."
   },
   "ErrorPages": {

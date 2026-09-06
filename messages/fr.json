@@ -507,15 +507,14 @@
     "request_acceptedBody": "{name} a accepté votre demande sur Chavrusa Link. Vous pouvez maintenant convenir d'un horaire pour étudier ensemble.",
     "session_confirmedSubject": "Votre séance avec {name} est confirmée",
     "session_confirmedBody": "{name} a confirmé votre séance d'étude sur Chavrusa Link. Vos coordonnées sont désormais partagées.",
-    "signoff": "— Chavrusa Link",
     "connect_requestHeading": "{name} souhaite étudier avec vous.",
-    "connect_requestAction": "Voir la demande.",
+    "connect_requestAction": "Voir la demande",
     "connect_requestFootnote": "Vous recevez cet e-mail parce que quelqu'un a demandé à entrer en relation avec vous sur Chavrusa Link.",
     "request_acceptedHeading": "{name} a accepté votre demande de connexion.",
-    "request_acceptedAction": "Rejoindre votre Chavrusa.",
+    "request_acceptedAction": "Rejoindre votre Chavrusa",
     "request_acceptedFootnote": "Vous recevez cet e-mail parce que votre demande de connexion a été acceptée.",
     "session_confirmedHeading": "Votre séance avec {name} est confirmée.",
-    "session_confirmedAction": "Voir les détails.",
+    "session_confirmedAction": "Voir les détails",
     "session_confirmedFootnote": "Vous recevez cet e-mail parce qu'une séance d'étude que vous avez planifiée vient d'être confirmée."
   },
   "ErrorPages": {
@@ -569,7 +568,7 @@
     "newMessageHeading": "Un message de {name}",
     "newMessageBody": "{name} vous a écrit sur Chavrusa Link. Vous pouvez le lire et répondre sur le site — nous ne vous enverrons pas d'autre e-mail à propos de cette conversation avant que vous ne l'ayez lu.",
     "newMessageAction": "Lire le message",
-    "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met fin à ces e-mails."
+    "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met également fin à ces e-mails."
   },
   "BrowseWall": {
     "count": "{count, plural, =0 {Des apprenants nous rejoignent en ce moment.} one {# apprenant est ici.} other {# apprenants sont ici.}}",
