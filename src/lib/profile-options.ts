@@ -1,4 +1,4 @@
-export const LANGUAGE_CODES = ["en", "he", "fr", "es"] as const;
+export const LANGUAGE_CODES = ["en", "he", "fr", "es", "yi"] as const;
 export type LanguageCode = (typeof LANGUAGE_CODES)[number];
 
 // Values are stored in the DB verbatim and double as the `Topics.*` /
