@@ -70,7 +70,7 @@ export default async function HomePage({
           <p
             lang="he"
             dir="rtl"
-            className="text-[22px] text-brass-deep"
+            className="text-[32px] text-brass-deep"
           >
             וּקְנֵה לְךָ חָבֵר
           </p>
