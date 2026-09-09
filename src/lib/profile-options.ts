@@ -20,6 +20,7 @@ export const TOPIC_KEYS = [
   "chitas",
   "mesillasYesharim",
   "parsha",
+  "smicha",
   "other",
 ] as const;
 export type TopicKey = (typeof TOPIC_KEYS)[number];
