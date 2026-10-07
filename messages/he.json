@@ -204,6 +204,7 @@
     "selectCity": "בחרו עיר",
     "cityOther": "אחר — הקלידו את שם העיר",
     "cityPlaceholder": "הזינו את שם העיר",
+    "cityFilterPlaceholder": "חיפוש לפי עיר",
     "backToCityList": "בחירה מתוך הרשימה",
     "neighborhood": "שכונה או אזור",
     "neighborhoodPlaceholder": "לדוגמה: קראון הייטס",

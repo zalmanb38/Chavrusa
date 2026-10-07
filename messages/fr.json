@@ -204,6 +204,7 @@
     "selectCity": "Choisissez une ville",
     "cityOther": "Autre — saisir ma ville",
     "cityPlaceholder": "Saisissez votre ville",
+    "cityFilterPlaceholder": "Rechercher par ville",
     "backToCityList": "Choisir dans la liste",
     "neighborhood": "Quartier ou secteur",
     "neighborhoodPlaceholder": "ex. Crown Heights",

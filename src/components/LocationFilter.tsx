@@ -117,11 +117,15 @@ export default function LocationFilter({
           // No curated list for this combination — several countries at
           // once included — and people who typed their own city still
           // need to be findable, so fall back to a partial text match.
+          //
+          // The placeholder is this filter's own, not the profile form's:
+          // there the field asks for your city, here it searches other
+          // people's, and one string cannot say both.
           <input
             type="text"
             name="city"
             value={city}
-            placeholder={t("cityPlaceholder")}
+            placeholder={t("cityFilterPlaceholder")}
             onChange={(e) => setCity(e.target.value)}
             className={selectClass}
           />
