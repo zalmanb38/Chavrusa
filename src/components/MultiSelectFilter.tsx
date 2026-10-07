@@ -68,15 +68,21 @@ export default function MultiSelectFilter({
         : t("nSelected", { count: selected.length });
 
   return (
-    <div ref={containerRef} className="relative flex flex-col gap-1 text-sm">
-      <span>{label}</span>
+    <div ref={containerRef} className="relative flex flex-col gap-1.5 text-sm">
+      {/* The same label and control treatment as the plain inputs beside
+          it — "Label — the only chrome voice" from the Browse design, and
+          square corners, so a multi-select doesn't read as a different
+          kind of thing from the keyword box next to it. */}
+      <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
+        {label}
+      </span>
 
       <button
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-transparent px-3 py-2 text-start text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+        className="flex w-full items-center justify-between gap-2 border border-border bg-transparent px-3 py-2 text-start text-sm focus:border-primary focus:outline-none"
       >
         <span className={selected.length === 0 ? "text-muted" : undefined}>
           {summary}
@@ -89,7 +95,7 @@ export default function MultiSelectFilter({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute top-full z-20 mt-1 flex max-h-64 w-max min-w-full flex-col gap-2 overflow-y-auto rounded-xl border border-border bg-surface p-3"
+        className="absolute top-full z-20 mt-1 flex max-h-64 w-max min-w-full flex-col gap-2 overflow-y-auto border border-border bg-surface p-3 shadow-sm"
       >
         {options.map((option) => (
           <label key={option.value} className="flex items-center gap-2 text-sm">

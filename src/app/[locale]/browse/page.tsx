@@ -67,6 +67,12 @@ export default async function BrowsePage({
   const tLanguages = await getTranslations("Languages");
   const tMap = await getTranslations("Map");
   const tLocation = await getTranslations("Location");
+  // The Hebrew name of each topic, read from the Hebrew locale rather
+  // than kept in a second list here — one set of names, translated once.
+  // In Hebrew the two would be the same string, so it shows one.
+  const tTopicsHe = await getTranslations({ locale: "he", namespace: "Topics" });
+  const topicLabel = (key: string) =>
+    locale === "he" ? tTopics(key) : `${tTopics(key)} · ${tTopicsHe(key)}`;
   const mapView = filters.view === "map";
   // Everything except the view itself, so each toggle link carries the
   // current filters rather than resetting them.
@@ -74,6 +80,13 @@ export default async function BrowsePage({
   void _view;
   const advancedFilterCount = countAdvancedFilters(filters);
   const selectedAges = toValues(filters.age);
+  const selectedTopics = toValues(filters.topic);
+  const selectedLanguages = toValues(filters.language);
+  const selectedStudyLanguages = toValues(filters.studyLanguage);
+  const selectedPreferences = toValues(filters.preference);
+  const selectedFrequencies = toValues(filters.frequency);
+  const selectedTimesOfDay = toValues(filters.timeOfDay);
+  const selectedSessionLengths = toValues(filters.sessionLength);
 
   const supabase = await createClient();
   const {
@@ -204,7 +217,7 @@ export default async function BrowsePage({
   }
 
   const filterChips = activeFilterChips(filters, {
-    topic: (v: string) => tTopics(v),
+    topic: (v: string) => topicLabel(v),
     language: (v: string) => tLanguages(v),
     studyLanguage: (v: string) => tLanguages(v),
     preference: (v: string) => tProfile(preferenceMessageKey[v as Preference]),
@@ -278,53 +291,42 @@ export default async function BrowsePage({
           </label>
 
           <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
-            <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterTopic")}</span>
-              <select
-                name="topic"
-                defaultValue={filters.topic ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {TOPIC_KEYS.map((key) => (
-                  <option key={key} value={key}>
-                    {tTopics(key)}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <MultiSelectFilter
+              name="topic"
+              label={t("filterTopic")}
+              options={TOPIC_KEYS.map((key) => ({
+                value: key,
+                label: topicLabel(key),
+              }))}
+              initialSelected={selectedTopics}
+              emptyLabel={t("all")}
+            />
 
-            <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterLanguage")}</span>
-              <select
-                name="language"
-                defaultValue={filters.language ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {LANGUAGE_CODES.map((code) => (
-                  <option key={code} value={code}>
-                    {tLanguages(code)}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <MultiSelectFilter
+              name="language"
+              label={t("filterLanguage")}
+              options={LANGUAGE_CODES.map((code) => ({
+                value: code,
+                label: tLanguages(code),
+              }))}
+              initialSelected={selectedLanguages}
+              emptyLabel={t("all")}
+            />
 
-            <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterPreference")}</span>
-              <select
-                name="preference"
-                defaultValue={filters.preference ?? ""}
-                className={selectClass}
-              >
-                <option value="">{t("all")}</option>
-                {PREFERENCES.map((p) => (
-                  <option key={p} value={p}>
-                    {tProfile(preferenceMessageKey[p])}
-                  </option>
-                ))}
-              </select>
-            </label>
+            {/* "Both" is a real answer on a profile but never a filter:
+                someone open to either already answers both boxes, so as a
+                filter value it selected everyone — which is what leaving
+                this empty means. */}
+            <MultiSelectFilter
+              name="preference"
+              label={t("filterPreference")}
+              options={PREFERENCES.filter((p) => p !== "both").map((p) => ({
+                value: p,
+                label: tProfile(preferenceMessageKey[p]),
+              }))}
+              initialSelected={selectedPreferences}
+              emptyLabel={t("all")}
+            />
 
             <LocationFilter
               initialCountry={filters.country ?? ""}
@@ -352,21 +354,16 @@ export default async function BrowsePage({
             </summary>
 
             <div className="mt-4 grid gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
-              <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterStudyLanguage")}</span>
-                <select
-                  name="studyLanguage"
-                  defaultValue={filters.studyLanguage ?? ""}
-                  className={selectClass}
-                >
-                  <option value="">{t("all")}</option>
-                  {STUDY_LANGUAGE_CODES.map((code) => (
-                    <option key={code} value={code}>
-                      {tLanguages(code)}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <MultiSelectFilter
+                name="studyLanguage"
+                label={t("filterStudyLanguage")}
+                options={STUDY_LANGUAGE_CODES.map((code) => ({
+                  value: code,
+                  label: tLanguages(code),
+                }))}
+                initialSelected={selectedStudyLanguages}
+                emptyLabel={t("all")}
+              />
 
   <MultiSelectFilter
                 name="age"
@@ -379,53 +376,38 @@ export default async function BrowsePage({
                 emptyLabel={t("all")}
               />
 
-              <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterFrequency")}</span>
-                <select
-                  name="frequency"
-                  defaultValue={filters.frequency ?? ""}
-                  className={selectClass}
-                >
-                  <option value="">{t("all")}</option>
-                  {FREQUENCIES.map((f) => (
-                    <option key={f} value={f}>
-                      {tProfile(frequencyMessageKey[f])}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <MultiSelectFilter
+                name="frequency"
+                label={t("filterFrequency")}
+                options={FREQUENCIES.map((f) => ({
+                  value: f,
+                  label: tProfile(frequencyMessageKey[f]),
+                }))}
+                initialSelected={selectedFrequencies}
+                emptyLabel={t("all")}
+              />
 
-              <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterTimeOfDay")}</span>
-                <select
-                  name="timeOfDay"
-                  defaultValue={filters.timeOfDay ?? ""}
-                  className={selectClass}
-                >
-                  <option value="">{t("all")}</option>
-                  {TIMES_OF_DAY.map((tod) => (
-                    <option key={tod} value={tod}>
-                      {tProfile(timeOfDayMessageKey[tod])}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <MultiSelectFilter
+                name="timeOfDay"
+                label={t("filterTimeOfDay")}
+                options={TIMES_OF_DAY.map((tod) => ({
+                  value: tod,
+                  label: tProfile(timeOfDayMessageKey[tod]),
+                }))}
+                initialSelected={selectedTimesOfDay}
+                emptyLabel={t("all")}
+              />
 
-              <label className="flex flex-col gap-1.5">
-            <span className={filterLabelClass}>{t("filterSessionLength")}</span>
-                <select
-                  name="sessionLength"
-                  defaultValue={filters.sessionLength ?? ""}
-                  className={selectClass}
-                >
-                  <option value="">{t("all")}</option>
-                  {SESSION_LENGTHS.map((len) => (
-                    <option key={len} value={len}>
-                      {tProfile("sessionLengthValue", { minutes: Number(len) })}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <MultiSelectFilter
+                name="sessionLength"
+                label={t("filterSessionLength")}
+                options={SESSION_LENGTHS.map((len) => ({
+                  value: len,
+                  label: tProfile("sessionLengthValue", { minutes: Number(len) }),
+                }))}
+                initialSelected={selectedSessionLengths}
+                emptyLabel={t("all")}
+              />
 
               {/*
                 With no coordinates for the viewer's own city there is no

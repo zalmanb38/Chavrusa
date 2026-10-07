@@ -13,21 +13,31 @@
 import { CITY_COORDS, coordKey, type LatLng } from "@/lib/city-coords";
 import { isHidden, type Profile } from "@/lib/profile-options";
 
+/**
+ * Repeatable filters are typed `string | string[]` because that is what a
+ * checkbox group actually submits: nothing, one value, or many. Several
+ * values widen the search — they are ORed, not ANDed. Picking Chumash and
+ * Tanya means "either", because the alternative reads as "both at once"
+ * and would make every additional box shrink the results towards zero.
+ *
+ * Country, region, city, keyword and distance stay single-valued: the
+ * first three are a cascade where a second country makes the region list
+ * meaningless, and the last two are not sets.
+ */
 export interface BrowseFilters {
-  language?: string;
-  studyLanguage?: string;
-  topic?: string;
+  language?: string | string[];
+  studyLanguage?: string | string[];
+  topic?: string | string[];
   country?: string;
   region?: string;
   city?: string;
   near?: string;
-  /** Repeatable: several ranges widen the search rather than narrowing it. */
   age?: string | string[];
-  frequency?: string;
-  timeOfDay?: string;
-  sessionLength?: string;
+  frequency?: string | string[];
+  timeOfDay?: string | string[];
+  sessionLength?: string | string[];
   q?: string;
-  preference?: string;
+  preference?: string | string[];
   view?: string;
 }
 
@@ -128,6 +138,7 @@ interface FilterableQuery<Self> {
   in(column: string, values: unknown[]): Self;
   ilike(column: string, pattern: string): Self;
   contains(column: string, value: unknown): Self;
+  overlaps(column: string, value: unknown): Self;
   not(column: string, operator: string, value: unknown): Self;
 }
 
@@ -141,11 +152,19 @@ export function applyQueryFilters<T extends FilterableQuery<T>>(
 ): T {
   let q = query;
 
-  if (filters.language) q = q.contains("languages", [filters.language]);
-  if (filters.studyLanguage) {
-    q = q.contains("study_languages", [filters.studyLanguage]);
+  // Array columns: overlaps is "has any of these", which is the OR the
+  // checkboxes promise. contains would be "has all of these" and would
+  // mean every extra box narrowed the results instead of widening them.
+  const languages = toValues(filters.language);
+  if (languages.length > 0) q = q.overlaps("languages", languages);
+
+  const studyLanguages = toValues(filters.studyLanguage);
+  if (studyLanguages.length > 0) {
+    q = q.overlaps("study_languages", studyLanguages);
   }
-  if (filters.topic) q = q.contains("topics", [filters.topic]);
+
+  const topics = toValues(filters.topic);
+  if (topics.length > 0) q = q.overlaps("topics", topics);
 
   // Country and region come from fixed lists so they match exactly. City
   // can also be free text where the curated list didn't cover someone, so
@@ -161,13 +180,27 @@ export function applyQueryFilters<T extends FilterableQuery<T>>(
     q = q.in("age_range", ages).not("hidden_fields", "cs", "{age_range}");
   }
 
-  if (filters.frequency) q = q.eq("frequency", filters.frequency);
-  if (filters.timeOfDay) q = q.eq("time_of_day", filters.timeOfDay);
-  if (filters.sessionLength) q = q.eq("session_length", filters.sessionLength);
+  // Scalar columns: one column, several acceptable values.
+  const frequencies = toValues(filters.frequency);
+  if (frequencies.length > 0) q = q.in("frequency", frequencies);
+
+  const timesOfDay = toValues(filters.timeOfDay);
+  if (timesOfDay.length > 0) q = q.in("time_of_day", timesOfDay);
+
+  const sessionLengths = toValues(filters.sessionLength);
+  if (sessionLengths.length > 0) q = q.in("session_length", sessionLengths);
+
   if (filters.q) q = q.ilike("blurb", `%${filters.q}%`);
 
-  if (filters.preference === "remote" || filters.preference === "in_person") {
-    q = q.in("preference", [filters.preference, "both"]);
+  // Someone open to both ways of learning answers either filter, so
+  // "both" rides along with whatever was asked for. It is not an option
+  // in the filter itself: as a filter value it selected everyone, which
+  // is what "All" already means.
+  const preferences = toValues(filters.preference).filter(
+    (p) => p === "remote" || p === "in_person",
+  );
+  if (preferences.length > 0) {
+    q = q.in("preference", [...preferences, "both"]);
   }
 
   return q;
