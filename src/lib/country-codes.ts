@@ -10,10 +10,17 @@ export interface CountryCode {
   /** English country name; shown alongside the dial code. */
   name: string;
   flag: string;
+  /**
+   * Shown in the picker in place of the flag. A dial code shared by more
+   * than one country has no single flag that is honest about it, and two
+   * flags side by side read as a smudge at this size — so the name is
+   * written out instead.
+   */
+  display?: string;
 }
 
 export const COUNTRY_CODES: CountryCode[] = [
-  { iso: "US", dial: "+1", name: "USA & Canada", flag: "🇺🇸🇨🇦" },
+  { iso: "US", dial: "+1", name: "USA & Canada", flag: "🇺🇸", display: "USA & Canada" },
   { iso: "IL", dial: "+972", name: "Israel", flag: "🇮🇱" },
   { iso: "GB", dial: "+44", name: "United Kingdom", flag: "🇬🇧" },
   { iso: "FR", dial: "+33", name: "France", flag: "🇫🇷" },
