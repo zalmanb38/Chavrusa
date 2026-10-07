@@ -8,6 +8,7 @@ import UnmatchButton from "@/components/UnmatchButton";
 import ImageSlot from "@/components/ImageSlot";
 import { MESSAGE_COLUMNS, unreadCount, type Message } from "@/lib/messages";
 import { PROFILE_DETAIL_FIELDS } from "@/lib/browse-filters";
+import RequestSectionIcon from "@/components/RequestSectionIcon";
 import ProfileDetails, {
   ProfileLocation,
   type ProfileDetailFields,
@@ -59,54 +60,125 @@ const PROFILE_SUMMARY_FIELDS = "id, name, city";
  * The page's shared furniture.
  *
  * Four sections that each list people were four slightly different sets
- * of class names, and the difference showed: this is one section head and
- * one empty state, used four times.
+ * of class names, and the difference showed: this is one section head,
+ * one empty state and one person row, used four times.
  *
- * The treatment follows Browse rather than the rounded cards this page
- * used to carry — hairline rules and whitespace, which is the language
- * the rest of the site is built in.
+ * The treatment follows Browse — hairline rules and whitespace — with
+ * one departure: this page is mostly empty for most people most of the
+ * time, so the empty state is its usual appearance rather than an edge
+ * case, and it carries the brass the rest of the site uses for emphasis.
  */
-function SectionHead({ title, count }: { title: string; count: number }) {
+function SectionHead({
+  kind,
+  title,
+  count,
+  tone = "neutral",
+}: {
+  kind: "incoming" | "outgoing" | "matched" | "blocked";
+  title: string;
+  count: number;
+  /** Matches are what the page is for, so they lead in brass. */
+  tone?: "neutral" | "warm";
+}) {
+  const warm = tone === "warm";
   return (
-    <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-border pt-5">
+    <div
+      className={`flex items-center gap-3 border-t-2 pt-5 ${
+        warm ? "border-brass" : "border-border"
+      }`}
+    >
+      <RequestSectionIcon
+        kind={kind}
+        className={`size-[22px] shrink-0 ${warm ? "text-brass" : "text-muted"}`}
+      />
       <h2 className="text-[21px] font-semibold">{title}</h2>
-      {count > 0 && (
-        <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
-          {count}
-        </span>
-      )}
+      {/* Shown at zero too: a section that states its count reads as a
+          part of the product, where one that goes quiet reads unfinished. */}
+      <span
+        className={`text-[15px] ${warm && count > 0 ? "text-brass-deep" : "text-muted"}`}
+      >
+        · {count}
+      </span>
     </div>
   );
 }
 
 /**
- * An empty section, said deliberately rather than left as a loose grey
- * line. Most of this page is empty for most people most of the time, so
- * the empty state is the page's usual appearance, not an edge case.
+ * An empty section, said deliberately.
+ *
+ * A solid parchment panel rather than a dashed outline — dashes read as
+ * scaffolding someone forgot to replace. The message sits beside its own
+ * icon at the start of the line instead of floating in the middle of a
+ * wide rectangle, and where there is something useful to do next, it
+ * carries the way there rather than ending the sentence.
  */
-function EmptyState({ children }: { children: React.ReactNode }) {
+function EmptyState({
+  kind,
+  children,
+  action,
+}: {
+  kind: "incoming" | "outgoing" | "matched" | "blocked";
+  children: React.ReactNode;
+  action?: { href: string; label: string };
+}) {
   return (
-    <p className="border border-dashed border-border px-5 py-7 text-center text-sm text-muted">
-      {children}
-    </p>
+    // items-start, and the words in their own column: on a narrow screen
+    // a wrapping line used to push the icon onto a row of its own.
+    <div className="flex max-w-[46em] items-start gap-3.5 border-s-2 border-brass bg-surface px-5 py-4">
+      <RequestSectionIcon
+        kind={kind}
+        className="mt-0.5 size-5 shrink-0 text-brass"
+      />
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <p className="text-sm text-muted">{children}</p>
+        {action && (
+          <Link
+            href={action.href}
+            className="text-sm font-medium text-accent underline underline-offset-4 hover:text-brass-deep"
+          >
+            {action.label}
+          </Link>
+        )}
+      </div>
+    </div>
   );
 }
 
-/** One person in a list: name, where they are, and what you can do. */
+/**
+ * One person in a list.
+ *
+ * The initial stands in for a photograph, which this page never has: a
+ * profile photo is only revealed on a confirmed match, and even then it
+ * belongs on the match page rather than in a list.
+ */
 function PersonRow({
   name,
   city,
+  warm = false,
   children,
 }: {
   name: string;
   city?: string;
+  warm?: boolean;
   children?: React.ReactNode;
 }) {
   return (
     <li className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 transition-colors hover:bg-surface">
-      <div className="flex flex-col gap-0.5">
-        <p className="text-[17px] font-medium">{name}</p>
-        {city && <p className="text-[13.5px] text-muted">{city}</p>}
+      <div className="flex items-center gap-3">
+        <span
+          aria-hidden
+          className={`flex size-10 shrink-0 items-center justify-center rounded-full text-[17px] font-semibold ${
+            warm
+              ? "bg-brass-tint text-brass-deep"
+              : "bg-surface text-muted"
+          }`}
+        >
+          {name.trim().charAt(0).toUpperCase()}
+        </span>
+        <div className="flex flex-col gap-0.5">
+          <p className="text-[17px] font-medium">{name}</p>
+          {city && <p className="text-[13.5px] text-muted">{city}</p>}
+        </div>
       </div>
       {children && (
         <div className="flex flex-wrap items-center gap-3">{children}</div>
@@ -114,7 +186,6 @@ function PersonRow({
     </li>
   );
 }
-
 
 export default async function RequestsPage({
   params,
@@ -126,6 +197,9 @@ export default async function RequestsPage({
 
   const t = await getTranslations("Requests");
   const tSafety = await getTranslations("Safety");
+  // The way out of an empty section is Browse, and it already has an
+  // approved label there — reused rather than written again here.
+  const tHome = await getTranslations("Home");
 
   const supabase = await createClient();
   const {
@@ -216,9 +290,18 @@ export default async function RequestsPage({
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("title")}</h1>
 
       <section className="flex flex-col gap-4">
-        <SectionHead title={t("incomingTitle")} count={incomingRows.length} />
+        <SectionHead
+          kind="incoming"
+          title={t("incomingTitle")}
+          count={incomingRows.length}
+        />
         {incomingRows.length === 0 ? (
-          <EmptyState>{t("noIncoming")}</EmptyState>
+          <EmptyState
+            kind="incoming"
+            action={{ href: "/browse", label: tHome("browseChavrusas") }}
+          >
+            {t("noIncoming")}
+          </EmptyState>
         ) : (
           <ul className="flex flex-col">
             {incomingRows.map((row) => (
@@ -252,9 +335,18 @@ export default async function RequestsPage({
       </section>
 
       <section className="flex flex-col gap-4">
-        <SectionHead title={t("outgoingTitle")} count={outgoingRows.length} />
+        <SectionHead
+          kind="outgoing"
+          title={t("outgoingTitle")}
+          count={outgoingRows.length}
+        />
         {outgoingRows.length === 0 ? (
-          <EmptyState>{t("noOutgoing")}</EmptyState>
+          <EmptyState
+            kind="outgoing"
+            action={{ href: "/browse", label: tHome("browseChavrusas") }}
+          >
+            {t("noOutgoing")}
+          </EmptyState>
         ) : (
           <ul className="flex flex-col">
             {outgoingRows.map((row) => (
@@ -282,16 +374,26 @@ export default async function RequestsPage({
       </section>
 
       <section className="flex flex-col gap-4">
-        <SectionHead title={t("matchedTitle")} count={matchedRows.length} />
+        <SectionHead
+          kind="matched"
+          tone="warm"
+          title={t("matchedTitle")}
+          count={matchedRows.length}
+        />
         {matchedRows.length === 0 ? (
-          <EmptyState>{t("noMatched")}</EmptyState>
+          <EmptyState
+            kind="matched"
+            action={{ href: "/browse", label: tHome("browseChavrusas") }}
+          >
+            {t("noMatched")}
+          </EmptyState>
         ) : (
           <ul className="flex flex-col">
             {matchedRows.map((row) => {
               const other =
                 row.requester.id === userId ? row.recipient : row.requester;
               return (
-                <PersonRow key={row.id} name={other.name} city={other.city}>
+                <PersonRow key={row.id} name={other.name} city={other.city} warm>
                   <div className="flex flex-col items-end gap-2">
                     {/* This was a "Matched" pill, which read as a status
                         badge rather than the way through to the person —
@@ -324,11 +426,12 @@ export default async function RequestsPage({
 
       <section className="flex flex-col gap-4">
         <SectionHead
+          kind="blocked"
           title={tSafety("blockedSectionTitle")}
           count={blockedRows.length}
         />
         {blockedRows.length === 0 ? (
-          <EmptyState>{tSafety("noBlocked")}</EmptyState>
+          <EmptyState kind="blocked">{tSafety("noBlocked")}</EmptyState>
         ) : (
           <ul className="flex flex-col">
             {blockedRows.map((row) => (
