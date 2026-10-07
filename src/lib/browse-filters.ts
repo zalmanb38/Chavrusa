@@ -20,15 +20,16 @@ import { isHidden, type Profile } from "@/lib/profile-options";
  * Tanya means "either", because the alternative reads as "both at once"
  * and would make every additional box shrink the results towards zero.
  *
- * Country, region, city, keyword and distance stay single-valued: the
- * first three are a cascade where a second country makes the region list
- * meaningless, and the last two are not sets.
+ * Region, city, keyword and distance stay single-valued. Region because
+ * its codes only mean anything inside one country, so there is no honest
+ * list to show across several; city and the last two because they are not
+ * sets.
  */
 export interface BrowseFilters {
   language?: string | string[];
   studyLanguage?: string | string[];
   topic?: string | string[];
-  country?: string;
+  country?: string | string[];
   region?: string;
   city?: string;
   near?: string;
@@ -169,8 +170,18 @@ export function applyQueryFilters<T extends FilterableQuery<T>>(
   // Country and region come from fixed lists so they match exactly. City
   // can also be free text where the curated list didn't cover someone, so
   // it stays a partial match.
-  if (filters.country) q = q.eq("country", filters.country);
-  if (filters.region) q = q.eq("region", filters.region);
+  const countries = toValues(filters.country);
+  if (countries.length > 0) q = q.in("country", countries);
+
+  // Region codes are only unique inside a country — "NY" and "ON" come
+  // from different lists — so a region means nothing once the search
+  // spans several. The control is hidden in that case; this is the same
+  // rule applied to a hand-edited or shared URL, which the control cannot
+  // police.
+  if (filters.region && countries.length === 1) {
+    q = q.eq("region", filters.region);
+  }
+
   if (filters.city) q = q.ilike("city", `%${filters.city}%`);
 
   // A hidden field must not be filterable: matching on a value someone

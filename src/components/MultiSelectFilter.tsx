@@ -21,12 +21,20 @@ export default function MultiSelectFilter({
   options,
   initialSelected,
   emptyLabel,
+  onSelectionChange,
 }: {
   name: string;
   label: string;
   options: MultiSelectOption[];
   initialSelected: string[];
   emptyLabel: string;
+  /**
+   * For a client parent that has to react to the choice — the location
+   * cascade, where the country decides whether a region list exists at
+   * all. Server components must not pass this: a function cannot cross
+   * the RSC boundary.
+   */
+  onSelectionChange?: (values: string[]) => void;
 }) {
   // The "3 selected" summary is translated here rather than passed in as
   // a formatter. Only serializable values cross the server/client
@@ -104,13 +112,16 @@ export default function MultiSelectFilter({
               name={name}
               value={option.value}
               checked={selected.includes(option.value)}
-              onChange={() =>
-                setSelected((prev) =>
-                  prev.includes(option.value)
-                    ? prev.filter((v) => v !== option.value)
-                    : [...prev, option.value],
-                )
-              }
+              onChange={() => {
+                // Computed outside the updater: React may call an updater
+                // twice, and a callback fired from inside one would run
+                // twice with it.
+                const next = selected.includes(option.value)
+                  ? selected.filter((v) => v !== option.value)
+                  : [...selected, option.value];
+                setSelected(next);
+                onSelectionChange?.(next);
+              }}
               className="accent-primary"
             />
             {option.label}

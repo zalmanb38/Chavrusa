@@ -87,6 +87,7 @@ export default async function BrowsePage({
   const selectedFrequencies = toValues(filters.frequency);
   const selectedTimesOfDay = toValues(filters.timeOfDay);
   const selectedSessionLengths = toValues(filters.sessionLength);
+  const selectedCountries = toValues(filters.country);
 
   const supabase = await createClient();
   const {
@@ -329,7 +330,7 @@ export default async function BrowsePage({
             />
 
             <LocationFilter
-              initialCountry={filters.country ?? ""}
+              initialCountries={selectedCountries}
               initialRegion={filters.region ?? ""}
               initialCity={filters.city ?? ""}
             />
