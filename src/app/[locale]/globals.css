@@ -217,3 +217,33 @@ a {
     mask-size: 3px 3px;
   }
 }
+
+/* Browse-map cluster labels.
+
+   These are permanent, not hover tooltips, so every dot carries one at
+   once and Leaflet's default treatment — white box, border, drop shadow,
+   little pointer — stacks into chrome that competes with the markers it
+   is labelling. Stripped back to plain text with a soft halo, which stays
+   readable over both basemaps without drawing a box around itself.
+
+   pointer-events stay off so a label never swallows the click meant for
+   the circle underneath it, which matters most where two labels overlap. */
+.leaflet-tooltip.cluster-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-foreground, #1b2430);
+  text-shadow:
+    0 0 3px var(--color-background, #f8f6f0),
+    0 0 3px var(--color-background, #f8f6f0),
+    0 0 3px var(--color-background, #f8f6f0);
+  pointer-events: none;
+}
+
+.leaflet-tooltip.cluster-label::before {
+  display: none;
+}

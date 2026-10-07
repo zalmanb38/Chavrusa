@@ -20,6 +20,13 @@ function subscribeToColorScheme(onChange: () => void) {
   return () => query.removeEventListener("change", onChange);
 }
 
+const ZOOM_FOR: Record<Cluster["kind"], number> = {
+  neighborhood: 14,
+  city: 12,
+  region: 7,
+  country: 4,
+};
+
 function FitToClusters({ clusters }: { clusters: Cluster[] }) {
   const map = useMap();
   // Refit on a genuine change of markers, not on every parent re-render.
@@ -28,7 +35,10 @@ function FitToClusters({ clusters }: { clusters: Cluster[] }) {
   useEffect(() => {
     if (clusters.length === 0) return;
     if (clusters.length === 1) {
-      map.setView([clusters[0].lat, clusters[0].lng], 9);
+      // One marker says nothing about how much ground it covers, so the
+      // zoom has to come from what it stands for. A flat 9 framed a
+      // neighborhood as if it were a country.
+      map.setView([clusters[0].lat, clusters[0].lng], ZOOM_FOR[clusters[0].kind]);
       return;
     }
     map.fitBounds(
@@ -101,7 +111,17 @@ export default function BrowseMap({
               }}
               eventHandlers={{ click: () => onSelect(cluster) }}
             >
-              <Tooltip direction="top" offset={[0, -4]}>
+              {/* Permanent, so the map reads as a labelled chart rather
+                  than something you have to hunt across with a cursor —
+                  and so it works at all on a touchscreen, which has no
+                  hover. Styled down in globals.css: at this density the
+                  default tooltip chrome would be louder than the dots. */}
+              <Tooltip
+                direction="top"
+                offset={[0, -4]}
+                permanent
+                className="cluster-label"
+              >
                 {labelFor(cluster)} · {cluster.count}
               </Tooltip>
             </CircleMarker>

@@ -40,6 +40,7 @@ export default function BrowseMapView({
   );
 
   const labelFor = (cluster: Cluster) => {
+    if (cluster.kind === "neighborhood") return cluster.neighborhood;
     if (cluster.kind === "city") return cluster.city;
     if (cluster.kind === "region") {
       const region = regionsFor(cluster.country).find(
@@ -111,7 +112,6 @@ export default function BrowseMapView({
               {t("clearSelection")}
             </button>
           </div>
-          <p className="text-xs text-muted">{t("namesHidden")}</p>
           <ul className="flex flex-col gap-4">
             {selectedProfiles.map((profile) => (
               <BrowseCard
@@ -120,7 +120,7 @@ export default function BrowseMapView({
                 currentUserId={currentUserId}
                 connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                 requestId={connectStatuses[profile.id]?.requestId ?? null}
-                showName={false}
+                showName
               />
             ))}
           </ul>
