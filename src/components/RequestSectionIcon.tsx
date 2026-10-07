@@ -30,25 +30,33 @@ export default function RequestSectionIcon({
       strokeLinejoin="round"
       stroke="currentColor"
     >
-      {/* The two request icons are the same book with the arrow reversed.
-          The arrows are horizontal, not diagonal: at 22px a diagonal
-          reads as a tick in both directions and the pair became
-          indistinguishable, which is the one thing they must not be. */}
+      {/* Both request icons are the open book with an arrow beside it,
+          the arrow reversed between them.
+
+          The book is drawn with both pages, not one. A single page and a
+          spine is a rectangle with a line in it — at this size it read as
+          an empty box, and only the two-page silhouette is recognisably a
+          book. The arrows are horizontal rather than diagonal for the
+          same reason: at 22px a diagonal reads as a tick either way round
+          and the pair stopped being distinguishable, which is the one
+          thing they must not be. */}
       {kind === "incoming" && (
         <>
-          <path d="M9 6.8c-1.5-.9-3.2-1.3-5.2-1.1v12.6c2-.2 3.7.2 5.2 1.1" />
-          <path d="M9 6.8v12.6" />
-          <path d="M21 12h-7.5" />
-          <path d="M16.5 8.6 13 12l3.5 3.4" />
+          <path d="M7.5 8C6 6.9 4.2 6.4 2 6.6v10.8c2.2-.2 4 .3 5.5 1.4" />
+          <path d="M7.5 8C9 6.9 10.8 6.4 13 6.6v10.8c-2.2-.2-4 .3-5.5 1.4" />
+          <path d="M7.5 8v10.8" />
+          <path d="M22 12.7h-6.5" />
+          <path d="M18.5 9.5 15.3 12.7l3.2 3.2" />
         </>
       )}
 
       {kind === "outgoing" && (
         <>
-          <path d="M9 6.8c-1.5-.9-3.2-1.3-5.2-1.1v12.6c2-.2 3.7.2 5.2 1.1" />
-          <path d="M9 6.8v12.6" />
-          <path d="M13.5 12H21" />
-          <path d="M17.5 8.6 21 12l-3.5 3.4" />
+          <path d="M7.5 8C6 6.9 4.2 6.4 2 6.6v10.8c2.2-.2 4 .3 5.5 1.4" />
+          <path d="M7.5 8C9 6.9 10.8 6.4 13 6.6v10.8c-2.2-.2-4 .3-5.5 1.4" />
+          <path d="M7.5 8v10.8" />
+          <path d="M15.5 12.7H22" />
+          <path d="M18.8 9.5 22 12.7l-3.2 3.2" />
         </>
       )}
 
