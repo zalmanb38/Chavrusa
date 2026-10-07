@@ -55,6 +55,66 @@ interface BlockedRow {
 
 const PROFILE_SUMMARY_FIELDS = "id, name, city";
 
+/**
+ * The page's shared furniture.
+ *
+ * Four sections that each list people were four slightly different sets
+ * of class names, and the difference showed: this is one section head and
+ * one empty state, used four times.
+ *
+ * The treatment follows Browse rather than the rounded cards this page
+ * used to carry — hairline rules and whitespace, which is the language
+ * the rest of the site is built in.
+ */
+function SectionHead({ title, count }: { title: string; count: number }) {
+  return (
+    <div className="flex flex-wrap items-baseline justify-between gap-3 border-t border-border pt-5">
+      <h2 className="text-[21px] font-semibold">{title}</h2>
+      {count > 0 && (
+        <span className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
+          {count}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * An empty section, said deliberately rather than left as a loose grey
+ * line. Most of this page is empty for most people most of the time, so
+ * the empty state is the page's usual appearance, not an edge case.
+ */
+function EmptyState({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="border border-dashed border-border px-5 py-7 text-center text-sm text-muted">
+      {children}
+    </p>
+  );
+}
+
+/** One person in a list: name, where they are, and what you can do. */
+function PersonRow({
+  name,
+  city,
+  children,
+}: {
+  name: string;
+  city?: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <li className="flex flex-wrap items-center justify-between gap-3 border-t border-border py-4 transition-colors hover:bg-surface">
+      <div className="flex flex-col gap-0.5">
+        <p className="text-[17px] font-medium">{name}</p>
+        {city && <p className="text-[13.5px] text-muted">{city}</p>}
+      </div>
+      {children && (
+        <div className="flex flex-wrap items-center gap-3">{children}</div>
+      )}
+    </li>
+  );
+}
+
 
 export default async function RequestsPage({
   params,
@@ -145,7 +205,7 @@ export default async function RequestsPage({
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-10 px-6 py-12 sm:px-11">
+    <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-9 px-6 py-12 sm:px-11">
       <ImageSlot
         direction="Two chavrusas' seforim, side by side"
         src="/photos/p4-two-seforim.jpg"
@@ -155,19 +215,19 @@ export default async function RequestsPage({
 
       <h1 className="text-[2rem] font-semibold sm:text-[34px]">{t("title")}</h1>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium">{t("incomingTitle")}</h2>
+      <section className="flex flex-col gap-4">
+        <SectionHead title={t("incomingTitle")} count={incomingRows.length} />
         {incomingRows.length === 0 ? (
-          <p className="text-sm text-muted">{t("noIncoming")}</p>
+          <EmptyState>{t("noIncoming")}</EmptyState>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             {incomingRows.map((row) => (
               <li
                 key={row.id}
-                className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5"
+                className="flex flex-col gap-3 border-t border-border py-5"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="font-serif text-lg font-medium">
+                  <p className="text-[21px] leading-tight font-semibold">
                     {row.requester.name}
                   </p>
                   <ProfileLocation profile={row.requester} />
@@ -191,61 +251,47 @@ export default async function RequestsPage({
         )}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium">{t("outgoingTitle")}</h2>
+      <section className="flex flex-col gap-4">
+        <SectionHead title={t("outgoingTitle")} count={outgoingRows.length} />
         {outgoingRows.length === 0 ? (
-          <p className="text-sm text-muted">{t("noOutgoing")}</p>
+          <EmptyState>{t("noOutgoing")}</EmptyState>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             {outgoingRows.map((row) => (
-              <li
+              <PersonRow
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
+                name={row.recipient.name}
+                city={row.recipient.city}
               >
-                <div>
-                  <p className="font-medium">{row.recipient.name}</p>
-                  {row.recipient.city && (
-                    <p className="text-sm text-muted">{row.recipient.city}</p>
-                  )}
-                </div>
                 {row.status === "admin_resolved" ? (
                   <div className="flex flex-col items-end gap-1">
-                    <span className="rounded-sm border border-border px-3.5 py-1.5 text-sm text-muted">
+                    <span className="border border-border px-3.5 py-1.5 text-sm text-muted">
                       {t("adminResolved")}
                     </span>
                     <RemoveResolvedRequestButton requestId={row.id} />
                   </div>
                 ) : (
-                  <span className="rounded-sm border border-border px-3.5 py-1.5 text-sm text-muted">
+                  <span className="border border-border px-3.5 py-1.5 text-sm text-muted">
                     {t("pending")}
                   </span>
                 )}
-              </li>
+              </PersonRow>
             ))}
           </ul>
         )}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium">{t("matchedTitle")}</h2>
+      <section className="flex flex-col gap-4">
+        <SectionHead title={t("matchedTitle")} count={matchedRows.length} />
         {matchedRows.length === 0 ? (
-          <p className="text-sm text-muted">{t("noMatched")}</p>
+          <EmptyState>{t("noMatched")}</EmptyState>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             {matchedRows.map((row) => {
               const other =
                 row.requester.id === userId ? row.recipient : row.requester;
               return (
-                <li
-                  key={row.id}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
-                >
-                  <div>
-                    <p className="font-medium">{other.name}</p>
-                    {other.city && (
-                      <p className="text-sm text-muted">{other.city}</p>
-                    )}
-                  </div>
+                <PersonRow key={row.id} name={other.name} city={other.city}>
                   <div className="flex flex-col items-end gap-2">
                     {/* This was a "Matched" pill, which read as a status
                         badge rather than the way through to the person —
@@ -269,34 +315,30 @@ export default async function RequestsPage({
                       partnerName={other.name}
                     />
                   </div>
-                </li>
+                </PersonRow>
               );
             })}
           </ul>
         )}
       </section>
 
-      <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-medium">
-          {tSafety("blockedSectionTitle")}
-        </h2>
+      <section className="flex flex-col gap-4">
+        <SectionHead
+          title={tSafety("blockedSectionTitle")}
+          count={blockedRows.length}
+        />
         {blockedRows.length === 0 ? (
-          <p className="text-sm text-muted">{tSafety("noBlocked")}</p>
+          <EmptyState>{tSafety("noBlocked")}</EmptyState>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col">
             {blockedRows.map((row) => (
-              <li
+              <PersonRow
                 key={row.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-surface p-4"
+                name={row.blocked.name}
+                city={row.blocked.city}
               >
-                <div>
-                  <p className="font-medium">{row.blocked.name}</p>
-                  {row.blocked.city && (
-                    <p className="text-sm text-muted">{row.blocked.city}</p>
-                  )}
-                </div>
                 <UnblockButton blockId={row.id} />
-              </li>
+              </PersonRow>
             ))}
           </ul>
         )}
