@@ -173,7 +173,7 @@ export default function PhoneVerification({
             value={dial}
             disabled={codeSent}
             onChange={(e) => setDial(e.target.value)}
-            className={`${inputClass} w-44 shrink-0`}
+            className={`${inputClass} w-40 shrink-0`}
           >
             {COUNTRY_CODES.map((c) => (
               <option key={c.iso} value={c.dial} title={countryLabel(c)}>

@@ -20,7 +20,7 @@ export interface CountryCode {
 }
 
 export const COUNTRY_CODES: CountryCode[] = [
-  { iso: "US", dial: "+1", name: "USA & Canada", flag: "🇺🇸", display: "USA & Canada" },
+  { iso: "US", dial: "+1", name: "US & Canada", flag: "🇺🇸", display: "US & Canada" },
   { iso: "IL", dial: "+972", name: "Israel", flag: "🇮🇱" },
   { iso: "GB", dial: "+44", name: "United Kingdom", flag: "🇬🇧" },
   { iso: "FR", dial: "+33", name: "France", flag: "🇫🇷" },
