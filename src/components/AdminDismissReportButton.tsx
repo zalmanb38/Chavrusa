@@ -8,12 +8,8 @@ import ErrorNote from "@/components/ErrorNote";
 
 export default function AdminDismissReportButton({
   reportId,
-  reporterId,
-  reportedId,
 }: {
   reportId: string;
-  reporterId?: string;
-  reportedId?: string;
 }) {
   const t = useTranslations("Admin");
   const router = useRouter();
@@ -25,33 +21,17 @@ export default function AdminDismissReportButton({
     setLoading(true);
     setError(null);
 
+    // One call: the report is marked dismissed (kept, with who and when)
+    // and any pending request between the two is resolved alongside it.
     const supabase = createClient();
-
-    if (reporterId && reportedId) {
-      const { error: resolveError } = await supabase
-        .from("connect_requests")
-        .update({ status: "admin_resolved" })
-        .eq("status", "pending")
-        .or(
-          `and(requester_id.eq.${reporterId},recipient_id.eq.${reportedId}),and(requester_id.eq.${reportedId},recipient_id.eq.${reporterId})`,
-        );
-
-      if (resolveError) {
-        setLoading(false);
-        setError(resolveError.message);
-        return;
-      }
-    }
-
-    const { error: deleteError } = await supabase
-      .from("reports")
-      .delete()
-      .eq("id", reportId);
+    const { error: dismissError } = await supabase.rpc("admin_dismiss_report", {
+      report_id: reportId,
+    });
 
     setLoading(false);
 
-    if (deleteError) {
-      setError(deleteError.message);
+    if (dismissError) {
+      setError(dismissError.message);
       return;
     }
 

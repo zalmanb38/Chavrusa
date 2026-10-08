@@ -40,6 +40,7 @@ export default async function AdminReportsPage({
     .select(
       "id, reason, created_at, connect_request_id, reporter:reporter_id(id, name), reported:reported_id(id, name, is_active)",
     )
+    .eq("status", "open")
     .order("created_at", { ascending: false });
 
   const reportRows = (reports ?? []) as unknown as ReportRow[];
@@ -175,11 +176,7 @@ export default async function AdminReportsPage({
                     isActive={row.reported.is_active}
                   />
                 )}
-                <AdminDismissReportButton
-                  reportId={row.id}
-                  reporterId={row.reporter?.id}
-                  reportedId={row.reported?.id}
-                />
+                <AdminDismissReportButton reportId={row.id} />
               </div>
             </li>
           ))}

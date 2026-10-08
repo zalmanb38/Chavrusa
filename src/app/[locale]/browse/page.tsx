@@ -173,7 +173,7 @@ export default async function BrowsePage({
 
   const { data: connectRequests, error: connectError } = await supabase
     .from("connect_requests")
-    .select("id, requester_id, recipient_id, status")
+    .select("id, requester_id, recipient_id, status, updated_at")
     .or(`requester_id.eq.${user.id},recipient_id.eq.${user.id}`);
 
   // A failed query yields null data, which reads downstream as "nobody
