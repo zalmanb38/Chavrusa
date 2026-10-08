@@ -92,6 +92,8 @@ begin
 end;
 $$;
 
+revoke all on function public.guard_study_session_update() from public, anon, authenticated;
+
 drop trigger if exists study_sessions_guard_update on public.study_sessions;
 create trigger study_sessions_guard_update
   before update on public.study_sessions
@@ -132,6 +134,8 @@ begin
 end;
 $$;
 
+revoke all on function public.guard_connect_request_parties() from public, anon, authenticated;
+
 drop trigger if exists connect_requests_guard_parties on public.connect_requests;
 create trigger connect_requests_guard_parties
   before update on public.connect_requests
@@ -162,8 +166,11 @@ create unique index if not exists connect_requests_live_pair_idx
 -- mean "never". Someone who wants it to mean never has blocking, which
 -- the insert policy already honours. The browse page mirrors this value
 -- in src/lib/connect.ts so it knows when to offer the button again.
+--
+-- It answers only about the caller's own requests. Taking the requester
+-- as an argument would let anyone ask whether any person had recently
+-- declined any other — something nobody but those two should know.
 create or replace function public.connect_request_cooldown_clear(
-  p_requester uuid,
   p_recipient uuid
 )
 returns boolean
@@ -174,15 +181,15 @@ set search_path = public
 as $$
   select not exists (
     select 1 from public.connect_requests cr
-    where cr.requester_id = p_requester
+    where cr.requester_id = auth.uid()
       and cr.recipient_id = p_recipient
       and cr.status = 'declined'
       and cr.updated_at > now() - interval '7 days'
   );
 $$;
 
-revoke all on function public.connect_request_cooldown_clear(uuid, uuid) from public;
-grant execute on function public.connect_request_cooldown_clear(uuid, uuid) to authenticated;
+revoke all on function public.connect_request_cooldown_clear(uuid) from public, anon;
+grant execute on function public.connect_request_cooldown_clear(uuid) to authenticated;
 
 drop policy if exists "Users can send requests as themselves" on public.connect_requests;
 create policy "Users can send requests as themselves"
@@ -191,7 +198,7 @@ create policy "Users can send requests as themselves"
   with check (
     auth.uid() = requester_id
     and status = 'pending'
-    and public.connect_request_cooldown_clear(requester_id, recipient_id)
+    and public.connect_request_cooldown_clear(recipient_id)
     and not exists (
       select 1 from public.blocks b
       where (b.blocker_id = requester_id and b.blocked_id = recipient_id)
@@ -263,7 +270,7 @@ begin
 end;
 $$;
 
-revoke all on function public.admin_dismiss_report(uuid) from public;
+revoke all on function public.admin_dismiss_report(uuid) from public, anon;
 grant execute on function public.admin_dismiss_report(uuid) to authenticated;
 
 -- 0022 opened a reported thread to admins on the understanding that "the
@@ -312,5 +319,5 @@ as $$
   ) end;
 $$;
 
-revoke all on function public.admin_dashboard_stats() from public;
+revoke all on function public.admin_dashboard_stats() from public, anon;
 grant execute on function public.admin_dashboard_stats() to authenticated;
