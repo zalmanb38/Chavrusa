@@ -114,7 +114,6 @@ export default async function ProfilePage({
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}
         initialFullName={(nameRow as { full_name: string } | null)?.full_name ?? ""}
-        userId={user.id}
       />
     </div>
   );

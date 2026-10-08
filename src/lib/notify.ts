@@ -9,7 +9,11 @@
  * nothing here is trusted.
  */
 export function notify(
-  type: "connect_request" | "request_accepted" | "session_confirmed",
+  type:
+    | "connect_request"
+    | "request_accepted"
+    | "session_proposed"
+    | "session_confirmed",
   id: string,
 ): void {
   void fetch("/api/notify", {

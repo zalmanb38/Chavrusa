@@ -157,7 +157,8 @@
     "studiesInValue": "Studies in {languages}",
     "prefRemoteList": "Remote only",
     "prefInPersonList": "In person only",
-    "prefBothList": "In person or remote"
+    "prefBothList": "In person or remote",
+    "contactPhoneInvalid": "Enter phone numbers with a country code, like +1 555 123 4567."
   },
   "Topics": {
     "chumash": "Chumash",
@@ -328,7 +329,8 @@
     "blockCancelButton": "Cancel",
     "blockedSectionTitle": "Blocked",
     "noBlocked": "You haven't blocked anyone.",
-    "unblock": "Unblock"
+    "unblock": "Unblock",
+    "reportRateLimited": "You've filed a report recently. Please wait a little before filing another — we already have the earlier one."
   },
   "Admin": {
     "reportsTitle": "Reports",
@@ -423,7 +425,10 @@
     "endedByAdmin": "ended by an admin",
     "endedByParticipant": "ended by {name}",
     "reportedConversation": "Reported conversation",
-    "conversationEmpty": "No messages in this conversation."
+    "conversationEmpty": "No messages in this conversation.",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "pageOf": "Page {page} of {pages} · {total} in total"
   },
   "Phone": {
     "title": "Verify phone",
@@ -517,7 +522,17 @@
     "request_acceptedFootnote": "You're receiving this because your connect request was accepted.",
     "session_confirmedHeading": "Your session with {name} is confirmed.",
     "session_confirmedAction": "View the details",
-    "session_confirmedFootnote": "You're receiving this because a study session you scheduled was just confirmed."
+    "session_confirmedFootnote": "You're receiving this because a study session you scheduled was just confirmed.",
+    "session_proposedSubject": "{name} suggested a time to learn",
+    "session_proposedHeading": "{name} suggested a time to learn",
+    "session_proposedBody": "{name} proposed a time for your next session on Chavrusa Link. You can confirm it, or suggest a different time.",
+    "session_proposedAction": "View the proposed time",
+    "session_proposedFootnote": "You're receiving this because a Chavrusa you're matched with proposed a time to learn.",
+    "session_counteredSubject": "{name} suggested a different time",
+    "session_counteredHeading": "{name} suggested a different time",
+    "session_counteredBody": "{name} would prefer a different time for your session on Chavrusa Link. You can confirm the new time, or suggest another.",
+    "session_counteredAction": "View the new time",
+    "session_counteredFootnote": "You're receiving this because a Chavrusa you're matched with changed a proposed time."
   },
   "ErrorPages": {
     "notFoundTitle": "Page not found",

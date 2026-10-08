@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { requireAdmin } from "@/lib/admin";
 import AdminNav from "@/components/AdminNav";
+import AdminPager, {
+  ADMIN_PAGE_SIZE,
+  pageFrom,
+} from "@/components/AdminPager";
 import { LANGUAGE_CODES } from "@/lib/profile-options";
 
 interface AdminUserRow {
@@ -17,6 +21,8 @@ interface AdminUserRow {
   is_admin: boolean;
   created_at: string;
   report_count: number;
+  /** The size of the whole filtered set, repeated on every row. */
+  total_count: number;
 }
 
 const controlClass =
@@ -27,6 +33,7 @@ type SearchParams = {
   language?: string;
   city?: string;
   verified?: string;
+  page?: string;
 };
 
 export default async function AdminUsersPage({
@@ -44,14 +51,20 @@ export default async function AdminUsersPage({
   const tLanguages = await getTranslations("Languages");
   const { supabase } = await requireAdmin(locale);
 
+  const page = pageFrom(filters.page);
   const { data } = await supabase.rpc("admin_list_users", {
     search: filters.search ?? "",
     filter_language: filters.language ?? "",
     filter_city: filters.city ?? "",
     filter_verified: filters.verified ?? "",
+    page_size: ADMIN_PAGE_SIZE,
+    page_offset: (page - 1) * ADMIN_PAGE_SIZE,
   });
 
   const users = (data ?? []) as AdminUserRow[];
+  // The function counts the whole filtered set in a window, so the total
+  // rides back on each row rather than costing a second query.
+  const total = users[0]?.total_count ?? 0;
 
   return (
     <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
@@ -192,6 +205,18 @@ export default async function AdminUsersPage({
           ))}
         </ul>
       )}
+
+      <AdminPager
+        pathname="/admin/users"
+        page={page}
+        total={total}
+        query={{
+          search: filters.search ?? "",
+          language: filters.language ?? "",
+          city: filters.city ?? "",
+          verified: filters.verified ?? "",
+        }}
+      />
     </div>
   );
 }

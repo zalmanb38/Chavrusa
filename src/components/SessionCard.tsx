@@ -54,8 +54,11 @@ export default function SessionCard({
     }
 
     // Confirming is what unlocks contact details for both sides, so it's
-    // the moment the other person most needs to hear about.
+    // the moment the other person most needs to hear about. Countering is
+    // the turn passing back, which is just as invisible without this — it
+    // was the one step in the whole exchange that said nothing.
     if (patch.status === "confirmed") notify("session_confirmed", session.id);
+    if (action === "counter") notify("session_proposed", session.id);
 
     router.refresh();
   }

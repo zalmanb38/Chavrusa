@@ -7,7 +7,12 @@ import { sendEmail } from "@/lib/email";
 import { renderEmailHtml, renderEmailText } from "@/lib/email-template";
 import { routing } from "@/i18n/routing";
 
-const TYPES = ["connect_request", "request_accepted", "session_confirmed"] as const;
+const TYPES = [
+  "connect_request",
+  "request_accepted",
+  "session_proposed",
+  "session_confirmed",
+] as const;
 type NotifyType = (typeof TYPES)[number];
 
 /**
@@ -24,6 +29,12 @@ interface Target {
   senderName: string;
   /** Where the email should land the reader. */
   path: string;
+  /**
+   * Overrides the message keys when one request type can mean two
+   * different things to the reader — proposing a time and countering one
+   * are the same row in two states.
+   */
+  messageType?: string;
 }
 
 export async function POST(request: Request) {
@@ -94,17 +105,20 @@ export async function POST(request: Request) {
     }
   }
 
-  if (type === "session_confirmed") {
+  if (type === "session_confirmed" || type === "session_proposed") {
     const { data: row } = await supabase
       .from("study_sessions")
       .select(
-        "id, status, connect_request_id, connect_requests!inner(requester_id, recipient_id)",
+        "id, status, proposed_by, created_at, updated_at, connect_request_id, connect_requests!inner(requester_id, recipient_id)",
       )
       .eq("id", id)
       .maybeSingle();
 
     const session = row as unknown as {
       status: string;
+      proposed_by: string;
+      created_at: string;
+      updated_at: string;
       connect_request_id: string;
       connect_requests: { requester_id: string; recipient_id: string } | null;
     } | null;
@@ -116,7 +130,15 @@ export async function POST(request: Request) {
     const { requester_id, recipient_id } = session.connect_requests;
     const isParticipant = user.id === requester_id || user.id === recipient_id;
 
-    if (!isParticipant || session.status !== "confirmed") {
+    // A proposal is only announceable by the person who made it, and only
+    // while it is still outstanding; a confirmation only once it is
+    // actually confirmed.
+    const applicable =
+      type === "session_confirmed"
+        ? session.status === "confirmed"
+        : session.status === "proposed" && session.proposed_by === user.id;
+
+    if (!isParticipant || !applicable) {
       return NextResponse.json({ error: "not_applicable" }, { status: 409 });
     }
 
@@ -128,10 +150,18 @@ export async function POST(request: Request) {
       .eq("id", user.id)
       .maybeSingle();
 
+    // Proposing a time and countering one arrive here identically, so the
+    // difference is read from the row rather than taken from the caller:
+    // a row that has been updated since it was written is a counter.
+    const countered =
+      type === "session_proposed" &&
+      new Date(session.updated_at) > new Date(session.created_at);
+
     target = {
       userId: otherId,
       senderName: me?.name ?? "",
       path: `/matches/${session.connect_request_id}`,
+      ...(countered ? { messageType: "session_countered" } : {}),
     };
   }
 
@@ -175,16 +205,18 @@ export async function POST(request: Request) {
 
   // The same shell the new-message email uses. The path stays relative:
   // the template is what turns it into a locale-prefixed absolute URL.
+  const messageType = target.messageType ?? type;
+
   const content = {
-    heading: t(`${type}Heading`, { name }),
-    paragraphs: [t(`${type}Body`, { name })],
-    action: { label: t(`${type}Action`), path: target.path },
-    footnote: t(`${type}Footnote`),
+    heading: t(`${messageType}Heading`, { name }),
+    paragraphs: [t(`${messageType}Body`, { name })],
+    action: { label: t(`${messageType}Action`), path: target.path },
+    footnote: t(`${messageType}Footnote`),
   };
 
   const result = await sendEmail({
     to,
-    subject: t(`${type}Subject`, { name }),
+    subject: t(`${messageType}Subject`, { name }),
     text: renderEmailText(content, locale),
     html: renderEmailHtml(content, locale),
   });

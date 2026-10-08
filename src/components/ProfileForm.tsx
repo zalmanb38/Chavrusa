@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { isValidOptionalPhone } from "@/lib/country-codes";
 import {
   LANGUAGE_CODES,
   TOPIC_KEYS,
@@ -46,12 +47,10 @@ export default function ProfileForm({
   initialProfile,
   initialContacts,
   initialFullName,
-  userId,
 }: {
   initialProfile: Profile | null;
   initialContacts: ProfileContacts | null;
   initialFullName: string;
-  userId: string;
 }) {
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Common");
@@ -136,64 +135,57 @@ export default function ProfileForm({
       return;
     }
 
+    // The two contact numbers are handed to a confirmed match as their
+    // way of reaching this person, so an unusable one is worth catching
+    // here rather than discovering when someone tries to dial it.
+    if (!isValidOptionalPhone(whatsapp) || !isValidOptionalPhone(contactPhone)) {
+      setError(t("contactPhoneInvalid"));
+      return;
+    }
+
     setSaving(true);
 
     const supabase = createClient();
-    const { error: saveError } = await supabase.from("profiles").upsert({
-      id: userId,
-      name,
-      languages,
-      topics,
-      topic_other: topics.includes(OTHER_TOPIC) ? topicOther.trim() : "",
-      level: level || null,
-      city: location.city.trim(),
-      country: location.country,
-      region: location.region,
-      neighborhood: location.neighborhood.trim(),
-      meeting_spot: location.meetingSpot.trim(),
-      preference,
-      availability,
-      age_range: ageRange,
-      study_languages: studyLanguages,
-      frequency,
-      time_of_day: timeOfDay,
-      session_length: sessionLength,
-      blurb: blurb.trim(),
-      hidden_fields: hiddenFields,
-      // Saving the form is the person confirming their public name,
-      // whether they edited the derived one or left it as it stands.
-      display_name_set: true,
+    // One call, one transaction. These were three sequential upserts, and
+    // a failure on the second or third left the first saved with no way
+    // back — a profile half-written, reported as a generic error.
+    const { error: saveError } = await supabase.rpc("save_profile", {
+      p_profile: {
+        name,
+        languages,
+        topics,
+        topic_other: topics.includes(OTHER_TOPIC) ? topicOther.trim() : "",
+        level: level || null,
+        city: location.city.trim(),
+        country: location.country,
+        region: location.region,
+        neighborhood: location.neighborhood.trim(),
+        meeting_spot: location.meetingSpot.trim(),
+        preference,
+        availability,
+        age_range: ageRange,
+        study_languages: studyLanguages,
+        frequency,
+        time_of_day: timeOfDay,
+        session_length: sessionLength,
+        blurb: blurb.trim(),
+        hidden_fields: hiddenFields,
+        // Saving the form is the person confirming their public name,
+        // whether they edited the derived one or left it as it stands.
+        display_name_set: true,
+      },
+      p_full_name: fullName.trim(),
+      p_contacts: {
+        whatsapp: whatsapp.trim(),
+        contact_phone: contactPhone.trim(),
+        zoom_link: zoomLink.trim(),
+      },
     });
-
-    if (saveError) {
-      setSaving(false);
-      setError(saveError.message);
-      return;
-    }
-
-    const { error: fullNameError } = await supabase
-      .from("profile_names")
-      .upsert({ id: userId, full_name: fullName.trim() });
-
-    if (fullNameError) {
-      setSaving(false);
-      setError(fullNameError.message);
-      return;
-    }
-
-    const { error: contactsError } = await supabase
-      .from("profile_contacts")
-      .upsert({
-        id: userId,
-        whatsapp,
-        contact_phone: contactPhone,
-        zoom_link: zoomLink,
-      });
 
     setSaving(false);
 
-    if (contactsError) {
-      setError(contactsError.message);
+    if (saveError) {
+      setError(saveError.message);
       return;
     }
 

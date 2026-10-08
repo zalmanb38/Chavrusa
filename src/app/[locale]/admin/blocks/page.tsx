@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { requireAdmin } from "@/lib/admin";
 import AdminNav from "@/components/AdminNav";
+import AdminPager, {
+  ADMIN_PAGE_SIZE,
+  pageFrom,
+} from "@/components/AdminPager";
 
 interface ProfileSummary {
   id: string;
@@ -17,23 +21,34 @@ interface BlockRow {
 
 export default async function AdminBlocksPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const filters = await searchParams;
 
   const t = await getTranslations("Admin");
   const { supabase } = await requireAdmin(locale);
 
-  const { data } = await supabase
+  const page = pageFrom(filters.page);
+  const from = (page - 1) * ADMIN_PAGE_SIZE;
+
+  // count: "exact" asks for the size of the whole set alongside the slice,
+  // which is what the pager needs and what range() alone cannot say.
+  const { data, count } = await supabase
     .from("blocks")
     .select(
       "id, created_at, blocker:blocker_id(id, name), blocked:blocked_id(id, name)",
+      { count: "exact" },
     )
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(from, from + ADMIN_PAGE_SIZE - 1);
 
   const blocks = (data ?? []) as unknown as BlockRow[];
+  const total = count ?? 0;
 
   return (
     <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-6 px-6 py-12 sm:px-10">
@@ -81,6 +96,8 @@ export default async function AdminBlocksPage({
           ))}
         </ul>
       )}
+
+      <AdminPager pathname="/admin/blocks" page={page} total={total} query={{}} />
     </div>
   );
 }

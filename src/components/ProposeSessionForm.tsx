@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { notify } from "@/lib/notify";
 import ErrorNote from "@/components/ErrorNote";
 
 export default function ProposeSessionForm({
@@ -29,12 +30,19 @@ export default function ProposeSessionForm({
     setError(null);
 
     const supabase = createClient();
-    const { error: insertError } = await supabase.from("study_sessions").insert({
-      connect_request_id: connectRequestId,
-      proposed_by: currentUserId,
-      scheduled_at: new Date(scheduledAt).toISOString(),
-      note,
-    });
+    // The id comes back because the notification needs it: proposing a
+    // time was silent, so the other person only learned of it by
+    // happening to open the match.
+    const { data: created, error: insertError } = await supabase
+      .from("study_sessions")
+      .insert({
+        connect_request_id: connectRequestId,
+        proposed_by: currentUserId,
+        scheduled_at: new Date(scheduledAt).toISOString(),
+        note,
+      })
+      .select("id")
+      .single();
 
     setSaving(false);
 
@@ -42,6 +50,8 @@ export default function ProposeSessionForm({
       setError(insertError.message);
       return;
     }
+
+    if (created?.id) notify("session_proposed", created.id);
 
     setScheduledAt("");
     setNote("");

@@ -2,6 +2,10 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { requireAdmin } from "@/lib/admin";
 import AdminNav from "@/components/AdminNav";
+import AdminPager, {
+  ADMIN_PAGE_SIZE,
+  pageFrom,
+} from "@/components/AdminPager";
 import AdminDeactivateButton from "@/components/AdminDeactivateButton";
 import AdminDismissReportButton from "@/components/AdminDismissReportButton";
 
@@ -25,25 +29,34 @@ interface ReportRow {
 
 export default async function AdminReportsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const filters = await searchParams;
 
   const t = await getTranslations("Admin");
 
   const { supabase } = await requireAdmin(locale);
 
-  const { data: reports } = await supabase
+  const page = pageFrom(filters.page);
+  const from = (page - 1) * ADMIN_PAGE_SIZE;
+
+  const { data: reports, count } = await supabase
     .from("reports")
     .select(
       "id, reason, created_at, connect_request_id, reporter:reporter_id(id, name), reported:reported_id(id, name, is_active)",
+      { count: "exact" },
     )
     .eq("status", "open")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .range(from, from + ADMIN_PAGE_SIZE - 1);
 
   const reportRows = (reports ?? []) as unknown as ReportRow[];
+  const total = count ?? 0;
 
   // Only the threads that reports actually name. The RLS policy grants
   // exactly this and no more, so a query for anything else comes back
@@ -182,6 +195,8 @@ export default async function AdminReportsPage({
           ))}
         </ul>
       )}
+
+      <AdminPager pathname="/admin/reports" page={page} total={total} query={{}} />
     </div>
   );
 }

@@ -44,7 +44,15 @@ export default function ReportButton({
     setSubmitting(false);
 
     if (insertError) {
-      setError(insertError.message);
+      // The cap lives in an RLS policy, so hitting it comes back as a
+      // policy violation rather than something a person can read. Any
+      // other failure keeps its own message, which is usually the useful
+      // one.
+      setError(
+        insertError.code === "42501"
+          ? t("reportRateLimited")
+          : insertError.message,
+      );
       return;
     }
 

@@ -67,3 +67,29 @@ export function splitPhone(e164: string | null): {
 
   return { dial: match.dial, national: e164.slice(match.dial.length) };
 }
+
+/**
+ * The same shape the SMS route enforces on the verified number, applied
+ * to the two contact fields beside it. They were free text: anything at
+ * all was accepted and then handed to a confirmed match as their only way
+ * of reaching the person.
+ *
+ * Both fields are optional, so empty passes. A country code is required
+ * rather than merely encouraged — these numbers are given to people who
+ * may well be in another country, where a number without one cannot be
+ * dialled.
+ *
+ * Separators are stripped before the test but not before storing: "+1 555
+ * 123 4567" is easier to read than "+15551234567", and the reader is a
+ * person, not a dialler.
+ */
+const E164 = /^\+[1-9]\d{7,14}$/;
+
+export function normalisePhoneInput(raw: string): string {
+  return raw.replace(/[\s()./\u2010-\u2015-]/g, "");
+}
+
+export function isValidOptionalPhone(raw: string): boolean {
+  const value = normalisePhoneInput(raw.trim());
+  return value === "" || E164.test(value);
+}
