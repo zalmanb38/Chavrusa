@@ -22,7 +22,7 @@ export interface ConnectInfo {
 // the interval in connect_request_cooldown_clear (migration 0025), which
 // is what actually enforces it — this only decides when to offer the
 // button again.
-export const DECLINE_COOLDOWN_MS = 14 * 24 * 60 * 60 * 1000;
+export const DECLINE_COOLDOWN_MS = 7 * 24 * 60 * 60 * 1000;
 
 // When a pair has more than one row — a decline and a later request, or
 // requests in both directions — the live relationship wins.

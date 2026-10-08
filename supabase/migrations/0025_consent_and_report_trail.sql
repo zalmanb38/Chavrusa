@@ -156,7 +156,7 @@ create unique index if not exists connect_requests_live_pair_idx
   on public.connect_requests (requester_id, recipient_id)
   where status <> 'declined';
 
--- Fourteen days from the most recent decline before the same person can
+-- Seven days from the most recent decline before the same person can
 -- ask again. Long enough that a decline can't be answered by asking again
 -- the same afternoon, short enough that "not right now" doesn't quietly
 -- mean "never". Someone who wants it to mean never has blocking, which
@@ -177,7 +177,7 @@ as $$
     where cr.requester_id = p_requester
       and cr.recipient_id = p_recipient
       and cr.status = 'declined'
-      and cr.updated_at > now() - interval '14 days'
+      and cr.updated_at > now() - interval '7 days'
   );
 $$;
 
