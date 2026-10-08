@@ -47,7 +47,8 @@
     "admin": "ניהול",
     "howItWorks": "איך זה עובד",
     "about": "אודות",
-    "unreadMessages": "{count, plural, one {הודעה אחת שלא נקראה} two {# הודעות שלא נקראו} other {# הודעות שלא נקראו}}"
+    "unreadMessages": "{count, plural, one {הודעה אחת שלא נקראה} two {# הודעות שלא נקראו} other {# הודעות שלא נקראו}}",
+    "menu": "תפריט"
   },
   "Auth": {
     "loginTitle": "ברוכים השבים",

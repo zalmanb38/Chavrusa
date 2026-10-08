@@ -47,7 +47,8 @@
     "admin": "Admin",
     "howItWorks": "How it works",
     "about": "About",
-    "unreadMessages": "{count, plural, =1 {# unread message} other {# unread messages}}"
+    "unreadMessages": "{count, plural, =1 {# unread message} other {# unread messages}}",
+    "menu": "Menu"
   },
   "Auth": {
     "loginTitle": "Welcome back",
