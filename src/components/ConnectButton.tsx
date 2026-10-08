@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { notify } from "@/lib/notify";
@@ -13,13 +13,16 @@ export default function ConnectButton({
   recipientId,
   initialStatus,
   requestId,
+  retryAfter,
 }: {
   currentUserId: string;
   recipientId: string;
   initialStatus: ConnectStatus;
   requestId: string | null;
+  retryAfter: string | null;
 }) {
   const t = useTranslations("Browse");
+  const format = useFormatter();
   const router = useRouter();
 
   const [status, setStatus] = useState(initialStatus);
@@ -84,8 +87,16 @@ export default function ConnectButton({
     );
   }
 
+  // Declined, and the cooldown hasn't run out. Says when it does, rather
+  // than leaving a gap where the button used to be.
   if (status === "declined") {
-    return null;
+    return retryAfter ? (
+      <span className="mt-1 w-fit px-0.5 py-1.5 text-sm text-muted">
+        {t("tryAgainAfter", {
+          date: format.dateTime(new Date(retryAfter), { dateStyle: "medium" }),
+        })}
+      </span>
+    ) : null;
   }
 
   return (

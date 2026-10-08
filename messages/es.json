@@ -240,6 +240,7 @@
     "noResults": "Aún no hay estudiantes que coincidan con tus filtros. Intenta ajustarlos.",
     "connect": "Conectar",
     "requestSent": "Solicitud enviada",
+    "tryAgainAfter": "Podrás intentarlo de nuevo después del {date}",
     "respond": "Responder",
     "matched": "Conectados",
     "notVisibleTitle": "Todavía no eres visible para los demás",

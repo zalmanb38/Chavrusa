@@ -20,12 +20,14 @@ export default function BrowseCard({
   currentUserId,
   connectStatus,
   requestId,
+  retryAfter,
   showName,
 }: {
   profile: Profile;
   currentUserId: string;
   connectStatus: ConnectStatus;
   requestId: string | null;
+  retryAfter: string | null;
   showName: boolean;
 }) {
   const t = useTranslations("Browse");
@@ -58,6 +60,7 @@ export default function BrowseCard({
           recipientId={profile.id}
           initialStatus={connectStatus}
           requestId={requestId}
+          retryAfter={retryAfter}
         />
 
         <div className="flex gap-3">

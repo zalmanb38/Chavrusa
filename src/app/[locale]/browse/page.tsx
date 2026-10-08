@@ -39,7 +39,7 @@ import BrowseMapView from "@/components/BrowseMapView";
 import {
   buildConnectStatusMap,
   type ConnectRequestRow,
-  type ConnectStatus,
+  type ConnectInfo,
 } from "@/lib/connect";
 
 // "Label — the only chrome voice": 11.5px, wide tracking, uppercase.
@@ -197,10 +197,8 @@ export default async function BrowsePage({
 
   // Both views are client components, and a Map doesn't survive the
   // server/client boundary — hand them a plain object instead.
-  const connectStatuses: Record<
-    string,
-    { status: ConnectStatus; requestId: string | null }
-  > = Object.fromEntries(connectStatusMap);
+  const connectStatuses: Record<string, ConnectInfo> =
+    Object.fromEntries(connectStatusMap);
 
   // The design's empty state quantifies the way out — "widening the
   // search finds N learners" — which needs the unfiltered total, not just
@@ -536,6 +534,7 @@ export default async function BrowsePage({
                   currentUserId={user.id}
                   connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                   requestId={connectStatuses[profile.id]?.requestId ?? null}
+                  retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
                   showName
                 />
               ))}

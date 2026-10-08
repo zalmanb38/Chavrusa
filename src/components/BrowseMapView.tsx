@@ -7,7 +7,7 @@ import { buildClusters, MIN_CLUSTER, type Cluster } from "@/lib/browse-clusters"
 import { regionsFor } from "@/lib/locations";
 import { usingFallbackTiles } from "@/lib/map-tiles";
 import type { Profile } from "@/lib/profile-options";
-import type { ConnectStatus } from "@/lib/connect";
+import type { ConnectInfo } from "@/lib/connect";
 import BrowseCard from "@/components/BrowseCard";
 import MapErrorBoundary from "@/components/MapErrorBoundary";
 
@@ -27,7 +27,7 @@ export default function BrowseMapView({
 }: {
   profiles: Profile[];
   currentUserId: string;
-  connectStatuses: Record<string, { status: ConnectStatus; requestId: string | null }>;
+  connectStatuses: Record<string, ConnectInfo>;
 }) {
   const t = useTranslations("Map");
   const tLocation = useTranslations("Location");
@@ -120,6 +120,7 @@ export default function BrowseMapView({
                 currentUserId={currentUserId}
                 connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                 requestId={connectStatuses[profile.id]?.requestId ?? null}
+                retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
                 showName
               />
             ))}

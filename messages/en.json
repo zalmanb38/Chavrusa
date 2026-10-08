@@ -240,6 +240,7 @@
     "noResults": "No learners match your filters yet. Try adjusting them.",
     "connect": "Connect",
     "requestSent": "Request sent",
+    "tryAgainAfter": "You can try again after {date}",
     "respond": "Respond",
     "matched": "Matched",
     "notVisibleTitle": "You're not visible to others yet",

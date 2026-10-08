@@ -16,6 +16,9 @@ export interface ConnectRequestRow {
 export interface ConnectInfo {
   status: ConnectStatus;
   requestId: string | null;
+  // When a "declined" status lifts, as an ISO string so it survives the
+  // server/client boundary. Null for every other status.
+  retryAfter: string | null;
 }
 
 // How long after a decline before the same person may ask again. Mirrors
@@ -47,16 +50,19 @@ export function buildConnectStatusMap(
     const otherId = row.requester_id === userId ? row.recipient_id : row.requester_id;
 
     let status: ConnectStatus;
+    let retryAfter: string | null = null;
     if (row.status === "accepted") {
       status = "matched";
     } else if (row.status === "declined") {
       // Only the person who was declined waits out the cooldown. The
       // person who declined is free to ask the other way whenever they
       // change their mind.
-      const coolingDown =
-        row.requester_id === userId &&
-        now - new Date(row.updated_at).getTime() < DECLINE_COOLDOWN_MS;
+      const liftsAt = new Date(row.updated_at).getTime() + DECLINE_COOLDOWN_MS;
+      const coolingDown = row.requester_id === userId && now < liftsAt;
       status = coolingDown ? "declined" : "none";
+      if (coolingDown) {
+        retryAfter = new Date(liftsAt).toISOString();
+      }
     } else if (row.requester_id === userId) {
       status = "pending_sent";
     } else {
@@ -68,6 +74,7 @@ export function buildConnectStatusMap(
       map.set(otherId, {
         status,
         requestId: status === "none" ? null : row.id,
+        retryAfter,
       });
     }
   }
