@@ -330,7 +330,7 @@
     "blockedSectionTitle": "Blocked",
     "noBlocked": "You haven't blocked anyone.",
     "unblock": "Unblock",
-    "reportRateLimited": "You've filed a report recently. Please wait a little before filing another — we already have the earlier one."
+    "reportRateLimited": "You filed a report on this user recently. Please wait a little before filing another report on this user."
   },
   "Admin": {
     "reportsTitle": "Reports",

@@ -157,7 +157,8 @@
     "studiesInValue": "Estudia en {languages}",
     "prefRemoteList": "Solo a distancia",
     "prefInPersonList": "Solo en persona",
-    "prefBothList": "En persona o a distancia"
+    "prefBothList": "En persona o a distancia",
+    "contactPhoneInvalid": "Escribe los números de teléfono con el código de país, por ejemplo +1 555 123 4567."
   },
   "Topics": {
     "chumash": "Jumash",
@@ -328,7 +329,8 @@
     "blockCancelButton": "Cancelar",
     "blockedSectionTitle": "Bloqueados",
     "noBlocked": "Aún no has bloqueado a nadie.",
-    "unblock": "Desbloquear"
+    "unblock": "Desbloquear",
+    "reportRateLimited": "Reportaste a este usuario hace poco. Espera un poco antes de enviar otro reporte sobre este usuario."
   },
   "Admin": {
     "reportsTitle": "Reportes",
@@ -423,7 +425,10 @@
     "endedByAdmin": "terminado por un administrador",
     "endedByParticipant": "terminado por {name}",
     "reportedConversation": "Conversación denunciada",
-    "conversationEmpty": "No hay mensajes en esta conversación."
+    "conversationEmpty": "No hay mensajes en esta conversación.",
+    "previousPage": "Anterior",
+    "nextPage": "Siguiente",
+    "pageOf": "Página {page} de {pages} · {total} en total"
   },
   "Phone": {
     "title": "Verificar teléfono",
@@ -517,7 +522,17 @@
     "request_acceptedFootnote": "Recibes este correo porque tu solicitud de conexión fue aceptada.",
     "session_confirmedHeading": "Tu sesión con {name} está confirmada.",
     "session_confirmedAction": "Ver los detalles",
-    "session_confirmedFootnote": "Recibes este correo porque una sesión de estudio que programaste acaba de confirmarse."
+    "session_confirmedFootnote": "Recibes este correo porque una sesión de estudio que programaste acaba de confirmarse.",
+    "session_proposedSubject": "{name} propuso un horario para estudiar",
+    "session_proposedHeading": "{name} propuso un horario para estudiar",
+    "session_proposedBody": "{name} propuso un horario para tu próxima sesión en Chavrusa Link. Puedes confirmarlo o proponer otro horario.",
+    "session_proposedAction": "Ver el horario propuesto",
+    "session_proposedFootnote": "Recibes este correo porque una Chavrusa con la que tienes match propuso un horario para estudiar.",
+    "session_counteredSubject": "{name} propuso otro horario",
+    "session_counteredHeading": "{name} propuso otro horario",
+    "session_counteredBody": "{name} prefiere otro horario para tu sesión en Chavrusa Link. Puedes confirmar el nuevo horario o proponer uno distinto.",
+    "session_counteredAction": "Ver el nuevo horario",
+    "session_counteredFootnote": "Recibes este correo porque una Chavrusa con la que tienes match cambió un horario propuesto."
   },
   "ErrorPages": {
     "notFoundTitle": "Página no encontrada",

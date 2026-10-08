@@ -157,7 +157,8 @@
     "studiesInValue": "Étudie en {languages}",
     "prefRemoteList": "À distance uniquement",
     "prefInPersonList": "En personne uniquement",
-    "prefBothList": "En personne ou à distance"
+    "prefBothList": "En personne ou à distance",
+    "contactPhoneInvalid": "Saisissez les numéros de téléphone avec l'indicatif du pays, par exemple +1 555 123 4567."
   },
   "Topics": {
     "chumash": "Houmach",
@@ -328,7 +329,8 @@
     "blockCancelButton": "Annuler",
     "blockedSectionTitle": "Bloqués",
     "noBlocked": "Vous n'avez bloqué personne.",
-    "unblock": "Débloquer"
+    "unblock": "Débloquer",
+    "reportRateLimited": "Vous avez signalé cet utilisateur récemment. Veuillez patienter un peu avant d'envoyer un autre signalement à son sujet."
   },
   "Admin": {
     "reportsTitle": "Signalements",
@@ -423,7 +425,10 @@
     "endedByAdmin": "terminée par un administrateur",
     "endedByParticipant": "terminée par {name}",
     "reportedConversation": "Conversation signalée",
-    "conversationEmpty": "Aucun message dans cette conversation."
+    "conversationEmpty": "Aucun message dans cette conversation.",
+    "previousPage": "Précédent",
+    "nextPage": "Suivant",
+    "pageOf": "Page {page} sur {pages} · {total} au total"
   },
   "Phone": {
     "title": "Vérifier le téléphone",
@@ -517,7 +522,17 @@
     "request_acceptedFootnote": "Vous recevez cet e-mail parce que votre demande de connexion a été acceptée.",
     "session_confirmedHeading": "Votre séance avec {name} est confirmée.",
     "session_confirmedAction": "Voir les détails",
-    "session_confirmedFootnote": "Vous recevez cet e-mail parce qu'une séance d'étude que vous avez planifiée vient d'être confirmée."
+    "session_confirmedFootnote": "Vous recevez cet e-mail parce qu'une séance d'étude que vous avez planifiée vient d'être confirmée.",
+    "session_proposedSubject": "{name} a proposé un horaire pour étudier",
+    "session_proposedHeading": "{name} a proposé un horaire pour étudier",
+    "session_proposedBody": "{name} a proposé un horaire pour votre prochaine séance sur Chavrusa Link. Vous pouvez le confirmer ou proposer un autre horaire.",
+    "session_proposedAction": "Voir l'horaire proposé",
+    "session_proposedFootnote": "Vous recevez cet e-mail parce qu'un Chavrusa avec qui vous êtes en relation a proposé un horaire pour étudier.",
+    "session_counteredSubject": "{name} a proposé un autre horaire",
+    "session_counteredHeading": "{name} a proposé un autre horaire",
+    "session_counteredBody": "{name} préfère un autre horaire pour votre séance sur Chavrusa Link. Vous pouvez confirmer le nouvel horaire ou en proposer un autre.",
+    "session_counteredAction": "Voir le nouvel horaire",
+    "session_counteredFootnote": "Vous recevez cet e-mail parce qu'un Chavrusa avec qui vous êtes en relation a modifié un horaire proposé."
   },
   "ErrorPages": {
     "notFoundTitle": "Page introuvable",

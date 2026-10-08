@@ -108,16 +108,17 @@ grant execute on function public.save_profile(jsonb, text, jsonb) to authenticat
 -- ─── reports have a ceiling ─────────────────────────────────────────────
 -- Reporting was the one write in the app with no limit on it, while
 -- phone codes, messages and even the public contact form all have one.
--- Two caps, for the two different abuses: one report per person per day
--- stops a report count being inflated by repetition, and ten an hour
--- stops the admin queue being flooded across many people.
+--
+-- Scoped to the pair, not to the reporter: one report per person per day,
+-- so a report count cannot be inflated by repetition, while someone who
+-- genuinely has three people to report can still report all three. A
+-- global ceiling was considered and dropped — it would have refused with
+-- a message naming "this user" while the cause was a different person
+-- entirely, which is worse than the gap it closed.
 --
 -- security definer because the check has to see rows the reporter cannot:
 -- there is no select policy on reports for the person who filed them, so
 -- a count run as the caller would see nothing and wave everything through.
-
-create index if not exists reports_reporter_recent_idx
-  on public.reports (reporter_id, created_at desc);
 
 create index if not exists reports_reporter_target_idx
   on public.reports (reporter_id, reported_id, created_at desc);
@@ -129,18 +130,12 @@ stable
 security definer
 set search_path = public
 as $$
-  select
-    not exists (
-      select 1 from public.reports r
-      where r.reporter_id = auth.uid()
-        and r.reported_id = p_reported
-        and r.created_at > now() - interval '24 hours'
-    )
-    and (
-      select count(*) from public.reports r
-      where r.reporter_id = auth.uid()
-        and r.created_at > now() - interval '1 hour'
-    ) < 10;
+  select not exists (
+    select 1 from public.reports r
+    where r.reporter_id = auth.uid()
+      and r.reported_id = p_reported
+      and r.created_at > now() - interval '24 hours'
+  );
 $$;
 
 revoke all on function public.report_rate_clear(uuid) from public, anon;

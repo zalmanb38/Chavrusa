@@ -157,7 +157,8 @@
     "studiesInValue": "לומד ב{languages}",
     "prefRemoteList": "מרחוק בלבד",
     "prefInPersonList": "פנים אל פנים בלבד",
-    "prefBothList": "פנים אל פנים או מרחוק"
+    "prefBothList": "פנים אל פנים או מרחוק",
+    "contactPhoneInvalid": "הזינו מספרי טלפון עם קידומת מדינה, לדוגמה: 4567 123 555 1+."
   },
   "Topics": {
     "chumash": "חומש",
@@ -328,7 +329,8 @@
     "blockCancelButton": "ביטול",
     "blockedSectionTitle": "חסומים",
     "noBlocked": "עדיין לא חסמת אף אחד.",
-    "unblock": "ביטול חסימה"
+    "unblock": "ביטול חסימה",
+    "reportRateLimited": "דיווחת על המשתמש הזה לאחרונה. המתן/י מעט לפני שליחת דיווח נוסף על אותו משתמש."
   },
   "Admin": {
     "reportsTitle": "דיווחים",
@@ -423,7 +425,10 @@
     "endedByAdmin": "הסתיימה על ידי מנהל",
     "endedByParticipant": "הסתיימה על ידי {name}",
     "reportedConversation": "השיחה שדווחה",
-    "conversationEmpty": "אין הודעות בשיחה זו."
+    "conversationEmpty": "אין הודעות בשיחה זו.",
+    "previousPage": "הקודם",
+    "nextPage": "הבא",
+    "pageOf": "עמוד {page} מתוך {pages} · {total} בסך הכול"
   },
   "Phone": {
     "title": "אימות טלפון",
@@ -517,7 +522,17 @@
     "request_acceptedFootnote": "קיבלת הודעה זו משום שבקשת ההתחברות שלך אושרה.",
     "session_confirmedHeading": "המפגש שלך עם {name} אושר.",
     "session_confirmedAction": "צפייה בפרטים",
-    "session_confirmedFootnote": "קיבלת הודעה זו משום שמפגש לימוד שקבעת אושר זה עתה."
+    "session_confirmedFootnote": "קיבלת הודעה זו משום שמפגש לימוד שקבעת אושר זה עתה.",
+    "session_proposedSubject": "{name} הציע/ה זמן ללמוד",
+    "session_proposedHeading": "{name} הציע/ה זמן ללמוד",
+    "session_proposedBody": "{name} הציע/ה זמן למפגש הלימוד הבא שלך ב-Chavrusa Link. אפשר לאשר אותו או להציע זמן אחר.",
+    "session_proposedAction": "צפייה בזמן המוצע",
+    "session_proposedFootnote": "קיבלת הודעה זו משום שחברותא שיש לך התאמה איתה הציע/ה זמן ללמוד.",
+    "session_counteredSubject": "{name} הציע/ה זמן אחר",
+    "session_counteredHeading": "{name} הציע/ה זמן אחר",
+    "session_counteredBody": "{name} מעדיף/ה זמן אחר למפגש שלך ב-Chavrusa Link. אפשר לאשר את הזמן החדש או להציע אחר.",
+    "session_counteredAction": "צפייה בזמן החדש",
+    "session_counteredFootnote": "קיבלת הודעה זו משום שחברותא שיש לך התאמה איתה שינה/תה זמן שהוצע."
   },
   "ErrorPages": {
     "notFoundTitle": "הדף לא נמצא",
