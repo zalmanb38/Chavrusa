@@ -19,15 +19,18 @@ export function tileConfig(dark: boolean): { url: string; attribution: string } 
   if (MAPTILER_KEY) {
     return {
       url: `https://api.maptiler.com/maps/${
-        dark ? "dataviz-dark" : "dataviz"
+        dark ? "streets-v2-dark" : "streets-v2"
       }/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`,
       attribution: `&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> ${OSM_ATTRIBUTION}`,
     };
   }
   return {
-    url: `https://{s}.basemaps.cartocdn.com/${
-      dark ? "dark_all" : "light_all"
-    }/{z}/{x}/{y}{r}.png`,
+    // Voyager rather than light_all, to match streets-v2's level of
+    // detail. There is no equally detailed dark Carto basemap, so dark
+    // keeps dark_all and stays the sparser of the two.
+    url: dark
+      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
     attribution: `&copy; <a href="https://carto.com/attributions">CARTO</a> ${OSM_ATTRIBUTION}`,
   };
 }
