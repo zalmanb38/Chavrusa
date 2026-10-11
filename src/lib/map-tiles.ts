@@ -18,8 +18,13 @@ const OSM_ATTRIBUTION =
 export function tileConfig(dark: boolean): { url: string; attribution: string } {
   if (MAPTILER_KEY) {
     return {
+      // basic-v2 rather than streets-v2: it keeps the street names,
+      // building footprints and transit labels, and drops the POI icon
+      // layer. Over Crown Heights the bus-stop pins alone were busier
+      // than the clusters they sat under, and a basemap that competes
+      // with its own data layer is the problem dataviz had in reverse.
       url: `https://api.maptiler.com/maps/${
-        dark ? "streets-v2-dark" : "streets-v2"
+        dark ? "basic-v2-dark" : "basic-v2"
       }/{z}/{x}/{y}.png?key=${MAPTILER_KEY}`,
       attribution: `&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> ${OSM_ATTRIBUTION}`,
     };
