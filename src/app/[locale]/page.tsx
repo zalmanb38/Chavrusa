@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
 import ShareButton from "@/components/ShareButton";
+import LaunchProgress from "@/components/LaunchProgress";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -109,6 +110,10 @@ export default async function HomePage({
           priority
         />
       </section>
+
+      {/* ── Soft-launch progress ─────────────────────────────────────── */}
+      {/* Takes itself off the page once the goal is met. */}
+      <LaunchProgress />
 
       {/* ── How the matching works ───────────────────────────────────── */}
       <section id="how" className="mx-auto w-full max-w-[1240px] px-6 pb-20 sm:px-14">
