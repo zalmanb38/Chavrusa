@@ -105,7 +105,7 @@ export default function LaunchProgressModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="launch-progress-heading"
-        className="relative flex w-full max-w-[380px] flex-col gap-2.5 rounded-2xl border border-border bg-surface p-4"
+        className="relative flex w-full max-w-[380px] flex-col gap-3.5 rounded-2xl border border-border bg-surface p-4"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -117,32 +117,27 @@ export default function LaunchProgressModal({
           <CloseIcon className="size-4" />
         </button>
 
-        <p className="flex items-center gap-1.5 pe-6 text-[11px] font-semibold tracking-[0.09em] text-brass-deep uppercase">
-          <span className="flex size-4 items-center justify-center bg-brass-tint">
-            <GroupIcon className="size-[10px]" />
-          </span>
-          {t("eyebrow")}
-        </p>
-
         <div>
-          {/* No end-padding here: the close button sits in the eyebrow row
-              above, not beside this line, so the heading gets the card's
-              full width and fits on one line instead of wrapping under a
-              reserved gutter it doesn't actually need. */}
+          {/* The eyebrow row is gone — the heading itself carries the gold
+              now, so it needs the close button's clearance back (pe-6),
+              and it drops a point (18px → 17px) to pay for that width.
+              One line in English and Hebrew, two in French and Spanish,
+              which are simply longer sentences; the card grows by a line
+              rather than the heading being squeezed. */}
           <h2
             id="launch-progress-heading"
-            className="text-[18px] leading-[1.25] font-semibold"
+            className="pe-6 text-[17px] leading-[1.25] font-semibold text-brass-deep"
           >
             {t("heading")}
           </h2>
-          <div className="mt-1.5 flex flex-col gap-1 text-[12.5px] leading-snug">
+          <div className="mt-2 flex flex-col gap-2 text-[12.5px] leading-normal">
             <p className="text-muted">{t("body1")}</p>
-            <p className="font-semibold">{t("body2")}</p>
+            <p className="font-semibold text-brass-deep">{t("body2")}</p>
             <p className="text-muted">{t("body3")}</p>
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           <div className="flex items-baseline justify-between gap-2">
             <span className="flex items-center gap-1 text-[12px]">
               <MemberIcon className="size-[12px] text-brass-deep" />
@@ -173,7 +168,7 @@ export default function LaunchProgressModal({
           <p className="text-[11.5px] text-muted">{t("toGo", { remaining })}</p>
         </div>
 
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           <Link
             href="/signup"
             className="bg-primary px-4 py-2 text-center text-[13.5px] font-semibold text-primary-foreground hover:bg-slate-600"
@@ -209,28 +204,6 @@ function MemberIcon({ className }: { className?: string }) {
     >
       <circle cx="12" cy="8" r="3.4" />
       <path d="M5 20c0-3.3 3.1-5.6 7-5.6s7 2.3 7 5.6" />
-    </svg>
-  );
-}
-
-/** Two overlapping people, for the "Help Us Grow" eyebrow. */
-function GroupIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="9" cy="8" r="3.2" />
-      <path d="M3.5 19c0-3.4 2.5-5.6 5.5-5.6s5.5 2.2 5.5 5.6" />
-      <circle cx="17.5" cy="9" r="2.5" strokeWidth="1.6" />
-      <path d="M14.8 19c0-2.6 1.6-4.4 3.9-4.4 1.9 0 3.3 1.1 3.8 2.9" strokeWidth="1.6" />
     </svg>
   );
 }
