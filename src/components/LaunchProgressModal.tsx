@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import ShareButton from "@/components/ShareButton";
@@ -34,6 +34,9 @@ export default function LaunchProgressModal({
 }: LaunchProgressModalProps) {
   const t = useTranslations("Launch");
   const [open, setOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   // Decide visibility after mount: localStorage isn't available during
   // server rendering, and reading it is what makes the "remember" promise
@@ -85,10 +88,44 @@ export default function LaunchProgressModal({
     }
   }
 
+  // role="dialog"/aria-modal only label the markup — nothing moves focus
+  // on its own. Without this, a keyboard user's focus stays wherever page
+  // load left it while the overlay visually blocks everything below it.
+  // On open: remember what had focus, then move focus into the dialog.
+  // On close: give it back, rather than stranding focus at the top of
+  // the document.
+  useEffect(() => {
+    if (!open) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    closeButtonRef.current?.focus();
+    return () => {
+      previouslyFocusedRef.current?.focus();
+    };
+  }, [open]);
+
   useEffect(() => {
     if (!open) return;
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") dismiss();
+      if (event.key === "Escape") {
+        dismiss();
+        return;
+      }
+      // Trap Tab/Shift+Tab inside the dialog so cycling through it never
+      // lands on page content sitting behind the overlay.
+      if (event.key !== "Tab" || !panelRef.current) return;
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        "a[href], button:not([disabled])",
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
@@ -102,6 +139,7 @@ export default function LaunchProgressModal({
       onClick={dismiss}
     >
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="launch-progress-heading"
@@ -109,6 +147,7 @@ export default function LaunchProgressModal({
         onClick={(event) => event.stopPropagation()}
       >
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={dismiss}
           aria-label={t("dismiss")}
