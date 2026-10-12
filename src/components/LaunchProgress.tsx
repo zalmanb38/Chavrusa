@@ -38,29 +38,35 @@ export default async function LaunchProgress() {
 
   return (
     <section className="mx-auto w-full max-w-[1240px] px-6 pb-20 sm:px-14">
-      {/* One column, not a two-up split: the copy and the milestone are one
-          read, not a page spread with an island floating on the right. */}
-      <div className="max-w-[42em] border-t border-border pt-5">
+      {/* Content still hugs the left, per the page's own rule — it is not
+          centred. But a 42em column left nothing except empty air beside
+          it on a wide screen, since nothing here is an image the way the
+          hero's right side is. So only the body copy keeps a narrow,
+          readable measure; the heading, card and buttons are allowed to
+          use more of the section's own width instead of being capped to
+          the same narrow column. */}
+      <div className="border-t border-border pt-5">
         <p className="flex items-center gap-2 text-[13px] font-semibold tracking-[0.09em] text-brass-deep uppercase">
           <span className="flex size-6 items-center justify-center bg-brass-tint">
             <GroupIcon className="size-[14px]" />
           </span>
           {t("eyebrow")}
         </p>
-        <h2 className="mt-2 max-w-[18em] text-[28px] leading-[1.15] font-semibold text-balance">
+        <h2 className="mt-2 max-w-[20em] text-[28px] leading-[1.15] font-semibold text-balance">
           {t("heading")}
         </h2>
 
-        <div className="mt-3 flex flex-col gap-2 text-[16px] leading-[1.5]">
+        <div className="mt-3 flex max-w-[34em] flex-col gap-2 text-[16px] leading-[1.5]">
           <p className="text-muted">{t("body1")}</p>
           <p className="font-semibold">{t("body2")}</p>
           <p className="text-muted">{t("body3")}</p>
         </div>
 
         {/* The milestone itself: a rule, a bar and three numbers. Boxed as
-            a card so it reads as the section's one visual anchor instead
-            of another row of text. */}
-        <div className="mt-5 flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
+            a card, and given a wider measure than the paragraphs above it
+            so it reads as the section's one visual anchor instead of a
+            narrow strip of its own. */}
+        <div className="mt-5 flex max-w-[56em] flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center bg-brass-tint">
