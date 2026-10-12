@@ -620,5 +620,19 @@
     "emailChangeNewAction": "Confirm this address",
     "emailChangeNewFootnote": "If you weren't expecting this, you can ignore this email and nothing will change.",
     "emailChangeAddresses": "Current address: {current}\nNew address: {next}"
+  },
+  "Launch": {
+    "eyebrow": "Help Us Grow",
+    "heading": "Help Us Reach Our First 100 Members!",
+    "body1": "Chavrusa Link is a free platform helping people find the right Chavrusa. We're just getting started, and every new member makes it easier for others to find a suitable learning partner.",
+    "body2": "Our first goal is 100 members, and you can help us get there.",
+    "body3": "Join today, invite your friends, and help us build a strong community of Torah learning.",
+    "milestoneLabel": "Our First Milestone",
+    "milestoneSub": "Growing together, one member at a time",
+    "joinedCount": "{count, plural, =1 {# member joined} other {# members joined}}",
+    "toGo": "{remaining, plural, =1 {# to go!} other {# to go!}}",
+    "goalLine": "Our goal: 100 members",
+    "joinButton": "Join Chavrusa Link",
+    "shareButton": "Share with Friends"
   }
 }

@@ -16,7 +16,25 @@ import { SITE_URL } from "@/lib/site";
  * link forwarded from `/he` or with tracking parameters attached still
  * arrives as the site's front door.
  */
-export default function ShareButton({ className }: { className?: string }) {
+export default function ShareButton({
+  className,
+  label,
+  tone = "ivory",
+}: {
+  className?: string;
+  /**
+   * Overrides the default label where the surrounding copy names the act
+   * differently — already translated by the caller, since a string
+   * crosses the server boundary and a translator function does not.
+   */
+  label?: string;
+  /**
+   * Which ground this sits on. The closing band is ink, so the button is
+   * ivory; anywhere else on the page is paper, where ivory on cream is
+   * very nearly nothing at all.
+   */
+  tone?: "ivory" | "ink";
+}) {
   const t = useTranslations("Share");
   // The site's own name, already approved and already translated — the
   // share sheet needs a title and this is it, so it is not new copy.
@@ -63,19 +81,25 @@ export default function ShareButton({ className }: { className?: string }) {
     await copy();
   }
 
+  const buttonTone =
+    tone === "ink"
+      ? "text-foreground hover:text-brass-deep"
+      : "text-ivory/90 hover:text-ivory";
+  const statusTone = tone === "ink" ? "text-muted" : "text-ivory/70";
+
   return (
     <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 ${className ?? ""}`}>
       <button
         type="button"
         onClick={handleClick}
-        className="flex items-center gap-2 text-[15px] text-ivory/90 underline-offset-4 hover:text-ivory hover:underline"
+        className={`flex items-center gap-2 text-[15px] underline-offset-4 hover:underline ${buttonTone}`}
       >
         <ShareIcon />
-        {t("shareLabel")}
+        {label ?? t("shareLabel")}
       </button>
 
       {/* Announced when it appears, and reserves no space when it hasn't. */}
-      <p role="status" aria-live="polite" className="text-[13.5px] text-ivory/70">
+      <p role="status" aria-live="polite" className={`text-[13.5px] ${statusTone}`}>
         {state === "copied" && t("copied")}
         {state === "manual" && <span dir="ltr">{SITE_URL}</span>}
       </p>
