@@ -633,6 +633,7 @@
     "toGo": "{remaining, plural, =1 {# to go!} other {# to go!}}",
     "goalLine": "Our goal: 100 members",
     "joinButton": "Join Chavrusa Link",
-    "shareButton": "Share with Friends"
+    "shareButton": "Share with Friends",
+    "dismiss": "Dismiss"
   }
 }

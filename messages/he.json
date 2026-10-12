@@ -633,6 +633,7 @@
     "toGo": "{remaining, plural, =1 {עוד אחד} other {עוד #}}",
     "goalLine": "היעד שלנו: 100 חברים",
     "joinButton": "הצטרפו ל-Chavrusa Link",
-    "shareButton": "שתפו עם חברים"
+    "shareButton": "שתפו עם חברים",
+    "dismiss": "סגור"
   }
 }
