@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
 import ShareButton from "@/components/ShareButton";
 import LaunchProgress from "@/components/LaunchProgress";
+import LaunchStatsCard from "@/components/LaunchStatsCard";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -193,38 +194,49 @@ export default async function HomePage({
 
       {/* ── Closing CTA: the one full-bleed colour band on the page ──── */}
       <section className="bg-primary text-ivory">
-        <div className="mx-auto grid w-full max-w-[1240px] items-center gap-10 px-6 py-16 sm:px-14 lg:grid-cols-[1.2fr_0.8fr]">
+        {/* items-stretch rather than items-center: the stats card grows to
+            match whatever height the sign-up column ends up at, instead of
+            sitting shorter and centered beside it. If the goal has been
+            met, LaunchStatsCard renders nothing and the right column is
+            simply air — which is the page's own rule for this layout. */}
+        <div className="mx-auto grid w-full max-w-[1240px] items-stretch gap-10 px-6 py-16 sm:px-14 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="flex flex-col gap-3">
             <h2 className="text-[2rem] font-semibold sm:text-[38px]">
               {t("ctaTitle")}
             </h2>
             <p className="max-w-[34em] text-ivory/90">{t("ctaBody")}</p>
+
+            {/*
+              A plain GET form rather than a scripted capture: it hands the
+              address to the sign-up page, which is the only thing the
+              design's input can usefully do here, and it works with no
+              JavaScript. Flows below the text now rather than sitting in
+              its own column, since that column is the stats card's.
+            */}
+            <form
+              action={`/${locale}/signup`}
+              className="mt-2 flex max-w-[420px] flex-col gap-3"
+            >
+              <label htmlFor="cta-email" className="sr-only">
+                {t("ctaEmailLabel")}
+              </label>
+              <input
+                id="cta-email"
+                type="email"
+                name="email"
+                placeholder={t("ctaEmailPlaceholder")}
+                className="min-h-[46px] border border-ivory/30 bg-ivory/10 px-4 text-ivory placeholder:text-ivory/60 focus:border-ivory focus:outline-none"
+              />
+              <button
+                type="submit"
+                className="min-h-[46px] bg-brass px-6 font-semibold text-slate-900 hover:bg-brass-tint"
+              >
+                {t("getStarted")}
+              </button>
+            </form>
           </div>
 
-          {/*
-            A plain GET form rather than a scripted capture: it hands the
-            address to the sign-up page, which is the only thing the
-            design's input can usefully do here, and it works with no
-            JavaScript.
-          */}
-          <form action={`/${locale}/signup`} className="flex flex-col gap-3">
-            <label htmlFor="cta-email" className="sr-only">
-              {t("ctaEmailLabel")}
-            </label>
-            <input
-              id="cta-email"
-              type="email"
-              name="email"
-              placeholder={t("ctaEmailPlaceholder")}
-              className="min-h-[46px] border border-ivory/30 bg-ivory/10 px-4 text-ivory placeholder:text-ivory/60 focus:border-ivory focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="min-h-[46px] bg-brass px-6 font-semibold text-slate-900 hover:bg-brass-tint"
-            >
-              {t("getStarted")}
-            </button>
-          </form>
+          <LaunchStatsCard />
         </div>
 
         {/* Below the sign-up rather than beside it: passing the site on is
