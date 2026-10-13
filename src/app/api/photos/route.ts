@@ -8,6 +8,8 @@ import {
   extensionFor,
 } from "@/lib/photos";
 import { mayAutoApprove, moderateImage } from "@/lib/moderation";
+import { sendAdminAlert } from "@/lib/admin-notify";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * Upload or replace the signed-in user's photo.
@@ -95,6 +97,29 @@ export async function POST(request: Request) {
   // earlier would leave a row pointing at nothing if the write failed.
   if (previous?.storage_path && previous.storage_path !== path) {
     await admin.storage.from(PHOTO_BUCKET).remove([previous.storage_path]);
+  }
+
+  // Anything that didn't auto-approve is sitting in the queue right now,
+  // not at some later batch point — an upload a filter couldn't clear is
+  // exactly the kind of thing a daily digest would surface too late.
+  if (status === "pending") {
+    const { data: uploader } = await admin
+      .from("profiles")
+      .select("name")
+      .eq("id", user.id)
+      .maybeSingle();
+    const name = uploader?.name || "A user";
+
+    void sendAdminAlert({
+      subject: `Photo needs review: ${name}`,
+      text: [
+        `${name} uploaded a profile photo that needs manual review.`,
+        "",
+        `Moderation verdict: ${moderation.verdict} (${moderation.detail})`,
+        "",
+        `Review: ${SITE_URL}/en/admin/photos`,
+      ].join("\n"),
+    });
   }
 
   return NextResponse.json({ status, verdict: moderation.verdict });

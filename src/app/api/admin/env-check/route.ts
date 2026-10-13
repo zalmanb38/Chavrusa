@@ -31,6 +31,7 @@ const EXPECTED = [
   "TWILIO_VERIFY_SERVICE_SID",
   "RESEND_API_KEY",
   "CONTACT_FROM_EMAIL",
+  "CRON_SECRET",
 ];
 
 export async function GET() {

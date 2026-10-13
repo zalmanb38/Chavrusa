@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import ErrorNote from "@/components/ErrorNote";
+import { notifyAdmin } from "@/lib/admin-notify";
 
 export default function ReportButton({
   currentUserId,
@@ -33,8 +34,17 @@ export default function ReportButton({
     setSubmitting(true);
     setError(null);
 
+    // Generated here rather than read back after the insert: there is no
+    // RLS select policy letting a reporter read their own row (only
+    // admins can list reports), so a trailing .select() would come back
+    // empty and look like the report itself had failed. Supplying the id
+    // up front sidesteps that without touching what reporters are
+    // allowed to see.
+    const reportId = crypto.randomUUID();
+
     const supabase = createClient();
     const { error: insertError } = await supabase.from("reports").insert({
+      id: reportId,
       reporter_id: currentUserId,
       reported_id: reportedId,
       reason,
@@ -55,6 +65,10 @@ export default function ReportButton({
       );
       return;
     }
+
+    // Best effort: the report is already filed and visible in the admin
+    // queue regardless of whether this email goes anywhere.
+    notifyAdmin("report_filed", reportId);
 
     setSubmitted(true);
     setOpen(false);
