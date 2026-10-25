@@ -34,6 +34,7 @@ import type { ProfileContacts } from "@/lib/contacts";
 import LocationFields, { type LocationValue } from "@/components/LocationFields";
 import { locationRequired } from "@/lib/locations";
 import ErrorNote from "@/components/ErrorNote";
+import UsernameField from "@/components/UsernameField";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
@@ -61,6 +62,7 @@ export default function ProfileForm({
   const router = useRouter();
 
   const [name, setName] = useState(initialProfile?.name ?? "");
+  const [username, setUsername] = useState(initialProfile?.username ?? "");
   const [fullName, setFullName] = useState(initialFullName);
   const [languages, setLanguages] = useState<LanguageCode[]>(
     initialProfile?.languages ?? [],
@@ -153,6 +155,7 @@ export default function ProfileForm({
     const { error: saveError } = await supabase.rpc("save_profile", {
       p_profile: {
         name,
+        username,
         languages,
         topics,
         topic_other: topics.includes(OTHER_TOPIC) ? topicOther.trim() : "",
@@ -186,7 +189,16 @@ export default function ProfileForm({
     setSaving(false);
 
     if (saveError) {
-      setError(saveError.message);
+      // The handle is checked while someone types, but the window between
+      // that answer and this save belongs to whoever gets there first, so
+      // the clash has to be sayable here too.
+      if (saveError.message === "username_taken") {
+        setError(t("usernameTaken"));
+      } else if (saveError.message === "username_invalid") {
+        setError(t("usernameInvalid"));
+      } else {
+        setError(saveError.message);
+      }
       return;
     }
 
@@ -223,6 +235,12 @@ export default function ProfileForm({
         />
         <span className="text-xs text-muted">{t("displayNameHint")}</span>
       </label>
+
+      <UsernameField
+        value={username}
+        onChange={setUsername}
+        inputClass={inputClass}
+      />
 
       <label className="flex flex-col gap-1.5 text-sm">
         {t("fullName")}

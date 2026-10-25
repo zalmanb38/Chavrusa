@@ -183,6 +183,8 @@ export interface Profile {
   hidden_fields: string[];
   /** False while the public name is still the one derived at migration. */
   display_name_set: boolean;
+  /** Unique public handle, or "" for someone who hasn't chosen one. */
+  username: string;
   is_active: boolean;
 }
 
