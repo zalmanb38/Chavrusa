@@ -278,12 +278,11 @@ export default function ProfileForm({
         <legend className="px-1 text-sm font-medium">
           {t("topicsOfInterest")}
         </legend>
-        {/* Two columns rather than three, and one on a phone: a subject
-            carries two names, and the longest pair needs the width of a
-            half-row to stay on one line. A name that wrapped would make
-            its whole grid row taller than the rest, which read as uneven
-            gaps down the list. */}
-        <div className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
+        {/* Columns sized to the longest pair of names rather than to a
+            share of the row: an even split left the two columns far
+            apart, with every label trailing white space. One column on a
+            phone, where the pair needs the full width. */}
+        <div className="grid grid-cols-1 gap-x-10 gap-y-2 sm:grid-cols-[repeat(2,max-content)]">
           {TOPIC_KEYS.map((key) => (
             <label key={key} className="flex items-center gap-2 text-sm">
               <input
