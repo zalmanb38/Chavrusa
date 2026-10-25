@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import LocaleSwitcher from "./LocaleSwitcher";
 import LogoutButton from "./LogoutButton";
+import NavMenu from "./NavMenu";
 import Logo from "./Logo";
 
 // Auth state is resolved once in the locale layout and passed down, so the
@@ -40,30 +41,24 @@ export default async function NavBar({
         { href: "/login", label: t("login") },
       ];
 
-  // A function, not a rendered array: the two copies need their own
-  // elements, and reaching into a rendered element's key to re-wrap it is
-  // the kind of thing that works until React decides it shouldn't.
-  const renderLinks = (wrap?: (node: React.ReactNode, key: string) => React.ReactNode) =>
-    links.map((link) => {
-      const node = (
-        <Link
-          key={link.href}
-          href={link.href}
-          className={`${linkClass} flex items-center gap-2`}
-        >
-          {link.label}
-          {!!link.badge && link.badge > 0 && (
-            <span
-              className="bg-brass-tint px-1.5 text-[12px] text-brass-deep"
-              aria-label={t("unreadMessages", { count: link.badge })}
-            >
-              {link.badge}
-            </span>
-          )}
-        </Link>
-      );
-      return wrap ? wrap(node, link.href) : node;
-    });
+  const renderLinks = () =>
+    links.map((link) => (
+      <Link
+        key={link.href}
+        href={link.href}
+        className={`${linkClass} flex items-center gap-2`}
+      >
+        {link.label}
+        {!!link.badge && link.badge > 0 && (
+          <span
+            className="bg-brass-tint px-1.5 text-[12px] text-brass-deep"
+            aria-label={t("unreadMessages", { count: link.badge })}
+          >
+            {link.badge}
+          </span>
+        )}
+      </Link>
+    ));
 
   return (
     // A hairline, not a shadow or a tinted bar: the design uses elevation
@@ -101,73 +96,47 @@ export default async function NavBar({
           landed wherever the wrapping left it, which is why it looked
           like a different button in every language.
 
-          A <details> rather than a client component: this is a disclosure
-          widget the browser already knows how to build, it needs no
-          JavaScript, and it keeps the whole nav a server component.
+          Still a <details> underneath — the browser builds the disclosure
+          and it works unhydrated. NavMenu is the thin client wrapper that
+          closes it again once a link is picked; everything here stays a
+          server component.
 
           The switch is at xl, not lg: French is the longest of the four
           languages and still wrapped to two rows at 1024px, which is the
           same defect one breakpoint up. The menu has to cover the widest
           screen that any language wraps on, not the narrowest.
         */}
-        <details className="group xl:hidden">
-          <summary
-            className="flex size-10 cursor-pointer list-none items-center justify-center border border-border"
-            aria-label={t("menu")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              className="size-5"
-              aria-hidden="true"
-            >
-              <g className="group-open:hidden">
-                <path d="M4 7h16" />
-                <path d="M4 12h16" />
-                <path d="M4 17h16" />
-              </g>
-              <g className="hidden group-open:block">
-                <path d="M6 6l12 12" />
-                <path d="M18 6L6 18" />
-              </g>
-            </svg>
-          </summary>
+        <NavMenu label={t("menu")}>
+          {/* One wrapping row rather than a stack: four links down the
+              side of the screen turned the panel into most of a phone,
+              which is what made the open menu feel like a page of its
+              own. */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {renderLinks()}
+          </div>
 
-          {/* Anchored to the bar, not to the button inside it: hung off
-              the <details> it inherited the nav's own padding and sat a
-              few pixels off the screen edge. inset-x-0 rather than a side,
-              so it needs no mirroring in Hebrew. */}
-          <div className="absolute inset-x-0 top-full z-20 flex flex-col gap-1 border-b border-border bg-background px-6 py-4 sm:px-14">
-            {renderLinks((node, key) => (
-              <div key={key} className="py-2">
-                {node}
-              </div>
-            ))}
-
-            {signedIn ? (
-              <div className="py-2">
-                <LogoutButton />
-              </div>
-            ) : (
-              /* Full width and on its own line, so the primary action
-                 carries the same weight whatever the language — the one
-                 thing wrapping could never guarantee. */
+          {signedIn ? (
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+              <LogoutButton />
+              <LocaleSwitcher />
+            </div>
+          ) : (
+            <>
+              {/* Full width and on its own line, so the primary action
+                  carries the same weight whatever the language — the one
+                  thing wrapping could never guarantee. */}
               <Link
                 href="/signup"
-                className="mt-2 bg-primary px-5 py-3 text-center text-[15px] font-semibold text-primary-foreground hover:bg-slate-600"
+                className="mt-4 block bg-primary px-5 py-3 text-center text-[15px] font-semibold text-primary-foreground hover:bg-slate-600"
               >
                 {t("signup")}
               </Link>
-            )}
-
-            <div className="mt-3">
-              <LocaleSwitcher />
-            </div>
-          </div>
-        </details>
+              <div className="mt-3">
+                <LocaleSwitcher />
+              </div>
+            </>
+          )}
+        </NavMenu>
       </nav>
     </header>
   );
