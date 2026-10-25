@@ -169,7 +169,11 @@
     "prefRemoteList": "Solo a distancia",
     "prefInPersonList": "Solo en persona",
     "prefBothList": "En persona o a distancia",
-    "contactPhoneInvalid": "Escribe los números de teléfono con el código de país, por ejemplo +1 555 123 4567."
+    "contactPhoneInvalid": "Escribe los números de teléfono con el código de país, por ejemplo +1 555 123 4567.",
+    "lookingLegend": "Buscando Chavrusa",
+    "lookingToggle": "Estoy buscando Chavrusa",
+    "lookingHint": "Deja esto activado mientras estés abierto a estudiar con alguien nuevo: es lo que te hace aparecer al explorar y en el mapa. Si lo desactivas, tu perfil deja de verse allí. Tus conexiones, tus sesiones y tus mensajes se quedan exactamente como están, y puedes volver a activarlo cuando quieras.",
+    "lookingMatchedNote": "Ya estás estudiando con alguien, y aun así puedes dejar esto activado. Mucha gente estudia un tema con una Chavrusa mientras busca otra para un tema distinto."
   },
   "Topics": {
     "chumash": "Jumash",
@@ -284,7 +288,12 @@
     "emptyFilteredBody": "{count, plural, =0 {Borrar los filtros mostraría a todos.} one {Borrar los filtros mostraría # persona.} other {Borrar los filtros mostraría # personas.}}",
     "widenSearch": "Ampliar la búsqueda",
     "emptyTitle": "Todavía no hay nadie que mostrar.",
-    "emptyBody": "Aquí solo aparecen quienes han verificado un número de teléfono. La lista se irá llenando conforme se una más gente."
+    "emptyBody": "Aquí solo aparecen quienes han verificado un número de teléfono. La lista se irá llenando conforme se una más gente.",
+    "alreadyLearning": "Ya tiene Chavrusa",
+    "filterNotMatched": "Solo personas que aún no tienen Chavrusa",
+    "notLookingTitle": "Tu perfil está oculto al explorar",
+    "notLookingBody": "Has desactivado la búsqueda de Chavrusa, así que nadie puede encontrarte aquí. Tus conexiones, tus sesiones y tus mensajes no se ven afectados.",
+    "notLookingFix": "Volver a activarlo"
   },
   "Requests": {
     "title": "Solicitudes de conexión",

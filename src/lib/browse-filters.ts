@@ -39,6 +39,14 @@ export interface BrowseFilters {
   sessionLength?: string | string[];
   q?: string;
   preference?: string | string[];
+  /**
+   * "1" to drop everyone who already has a chavrusa. Off by default and
+   * encoded as present-or-absent rather than 1/0, because the default is
+   * to show them: someone learning Gemara with one person may well be
+   * looking for a Chumash partner, and hiding them by default would be
+   * the thing this feature exists to avoid.
+   */
+  notMatched?: string;
   view?: string;
 }
 
@@ -113,7 +121,7 @@ export const PROFILE_COLUMNS =
   "id, name, languages, study_languages, topics, topic_other, level, city, " +
   "country, region, neighborhood, meeting_spot, preference, availability, " +
   "age_range, frequency, time_of_day, session_length, blurb, hidden_fields, " +
-  "is_active";
+  "is_active, is_looking, match_count";
 
 /**
  * Exactly what `ProfileDetails` renders, and the one place it is written.
@@ -213,6 +221,11 @@ export function applyQueryFilters<T extends FilterableQuery<T>>(
   if (preferences.length > 0) {
     q = q.in("preference", [...preferences, "both"]);
   }
+
+  // "Not learning with anyone yet". match_count is maintained by the
+  // database from the live matches, so this is the one filter nobody can
+  // make a flattering answer to.
+  if (filters.notMatched) q = q.eq("match_count", 0);
 
   return q;
 }

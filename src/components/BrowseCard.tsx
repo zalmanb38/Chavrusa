@@ -47,6 +47,20 @@ export default function BrowseCard({
           <span className="text-[13.5px] text-muted">
             <ProfileLocation profile={profile} />
           </span>
+          {/*
+            Somebody learning with one chavrusa may still be looking for
+            another, so this says what is true rather than closing the
+            card: they are here because they are still looking, and the
+            person reading deserves to know they are not the first.
+
+            Meta voice like the location beside it, and no box — a badge
+            would read as a status the card is about.
+          */}
+          {profile.match_count > 0 && (
+            <span className="text-[13.5px] text-muted">
+              {t("alreadyLearning")}
+            </span>
+          )}
         </div>
 
         <ProfileDetails profile={profile} compact />

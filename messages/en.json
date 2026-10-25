@@ -169,7 +169,11 @@
     "prefRemoteList": "Remote only",
     "prefInPersonList": "In person only",
     "prefBothList": "In person or remote",
-    "contactPhoneInvalid": "Enter phone numbers with a country code, like +1 555 123 4567."
+    "contactPhoneInvalid": "Enter phone numbers with a country code, like +1 555 123 4567.",
+    "lookingLegend": "Looking for a Chavrusa",
+    "lookingToggle": "I'm looking for a Chavrusa",
+    "lookingHint": "Leave this on while you're open to learning with someone new — it's what puts you in Browse and on the map. Turn it off and your profile is hidden there. Your matches, sessions and messages all stay exactly as they are, and you can turn it back on whenever you like.",
+    "lookingMatchedNote": "You're already learning with someone, and you can still leave this on. Plenty of people learn one subject with one Chavrusa while looking for another."
   },
   "Topics": {
     "chumash": "Chumash",
@@ -284,7 +288,12 @@
     "emptyFilteredBody": "{count, plural, =0 {Clearing your filters would show everyone here.} =1 {Clearing your filters would show # learner.} other {Clearing your filters would show # learners.}}",
     "widenSearch": "Widen the search",
     "emptyTitle": "Nobody to show yet.",
-    "emptyBody": "Only learners who have verified a phone number appear here. As more people join, this fills up."
+    "emptyBody": "Only learners who have verified a phone number appear here. As more people join, this fills up.",
+    "alreadyLearning": "Already has a Chavrusa",
+    "filterNotMatched": "Only people without a Chavrusa yet",
+    "notLookingTitle": "Your profile is hidden from Browse",
+    "notLookingBody": "You've turned off looking for a Chavrusa, so nobody can find you here. Your matches, sessions and messages are unaffected.",
+    "notLookingFix": "Turn it back on"
   },
   "Requests": {
     "title": "Connect Requests",

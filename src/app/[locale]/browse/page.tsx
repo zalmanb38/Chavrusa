@@ -118,7 +118,7 @@ export default async function BrowsePage({
     supabase.from("blocks").select("blocked_id").eq("blocker_id", user.id),
     supabase
       .from("profiles")
-      .select("phone_verified, country, region, city")
+      .select("phone_verified, is_looking, country, region, city")
       .eq("id", user.id)
       .maybeSingle(),
   ]);
@@ -128,6 +128,11 @@ export default async function BrowsePage({
   // so say so here rather than leaving someone to wonder why no requests
   // ever arrive.
   const viewerVerified = viewer?.phone_verified ?? false;
+
+  // Someone who switched themselves off is still welcome to browse, but
+  // the switch is on another page and its effect shows up here as silence.
+  // Say it where the silence is.
+  const viewerLooking = viewer?.is_looking ?? true;
 
   // "Near me" is measured from the viewer's own city. Without one there's
   // no origin to measure from, so the option is offered but explained.
@@ -147,6 +152,10 @@ export default async function BrowsePage({
     .select(PROFILE_COLUMNS)
     .neq("id", user.id)
     .eq("is_active", true)
+    // The person's own switch, and not negotiable from the filter panel:
+    // somebody who has taken themselves off Browse is off it, the way
+    // is_active works for an account an admin has hidden.
+    .eq("is_looking", true)
     .eq("phone_verified", true)
     .not("name", "eq", "");
 
@@ -209,6 +218,7 @@ export default async function BrowsePage({
       .select("id", { count: "exact", head: true })
       .neq("id", user.id)
       .eq("is_active", true)
+      .eq("is_looking", true)
       .eq("phone_verified", true)
       .not("name", "eq", "");
     totalDiscoverable = count ?? 0;
@@ -223,6 +233,9 @@ export default async function BrowsePage({
     timeOfDay: (v: string) => tProfile(timeOfDayMessageKey[v as TimeOfDay]),
     sessionLength: (v: string) => tProfile("sessionLengthValue", { minutes: Number(v) }),
     country: (v: string) => tLocation(`country_${v}`),
+    // One value, "1", so the chip is named after the filter rather than
+    // after what it holds.
+    notMatched: () => t("filterNotMatched"),
   });
 
   return (
@@ -270,6 +283,24 @@ export default async function BrowsePage({
             className="w-fit bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
           >
             {t("verifyNow")}
+          </Link>
+        </div>
+      )}
+
+      {/* The same shape as the unverified notice above, and for the same
+          reason: an empty inbox is indistinguishable from a quiet week
+          unless the page says which it is. Unlike that one, this is a
+          choice the person made — so it reads as a reminder, not a
+          warning. */}
+      {!viewerLooking && (
+        <div className="mb-6 flex flex-col gap-2 border-s-2 border-brass bg-surface p-4">
+          <p className="font-semibold">{t("notLookingTitle")}</p>
+          <p className="text-sm text-muted">{t("notLookingBody")}</p>
+          <Link
+            href="/profile"
+            className="w-fit bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
+          >
+            {t("notLookingFix")}
           </Link>
         </div>
       )}
@@ -332,6 +363,28 @@ export default async function BrowsePage({
               initialCity={filters.city ?? ""}
             />
           </div>
+
+          {/*
+            Off by default, deliberately. Showing only unmatched people is
+            a reasonable thing to want, but as a default it would hide
+            everyone who has found one chavrusa and is looking for a
+            second — which is the case this whole feature exists to keep
+            open.
+
+            A bare checkbox with no value: present in the query means on,
+            which is also what makes the "clear all" link and the chips
+            above the results work on it without a special case.
+          */}
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              name="notMatched"
+              value="1"
+              defaultChecked={Boolean(filters.notMatched)}
+              className="accent-primary"
+            />
+            {t("filterNotMatched")}
+          </label>
 
           {/*
             A plain <details> rather than a client component: it needs no

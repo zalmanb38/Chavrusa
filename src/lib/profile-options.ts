@@ -186,6 +186,20 @@ export interface Profile {
   /** Unique public handle, or "" for someone who hasn't chosen one. */
   username: string;
   is_active: boolean;
+  /**
+   * The person's own answer to "are you still looking?". False takes them
+   * off Browse and the map and changes nothing else — their profile,
+   * matches and sessions all stay. Not the same switch as `is_active`,
+   * which is the admin side and which they cannot set.
+   */
+  is_looking: boolean;
+  /**
+   * How many live matches this person has. Derived from connect_requests
+   * by a trigger, never written by the form — Browse uses it to say that
+   * someone is already learning with a chavrusa, which is a different
+   * thing from their having stopped looking.
+   */
+  match_count: number;
 }
 
 export const preferenceMessageKey: Record<Preference, string> = {

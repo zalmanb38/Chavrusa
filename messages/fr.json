@@ -169,7 +169,11 @@
     "prefRemoteList": "À distance uniquement",
     "prefInPersonList": "En personne uniquement",
     "prefBothList": "En personne ou à distance",
-    "contactPhoneInvalid": "Saisissez les numéros de téléphone avec l'indicatif du pays, par exemple +1 555 123 4567."
+    "contactPhoneInvalid": "Saisissez les numéros de téléphone avec l'indicatif du pays, par exemple +1 555 123 4567.",
+    "lookingLegend": "À la recherche d'un Chavrusa",
+    "lookingToggle": "Je cherche un Chavrusa",
+    "lookingHint": "Laissez cette option activée tant que vous êtes ouvert à étudier avec quelqu'un de nouveau — c'est elle qui vous fait apparaître dans la recherche et sur la carte. Désactivez-la et votre profil n'y est plus visible. Vos mises en relation, vos séances et vos messages restent exactement comme ils sont, et vous pouvez la réactiver quand vous voulez.",
+    "lookingMatchedNote": "Vous étudiez déjà avec quelqu'un, et vous pouvez tout de même laisser cette option activée. Beaucoup de personnes étudient un sujet avec un Chavrusa tout en cherchant un autre."
   },
   "Topics": {
     "chumash": "Houmach",
@@ -284,7 +288,12 @@
     "emptyFilteredBody": "{count, plural, =0 {Effacer vos filtres afficherait tout le monde.} one {Effacer vos filtres afficherait # apprenant.} other {Effacer vos filtres afficherait # apprenants.}}",
     "widenSearch": "Élargir la recherche",
     "emptyTitle": "Personne à afficher pour l'instant.",
-    "emptyBody": "Seuls les apprenants ayant vérifié un numéro de téléphone apparaissent ici. La liste se remplira à mesure que d'autres nous rejoignent."
+    "emptyBody": "Seuls les apprenants ayant vérifié un numéro de téléphone apparaissent ici. La liste se remplira à mesure que d'autres nous rejoignent.",
+    "alreadyLearning": "A déjà un Chavrusa",
+    "filterNotMatched": "Uniquement les personnes sans Chavrusa",
+    "notLookingTitle": "Votre profil n'apparaît pas dans la recherche",
+    "notLookingBody": "Vous avez désactivé la recherche d'un Chavrusa, donc personne ne peut vous trouver ici. Vos mises en relation, vos séances et vos messages ne sont pas affectés.",
+    "notLookingFix": "Réactiver"
   },
   "Requests": {
     "title": "Demandes de connexion",
