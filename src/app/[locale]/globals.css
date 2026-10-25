@@ -182,6 +182,17 @@ a {
   opacity: 0.45;
 }
 
+/* Chrome puts an anonymous ::details-content box between an open <details>
+   and its children, so a flex rule on the menu row inside the nav never
+   reaches the flex container — the row ends up content-width and bunched
+   against the button instead of centred in the bar. Growing that box is
+   what lets it centre. Browsers that don't expose the pseudo-element hand
+   the row straight to the flex container and ignore this. */
+header nav details::details-content {
+  flex: 1;
+  min-width: 0;
+}
+
 /* Newsprint dot screen for photography, per the design system. Applied by
    ImageSlot once a real image exists; harmless on an empty slot. */
 .halftone {

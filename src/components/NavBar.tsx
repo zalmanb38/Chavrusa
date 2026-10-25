@@ -76,7 +76,7 @@ export default async function NavBar({
         {/* Wordmark pushed left, everything else trailing it. */}
         <Link
           href="/"
-          className="me-auto flex shrink-0 items-center gap-3 whitespace-nowrap text-[21px]"
+          className="me-auto flex shrink-0 items-center gap-3 whitespace-nowrap text-[21px] sm:me-0 xl:me-auto"
         >
           <Logo className="size-[30px] xl:size-[34px]" />
           {common("appName")}
@@ -118,11 +118,16 @@ export default async function NavBar({
           screen that any language wraps on, not the narrowest.
         */}
         <NavMenu label={t("menu")}>
-          {renderLinks("menu")}
+          {/* The links are their own group, so the gap that separates
+              them from the language picker is bigger than the gap
+              between the chips themselves — otherwise the picker reads
+              as a fifth link. */}
+          <div className="flex flex-wrap items-center gap-2">
+            {renderLinks("menu")}
+            {signedIn && <LogoutButton className={chipClass} />}
+          </div>
 
-          {signedIn ? (
-            <LogoutButton className={chipClass} />
-          ) : (
+          {signedIn ? null : (
             /* Full width on a phone, where it's the one line of the menu
                that should carry weight; in the bar it sits in the row
                with everything else. */

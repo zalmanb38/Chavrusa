@@ -76,7 +76,7 @@ export default function NavMenu({
     // Hebrew, which is where it already sat.
     <details
       ref={ref}
-      className="group sm:open:flex sm:open:flex-row-reverse sm:open:items-center sm:open:gap-4 xl:hidden"
+      className="group sm:flex sm:grow sm:flex-row-reverse sm:items-center sm:gap-4 xl:hidden"
     >
       <summary className="flex h-10 shrink-0 cursor-pointer list-none items-center gap-2 border border-border px-3 text-[15px]">
         <svg
@@ -109,7 +109,7 @@ export default function NavMenu({
       */}
       <div
         onClick={handleClick}
-        className="absolute inset-x-0 top-full z-20 flex flex-wrap items-center gap-2 border-b border-border bg-background px-6 py-4 sm:static sm:justify-end sm:border-0 sm:p-0"
+        className="absolute inset-x-0 top-full z-20 flex flex-wrap items-center gap-2 border-b border-border bg-background px-6 py-4 sm:static sm:w-full sm:flex-1 sm:justify-center sm:gap-6 sm:border-0 sm:p-0"
       >
         {children}
       </div>
