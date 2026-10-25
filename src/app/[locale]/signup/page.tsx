@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import ErrorNote from "@/components/ErrorNote";
 import MenOnlyNotice from "@/components/MenOnlyNotice";
+import PasswordField from "@/components/PasswordField";
 
 export default function SignupPage() {
   const t = useTranslations("Auth");
@@ -103,31 +104,21 @@ export default function SignupPage() {
             />
           </label>
 
-          <label className="flex flex-col gap-1.5 text-sm">
-            {t("password")}
-            <input
-              type="password"
-              required
-              minLength={8}
-              autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
-            />
-          </label>
+          <PasswordField
+            label={t("password")}
+            value={password}
+            onChange={setPassword}
+            autoComplete="new-password"
+            minLength={8}
+          />
 
-          <label className="flex flex-col gap-1.5 text-sm">
-            {t("confirmPassword")}
-            <input
-              type="password"
-              required
-              minLength={8}
-              autoComplete="new-password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
-            />
-          </label>
+          <PasswordField
+            label={t("confirmPassword")}
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            autoComplete="new-password"
+            minLength={8}
+          />
 
           {error && <ErrorNote>{error}</ErrorNote>}
           {info && <p className="text-sm text-accent">{info}</p>}
