@@ -4,7 +4,13 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-export default function LogoutButton() {
+export default function LogoutButton({
+  className = "text-sm text-foreground/80 hover:text-foreground",
+}: {
+  // The menu renders Log Out as one of its chips, so it needs the chip's
+  // styling; the wide nav keeps the quiet default.
+  className?: string;
+}) {
   const t = useTranslations("Nav");
   const router = useRouter();
 
@@ -19,7 +25,7 @@ export default function LogoutButton() {
     <button
       type="button"
       onClick={handleLogout}
-      className="text-sm text-foreground/80 hover:text-foreground"
+      className={className}
     >
       {t("logout")}
     </button>

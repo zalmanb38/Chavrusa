@@ -41,12 +41,20 @@ export default async function NavBar({
         { href: "/login", label: t("login") },
       ];
 
-  const renderLinks = () =>
+  /**
+   * Inside the menu the links are chips — a pale slate fill, square like
+   * everything else in this design — so the four of them read as one group
+   * sitting in the bar rather than as loose text under the wordmark.
+   */
+  const chipClass =
+    "bg-slate-100 px-3 py-1.5 text-[15px] text-slate-700 hover:bg-slate-200";
+
+  const renderLinks = (variant: "bar" | "menu" = "bar") =>
     links.map((link) => (
       <Link
         key={link.href}
         href={link.href}
-        className={`${linkClass} flex items-center gap-2`}
+        className={`${variant === "menu" ? chipClass : linkClass} flex items-center gap-2`}
       >
         {link.label}
         {!!link.badge && link.badge > 0 && (
@@ -66,7 +74,10 @@ export default async function NavBar({
     <header className="sticky top-0 z-20 border-b border-border bg-background">
       <nav className="relative mx-auto flex max-w-[1240px] items-center gap-8 px-6 py-4 sm:px-14 xl:py-5">
         {/* Wordmark pushed left, everything else trailing it. */}
-        <Link href="/" className="me-auto flex items-center gap-3 text-[21px]">
+        <Link
+          href="/"
+          className="me-auto flex shrink-0 items-center gap-3 whitespace-nowrap text-[21px]"
+        >
           <Logo className="size-[30px] xl:size-[34px]" />
           {common("appName")}
         </Link>
@@ -107,35 +118,23 @@ export default async function NavBar({
           screen that any language wraps on, not the narrowest.
         */}
         <NavMenu label={t("menu")}>
-          {/* One wrapping row rather than a stack: four links down the
-              side of the screen turned the panel into most of a phone,
-              which is what made the open menu feel like a page of its
-              own. */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            {renderLinks()}
-          </div>
+          {renderLinks("menu")}
 
           {signedIn ? (
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-              <LogoutButton />
-              <LocaleSwitcher />
-            </div>
+            <LogoutButton className={chipClass} />
           ) : (
-            <>
-              {/* Full width and on its own line, so the primary action
-                  carries the same weight whatever the language — the one
-                  thing wrapping could never guarantee. */}
-              <Link
-                href="/signup"
-                className="mt-4 block bg-primary px-5 py-3 text-center text-[15px] font-semibold text-primary-foreground hover:bg-slate-600"
-              >
-                {t("signup")}
-              </Link>
-              <div className="mt-3">
-                <LocaleSwitcher />
-              </div>
-            </>
+            /* Full width on a phone, where it's the one line of the menu
+               that should carry weight; in the bar it sits in the row
+               with everything else. */
+            <Link
+              href="/signup"
+              className="w-full bg-primary px-5 py-1.5 text-center text-[15px] font-semibold text-primary-foreground hover:bg-slate-600 sm:w-auto"
+            >
+              {t("signup")}
+            </Link>
           )}
+
+          <LocaleSwitcher />
         </NavMenu>
       </nav>
     </header>
