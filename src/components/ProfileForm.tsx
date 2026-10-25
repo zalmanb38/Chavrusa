@@ -260,14 +260,19 @@ export default function ProfileForm({
         <legend className="px-1 text-sm font-medium">
           {t("topicsOfInterest")}
         </legend>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        {/* Two columns rather than three, and one on a phone: a subject
+            carries two names, and the longest pair needs the width of a
+            half-row to stay on one line. A name that wrapped would make
+            its whole grid row taller than the rest, which read as uneven
+            gaps down the list. */}
+        <div className="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-2">
           {TOPIC_KEYS.map((key) => (
             <label key={key} className="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"
                 checked={topics.includes(key)}
                 onChange={() => setTopics((prev) => toggle(prev, key))}
-                className="accent-primary"
+                className="shrink-0 accent-primary"
               />
               {topicName(key, locale)}
             </label>
