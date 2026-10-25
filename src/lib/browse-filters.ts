@@ -110,7 +110,7 @@ export function proximityOptions(
 }
 
 export const PROFILE_COLUMNS =
-  "id, name, languages, study_languages, topics, topic_other, level, city, " +
+  "id, name, username, languages, study_languages, topics, topic_other, level, city, " +
   "country, region, neighborhood, meeting_spot, preference, availability, " +
   "age_range, frequency, time_of_day, session_length, blurb, hidden_fields, " +
   "is_active";
@@ -125,7 +125,8 @@ export const PROFILE_COLUMNS =
  * Browse could see.
  */
 export const PROFILE_DETAIL_FIELDS =
-  "id, name, city, country, region, neighborhood, languages, study_languages, " +
+  "id, name, username, city, country, region, neighborhood, languages, " +
+  "study_languages, " +
   "topics, topic_other, level, preference, availability, age_range, " +
   "frequency, time_of_day, session_length, blurb, hidden_fields";
 

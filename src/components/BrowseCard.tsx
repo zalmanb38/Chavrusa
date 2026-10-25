@@ -5,6 +5,7 @@ import type { Profile } from "@/lib/profile-options";
 import type { ConnectStatus } from "@/lib/connect";
 import ProfileDetails, { ProfileLocation } from "@/components/ProfileDetails";
 import ConnectButton from "@/components/ConnectButton";
+import ProfileHandle from "@/components/ProfileHandle";
 import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
 
@@ -42,6 +43,13 @@ export default function BrowseCard({
           <h2 className="text-[21px] leading-tight font-semibold">
             {showName ? profile.name : t("anonymousLearner")}
           </h2>
+          {/* The handle rides in the same baseline row as the name rather
+              than on a line of its own: this is a hairline row, and a
+              second line of text for three optional words would weigh
+              more than it says. Hidden with the name on the map, where
+              identifying someone by their place is the whole point of
+              not naming them. */}
+          {showName && <ProfileHandle username={profile.username} className="text-[13.5px]" />}
           {/* Meta voice: smaller, quieter, and clearly not part of the
               name it sits beside. */}
           <span className="text-[13.5px] text-muted">

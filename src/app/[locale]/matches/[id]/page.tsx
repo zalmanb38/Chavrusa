@@ -6,6 +6,7 @@ import SessionCard from "@/components/SessionCard";
 import ProposeSessionForm from "@/components/ProposeSessionForm";
 import ReportButton from "@/components/ReportButton";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import ProfileHandle from "@/components/ProfileHandle";
 import UnmatchButton from "@/components/UnmatchButton";
 import MessageThread from "@/components/MessageThread";
 import { MESSAGE_COLUMNS, type Message } from "@/lib/messages";
@@ -67,7 +68,7 @@ export default async function MatchDetailPage({
   // client cannot infer the row shape from it — the same cast the requests
   // page makes for the same reason.
   const otherProfile = otherProfileRow as unknown as
-    | (ProfileDetailFields & { id: string; name: string })
+    | (ProfileDetailFields & { id: string; name: string; username: string })
     | null;
 
   const otherName = otherProfile?.name || "";
@@ -150,6 +151,10 @@ export default async function MatchDetailPage({
 
       <div className="flex flex-col gap-2">
         <h1 className="text-[2rem] font-semibold sm:text-[34px]">{otherName}</h1>
+        <ProfileHandle
+          username={otherProfile?.username}
+          className="text-sm"
+        />
         {otherFullName && otherFullName !== otherName && (
           <p className="text-sm text-muted">
             {t("fullNameLabel", { name: otherFullName })}
