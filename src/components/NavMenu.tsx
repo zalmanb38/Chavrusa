@@ -76,7 +76,7 @@ export default function NavMenu({
     // Hebrew, which is where it already sat.
     <details
       ref={ref}
-      className="group sm:flex sm:grow sm:flex-row-reverse sm:items-center sm:gap-4 xl:hidden"
+      className="group sm:flex sm:grow sm:flex-row-reverse sm:items-center sm:gap-3 xl:hidden"
     >
       <summary className="flex h-10 shrink-0 cursor-pointer list-none items-center gap-2 border border-border px-3 text-[15px]">
         <svg
@@ -104,12 +104,14 @@ export default function NavMenu({
       {/*
         Two placements, one element. On a phone there is no room beside
         the wordmark, so it stays a panel across the full width, hung
-        under the bar. From sm up it is just a wrapping row inside the
-        bar, and the <details> above does the placing.
+        under the bar. From sm up it is a wrapping row inside the bar,
+        gathered at the button end: the links, the language picker and
+        the button read as one control rather than as three things
+        spread across the bar.
       */}
       <div
         onClick={handleClick}
-        className="absolute inset-x-0 top-full z-20 flex flex-wrap items-center gap-2 border-b border-border bg-background px-6 py-4 sm:static sm:w-full sm:flex-1 sm:justify-center sm:gap-6 sm:border-0 sm:p-0"
+        className="absolute inset-x-0 top-full z-20 flex flex-wrap items-center gap-2 border-b border-border bg-background px-6 py-4 sm:static sm:w-full sm:flex-1 sm:justify-end sm:gap-3 sm:border-0 sm:p-0"
       >
         {children}
       </div>
