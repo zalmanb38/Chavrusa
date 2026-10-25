@@ -186,24 +186,6 @@ export interface Profile {
   is_active: boolean;
 }
 
-/**
- * Turns a stored topic list into display labels, substituting the user's
- * own words for "Other" and dropping keys that are no longer offered.
- */
-export function topicLabels(
-  topics: string[] | null | undefined,
-  topicOther: string | null | undefined,
-  translate: (key: TopicKey) => string,
-): string[] {
-  return (topics ?? []).filter(isTopicKey).map((key) => {
-    if (key === OTHER_TOPIC) {
-      const custom = topicOther?.trim();
-      return custom && custom.length > 0 ? custom : translate(key);
-    }
-    return translate(key);
-  });
-}
-
 export const preferenceMessageKey: Record<Preference, string> = {
   remote: "prefRemote",
   in_person: "prefInPerson",

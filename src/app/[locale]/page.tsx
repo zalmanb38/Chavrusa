@@ -5,6 +5,7 @@ import ShareButton from "@/components/ShareButton";
 import LaunchProgress from "@/components/LaunchProgress";
 import LaunchStatsCard from "@/components/LaunchStatsCard";
 import { createClient } from "@/lib/supabase/server";
+import { topicNameEn, topicNameHe } from "@/lib/topic-names";
 
 /**
  * The homepage, rebuilt to the Broadsheet handoff.
@@ -19,14 +20,14 @@ import { createClient } from "@/lib/supabase/server";
 // Two full rows of four. Every key here is a real TOPIC_KEY, so each tile
 // links to a Browse filter that can actually return people.
 const SUBJECTS = [
-  { key: "gemara", hebrew: "גמרא" },
-  { key: "chumash", hebrew: "חומש" },
-  { key: "mishnah", hebrew: "משנה" },
-  { key: "chassidus", hebrew: "חסידות" },
-  { key: "tanya", hebrew: "תניא" },
-  { key: "halacha", hebrew: "הלכה" },
-  { key: "shaarHabitachon", hebrew: "שער הביטחון" },
-  { key: "musar", hebrew: "מוסר" },
+  "gemara",
+  "chumash",
+  "mishnah",
+  "chassidus",
+  "tanya",
+  "halacha",
+  "shaarHabitachon",
+  "musar",
 ] as const;
 
 const STEPS = ["1", "2", "3", "4"] as const;
@@ -40,7 +41,6 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("Home");
-  const tTopics = await getTranslations("Topics");
 
   // Real counts, not the design's sample figures. Comes from a
   // security-definer function because this page is public and profiles
@@ -160,8 +160,8 @@ export default async function HomePage({
         <div className="mt-8 grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
           {SUBJECTS.map((subject) => (
             <Link
-              key={subject.key}
-              href={{ pathname: "/browse", query: { topic: subject.key } }}
+              key={subject}
+              href={{ pathname: "/browse", query: { topic: subject } }}
               className="flex flex-col gap-1 bg-surface px-6 py-[22px] hover:bg-neutral-200"
             >
               {/* Hebrew as an accent inside an English interface — its own
@@ -174,16 +174,16 @@ export default async function HomePage({
                 dir="rtl"
                 className="text-left text-[26px] leading-tight text-brass-deep"
               >
-                {subject.hebrew}
+                {topicNameHe(subject)}
               </span>
-              <span className="text-[17px]">{tTopics(subject.key)}</span>
+              <span className="text-[17px]">{topicNameEn(subject)}</span>
               {/* Omitted rather than shown as zero: a card reading "0
                   learners" is worse than one that simply doesn't claim a
                   number yet. */}
-              {(learnersByTopic.get(subject.key) ?? 0) > 0 && (
+              {(learnersByTopic.get(subject) ?? 0) > 0 && (
                 <span className="text-[12.5px] text-muted">
                   {t("subjectLearners", {
-                    count: learnersByTopic.get(subject.key) ?? 0,
+                    count: learnersByTopic.get(subject) ?? 0,
                   })}
                 </span>
               )}
