@@ -67,8 +67,18 @@ export default function NavMenu({
   }
 
   return (
-    <details ref={ref} className="group xl:hidden">
-      <summary className="flex h-10 cursor-pointer list-none items-center gap-2 border border-border px-3 text-[15px]">
+    // Once open, from sm up, the <details> itself becomes the row: the
+    // links sit in normal flow beside the button rather than hanging off
+    // it. Laying them out instead of positioning them is what stops the
+    // long languages from running over the wordmark — flexbox shares the
+    // bar out, and the row wraps inside it when there isn't enough.
+    // flex-row-reverse puts the button last in reading order and first in
+    // Hebrew, which is where it already sat.
+    <details
+      ref={ref}
+      className="group sm:open:flex sm:open:flex-row-reverse sm:open:items-center sm:open:gap-4 xl:hidden"
+    >
+      <summary className="flex h-10 shrink-0 cursor-pointer list-none items-center gap-2 border border-border px-3 text-[15px]">
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -91,13 +101,15 @@ export default function NavMenu({
         {label}
       </summary>
 
-      {/* Anchored to the bar, not to the button inside it: hung off the
-          <details> it inherited the nav's own padding and sat a few pixels
-          off the screen edge. inset-x-0 rather than a side, so it needs no
-          mirroring in Hebrew. */}
+      {/*
+        Two placements, one element. On a phone there is no room beside
+        the wordmark, so it stays a panel across the full width, hung
+        under the bar. From sm up it is just a wrapping row inside the
+        bar, and the <details> above does the placing.
+      */}
       <div
         onClick={handleClick}
-        className="absolute inset-x-0 top-full z-20 border-b border-border bg-background px-6 py-4 sm:px-14"
+        className="absolute inset-x-0 top-full z-20 flex flex-wrap items-center gap-2 border-b border-border bg-background px-6 py-4 sm:static sm:justify-end sm:border-0 sm:p-0"
       >
         {children}
       </div>
