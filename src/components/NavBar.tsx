@@ -119,9 +119,9 @@ export default async function NavBar({
         */}
         <NavMenu label={t("menu")}>
           {/* The links are their own group, so the gap that separates
-              them from the language picker is bigger than the gap
-              between the chips themselves — otherwise the picker reads
-              as a fifth link. */}
+              them from the language picker stays a little wider than the
+              gap between the chips themselves — just enough that the
+              picker doesn't read as a fifth link. */}
           <div className="flex flex-wrap items-center gap-2">
             {renderLinks("menu")}
             {signedIn && <LogoutButton className={chipClass} />}
