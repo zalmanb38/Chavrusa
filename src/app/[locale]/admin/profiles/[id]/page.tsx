@@ -7,12 +7,12 @@ import {
   ageRangeLabel,
   preferenceMessageKey,
   levelMessageKey,
-  topicLabels,
   type LanguageCode,
   type TopicKey,
   type Level,
   type Preference,
 } from "@/lib/profile-options";
+import { topicLabels } from "@/lib/topic-names";
 import { formatLocation } from "@/lib/locations";
 
 interface FullProfile {
@@ -56,7 +56,6 @@ export default async function AdminProfileDetailPage({
 
   const t = await getTranslations("Admin");
   const tProfile = await getTranslations("Profile");
-  const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
   const tLocation = await getTranslations("Location");
 
@@ -221,7 +220,7 @@ export default async function AdminProfileDetailPage({
         <div>
           <p className="text-xs text-muted">{tProfile("topicsOfInterest")}</p>
           <p>
-            {topicLabels(p.topics, p.topic_other, tTopics).join(", ") || "—"}
+            {topicLabels(p.topics, p.topic_other, locale).join(", ") || "—"}
           </p>
         </div>
         <div className="col-span-2 sm:col-span-3">

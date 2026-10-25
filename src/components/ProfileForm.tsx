@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { isValidOptionalPhone } from "@/lib/country-codes";
@@ -29,6 +29,7 @@ import {
   type Level,
   type Preference,
 } from "@/lib/profile-options";
+import { topicName } from "@/lib/topic-names";
 import type { ProfileContacts } from "@/lib/contacts";
 import LocationFields, { type LocationValue } from "@/components/LocationFields";
 import { locationRequired } from "@/lib/locations";
@@ -54,9 +55,9 @@ export default function ProfileForm({
 }) {
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Common");
-  const tTopics = useTranslations("Topics");
   const tLocation = useTranslations("Location");
   const tLanguages = useTranslations("Languages");
+  const locale = useLocale();
   const router = useRouter();
 
   const [name, setName] = useState(initialProfile?.name ?? "");
@@ -268,7 +269,7 @@ export default function ProfileForm({
                 onChange={() => setTopics((prev) => toggle(prev, key))}
                 className="accent-primary"
               />
-              {tTopics(key)}
+              {topicName(key, locale)}
             </label>
           ))}
         </div>

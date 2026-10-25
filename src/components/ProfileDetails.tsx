@@ -1,8 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
-  topicLabels,
   preferenceListKey,
   levelMessageKey,
   frequencyMessageKey,
@@ -14,6 +13,7 @@ import {
   type TimeOfDay,
   ageRangeLabel,
 } from "@/lib/profile-options";
+import { topicLabels } from "@/lib/topic-names";
 import { formatLocationShort } from "@/lib/locations";
 import { visibleAgeRange } from "@/lib/browse-filters";
 
@@ -113,10 +113,10 @@ export default function ProfileDetails({
   compact?: boolean;
 }) {
   const tProfile = useTranslations("Profile");
-  const tTopics = useTranslations("Topics");
   const tLanguages = useTranslations("Languages");
+  const locale = useLocale();
 
-  const topics = topicLabels(profile.topics, profile.topic_other, tTopics);
+  const topics = topicLabels(profile.topics, profile.topic_other, locale);
   const storedAge = visibleAgeRange(profile);
   const age = storedAge ? ageRangeLabel(storedAge, tProfile) : "";
 

@@ -5,6 +5,7 @@ import {
   LANGUAGE_CODES,
   STUDY_LANGUAGE_CODES,
   TOPIC_KEYS,
+  isTopicKey,
   PREFERENCES,
   AGE_RANGES,
   ageRangeLabel,
@@ -19,6 +20,7 @@ import {
   type Frequency,
   type TimeOfDay,
 } from "@/lib/profile-options";
+import { topicName } from "@/lib/topic-names";
 import {
   PROFILE_COLUMNS,
   proximityOptions,
@@ -63,16 +65,13 @@ export default async function BrowsePage({
 
   const t = await getTranslations("Browse");
   const tProfile = await getTranslations("Profile");
-  const tTopics = await getTranslations("Topics");
   const tLanguages = await getTranslations("Languages");
   const tMap = await getTranslations("Map");
   const tLocation = await getTranslations("Location");
-  // The Hebrew name of each topic, read from the Hebrew locale rather
-  // than kept in a second list here — one set of names, translated once.
-  // In Hebrew the two would be the same string, so it shows one.
-  const tTopicsHe = await getTranslations({ locale: "he", namespace: "Topics" });
+  // A stored value from an older subject list is shown as it was saved
+  // rather than crashing the page on a missing name.
   const topicLabel = (key: string) =>
-    locale === "he" ? tTopics(key) : `${tTopics(key)} · ${tTopicsHe(key)}`;
+    isTopicKey(key) ? topicName(key, locale) : key;
   const mapView = filters.view === "map";
   // Everything except the view itself, so each toggle link carries the
   // current filters rather than resetting them.
