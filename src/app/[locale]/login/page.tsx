@@ -7,6 +7,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import ErrorNote from "@/components/ErrorNote";
+import PasswordField from "@/components/PasswordField";
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
@@ -68,17 +69,12 @@ export default function LoginPage() {
             />
           </label>
 
-          <label className="flex flex-col gap-1.5 text-sm">
-            {t("password")}
-            <input
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
-            />
-          </label>
+          <PasswordField
+            label={t("password")}
+            value={password}
+            onChange={setPassword}
+            autoComplete="current-password"
+          />
 
           <Link
             href="/forgot-password"

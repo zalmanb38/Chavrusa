@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import ErrorNote from "@/components/ErrorNote";
+import PasswordField from "@/components/PasswordField";
 
 export default function ResetPasswordPage() {
   const t = useTranslations("Auth");
@@ -178,31 +179,21 @@ export default function ResetPasswordPage() {
           <p className="text-sm text-accent">{t("resetPasswordSuccess")}</p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <label className="flex flex-col gap-1.5 text-sm">
-              {t("newPassword")}
-              <input
-                type="password"
-                required
-                minLength={8}
-                autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
-              />
-            </label>
+            <PasswordField
+              label={t("newPassword")}
+              value={password}
+              onChange={setPassword}
+              autoComplete="new-password"
+              minLength={8}
+            />
 
-            <label className="flex flex-col gap-1.5 text-sm">
-              {t("confirmNewPassword")}
-              <input
-                type="password"
-                required
-                minLength={8}
-                autoComplete="new-password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
-              />
-            </label>
+            <PasswordField
+              label={t("confirmNewPassword")}
+              value={confirmPassword}
+              onChange={setConfirmPassword}
+              autoComplete="new-password"
+              minLength={8}
+            />
 
             {error && (
               <ErrorNote>
