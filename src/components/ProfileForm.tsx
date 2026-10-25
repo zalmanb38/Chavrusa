@@ -236,12 +236,6 @@ export default function ProfileForm({
         <span className="text-xs text-muted">{t("displayNameHint")}</span>
       </label>
 
-      <UsernameField
-        value={username}
-        onChange={setUsername}
-        inputClass={inputClass}
-      />
-
       <label className="flex flex-col gap-1.5 text-sm">
         {t("fullName")}
         <input
@@ -254,6 +248,12 @@ export default function ProfileForm({
         />
         <span className="text-xs text-muted">{t("fullNameHint")}</span>
       </label>
+
+      <UsernameField
+        value={username}
+        onChange={setUsername}
+        inputClass={inputClass}
+      />
 
       <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
