@@ -70,6 +70,7 @@
     "genericError": "Something went wrong. Please try again.",
     "passwordMismatch": "Passwords do not match.",
     "passwordNeedsLetterAndDigit": "Password must contain at least one letter and one number.",
+    "passwordHint": "At least 8 characters, including a letter and a number.",
     "forgotPassword": "Forgot password?",
     "forgotPasswordTitle": "Reset your password",
     "forgotPasswordSubtitle": "Enter your email and we'll send you a link to reset your password.",

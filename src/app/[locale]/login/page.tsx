@@ -17,15 +17,19 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? "/profile";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    // Read from the form, not from React state: autofill can fill a field
+    // without React hearing about it, which would send an empty password.
+    const fields = new FormData(e.currentTarget);
+    const email = String(fields.get("email") ?? "");
+    const password = String(fields.get("password") ?? "");
 
     const supabase = createClient();
     const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -61,18 +65,16 @@ export default function LoginPage() {
             {t("email")}
             <input
               type="email"
+              name="email"
               required
               autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
             />
           </label>
 
           <PasswordField
             label={t("password")}
-            value={password}
-            onChange={setPassword}
+            name="password"
             autoComplete="current-password"
           />
 
