@@ -614,15 +614,15 @@
     "newMessageFootnote": "Recibes esto porque tienes match con esta persona. Si terminas el match, también dejan de llegar estos correos."
   },
   "BrowseWall": {
-    "heading": "Explorar chavrutas",
+    "heading": "Explorar Chavrutas",
     "count": "{count, plural, =0 {Ahora mismo se están uniendo personas verificadas.} one {Hay # persona verificada aquí.} other {Hay # personas verificadas aquí.}}",
-    "body": "Inicia sesión para ver más información y ponerte en contacto con una posible chavruta. Podrás ver qué estudian, cuándo tienen tiempo y si pueden encajar contigo.",
-    "reassurance": "Unirse es gratis. Tu ficha solo aparece cuando tu cuenta está verificada.",
+    "body": "Inicia sesión para ver más información y ponerte en contacto con una posible Chavruta. Podrás ver qué estudian, cuándo tienen tiempo y si pueden encajar contigo.",
+    "reassurance": "Unirse es gratis. Tu ficha solo aparece cuando verificas tu cuenta.",
     "heroImageDirection": "Una pila de sefarim sobre una mesa, de lado. Solo objetos y textos, sin rostros.",
     "createAccount": "Crear una cuenta gratuita",
     "signIn": "Iniciar sesión",
     "previewTitle": "Vista previa de los participantes",
-    "previewBody": "Inicia sesión para ver las fichas completas y contactar con una posible chavruta.",
+    "previewBody": "Inicia sesión para ver las fichas completas y contactar con una posible Chavruta.",
     "previewFocus": "Estudia",
     "previewLearners": "{count, plural, one {# persona aquí} other {# personas aquí}}",
     "previewLocked": "Inicia sesión para ver la ficha completa",
@@ -632,9 +632,9 @@
     "step2Title": "Explora los participantes",
     "step2Body": "Mira quién estudia qué y cuándo tiene tiempo.",
     "step3Title": "Conecta",
-    "step3Body": "Encuentra una posible chavruta y empezad a estudiar juntos.",
-    "finalTitle": "¿Listo para encontrar una chavruta?",
-    "finalBody": "Crea una cuenta gratuita o inicia sesión para explorar a los participantes y ponerte en contacto con una posible chavruta."
+    "step3Body": "Encuentra una posible Chavruta y empezad a estudiar juntos.",
+    "finalTitle": "¿Listo para encontrar una Chavruta?",
+    "finalBody": "Crea una cuenta gratuita o inicia sesión para explorar a los participantes y ponerte en contacto con una posible Chavruta."
   },
   "Share": {
     "shareLabel": "Comparte el sitio",
