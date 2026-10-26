@@ -174,7 +174,8 @@
     "lookingLegend": "Looking for a Chavrusa",
     "lookingToggle": "I'm looking for a Chavrusa",
     "lookingHint": "Leave this on while you're open to learning with someone new — it's what puts you in Browse and on the map. Turn it off and your profile is hidden there. Your matches, sessions and messages all stay exactly as they are, and you can turn it back on whenever you like.",
-    "lookingMatchedNote": "You're already learning with someone, and you can still leave this on. Plenty of people learn one subject with one Chavrusa while looking for another."
+    "lookingMatchedNote": "You're already learning with someone, and you can still leave this on. Plenty of people learn one subject with one Chavrusa while looking for another.",
+    "topicsMatchedHint": "Already learning one of these with someone? Uncheck it and leave the rest on — you stay findable for the subjects you still want a chavrusa for."
   },
   "Topics": {
     "chumash": "Chumash",
@@ -337,7 +338,9 @@
     "contactPhoneLabel": "Phone",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} hasn't added contact info yet.",
-    "fullNameLabel": "Full name: {name}"
+    "fullNameLabel": "Full name: {name}",
+    "subjectTipBody": "Have a chavrusa for this subject now? Uncheck it on your profile and leave your other subjects on. People looking for those can still find you, and you stop being asked about the one you have covered.",
+    "subjectTipLink": "Edit my subjects"
   },
   "Safety": {
     "report": "Report",

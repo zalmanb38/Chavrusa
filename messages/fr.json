@@ -174,7 +174,8 @@
     "lookingLegend": "À la recherche d'un Chavrusa",
     "lookingToggle": "Je cherche un Chavrusa",
     "lookingHint": "Laissez cette option activée tant que vous êtes ouvert à étudier avec quelqu'un de nouveau — c'est elle qui vous fait apparaître dans la recherche et sur la carte. Désactivez-la et votre profil n'y est plus visible. Vos mises en relation, vos séances et vos messages restent exactement comme ils sont, et vous pouvez la réactiver quand vous voulez.",
-    "lookingMatchedNote": "Vous étudiez déjà avec quelqu'un, et vous pouvez tout de même laisser cette option activée. Beaucoup de personnes étudient un sujet avec un Chavrusa tout en cherchant un autre."
+    "lookingMatchedNote": "Vous étudiez déjà avec quelqu'un, et vous pouvez tout de même laisser cette option activée. Beaucoup de personnes étudient un sujet avec un Chavrusa tout en cherchant un autre.",
+    "topicsMatchedHint": "Vous étudiez déjà l'un de ces sujets avec quelqu'un ? Décochez-le et laissez les autres cochés — vous restez visible pour les sujets pour lesquels vous cherchez encore un Chavrusa."
   },
   "Topics": {
     "chumash": "Houmach",
@@ -337,7 +338,9 @@
     "contactPhoneLabel": "Téléphone",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées.",
-    "fullNameLabel": "Nom complet : {name}"
+    "fullNameLabel": "Nom complet : {name}",
+    "subjectTipBody": "Vous avez maintenant un Chavrusa pour ce sujet ? Décochez-le sur votre profil et laissez vos autres sujets cochés. Les personnes qui cherchent ceux-là peuvent toujours vous trouver, et on cesse de vous solliciter pour celui qui est réglé.",
+    "subjectTipLink": "Modifier mes sujets"
   },
   "Safety": {
     "report": "Signaler",

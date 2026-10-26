@@ -174,7 +174,8 @@
     "lookingLegend": "Buscando Chavrusa",
     "lookingToggle": "Estoy buscando Chavrusa",
     "lookingHint": "Deja esto activado mientras estés abierto a estudiar con alguien nuevo: es lo que te hace aparecer al explorar y en el mapa. Si lo desactivas, tu perfil deja de verse allí. Tus conexiones, tus sesiones y tus mensajes se quedan exactamente como están, y puedes volver a activarlo cuando quieras.",
-    "lookingMatchedNote": "Ya estás estudiando con alguien, y aun así puedes dejar esto activado. Mucha gente estudia un tema con una Chavrusa mientras busca otra para un tema distinto."
+    "lookingMatchedNote": "Ya estás estudiando con alguien, y aun así puedes dejar esto activado. Mucha gente estudia un tema con una Chavrusa mientras busca otra para un tema distinto.",
+    "topicsMatchedHint": "¿Ya estudias uno de estos con alguien? Desmárcalo y deja los demás — sigues siendo visible para los temas en los que aún buscas Chavrusa."
   },
   "Topics": {
     "chumash": "Jumash",
@@ -337,7 +338,9 @@
     "contactPhoneLabel": "Teléfono",
     "contactZoomLabel": "Zoom",
     "contactNoneSet": "{name} todavía no agregó información de contacto.",
-    "fullNameLabel": "Nombre completo: {name}"
+    "fullNameLabel": "Nombre completo: {name}",
+    "subjectTipBody": "¿Ya tienes Chavrusa para este tema? Desmárcalo en tu perfil y deja marcados los demás. Quien busque esos seguirá encontrándote, y dejarás de recibir solicitudes para el que ya tienes resuelto.",
+    "subjectTipLink": "Editar mis temas"
   },
   "Safety": {
     "report": "Reportar",

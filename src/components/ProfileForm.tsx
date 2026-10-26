@@ -313,6 +313,12 @@ export default function ProfileForm({
         <legend className="px-1 text-sm font-medium">
           {t("topicsOfInterest")}
         </legend>
+        {/* Said only to people it can apply to. The list is where the
+            advice on the match page is acted on, and somebody with no
+            chavrusa yet has nothing to uncheck. */}
+        {(initialProfile?.match_count ?? 0) > 0 && (
+          <p className="-mt-1 text-xs text-muted">{t("topicsMatchedHint")}</p>
+        )}
         {/* Columns sized to the longest pair of names rather than to a
             share of the row: an even split left the two columns far
             apart, with every label trailing white space. One column on a
