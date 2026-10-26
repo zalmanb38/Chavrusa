@@ -6,6 +6,13 @@ import { useTranslations } from "next-intl";
 /**
  * A password input with an eye that reveals what has been typed.
  *
+ * The input is uncontrolled and carries a `name`: the form reads it at
+ * submit. A controlled value was the cause of a sign-up that rejected
+ * perfectly good passwords — on Android, autofill and password managers
+ * can set a field's value without firing the event React listens for, so
+ * state stayed empty while the box on screen was full, and the "needs a
+ * letter and a number" check ran against nothing.
+ *
  * Typing a password you cannot see is the one place on the site where a
  * typo costs a whole round-trip, so the reveal is here rather than left to
  * the browser: only Edge offers one of its own, and the field is
@@ -22,22 +29,25 @@ import { useTranslations } from "next-intl";
  */
 export default function PasswordField({
   label,
-  value,
-  onChange,
+  name,
+  hint,
   autoComplete,
   minLength,
   required = true,
 }: {
   /** Already translated by the caller, which holds the message namespace. */
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  /** The key this field appears under in the form's data. */
+  name: string;
+  /** Already translated: the rule, shown before anyone can break it. */
+  hint?: string;
   autoComplete: "current-password" | "new-password";
   minLength?: number;
   required?: boolean;
 }) {
   const t = useTranslations("Auth");
   const id = useId();
+  const hintId = `${id}-hint`;
   const [visible, setVisible] = useState(false);
 
   return (
@@ -47,12 +57,12 @@ export default function PasswordField({
       <div className="relative">
         <input
           id={id}
+          name={name}
           type={visible ? "text" : "password"}
           required={required}
           minLength={minLength}
           autoComplete={autoComplete}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          aria-describedby={hint ? hintId : undefined}
           className="w-full rounded-xl border border-border bg-transparent px-3.5 py-2.5 pe-11 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
         />
 
@@ -66,6 +76,12 @@ export default function PasswordField({
           {visible ? <EyeOffIcon /> : <EyeIcon />}
         </button>
       </div>
+
+      {hint && (
+        <p id={hintId} className="text-xs text-muted">
+          {hint}
+        </p>
+      )}
     </div>
   );
 }

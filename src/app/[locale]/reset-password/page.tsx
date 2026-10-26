@@ -20,8 +20,6 @@ export default function ResetPasswordPage() {
   // hard to place twice over.
   const [errorDetail, setErrorDetail] = useState<string | null>(null);
 
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -117,9 +115,15 @@ export default function ResetPasswordPage() {
     };
   }, [searchParams, t]);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+
+    // Read the fields from the form itself, never from React state: see the
+    // note on the same read in the sign-up page.
+    const fields = new FormData(e.currentTarget);
+    const password = String(fields.get("password") ?? "");
+    const confirmPassword = String(fields.get("confirmPassword") ?? "");
 
     if (password !== confirmPassword) {
       setError(t("passwordMismatch"));
@@ -181,16 +185,15 @@ export default function ResetPasswordPage() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <PasswordField
               label={t("newPassword")}
-              value={password}
-              onChange={setPassword}
+              name="password"
+              hint={t("passwordHint")}
               autoComplete="new-password"
               minLength={8}
             />
 
             <PasswordField
               label={t("confirmNewPassword")}
-              value={confirmPassword}
-              onChange={setConfirmPassword}
+              name="confirmPassword"
               autoComplete="new-password"
               minLength={8}
             />

@@ -19,17 +19,24 @@ export default function SignupPage() {
   const searchParams = useSearchParams();
   const next = searchParams.get("next") ?? "/profile";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     setInfo(null);
+
+    // Read the fields from the form itself, never from React state. On
+    // Android, autofill and password managers can set a field's value
+    // without firing the event React listens for: state stays empty while
+    // the box on screen is full, and the check below then rejects a
+    // password nobody mistyped.
+    const fields = new FormData(e.currentTarget);
+    const email = String(fields.get("email") ?? "");
+    const password = String(fields.get("password") ?? "");
+    const confirmPassword = String(fields.get("confirmPassword") ?? "");
 
     if (password !== confirmPassword) {
       setError(t("passwordMismatch"));
@@ -96,26 +103,24 @@ export default function SignupPage() {
             {t("email")}
             <input
               type="email"
+              name="email"
               required
               autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
             />
           </label>
 
           <PasswordField
             label={t("password")}
-            value={password}
-            onChange={setPassword}
+            name="password"
+            hint={t("passwordHint")}
             autoComplete="new-password"
             minLength={8}
           />
 
           <PasswordField
             label={t("confirmPassword")}
-            value={confirmPassword}
-            onChange={setConfirmPassword}
+            name="confirmPassword"
             autoComplete="new-password"
             minLength={8}
           />
