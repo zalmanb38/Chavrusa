@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { redirect } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SessionCard from "@/components/SessionCard";
 import ProposeSessionForm from "@/components/ProposeSessionForm";
@@ -188,6 +188,25 @@ export default async function MatchDetailPage({
         />
       </div>
       </div>
+
+      {/*
+        The one thing a new match is most likely not to think of, said
+        where it becomes true rather than in a help page nobody opens.
+
+        A matched pair is matched for one subject; the profile lists
+        several. Nobody arrives knowing that unchecking the settled one is
+        what stops the requests about it while leaving the rest open, so
+        this is the page that has to say it.
+
+        Quiet, and in the body voice rather than a notice: it is advice
+        that keeps being true, not something gone wrong.
+      */}
+      <p className="text-sm text-muted">
+        {t("subjectTipBody")}{" "}
+        <Link href="/profile" className="underline hover:text-brass">
+          {t("subjectTipLink")}
+        </Link>
+      </p>
 
       <MessageThread
         requestId={id}
