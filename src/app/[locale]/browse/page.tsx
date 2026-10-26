@@ -16,6 +16,7 @@ import {
   frequencyMessageKey,
   timeOfDayMessageKey,
   type Profile,
+  type TopicKey,
   type Preference,
   type Frequency,
   type TimeOfDay,
@@ -100,12 +101,34 @@ export default async function BrowsePage({
     // Through a function, not the table: a signed-out visitor cannot read
     // profiles under RLS, so a direct count here would always be zero —
     // and a wall whose whole argument is a real number must not invent it.
-    const { data: count, error: countError } = await supabase.rpc(
-      "discoverable_learner_count",
-    );
+    const [
+      { data: count, error: countError },
+      { data: counts, error: countsError },
+    ] = await Promise.all([
+      supabase.rpc("discoverable_learner_count"),
+      // The wall's preview is real subjects with real numbers, read the
+      // same way and for the same reason: it is the only anonymous slice
+      // of Browse a signed-out visitor may see.
+      supabase.rpc("subject_counts"),
+    ]);
     if (countError) console.error("Browse wall count failed", countError);
+    if (countsError) console.error("Browse wall subjects failed", countsError);
 
-    return <BrowseWall learnerCount={Number(count ?? 0)} />;
+    // Four cards, the best-attended subjects first. Anything that is not
+    // a subject we still offer is dropped rather than shown by its raw
+    // key, and a subject nobody has listed never reaches the page.
+    const subjects = ((counts ?? []) as { topic: string; learners: number }[])
+      .filter((row) => isTopicKey(row.topic) && Number(row.learners) > 0)
+      .map((row) => ({
+        topic: row.topic as TopicKey,
+        learners: Number(row.learners),
+      }))
+      .sort((a, b) => b.learners - a.learners)
+      .slice(0, 4);
+
+    return (
+      <BrowseWall learnerCount={Number(count ?? 0)} subjects={subjects} />
+    );
   }
 
   // RLS only hides profiles from people who blocked *you*; profiles you've
