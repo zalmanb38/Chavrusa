@@ -279,65 +279,15 @@ $$;
 revoke all on function public.save_profile(jsonb, text, jsonb) from public, anon;
 grant execute on function public.save_profile(jsonb, text, jsonb) to authenticated;
 
--- ─── the public counts follow Browse ────────────────────────────────────
--- Each of these promises the number behind a page: the wall's "N learners
--- are here", the homepage subject cards, the launch banner. Someone who
--- has switched themselves off Browse is not behind any of them any more,
--- so all three have to learn the new flag at the same time as Browse does
--- or they start overstating.
-
-create or replace function public.discoverable_learner_count()
-returns bigint
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select count(*)::bigint
-  from public.profiles p
-  where p.is_active
-    and p.is_looking
-    and p.phone_verified
-    and p.name <> ''
-    and not p.suspended
-$$;
-
-grant execute on function public.discoverable_learner_count() to anon, authenticated;
-
-create or replace function public.active_member_count()
-returns bigint
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select count(*)::bigint
-  from public.profiles p
-  where p.is_active
-    and p.is_looking
-    and p.phone_verified
-    and p.name <> ''
-    and not p.suspended
-$$;
-
-grant execute on function public.active_member_count() to anon, authenticated;
-
-create or replace function public.subject_counts()
-returns table (topic text, learners bigint)
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select t.topic, count(*)::bigint as learners
-  from public.profiles p
-  cross join lateral unnest(p.topics) as t(topic)
-  where p.is_active
-    and p.is_looking
-    and p.phone_verified
-    and p.name <> ''
-    and not p.suspended
-  group by t.topic
-$$;
-
-grant execute on function public.subject_counts() to anon, authenticated;
+-- ─── the public counts deliberately do NOT follow the flag ──────────────
+-- discoverable_learner_count, active_member_count and subject_counts all
+-- stay exactly as they were. They answer how many people are HERE, which
+-- is not the same question as how many are looking right now: someone who
+-- has found their chavrusas through the site is still a member of it, and
+-- a homepage number that fell every time somebody succeeded would be
+-- reporting the opposite of what happened.
+--
+-- The consequence, accepted on purpose: the signed-out wall's count can
+-- exceed the number of cards Browse then shows. That is the honest way
+-- round of the two — overstating what a visitor will find is a smaller
+-- problem than a membership figure that drops when the product works.

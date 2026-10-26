@@ -293,7 +293,9 @@
     "filterNotMatched": "Uniquement les personnes sans Chavrusa",
     "notLookingTitle": "Votre profil n'apparaît pas dans la recherche",
     "notLookingBody": "Vous avez désactivé la recherche d'un Chavrusa, donc personne ne peut vous trouver ici. Vos mises en relation, vos séances et vos messages ne sont pas affectés.",
-    "notLookingFix": "Réactiver"
+    "notLookingFix": "Réactiver",
+    "matchedSectionTitle": "Étudient déjà avec quelqu'un",
+    "matchedSectionBody": "Ils ont un Chavrusa et restent ouverts à un autre."
   },
   "Requests": {
     "title": "Demandes de connexion",

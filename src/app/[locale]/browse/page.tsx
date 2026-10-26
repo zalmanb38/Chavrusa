@@ -224,6 +224,17 @@ export default async function BrowsePage({
     totalDiscoverable = count ?? 0;
   }
 
+  // The list is in two parts, and the order is the point: whoever is free
+  // comes first, and the people already learning sit at the end under a
+  // heading that says so. They stay on the page — one chavrusa for Gemara
+  // is no reason to be unreachable about Chumash — but nobody has to read
+  // past them to find somebody unattached.
+  //
+  // The map gets no sections: there is no "bottom" of a map, so there the
+  // card says it for itself.
+  const freeToStart = profiles.filter((p) => p.match_count === 0);
+  const alreadyLearning = profiles.filter((p) => p.match_count > 0);
+
   const filterChips = activeFilterChips(filters, {
     topic: (v: string) => topicLabel(v),
     language: (v: string) => tLanguages(v),
@@ -578,19 +589,51 @@ export default async function BrowsePage({
               connectStatuses={connectStatuses}
             />
           ) : (
-            <ul className="flex flex-col">
-              {profiles.map((profile) => (
-                <BrowseCard
-                  key={profile.id}
-                  profile={profile}
-                  currentUserId={user.id}
-                  connectStatus={connectStatuses[profile.id]?.status ?? "none"}
-                  requestId={connectStatuses[profile.id]?.requestId ?? null}
-                  retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
-                  showName
-                />
-              ))}
-            </ul>
+            <>
+              {freeToStart.length > 0 && (
+                <ul className="flex flex-col">
+                  {freeToStart.map((profile) => (
+                    <BrowseCard
+                      key={profile.id}
+                      profile={profile}
+                      currentUserId={user.id}
+                      connectStatus={connectStatuses[profile.id]?.status ?? "none"}
+                      requestId={connectStatuses[profile.id]?.requestId ?? null}
+                      retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
+                      showName
+                    />
+                  ))}
+                </ul>
+              )}
+
+              {alreadyLearning.length > 0 && (
+                <section className="flex flex-col gap-1 pt-6">
+                  {/* Section voice, not a second page heading: the same
+                      quiet uppercase label the filters use, so the list
+                      below it reads as a continuation rather than a
+                      different kind of result. */}
+                  <h2 className={filterLabelClass}>
+                    {t("matchedSectionTitle")}
+                  </h2>
+                  <p className="text-[13px] text-muted">
+                    {t("matchedSectionBody")}
+                  </p>
+                  <ul className="mt-2 flex flex-col">
+                    {alreadyLearning.map((profile) => (
+                      <BrowseCard
+                        key={profile.id}
+                        profile={profile}
+                        currentUserId={user.id}
+                        connectStatus={connectStatuses[profile.id]?.status ?? "none"}
+                        requestId={connectStatuses[profile.id]?.requestId ?? null}
+                        retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
+                        showName
+                      />
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </>
           )}
         </main>
       </div>

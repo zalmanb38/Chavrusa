@@ -12,8 +12,10 @@ import BlockButton from "@/components/BlockButton";
  * One learner, as shown in Browse.
  *
  * Shared by the list and the map so the two can't drift apart as either
- * one is edited. `showName` is the only difference between them: a map
- * cluster deliberately doesn't attach names to a place.
+ * one is edited. Two props are the difference between them: `showName`,
+ * because a map cluster deliberately doesn't attach names to a place, and
+ * `showMatchedNote`, because the list says it with a section heading and
+ * a map has no bottom to put one at.
  */
 export default function BrowseCard({
   profile,
@@ -22,6 +24,7 @@ export default function BrowseCard({
   requestId,
   retryAfter,
   showName,
+  showMatchedNote = false,
 }: {
   profile: Profile;
   currentUserId: string;
@@ -29,6 +32,7 @@ export default function BrowseCard({
   requestId: string | null;
   retryAfter: string | null;
   showName: boolean;
+  showMatchedNote?: boolean;
 }) {
   const t = useTranslations("Browse");
 
@@ -56,7 +60,7 @@ export default function BrowseCard({
             Meta voice like the location beside it, and no box — a badge
             would read as a status the card is about.
           */}
-          {profile.match_count > 0 && (
+          {showMatchedNote && profile.match_count > 0 && (
             <span className="text-[13.5px] text-muted">
               {t("alreadyLearning")}
             </span>

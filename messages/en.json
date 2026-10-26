@@ -293,7 +293,9 @@
     "filterNotMatched": "Only people without a Chavrusa yet",
     "notLookingTitle": "Your profile is hidden from Browse",
     "notLookingBody": "You've turned off looking for a Chavrusa, so nobody can find you here. Your matches, sessions and messages are unaffected.",
-    "notLookingFix": "Turn it back on"
+    "notLookingFix": "Turn it back on",
+    "matchedSectionTitle": "Already learning with someone",
+    "matchedSectionBody": "They have a Chavrusa and are still open to another."
   },
   "Requests": {
     "title": "Connect Requests",
