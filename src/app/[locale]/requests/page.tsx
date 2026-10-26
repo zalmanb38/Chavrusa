@@ -13,6 +13,7 @@ import ProfileDetails, {
   ProfileLocation,
   type ProfileDetailFields,
 } from "@/components/ProfileDetails";
+import ProfileHandle from "@/components/ProfileHandle";
 
 interface ProfileSummary {
   id: string;
@@ -20,13 +21,16 @@ interface ProfileSummary {
   city: string;
 }
 
+/** The handle rides with the full profile, not with the summary rows. */
+type RequesterHandle = { username: string };
+
 /**
  * An incoming request shows the requester's whole public profile, not
  * just a name — the recipient hasn't browsed to them, so this is their
  * only chance to judge the fit before answering. Full name and photo stay
  * out of it: those are governed by the match-reveal rule.
  */
-type RequesterProfile = ProfileSummary & ProfileDetailFields;
+type RequesterProfile = ProfileSummary & ProfileDetailFields & RequesterHandle;
 
 interface IncomingRow {
   id: string;
@@ -313,6 +317,10 @@ export default async function RequestsPage({
                   <p className="text-[21px] leading-tight font-semibold">
                     {row.requester.name}
                   </p>
+                  <ProfileHandle
+                    username={row.requester.username}
+                    className="text-[13.5px]"
+                  />
                   <ProfileLocation profile={row.requester} />
                 </div>
 
