@@ -122,6 +122,7 @@ export default function BrowseMapView({
                 requestId={connectStatuses[profile.id]?.requestId ?? null}
                 retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
                 showName
+                showMatchedNote
               />
             ))}
           </ul>

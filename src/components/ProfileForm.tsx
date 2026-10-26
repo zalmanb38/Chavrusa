@@ -102,6 +102,11 @@ export default function ProfileForm({
   const [hiddenFields, setHiddenFields] = useState<string[]>(
     initialProfile?.hidden_fields ?? [],
   );
+  // Defaults to true for someone with no row yet: a new profile is being
+  // filled in by somebody who came here to find a chavrusa.
+  const [isLooking, setIsLooking] = useState(
+    initialProfile?.is_looking ?? true,
+  );
   const [whatsapp, setWhatsapp] = useState(initialContacts?.whatsapp ?? "");
   const [contactPhone, setContactPhone] = useState(
     initialContacts?.contact_phone ?? "",
@@ -174,6 +179,7 @@ export default function ProfileForm({
         session_length: sessionLength,
         blurb: blurb.trim(),
         hidden_fields: hiddenFields,
+        is_looking: isLooking,
         // Saving the form is the person confirming their public name,
         // whether they edited the derived one or left it as it stands.
         display_name_set: true,
@@ -221,6 +227,35 @@ export default function ProfileForm({
           <p className="text-sm text-muted">{t("displayNamePromptBody")}</p>
         </div>
       )}
+
+      {/*
+        First, because it decides whether anything else on this page is
+        seen at all. A switch rather than a button: it is a standing
+        answer to "are you looking?", not an action taken once, and
+        someone whose circumstances change should find it where they left
+        it.
+      */}
+      <fieldset className="flex flex-col gap-2 border-t border-border pt-5">
+        <legend className="px-1 text-sm font-medium">
+          {t("lookingLegend")}
+        </legend>
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={isLooking}
+            onChange={(e) => setIsLooking(e.target.checked)}
+            className="accent-primary"
+          />
+          {t("lookingToggle")}
+        </label>
+        <span className="text-xs text-muted">{t("lookingHint")}</span>
+        {/* Said only to the people it is actually about. Somebody who has
+            just found a chavrusa is the one most likely to read this
+            switch as "I'm done" and turn it off by reflex. */}
+        {(initialProfile?.match_count ?? 0) > 0 && (
+          <span className="text-xs text-muted">{t("lookingMatchedNote")}</span>
+        )}
+      </fieldset>
 
       <label className="flex flex-col gap-1.5 text-sm">
         {t("displayName")}
