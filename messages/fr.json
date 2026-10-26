@@ -614,10 +614,27 @@
     "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met également fin à ces e-mails."
   },
   "BrowseWall": {
-    "count": "{count, plural, =0 {Des apprenants nous rejoignent en ce moment.} one {# apprenant est ici.} other {# apprenants sont ici.}}",
-    "body": "Connectez-vous pour voir qui ils sont, ce qu'ils étudient et quand ils sont disponibles. Rien à payer, et votre propre fiche reste masquée jusqu'à ce que vous la publiiez.",
+    "heading": "Parcourir les chavroutas",
+    "count": "{count, plural, =0 {Des apprenants vérifiés nous rejoignent en ce moment.} one {# apprenant vérifié est ici.} other {# apprenants vérifiés sont ici.}}",
+    "body": "Connectez-vous pour en voir plus et entrer en contact avec une chavrouta. Vous verrez ce qu’ils étudient, quand ils sont disponibles et s’ils peuvent vous convenir.",
+    "reassurance": "L’inscription est gratuite. Votre fiche n’apparaît qu’une fois votre compte vérifié.",
+    "heroImageDirection": "Une pile de sefarim sur une table, vue de côté. Objets et textes uniquement, pas de visages.",
     "createAccount": "Créer un compte gratuit",
-    "signIn": "Se connecter"
+    "signIn": "Se connecter",
+    "previewTitle": "Aperçu des apprenants",
+    "previewBody": "Connectez-vous pour accéder aux fiches complètes et contacter une chavrouta.",
+    "previewFocus": "Étudie",
+    "previewLearners": "{count, plural, one {# apprenant ici} other {# apprenants ici}}",
+    "previewLocked": "Connectez-vous pour voir la fiche complète",
+    "howTitle": "Comment ça marche",
+    "step1Title": "Créer un compte",
+    "step1Body": "Inscrivez-vous gratuitement et complétez votre fiche.",
+    "step2Title": "Parcourir les apprenants",
+    "step2Body": "Voyez qui étudie quoi et quand ils sont disponibles.",
+    "step3Title": "Entrer en contact",
+    "step3Body": "Trouvez une chavrouta et commencez à étudier ensemble.",
+    "finalTitle": "Prêt à trouver une chavrouta ?",
+    "finalBody": "Créez un compte gratuit ou connectez-vous pour parcourir les apprenants et entrer en contact avec une chavrouta."
   },
   "Share": {
     "shareLabel": "Partager le site",
