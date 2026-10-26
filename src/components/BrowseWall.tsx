@@ -1,31 +1,29 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
-import { topicNameEn, topicNameHe } from "@/lib/topic-names";
-import type { TopicKey } from "@/lib/profile-options";
+
+// "Label — the only chrome voice": 11px here, matching ProfileDetails'
+// own field labels rather than the page's section labels.
+const labelClass = "text-[11px] tracking-[0.14em] text-muted uppercase";
 
 /**
  * What a signed-out visitor gets at /browse.
  *
  * Built to Zalman's brief and the mock-up of 26 Oct: hero with a photo,
- * a gated preview of what is behind the wall, how it works, why join, and
- * a closing panel. The vocabulary stays the site's own — hairline rules,
+ * a gated preview of what is behind the wall, how it works, and a closing
+ * panel. The vocabulary stays the site's own — hairline rules,
  * square corners, brass accents — so this reads as the same paper as the
  * homepage rather than a visitor from another design.
  *
- * Every number and every subject here is real. The mock-up's cards carry
- * an availability, a neighbourhood and a level; those are invented the
- * moment they are written, and the original wall handoff was explicit
- * that invented listings must never appear here — somebody who signs up
- * on the strength of four plausible listings and finds none of them is
- * owed an apology no copy can make. So each card carries the subject and
- * the count, which are true, and the lines the mock-up fills with sample
- * values are left as the blurred shapes of a gated card.
+ * The count is the only number on the page, and it is real. The preview
+ * below it is Browse's own row — the same grid, hairlines and right rail
+ * — with everything that would name or describe a person left as a grey
+ * shape. The original wall handoff was explicit that invented listings
+ * must never appear here: somebody who signs up on the strength of four
+ * plausible learners and finds none of them is owed an apology no copy
+ * can make. The shape is the sneak peek; the values arrive with the
+ * sign-in.
  */
-
-// "Label — the only chrome voice": 11.5px, wide tracking, uppercase.
-const labelClass =
-  "text-[11.5px] tracking-[0.14em] text-muted uppercase";
 
 // Hairline weight, brass, inherits the text colour where it should.
 function LockIcon({ className }: { className?: string }) {
@@ -44,26 +42,15 @@ function LockIcon({ className }: { className?: string }) {
   );
 }
 
-const WHY_ICONS = [
-  // Free to sign up — a tick in a circle.
-  "M12 20.5a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17Z M8.5 12.2l2.4 2.4 4.6-5",
-  // Learners looking for a partner — two figures.
-  "M9.5 11.2a3.1 3.1 0 1 0 0-6.2 3.1 3.1 0 0 0 0 6.2Z M3.8 20c0-3.1 2.6-5.7 5.7-5.7s5.7 2.6 5.7 5.7 M16.8 5.6a3 3 0 0 1 0 5.6 M17.8 14.6c1.6.9 2.7 2.6 2.7 4.6",
-  // Verified — a shield with a tick.
-  "M12 3.5 19 6v6c0 4-3 7-7 8.5C8 19 5 16 5 12V6l7-2.5Z M9.2 12.1l2 2 3.6-3.9",
-  // Meaningful connections — a heart.
-  "M12 20.2C10.4 19.1 4.8 15.1 4.8 10.8A3.9 3.9 0 0 1 12 8.6a3.9 3.9 0 0 1 7.2 2.2c0 4.3-5.6 8.3-7.2 9.4Z",
-] as const;
-
 export default async function BrowseWall({
   learnerCount,
-  subjects,
 }: {
   learnerCount: number;
-  /** Real subjects with at least one learner, most learners first. */
-  subjects: { topic: TopicKey; learners: number }[];
 }) {
   const t = await getTranslations("BrowseWall");
+  // The redacted rows borrow Browse's own labels and status wording
+  // rather than inventing a second set of words for the same fields.
+  const tp = await getTranslations("Profile");
 
   // Both routes carry the destination, so signing in lands back on Browse
   // rather than on a profile page.
@@ -121,10 +108,10 @@ export default async function BrowseWall({
         />
       </section>
 
-      {/* ── Gated preview of what is behind the wall ─────────────────── */}
-      {/* Hidden rather than shown empty: a preview section with nothing in
-          it argues against the count above it. */}
-      {subjects.length > 0 && (
+      {/* ── Gated preview: Browse's own rows, with the people redacted ── */}
+      {/* Hidden rather than shown empty: a preview of nothing argues
+          against the count above it. */}
+      {learnerCount > 0 && (
         <section className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
           <div className="border-t border-border pt-6">
             <h2 className="text-[30px] font-semibold">{t("previewTitle")}</h2>
@@ -133,49 +120,60 @@ export default async function BrowseWall({
             </p>
           </div>
 
-          <div className="mt-8 grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
-            {subjects.map(({ topic, learners }) => (
-              <div
-                key={topic}
-                className="flex flex-col gap-1 bg-surface px-6 py-[22px]"
+          {/* Deliberately the same grid, hairlines and right rail as
+              BrowseCard, so this reads as the page itself with the people
+              taken out rather than as a different page's idea of it. What
+              would name or describe somebody is a grey shape: the values
+              are real only once you are signed in, and inventing them is
+              the one thing this page must not do. */}
+          <ul className="mt-6">
+            {Array.from({ length: Math.min(learnerCount, 4) }, (_, row) => (
+              <li
+                key={row}
+                className="grid gap-6 border-t border-border py-4 lg:grid-cols-[1fr_200px]"
               >
-                <span className={labelClass}>{t("previewFocus")}</span>
-                {/* A pure-Hebrew run, so bidi sets it right-to-left on its
-                    own; no dir of its own, which is what lets it align to
-                    the card's start edge in both directions instead of
-                    sitting in the opposite corner from the English name
-                    below it. */}
-                <span
-                  lang="he"
-                  className="text-start text-[26px] leading-tight text-brass-deep"
-                >
-                  {topicNameHe(topic)}
-                </span>
-                <span className="text-[17px]">{topicNameEn(topic)}</span>
-                <span className="text-[12.5px] text-muted">
-                  {t("previewLearners", { count: learners })}
-                </span>
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                    {/* The name's line, at the name's weight. Signed-out
+                        visitors genuinely cannot see names, so this one
+                        is honestly blank rather than filled in. */}
+                    <div aria-hidden className="h-[21px] w-40 bg-neutral-300" />
+                    {/* True of every row Browse shows: it filters on the
+                        looking flag, so everybody behind this wall is. */}
+                    <span className="text-[13.5px] text-muted">
+                      {tp("lookingLegend")}
+                    </span>
+                  </div>
 
-                {/* The shape of the fields a signed-in visitor gets —
-                    availability, place, how often — with no values in
-                    them, because inventing the values is the one thing
-                    this page must not do. mt-auto so the locked line sits
-                    at the same height across a row of uneven cards. */}
-                <div
-                  aria-hidden
-                  className="mt-4 flex flex-col gap-2 pt-1 opacity-45"
-                >
-                  <div className="h-3 w-4/5 bg-neutral-300" />
-                  <div className="h-3 w-3/5 bg-neutral-300" />
+                  {/* The label is structure, so it is real; the values are
+                      a person's, so they are not here yet. */}
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className={labelClass}>{tp("topicsShort")}</span>
+                    <span aria-hidden className="flex flex-wrap gap-1.5">
+                      <span className="block h-[22px] w-24 bg-slate-200" />
+                      <span className="block h-[22px] w-20 bg-slate-200" />
+                      <span className="block h-[22px] w-16 bg-neutral-200" />
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className={labelClass}>{tp("availableShort")}</span>
+                    <span
+                      aria-hidden
+                      className="block h-[15px] w-full max-w-[18rem] bg-neutral-200"
+                    />
+                  </div>
                 </div>
 
-                <span className="mt-auto flex items-center gap-2 border-t border-border pt-3 text-[12.5px] text-muted">
-                  <LockIcon className="h-[13px] w-[13px] shrink-0 text-brass" />
-                  {t("previewLocked")}
-                </span>
-              </div>
+                <div className="flex flex-col items-start gap-3 lg:border-s lg:border-border lg:ps-6">
+                  <span className="flex items-center gap-2 text-[13.5px] text-muted">
+                    <LockIcon className="h-[14px] w-[14px] shrink-0 text-brass" />
+                    {t("previewLocked")}
+                  </span>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       )}
 
@@ -209,36 +207,6 @@ export default async function BrowseWall({
             </div>
           ))}
         </div>
-      </section>
-
-      {/* ── Why join ─────────────────────────────────────────────────── */}
-      <section className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
-        <div className="border-t border-border pt-6">
-          <h2 className="text-[30px] font-semibold">{t("whyTitle")}</h2>
-        </div>
-
-        <ul className="mt-8 grid gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
-          {WHY_ICONS.map((path, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-3 border-border lg:border-s lg:ps-6 lg:first:border-s-0 lg:first:ps-0"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                aria-hidden
-                className="mt-px h-[22px] w-[22px] shrink-0 text-brass"
-              >
-                <path d={path} />
-              </svg>
-              <span className="text-[15.5px] leading-[1.6] text-pretty">
-                {t(`why${i + 1}`)}
-              </span>
-            </li>
-          ))}
-        </ul>
       </section>
 
       {/* ── Closing panel ────────────────────────────────────────────── */}
