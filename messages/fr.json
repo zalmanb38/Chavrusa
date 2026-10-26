@@ -623,6 +623,8 @@
     "signIn": "Se connecter",
     "previewTitle": "Aperçu des apprenants",
     "previewBody": "Connectez-vous pour accéder aux fiches complètes et contacter une chavrouta.",
+    "previewFocus": "Étudie",
+    "previewLearners": "{count, plural, one {# apprenant ici} other {# apprenants ici}}",
     "previewLocked": "Connectez-vous pour voir la fiche complète",
     "howTitle": "Comment ça marche",
     "step1Title": "Créer un compte",

@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ImageSlot from "@/components/ImageSlot";
+import { topicNameEn, topicNameHe } from "@/lib/topic-names";
+import type { TopicKey } from "@/lib/profile-options";
 
 // "Label — the only chrome voice": 11px here, matching ProfileDetails'
 // own field labels rather than the page's section labels.
@@ -44,13 +46,13 @@ function LockIcon({ className }: { className?: string }) {
 
 export default async function BrowseWall({
   learnerCount,
+  subjects,
 }: {
   learnerCount: number;
+  /** Real subjects with at least one learner, most learners first. */
+  subjects: { topic: TopicKey; learners: number }[];
 }) {
   const t = await getTranslations("BrowseWall");
-  // The redacted rows borrow Browse's own labels and status wording
-  // rather than inventing a second set of words for the same fields.
-  const tp = await getTranslations("Profile");
 
   // Both routes carry the destination, so signing in lands back on Browse
   // rather than on a profile page.
@@ -108,10 +110,10 @@ export default async function BrowseWall({
         />
       </section>
 
-      {/* ── Gated preview: Browse's own rows, with the people redacted ── */}
+      {/* ── Gated preview of what is behind the wall ─────────────── */}
       {/* Hidden rather than shown empty: a preview of nothing argues
           against the count above it. */}
-      {learnerCount > 0 && (
+      {subjects.length > 0 && (
         <section className="mx-auto w-full max-w-[1240px] px-6 pb-16 sm:px-14">
           <div className="border-t border-border pt-6">
             <h2 className="text-[30px] font-semibold">{t("previewTitle")}</h2>
@@ -120,60 +122,70 @@ export default async function BrowseWall({
             </p>
           </div>
 
-          {/* Deliberately the same grid, hairlines and right rail as
-              BrowseCard, so this reads as the page itself with the people
-              taken out rather than as a different page's idea of it. What
-              would name or describe somebody is a grey shape: the values
-              are real only once you are signed in, and inventing them is
-              the one thing this page must not do. */}
-          <ul className="mt-6">
-            {Array.from({ length: Math.min(learnerCount, 4) }, (_, row) => (
-              <li
-                key={row}
-                className="grid gap-6 border-t border-border py-4 lg:grid-cols-[1fr_200px]"
+          <div className="mt-8 grid gap-[18px] sm:grid-cols-2 lg:grid-cols-4">
+            {subjects.map(({ topic, learners }) => (
+              <div
+                key={topic}
+                className="flex flex-col gap-3 bg-surface px-5 py-5"
               >
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                    {/* The name's line, at the name's weight. Signed-out
-                        visitors genuinely cannot see names, so this one
-                        is honestly blank rather than filled in. */}
-                    <div aria-hidden className="h-[21px] w-40 bg-neutral-300" />
-                    {/* True of every row Browse shows: it filters on the
-                        looking flag, so everybody behind this wall is. */}
-                    <span className="text-[13.5px] text-muted">
-                      {tp("lookingLegend")}
-                    </span>
-                  </div>
-
-                  {/* The label is structure, so it is real; the values are
-                      a person's, so they are not here yet. */}
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className={labelClass}>{tp("topicsShort")}</span>
-                    <span aria-hidden className="flex flex-wrap gap-1.5">
-                      <span className="block h-[22px] w-24 bg-slate-200" />
-                      <span className="block h-[22px] w-20 bg-slate-200" />
-                      <span className="block h-[22px] w-16 bg-neutral-200" />
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className={labelClass}>{tp("availableShort")}</span>
+                <div className="flex items-start gap-3">
+                  {/* The portrait a signed-in visitor doesn't get either:
+                      photographs are match-only, so this one stays a
+                      shape at every stage. */}
+                  <span
+                    aria-hidden
+                    className="mt-0.5 h-10 w-10 shrink-0 rounded-full bg-neutral-300"
+                  />
+                  <span className="flex flex-col">
+                    <span className={labelClass}>{t("previewFocus")}</span>
+                    {/* A pure-Hebrew run, so bidi sets it right-to-left on
+                        its own; no dir of its own, which is what lets it
+                        align to the card's start edge in both directions
+                        instead of sitting in the opposite corner from the
+                        English name below it. */}
                     <span
-                      aria-hidden
-                      className="block h-[15px] w-full max-w-[18rem] bg-neutral-200"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-start gap-3 lg:border-s lg:border-border lg:ps-6">
-                  <span className="flex items-center gap-2 text-[13.5px] text-muted">
-                    <LockIcon className="h-[14px] w-[14px] shrink-0 text-brass" />
-                    {t("previewLocked")}
+                      lang="he"
+                      className="text-start text-[22px] leading-tight text-brass-deep"
+                    >
+                      {topicNameHe(topic)}
+                    </span>
+                    <span className="text-[16px] leading-tight">
+                      {topicNameEn(topic)}
+                    </span>
                   </span>
                 </div>
-              </li>
+
+                <span className="text-[12.5px] text-muted">
+                  {t("previewLearners", { count: learners })}
+                </span>
+
+                {/* The fields that belong to a person — availability,
+                    place, how often — behind the lock that actually
+                    holds them. Shapes, not sample values: inventing the
+                    values is the one thing this page must not do. */}
+                <div className="relative mt-1">
+                  <div
+                    aria-hidden
+                    className="flex min-h-[112px] flex-col justify-between gap-3 opacity-40 blur-[1.5px]"
+                  >
+                    <div className="h-3.5 w-4/5 bg-neutral-300" />
+                    <div className="h-3.5 w-3/5 bg-neutral-300" />
+                    <div className="h-3.5 w-2/3 bg-neutral-300" />
+                    <div className="h-3.5 w-1/2 bg-neutral-300" />
+                  </div>
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 text-center">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brass-tint">
+                      <LockIcon className="h-4 w-4 text-slate-900" />
+                    </span>
+                    <span className="text-[12.5px] leading-tight text-muted">
+                      {t("previewLocked")}
+                    </span>
+                  </div>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
       )}
 

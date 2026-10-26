@@ -623,6 +623,8 @@
     "signIn": "Sign in",
     "previewTitle": "Preview of available learners",
     "previewBody": "Sign in to unlock full profiles and contact potential chavrusas.",
+    "previewFocus": "Learning",
+    "previewLearners": "{count, plural, =1 {# learner here} other {# learners here}}",
     "previewLocked": "Sign in to view full profile",
     "howTitle": "How it works",
     "step1Title": "Create an account",

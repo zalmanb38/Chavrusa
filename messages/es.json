@@ -623,6 +623,8 @@
     "signIn": "Iniciar sesión",
     "previewTitle": "Vista previa de los participantes",
     "previewBody": "Inicia sesión para ver las fichas completas y contactar con una posible chavruta.",
+    "previewFocus": "Estudia",
+    "previewLearners": "{count, plural, one {# persona aquí} other {# personas aquí}}",
     "previewLocked": "Inicia sesión para ver la ficha completa",
     "howTitle": "Cómo funciona",
     "step1Title": "Crea una cuenta",

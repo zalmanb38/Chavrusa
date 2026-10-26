@@ -623,6 +623,8 @@
     "signIn": "כניסה",
     "previewTitle": "הצצה ללומדים שכאן",
     "previewBody": "היכנסו כדי לראות פרופילים מלאים וליצור קשר עם חברותא אפשרית.",
+    "previewFocus": "לומד",
+    "previewLearners": "{count, plural, one {לומד אחד כאן} two {# לומדים כאן} other {# לומדים כאן}}",
     "previewLocked": "היכנסו כדי לראות את הפרופיל המלא",
     "howTitle": "איך זה עובד",
     "step1Title": "פתיחת חשבון",
