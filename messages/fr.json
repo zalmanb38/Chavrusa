@@ -614,15 +614,15 @@
     "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met également fin à ces e-mails."
   },
   "BrowseWall": {
-    "heading": "Parcourir les Chavroutas",
+    "heading": "Parcourir les chavroutas",
     "count": "{count, plural, =0 {Des apprenants vérifiés nous rejoignent en ce moment.} one {# apprenant vérifié est ici.} other {# apprenants vérifiés sont ici.}}",
-    "body": "Connectez-vous pour en voir plus et entrer en contact avec une Chavrouta. Vous verrez ce qu’ils étudient, quand ils sont disponibles et s’ils peuvent vous convenir.",
+    "body": "Connectez-vous pour en voir plus et entrer en contact avec une chavrouta. Vous verrez ce qu’ils étudient, quand ils sont disponibles et s’ils peuvent vous convenir.",
     "reassurance": "L’inscription est gratuite. Votre fiche n’apparaît qu’une fois que vous avez vérifié votre compte.",
     "heroImageDirection": "Une pile de sefarim sur une table, vue de côté. Objets et textes uniquement, pas de visages.",
     "createAccount": "Créer un compte gratuit",
     "signIn": "Se connecter",
     "previewTitle": "Aperçu des apprenants",
-    "previewBody": "Connectez-vous pour accéder aux fiches complètes et contacter une Chavrouta.",
+    "previewBody": "Connectez-vous pour accéder aux fiches complètes et contacter une chavrouta.",
     "previewFocus": "Étudie",
     "previewLearners": "{count, plural, one {# apprenant ici} other {# apprenants ici}}",
     "previewLocked": "Connectez-vous pour voir la fiche complète",
@@ -632,9 +632,9 @@
     "step2Title": "Parcourir les apprenants",
     "step2Body": "Voyez qui étudie quoi et quand ils sont disponibles.",
     "step3Title": "Entrer en contact",
-    "step3Body": "Trouvez une Chavrouta et commencez à étudier ensemble.",
-    "finalTitle": "Prêt à trouver une Chavrouta ?",
-    "finalBody": "Créez un compte gratuit ou connectez-vous pour parcourir les apprenants et entrer en contact avec une Chavrouta."
+    "step3Body": "Trouvez une chavrouta et commencez à étudier ensemble.",
+    "finalTitle": "Prêt à trouver une chavrouta ?",
+    "finalBody": "Créez un compte gratuit ou connectez-vous pour parcourir les apprenants et entrer en contact avec une chavrouta."
   },
   "Share": {
     "shareLabel": "Partager le site",
