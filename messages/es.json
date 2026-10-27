@@ -617,7 +617,7 @@
     "heading": "Explorar chavrutas",
     "count": "{count, plural, =0 {Ahora mismo se están uniendo personas verificadas.} one {Hay # persona verificada aquí.} other {Hay # personas verificadas aquí.}}",
     "body": "Inicia sesión para ver más información y ponerte en contacto con una posible chavruta. Podrás ver qué estudian, cuándo tienen tiempo y si pueden encajar contigo.",
-    "reassurance": "Unirse es gratis. Tu ficha solo aparece cuando tu cuenta está verificada.",
+    "reassurance": "Unirse es gratis. Tu ficha solo aparece cuando verificas tu cuenta.",
     "heroImageDirection": "Una pila de sefarim sobre una mesa, de lado. Solo objetos y textos, sin rostros.",
     "createAccount": "Crear una cuenta gratuita",
     "signIn": "Iniciar sesión",
