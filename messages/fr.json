@@ -67,6 +67,7 @@
     "signupLink": "S'inscrire",
     "loginLink": "Se connecter",
     "checkEmail": "Consultez votre e-mail pour confirmer votre compte avant de vous connecter.",
+    "signupEmailAlreadySent": "Un e-mail de confirmation est déjà en route. Vérifiez votre boîte de réception et, s'il n'arrive pas, réessayez dans une minute.",
     "genericError": "Une erreur s'est produite. Veuillez réessayer.",
     "passwordMismatch": "Les mots de passe ne correspondent pas.",
     "passwordNeedsLetterAndDigit": "Le mot de passe doit contenir au moins une lettre et un chiffre.",

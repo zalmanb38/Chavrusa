@@ -67,6 +67,7 @@
     "signupLink": "Regístrate",
     "loginLink": "Inicia sesión",
     "checkEmail": "Revisa tu correo para confirmar tu cuenta antes de iniciar sesión.",
+    "signupEmailAlreadySent": "Ya hay un correo de confirmación en camino. Revisa tu bandeja de entrada y, si no llega, inténtalo de nuevo en un minuto.",
     "genericError": "Algo salió mal. Inténtalo de nuevo.",
     "passwordMismatch": "Las contraseñas no coinciden.",
     "passwordNeedsLetterAndDigit": "La contraseña debe contener al menos una letra y un número.",
