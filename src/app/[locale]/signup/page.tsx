@@ -70,7 +70,21 @@ export default function SignupPage() {
     setLoading(false);
 
     if (signUpError) {
-      setError(signUpError.message || t("genericError"));
+      // A sign-up that went through leaves Supabase refusing a second
+      // confirmation mail to the same address for a minute, and it says so
+      // in raw English ("you can only request this after 57 seconds") on
+      // every locale. Pressing the button again is the natural thing to do
+      // when the mail hasn't landed yet, so answer it in the reader's own
+      // language, and say what actually happened: the mail is on its way.
+      const rateLimited =
+        signUpError.code === "over_email_send_rate_limit" ||
+        signUpError.status === 429;
+
+      setError(
+        rateLimited
+          ? t("signupEmailAlreadySent")
+          : signUpError.message || t("genericError"),
+      );
       return;
     }
 
@@ -89,54 +103,61 @@ export default function SignupPage() {
       <MenOnlyNotice />
 
 
-      <div className="flex flex-col gap-6">
-        <GoogleSignInButton next={next} />
+      {/* Once the confirmation mail is out there is nothing left to do on
+          this form, and leaving it up invites a second press — which
+          Supabase answers with a rate-limit refusal rather than a second
+          mail. Show the note in its place. */}
+      {info ? (
+        <p className="text-sm text-accent">{info}</p>
+      ) : (
+        <div className="flex flex-col gap-6">
+          <GoogleSignInButton next={next} />
 
-        <div className="flex items-center gap-3 text-xs text-muted">
-          <span className="h-px flex-1 bg-border" />
-          {t("orUseEmail")}
-          <span className="h-px flex-1 bg-border" />
-        </div>
+          <div className="flex items-center gap-3 text-xs text-muted">
+            <span className="h-px flex-1 bg-border" />
+            {t("orUseEmail")}
+            <span className="h-px flex-1 bg-border" />
+          </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label className="flex flex-col gap-1.5 text-sm">
-            {t("email")}
-            <input
-              type="email"
-              name="email"
-              required
-              autoComplete="email"
-              className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label className="flex flex-col gap-1.5 text-sm">
+              {t("email")}
+              <input
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+                className="rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+              />
+            </label>
+
+            <PasswordField
+              label={t("password")}
+              name="password"
+              hint={t("passwordHint")}
+              autoComplete="new-password"
+              minLength={8}
             />
-          </label>
 
-          <PasswordField
-            label={t("password")}
-            name="password"
-            hint={t("passwordHint")}
-            autoComplete="new-password"
-            minLength={8}
-          />
+            <PasswordField
+              label={t("confirmPassword")}
+              name="confirmPassword"
+              autoComplete="new-password"
+              minLength={8}
+            />
 
-          <PasswordField
-            label={t("confirmPassword")}
-            name="confirmPassword"
-            autoComplete="new-password"
-            minLength={8}
-          />
+            {error && <ErrorNote>{error}</ErrorNote>}
 
-          {error && <ErrorNote>{error}</ErrorNote>}
-          {info && <p className="text-sm text-accent">{info}</p>}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="rounded-sm bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
-          >
-            {t("signupButton")}
-          </button>
-        </form>
-      </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-sm bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+            >
+              {t("signupButton")}
+            </button>
+          </form>
+        </div>
+      )}
 
       <p className="text-center text-sm text-muted">
         {t("haveAccount")}{" "}

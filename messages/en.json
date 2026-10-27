@@ -67,6 +67,7 @@
     "signupLink": "Sign up",
     "loginLink": "Log in",
     "checkEmail": "Check your email to confirm your account before logging in.",
+    "signupEmailAlreadySent": "A confirmation email is already on its way. Check your inbox, and if it hasn't arrived, try again in a minute.",
     "genericError": "Something went wrong. Please try again.",
     "passwordMismatch": "Passwords do not match.",
     "passwordNeedsLetterAndDigit": "Password must contain at least one letter and one number.",
