@@ -263,16 +263,20 @@ export default function ProfileForm({
         <legend className="px-1 text-sm font-medium">
           {t("lookingLegend")}
         </legend>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={isLooking}
-            onChange={(e) => setIsLooking(e.target.checked)}
-            className="accent-primary"
-          />
-          {t("lookingToggle")}
-        </label>
-        <span className="text-xs text-muted">{t("lookingHint")}</span>
+        {/* The legend already says what the box is for, so the box carries
+            its own wording only for screen readers; a visible label here
+            would repeat the heading word for word. */}
+        <input
+          type="checkbox"
+          checked={isLooking}
+          onChange={(e) => setIsLooking(e.target.checked)}
+          className="accent-primary self-start"
+          aria-label={t("lookingToggle")}
+          aria-describedby="looking-hint"
+        />
+        <span id="looking-hint" className="text-xs text-muted">
+          {t("lookingHint")}
+        </span>
         {/* Said only to the people it is actually about. Somebody who has
             just found a chavrusa is the one most likely to read this
             switch as "I'm done" and turn it off by reflex. */}
