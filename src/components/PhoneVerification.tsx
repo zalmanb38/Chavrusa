@@ -9,6 +9,7 @@ import {
   type CountryCode,
 } from "@/lib/country-codes";
 import ErrorNote from "@/components/ErrorNote";
+import RequiredMark from "@/components/RequiredMark";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none disabled:opacity-60";
@@ -176,7 +177,9 @@ export default function PhoneVerification({
       </p>
 
       <div className="flex flex-col gap-1.5 text-sm">
-        {t("phoneLabel")}
+        <span>
+          {t("phoneLabel")} <RequiredMark />
+        </span>
         <div className="flex gap-2" dir="ltr">
           <label className="sr-only" htmlFor="phone-country">
             {t("countryLabel")}
