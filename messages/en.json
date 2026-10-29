@@ -176,8 +176,8 @@
     "contactPhoneInvalid": "Enter phone numbers with a country code, like +1 555 123 4567.",
     "lookingLegend": "Looking for a Chavrusa",
     "lookingToggle": "I'm looking for a Chavrusa",
-    "lookingHint": "Leave this on while you're open to learning with someone new — it's what puts you in Browse and on the map. Turn it off and your profile is hidden there.",
-    "lookingMatchedNote": "You're already learning with someone, and you can still leave this on. Plenty of people learn one subject with one Chavrusa while looking for another.",
+    "lookingHint": "Leave this checked while you're open to learning with someone new — it's what puts you in Browse and on the map. Turn it off and your profile is hidden.",
+    "lookingMatchedNote": "If you're already learning with someone, you can leave this on to find a Chavrusa for a different subject.",
     "topicsMatchedHint": "Already learning one of these with someone? Uncheck it and leave the rest on — you stay findable for the subjects you still want a Chavrusa for."
   },
   "Topics": {

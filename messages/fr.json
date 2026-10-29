@@ -176,8 +176,8 @@
     "contactPhoneInvalid": "Saisissez les numéros de téléphone avec l'indicatif du pays, par exemple +1 555 123 4567.",
     "lookingLegend": "À la recherche d'un Chavrusa",
     "lookingToggle": "Je cherche un Chavrusa",
-    "lookingHint": "Laissez cette option activée tant que vous êtes ouvert à étudier avec quelqu'un de nouveau — c'est elle qui vous fait apparaître dans la recherche et sur la carte. Désactivez-la et votre profil n'y est plus visible.",
-    "lookingMatchedNote": "Vous étudiez déjà avec quelqu'un, et vous pouvez tout de même laisser cette option activée. Beaucoup de personnes étudient un sujet avec un Chavrusa tout en cherchant un autre.",
+    "lookingHint": "Laissez cette case cochée tant que vous êtes ouvert à étudier avec quelqu'un de nouveau — c'est elle qui vous fait apparaître dans la recherche et sur la carte. Désactivez-la et votre profil n'est plus visible.",
+    "lookingMatchedNote": "Si vous étudiez déjà avec quelqu'un, vous pouvez laisser cette option activée pour trouver un Chavrusa pour un autre sujet.",
     "topicsMatchedHint": "Vous étudiez déjà l'un de ces sujets avec quelqu'un ? Décochez-le et laissez les autres cochés — vous restez visible pour les sujets pour lesquels vous cherchez encore un Chavrusa."
   },
   "Topics": {
