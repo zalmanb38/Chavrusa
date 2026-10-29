@@ -112,6 +112,8 @@
     "completeYourProfile": "Complete your profile so others can find you.",
     "requiredLegend": "marks a required field. Everything else is optional.",
     "topicsRequired": "Choose at least one subject so people can find you.",
+    "contactRequired": "Please enter at least one contact detail — WhatsApp, a phone number or a Zoom link.",
+    "contactRequiredHint": "Please enter at least one contact detail.",
     "noProfileYet": "You haven't set up your profile yet.",
     "contactSectionTitle": "Contact info",
     "contactSectionHint": "Only shared with a learner once you've confirmed a session together — never shown while browsing.",

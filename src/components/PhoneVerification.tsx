@@ -136,7 +136,9 @@ export default function PhoneVerification({
             the other way: the heading says what this is, the tag says
             where it stands. */}
         <legend className="flex flex-wrap items-center gap-2 px-1 text-sm font-medium">
-          {t("title")}
+          {/* Not "Verify phone" any more: the step is done, and what the
+              box holds from here on is the number itself. */}
+          {t("phoneLabel")}
           <span className="border-s-2 border-accent bg-accent/10 px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-accent uppercase">
             {t("verifiedBadge")}
           </span>

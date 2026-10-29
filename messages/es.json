@@ -112,6 +112,8 @@
     "completeYourProfile": "Completa tu perfil para que otros puedan encontrarte.",
     "requiredLegend": "indica un campo obligatorio. Todo lo demás es opcional.",
     "topicsRequired": "Elige al menos un tema para que los demás puedan encontrarte.",
+    "contactRequired": "Indica al menos un dato de contacto: WhatsApp, un número de teléfono o un enlace de Zoom.",
+    "contactRequiredHint": "Indica al menos un dato de contacto.",
     "noProfileYet": "Aún no has creado tu perfil.",
     "contactSectionTitle": "Información de contacto",
     "contactSectionHint": "Solo se comparte con otro estudiante una vez que confirmen una sesión juntos — nunca se muestra al explorar.",

@@ -112,6 +112,8 @@
     "completeYourProfile": "Complétez votre profil pour que d'autres puissent vous trouver.",
     "requiredLegend": "indique un champ obligatoire. Tout le reste est facultatif.",
     "topicsRequired": "Choisissez au moins un sujet pour que les autres puissent vous trouver.",
+    "contactRequired": "Veuillez indiquer au moins un moyen de contact : WhatsApp, un numéro de téléphone ou un lien Zoom.",
+    "contactRequiredHint": "Veuillez indiquer au moins un moyen de contact.",
     "noProfileYet": "Vous n'avez pas encore créé de profil.",
     "contactSectionTitle": "Coordonnées",
     "contactSectionHint": "Partagées avec un autre apprenant seulement une fois qu'une séance est confirmée entre vous — jamais affichées lors de la navigation.",
