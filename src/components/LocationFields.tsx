@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import RequiredMark from "@/components/RequiredMark";
 import {
   COUNTRY_CODES,
   OTHER_VALUE,
@@ -58,8 +59,12 @@ export default function LocationFields({
       </p>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("country")}
-        {required && <span className="sr-only">{t("requiredMark")}</span>}
+        {/* The mark comes and goes with the learning preference above:
+            these three are compulsory only for someone who meets in
+            person, so a fixed asterisk would be a lie half the time. */}
+        <span>
+          {t("country")} {required && <RequiredMark />}
+        </span>
         <select
           required={required}
           value={value.country}
@@ -84,7 +89,9 @@ export default function LocationFields({
 
       {showRegion && (
         <label className="flex flex-col gap-1.5 text-sm">
-          {t("region")}
+          <span>
+            {t("region")} {required && <RequiredMark />}
+          </span>
           <select
             required={required}
             value={value.region}
@@ -105,7 +112,9 @@ export default function LocationFields({
 
       {value.country && (
         <label className="flex flex-col gap-1.5 text-sm">
-          {t("city")}
+          <span>
+            {t("city")} {required && <RequiredMark />}
+          </span>
           {cities.length > 0 && !cityIsFreeText ? (
             <select
               required={required}
@@ -152,8 +161,7 @@ export default function LocationFields({
       )}
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("neighborhood")}{" "}
-        <span className="text-xs text-muted">{t("optionalMark")}</span>
+        {t("neighborhood")}
         <input
           type="text"
           maxLength={100}
@@ -165,8 +173,7 @@ export default function LocationFields({
       </label>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("meetingSpot")}{" "}
-        <span className="text-xs text-muted">{t("optionalMark")}</span>
+        {t("meetingSpot")}
         <input
           type="text"
           maxLength={150}
