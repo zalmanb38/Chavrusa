@@ -35,6 +35,7 @@ import LocationFields, { type LocationValue } from "@/components/LocationFields"
 import { locationRequired } from "@/lib/locations";
 import ErrorNote from "@/components/ErrorNote";
 import UsernameField from "@/components/UsernameField";
+import RequiredMark from "@/components/RequiredMark";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none";
@@ -133,6 +134,15 @@ export default function ProfileForm({
     setSuccess(false);
     setError(null);
 
+    // Nothing on Browse works without this one: a profile with no
+    // subject gives a reader nothing to decide on and matches nobody's
+    // filters, so it is worth stopping here rather than saving a card
+    // that cannot be found.
+    if (topics.length === 0) {
+      setError(t("topicsRequired"));
+      return;
+    }
+
     // Someone who only meets in person can't be matched without somewhere
     // to meet, so this is the one case where location is compulsory.
     if (
@@ -221,6 +231,20 @@ export default function ProfileForm({
         <p className="text-sm text-muted">{t("completeYourProfile")}</p>
       )}
 
+      {/* Said once, at the top, because the alternative is tagging forty
+          fields "optional" — and a form where nearly every label carries
+          a tag is no easier to skim than one where none does. */}
+      <p className="text-sm text-muted">
+        {/* An asterisk is a neutral character, so at the head of a Hebrew
+            line it would be laid out as if it belonged to the Latin run
+            and jump to the far end. bdi isolates it, and it stays where
+            the sentence starts. */}
+        <bdi aria-hidden="true" className="text-clay">
+          *
+        </bdi>{" "}
+        {t("requiredLegend")}
+      </p>
+
       {needsDisplayNamePrompt && (
         <div className="flex flex-col gap-1 rounded-2xl border border-primary/60 bg-primary/10 p-4">
           <p className="font-medium">{t("displayNamePromptTitle")}</p>
@@ -258,7 +282,9 @@ export default function ProfileForm({
       </fieldset>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("displayName")}
+        <span>
+          {t("displayName")} <RequiredMark />
+        </span>
         <input
           type="text"
           required
@@ -311,7 +337,7 @@ export default function ProfileForm({
 
       <fieldset className="flex flex-col gap-3 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
-          {t("topicsOfInterest")}
+          {t("topicsOfInterest")} <RequiredMark />
         </legend>
         {/* Said only to people it can apply to. The list is where the
             advice on the match page is acted on, and somebody with no
@@ -353,8 +379,7 @@ export default function ProfileForm({
       </fieldset>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("learningLevel")}{" "}
-        <span className="text-muted">({tCommon("optional")})</span>
+        {t("learningLevel")}
         <select
           value={level}
           onChange={(e) => setLevel(e.target.value as Level | "")}
@@ -370,8 +395,7 @@ export default function ProfileForm({
       </label>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("ageRange")}{" "}
-        <span className="text-xs text-muted">{tLocation("optionalMark")}</span>
+        {t("ageRange")}
         <select
           value={ageRange}
           onChange={(e) => setAgeRange(e.target.value)}
@@ -482,8 +506,7 @@ export default function ProfileForm({
       </div>
 
       <label className="flex flex-col gap-1.5 text-sm">
-        {t("blurb")}{" "}
-        <span className="text-xs text-muted">{tLocation("optionalMark")}</span>
+        {t("blurb")}
         <textarea
           value={blurb}
           maxLength={400}
