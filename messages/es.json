@@ -474,6 +474,7 @@
     "verifyCode": "Verificar",
     "verifying": "Verificando…",
     "verifiedBadge": "Verificado",
+    "yourNumber": "Tu número de teléfono",
     "changeNumber": "Cambiar número",
     "invalidPhone": "Ingresa un número de teléfono válido para el país seleccionado.",
     "sendError": "No se pudo enviar el código. Inténtalo de nuevo.",

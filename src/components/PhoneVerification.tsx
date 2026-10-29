@@ -132,11 +132,21 @@ export default function PhoneVerification({
   if (verified && !changing) {
     return (
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
-        <legend className="px-1 text-sm font-medium">{t("title")}</legend>
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm">
-            <span dir="ltr">{verifiedPhone}</span>{" "}
-            <span className="text-xs text-accent">{t("verifiedBadge")}</span>
+        {/* The same shape as the unverified card, with the tag answering
+            the other way: the heading says what this is, the tag says
+            where it stands. */}
+        <legend className="flex flex-wrap items-center gap-2 px-1 text-sm font-medium">
+          {t("title")}
+          <span className="border-s-2 border-accent bg-accent/10 px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-accent uppercase">
+            {t("verifiedBadge")}
+          </span>
+        </legend>
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <p className="flex flex-col gap-1.5 text-sm">
+            {t("yourNumber")}
+            <span dir="ltr" className="font-medium">
+              {verifiedPhone}
+            </span>
           </p>
           <button
             type="button"
