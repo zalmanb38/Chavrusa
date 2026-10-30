@@ -129,7 +129,13 @@ export default function PhoneVerification({
     return `${c.flag} ${c.name} (${c.dial})`;
   }
 
-  if (verified && !changing) {
+  // An account can carry the verified flag with no number behind it: an
+  // admin can set the flag by hand, and nothing writes a number in that
+  // path. Showing the settled card then leaves a card with a blank where
+  // the number should be, so that case falls through to the form.
+  const hasNumber = verifiedPhone.trim() !== "";
+
+  if (verified && hasNumber && !changing) {
     return (
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
         {/* The same shape as the unverified card, with the tag answering
@@ -175,17 +181,23 @@ export default function PhoneVerification({
         {t("title")}
         {/* A tag rather than an asterisk: this is the one thing on the
             page that has to be done before anybody can be found at all,
-            and it is a step, not a field to fill in. */}
-        <span className="border-s-2 border-clay bg-clay-tint px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-clay-text uppercase">
-          {t("requiredBadge")}
-        </span>
+            and it is a step, not a field to fill in. Not said to someone
+            already carrying the flag: their profile is not hidden, so the
+            warning below would be untrue for them. */}
+        {!verified && (
+          <span className="border-s-2 border-clay bg-clay-tint px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-clay-text uppercase">
+            {t("requiredBadge")}
+          </span>
+        )}
       </legend>
       {/* The error pattern's own styling, without the alert role: it says
           what is not working yet, but it is the resting state of a new
           account rather than something that just went wrong. */}
-      <p className="-mt-2 border-s-2 border-clay bg-clay-tint px-3 py-2 text-sm text-clay-text">
-        {t("hint")}
-      </p>
+      {!verified && (
+        <p className="-mt-2 border-s-2 border-clay bg-clay-tint px-3 py-2 text-sm text-clay-text">
+          {t("hint")}
+        </p>
+      )}
 
       <div className="flex flex-col gap-1.5 text-sm">
         <span>
