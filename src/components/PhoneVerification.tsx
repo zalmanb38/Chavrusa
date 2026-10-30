@@ -143,12 +143,11 @@ export default function PhoneVerification({
             {t("verifiedBadge")}
           </span>
         </legend>
-        <div className="flex flex-wrap items-end justify-between gap-2">
-          <p className="flex flex-col gap-1.5 text-sm">
-            {t("yourNumber")}
-            <span dir="ltr" className="font-medium">
-              {verifiedPhone}
-            </span>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {/* No label over it: the heading beside the Verified tag
+              already says what this number is. */}
+          <p dir="ltr" className="text-sm font-medium">
+            {verifiedPhone}
           </p>
           <button
             type="button"
