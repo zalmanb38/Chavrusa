@@ -153,6 +153,18 @@ export default function ProfileForm({
       return;
     }
 
+    // A profile nobody can reach is a dead end at the last step, after
+    // two people have already agreed to learn together, so one way in is
+    // the floor. Which one is up to the person.
+    if (
+      !whatsapp.trim() &&
+      !contactPhone.trim() &&
+      !zoomLink.trim()
+    ) {
+      setError(t("contactRequired"));
+      return;
+    }
+
     // The two contact numbers are handed to a confirmed match as their
     // way of reaching this person, so an unusable one is worth catching
     // here rather than discovering when someone tries to dial it.
@@ -561,9 +573,13 @@ export default function ProfileForm({
 
       <fieldset className="flex flex-col gap-4 border-t border-border pt-5">
         <legend className="px-1 text-sm font-medium">
-          {t("contactSectionTitle")}
+          {t("contactSectionTitle")} <RequiredMark />
         </legend>
         <p className="-mt-2 text-xs text-muted">{t("contactSectionHint")}</p>
+        {/* Said in the section as well as in the error: the asterisk sits
+            on the heading because any one of the three satisfies it, and
+            a mark on a group needs a sentence to be read correctly. */}
+        <p className="-mt-1 text-xs text-muted">{t("contactRequiredHint")}</p>
 
         <label className="flex flex-col gap-1.5 text-sm">
           {t("whatsapp")}

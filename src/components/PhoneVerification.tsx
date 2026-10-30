@@ -9,6 +9,7 @@ import {
   type CountryCode,
 } from "@/lib/country-codes";
 import ErrorNote from "@/components/ErrorNote";
+import RequiredMark from "@/components/RequiredMark";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none disabled:opacity-60";
@@ -131,11 +132,22 @@ export default function PhoneVerification({
   if (verified && !changing) {
     return (
       <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
-        <legend className="px-1 text-sm font-medium">{t("title")}</legend>
+        {/* The same shape as the unverified card, with the tag answering
+            the other way: the heading says what this is, the tag says
+            where it stands. */}
+        <legend className="flex flex-wrap items-center gap-2 px-1 text-sm font-medium">
+          {/* Not "Verify phone" any more: the step is done, and what the
+              box holds from here on is the number itself. */}
+          {t("phoneLabel")}
+          <span className="border-s-2 border-accent bg-accent/10 px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-accent uppercase">
+            {t("verifiedBadge")}
+          </span>
+        </legend>
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-sm">
-            <span dir="ltr">{verifiedPhone}</span>{" "}
-            <span className="text-xs text-accent">{t("verifiedBadge")}</span>
+          {/* No label over it: the heading beside the Verified tag
+              already says what this number is. */}
+          <p dir="ltr" className="text-sm font-medium">
+            {verifiedPhone}
           </p>
           <button
             type="button"
@@ -176,7 +188,9 @@ export default function PhoneVerification({
       </p>
 
       <div className="flex flex-col gap-1.5 text-sm">
-        {t("phoneLabel")}
+        <span>
+          {t("phoneLabel")} <RequiredMark />
+        </span>
         <div className="flex gap-2" dir="ltr">
           <label className="sr-only" htmlFor="phone-country">
             {t("countryLabel")}
