@@ -600,7 +600,11 @@
     "changeEmailButton": "Actualizar correo",
     "changeEmailCancel": "Cancelar",
     "changeEmailSent": "Revisa tanto {email} como tu dirección actual para confirmar el cambio.",
-    "emailUpdated": "El correo de tu cuenta se ha actualizado."
+    "emailUpdated": "El correo de tu cuenta se ha actualizado.",
+    "newMemberEmailsLabel": "Avísame por correo cuando se unan personas que estudian lo que yo estudio",
+    "newMemberEmailsHint": "Como mucho una vez por semana, y solo cuando alguien se haya unido de verdad. Por lo demás, solo te escribimos sobre tus solicitudes, tus conexiones y tus mensajes.",
+    "emailPrefsSaved": "Guardado",
+    "emailPrefsError": "No se ha podido guardar. Inténtalo de nuevo."
   },
   "Notice": {
     "menOnly": "Chavrusa Link es por ahora solo para hombres. Si eres una mujer que busca compañero de estudio, <link>escríbenos a través del formulario de contacto</link> para más información."
@@ -621,7 +625,12 @@
     "newMessageHeading": "Un mensaje de {name}",
     "newMessageBody": "{name} te ha escrito en Chavrusa Link. Puedes leerlo y responder en el sitio; no volveremos a escribirte sobre esta conversación hasta que lo hayas leído.",
     "newMessageAction": "Leer el mensaje",
-    "newMessageFootnote": "Recibes esto porque tienes match con esta persona. Si terminas el match, también dejan de llegar estos correos."
+    "newMessageFootnote": "Recibes esto porque tienes match con esta persona. Si terminas el match, también dejan de llegar estos correos.",
+    "newMembersSubject": "{count, plural, =1 {# persona nueva en Chavrusa Link} other {# personas nuevas en Chavrusa Link}}",
+    "newMembersHeading": "{count, plural, =1 {Alguien nuevo estudia lo que tú estudias} other {Hay personas que estudian lo que tú estudias}}",
+    "newMembersBody": "{count, plural, =1 {# persona se ha unido a Chavrusa Link desde la última vez que te escribimos, y estudia: {subjects}. Échale un vistazo y mira si puede encajar contigo.} other {# personas se han unido a Chavrusa Link desde la última vez que te escribimos, y entre todas estudian: {subjects}. Échales un vistazo y mira si alguna puede encajar contigo.}}",
+    "newMembersAction": "Ver quién se ha unido",
+    "newMembersFootnote": "Recibes este mensaje porque tu perfil indica temas que otras personas también estudian. Puedes desactivar estos correos en tu página de perfil."
   },
   "BrowseWall": {
     "heading": "Explorar chavrutas",

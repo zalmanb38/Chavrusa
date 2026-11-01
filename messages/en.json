@@ -600,7 +600,11 @@
     "changeEmailButton": "Update email",
     "changeEmailCancel": "Cancel",
     "changeEmailSent": "Check both {email} and your current address to confirm the change.",
-    "emailUpdated": "Your account email has been updated."
+    "emailUpdated": "Your account email has been updated.",
+    "newMemberEmailsLabel": "Email me when people join who learn what I learn",
+    "newMemberEmailsHint": "At most one a week, and only when somebody has actually joined. Nothing else is emailed to you unless it is about your own requests, matches or messages.",
+    "emailPrefsSaved": "Saved",
+    "emailPrefsError": "Couldn't save that. Please try again."
   },
   "Notice": {
     "menOnly": "Chavrusa Link is currently for men only. If you're a woman looking for a study partner, please <link>reach out via our contact form</link> for more information."
@@ -621,7 +625,12 @@
     "newMessageHeading": "A message from {name}",
     "newMessageBody": "{name} has written to you on Chavrusa Link. You can read it and reply on the site — we will not email you again about this conversation until you have read it.",
     "newMessageAction": "Read the message",
-    "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match also ends these emails."
+    "newMessageFootnote": "You are receiving this because you are matched with this learner. Ending the match also ends these emails.",
+    "newMembersSubject": "{count, plural, =1 {# new learner on Chavrusa Link} other {# new learners on Chavrusa Link}}",
+    "newMembersHeading": "{count, plural, =1 {Somebody new is learning what you learn} other {People are learning what you learn}}",
+    "newMembersBody": "{count, plural, =1 {# learner has joined Chavrusa Link since we last wrote, and they learn: {subjects}. Have a look and see whether any of them could be a good fit.} other {# learners have joined Chavrusa Link since we last wrote, and between them they learn: {subjects}. Have a look and see whether any of them could be a good fit.}}",
+    "newMembersAction": "See who has joined",
+    "newMembersFootnote": "You are receiving this because your profile lists subjects other people are learning too. You can turn these off on your profile page."
   },
   "BrowseWall": {
     "heading": "Browse Chavrusas",
