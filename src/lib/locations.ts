@@ -167,12 +167,16 @@ export function citiesFor(country: string, region: string): string[] {
 }
 
 /**
- * Location is only compulsory for people who exclusively meet in person —
- * for everyone else it's optional context, so requiring it would be
- * asking for data the site has no use for.
+ * Compulsory for anyone who is willing to meet in person at all — "both"
+ * included. Somebody open to meeting cannot be met without a city, and
+ * the earlier rule marked the fields required only for the exclusive
+ * case, so "both" asked for the same thing and said it was optional.
+ *
+ * Still optional for remote-only learners: a place nobody will travel to
+ * is data the site has no use for.
  */
 export function locationRequired(preference: string): boolean {
-  return preference === "in_person";
+  return preference === "in_person" || preference === "both";
 }
 
 /**
