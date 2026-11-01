@@ -22,7 +22,9 @@
 alter table public.profile_contacts
   add column if not exists contact_email text not null default '';
 
--- Unchanged from 0031 apart from the new column in the contacts upsert.
+-- Carried over from 0032 — the current definition, with the username and
+-- is_looking handling intact — with the new column in the contacts
+-- upsert and nothing else changed.
 
 create or replace function public.save_profile(
   p_profile jsonb,
@@ -42,6 +44,12 @@ declare
       then lower(trim(coalesce(p_profile->>'username', '')))
     else null
   end;
+  -- Same rule, same reason: null means "leave it as it is".
+  new_is_looking boolean := case
+    when p_profile ? 'is_looking'
+      then (p_profile->>'is_looking')::boolean
+    else null
+  end;
 begin
   if uid is null then
     raise exception 'not authenticated' using errcode = '28000';
@@ -51,7 +59,7 @@ begin
     id, name, username, languages, topics, topic_other, level, city, country,
     region, neighborhood, meeting_spot, preference, availability, age_range,
     study_languages, frequency, time_of_day, session_length, blurb,
-    hidden_fields, display_name_set
+    hidden_fields, display_name_set, is_looking
   )
   values (
     uid,
@@ -75,12 +83,14 @@ begin
     coalesce(p_profile->>'session_length', ''),
     coalesce(p_profile->>'blurb', ''),
     coalesce(array(select jsonb_array_elements_text(p_profile->'hidden_fields')), '{}'),
-    coalesce((p_profile->>'display_name_set')::boolean, true)
+    coalesce((p_profile->>'display_name_set')::boolean, true),
+    coalesce(new_is_looking, true)
   )
   on conflict (id) do update set
     name = excluded.name,
-    -- The one column that survives being left out of the payload.
+    -- The columns that survive being left out of the payload.
     username = coalesce(new_username, public.profiles.username),
+    is_looking = coalesce(new_is_looking, public.profiles.is_looking),
     languages = excluded.languages,
     topics = excluded.topics,
     topic_other = excluded.topic_other,
@@ -138,3 +148,16 @@ $$;
 
 revoke all on function public.save_profile(jsonb, text, jsonb) from public, anon;
 grant execute on function public.save_profile(jsonb, text, jsonb) to authenticated;
+
+-- ─── the public counts deliberately do NOT follow the flag ──────────────
+-- discoverable_learner_count, active_member_count and subject_counts all
+-- stay exactly as they were. They answer how many people are HERE, which
+-- is not the same question as how many are looking right now: someone who
+-- has found their chavrusas through the site is still a member of it, and
+-- a homepage number that fell every time somebody succeeded would be
+-- reporting the opposite of what happened.
+--
+-- The consequence, accepted on purpose: the signed-out wall's count can
+-- exceed the number of cards Browse then shows. That is the honest way
+-- round of the two — overstating what a visitor will find is a smaller
+-- problem than a membership figure that drops when the product works.
