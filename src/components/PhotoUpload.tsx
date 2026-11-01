@@ -99,13 +99,13 @@ export default function PhotoUpload({
   }
 
   return (
-    <section className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5">
+    <section className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-4">
       <div className="flex flex-col gap-1">
         <h2 className="text-sm font-medium">{t("title")}</h2>
         <p className="text-xs text-muted">{t("hint")}</p>
       </div>
 
-      <div className="flex items-start gap-4">
+      <div className="flex items-center gap-3">
         {preview ? (
           /* Signed Supabase URLs are short-lived and host-specific, so
              they don't fit next/image's remotePatterns model. */
@@ -113,10 +113,10 @@ export default function PhotoUpload({
           <img
             src={preview}
             alt={t("yourPhotoAlt")}
-            className="h-28 w-28 rounded-2xl object-cover"
+            className="h-16 w-16 shrink-0 rounded-2xl object-cover"
           />
         ) : (
-          <PhotoPlaceholder className="h-28 w-28" />
+          <PhotoPlaceholder className="h-16 w-16 shrink-0" />
         )}
 
         <div className="flex flex-col gap-2">

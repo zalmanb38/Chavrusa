@@ -271,31 +271,29 @@ export default function ProfileForm({
         someone whose circumstances change should find it where they left
         it.
       */}
-      <fieldset className="flex flex-col gap-2 border-t border-border pt-5">
-        <legend className="px-1 text-sm font-medium">
+      <div className="flex flex-col gap-1.5 border-t border-border pt-5">
+        {/* One line: the box sits with its own wording, so the section
+            needs no separate heading above it to repeat. */}
+        <label className="flex items-center gap-2 text-sm font-medium">
+          <input
+            type="checkbox"
+            checked={isLooking}
+            onChange={(e) => setIsLooking(e.target.checked)}
+            className="accent-primary h-4 w-4 shrink-0"
+            aria-describedby="looking-hint"
+          />
           {t("lookingLegend")}
-        </legend>
-        {/* The legend already says what the box is for, so the box carries
-            its own wording only for screen readers; a visible label here
-            would repeat the heading word for word. */}
-        <input
-          type="checkbox"
-          checked={isLooking}
-          onChange={(e) => setIsLooking(e.target.checked)}
-          className="accent-primary self-start"
-          aria-label={t("lookingToggle")}
-          aria-describedby="looking-hint"
-        />
-        <span id="looking-hint" className="text-xs text-muted">
+        </label>
+        <p id="looking-hint" className="text-xs text-muted">
           {t("lookingHint")}
-        </span>
+        </p>
         {/* Said only to the people it is actually about. Somebody who has
             just found a chavrusa is the one most likely to read this
             switch as "I'm done" and turn it off by reflex. */}
         {(initialProfile?.match_count ?? 0) > 0 && (
-          <span className="text-xs text-muted">{t("lookingMatchedNote")}</span>
+          <p className="text-xs text-muted">{t("lookingMatchedNote")}</p>
         )}
-      </fieldset>
+      </div>
 
       <label className="flex flex-col gap-1.5 text-sm">
         <span>
