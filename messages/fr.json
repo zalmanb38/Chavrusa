@@ -112,7 +112,7 @@
     "completeYourProfile": "Complétez votre profil pour que d'autres puissent vous trouver.",
     "requiredLegend": "indique un champ obligatoire.",
     "topicsRequired": "Choisissez au moins un sujet pour que les autres puissent vous trouver.",
-    "contactRequired": "Veuillez indiquer au moins un moyen de contact : WhatsApp, un numéro de téléphone ou un lien Zoom.",
+    "contactRequired": "Veuillez indiquer au moins un moyen de contact — WhatsApp, un numéro de téléphone, un lien Zoom ou une adresse e-mail.",
     "contactRequiredHint": "Veuillez indiquer au moins un moyen de contact.",
     "noProfileYet": "Vous n'avez pas encore créé de profil.",
     "contactSectionTitle": "Coordonnées",
@@ -123,6 +123,9 @@
     "contactPhonePlaceholder": "ex. +33 6 12 34 56 78",
     "zoomLink": "Lien Zoom",
     "zoomLinkPlaceholder": "ex. https://zoom.us/j/...",
+    "contactEmail": "Adresse e-mail",
+    "contactEmailPlaceholder": "ex. vous@exemple.com",
+    "useAccountEmail": "Utiliser l’e-mail de mon compte ({email})",
     "topicOtherLabel": "Veuillez préciser",
     "topicOtherPlaceholder": "ex. Kouzari, Pirkei Avot",
     "displayName": "Nom affiché",
@@ -176,6 +179,7 @@
     "prefInPersonList": "En personne uniquement",
     "prefBothList": "En personne ou à distance",
     "contactPhoneInvalid": "Saisissez les numéros de téléphone avec l'indicatif du pays, par exemple +1 555 123 4567.",
+    "contactEmailInvalid": "Saisissez une adresse e-mail du type vous@exemple.com.",
     "lookingLegend": "À la recherche d'un Chavrusa",
     "lookingToggle": "Je cherche un Chavrusa",
     "lookingHint": "Laissez cette case cochée tant que vous êtes ouvert à étudier avec quelqu'un de nouveau — c'est elle qui vous fait apparaître dans la recherche et sur la carte. Désactivez-la et votre profil n'est plus visible.",
@@ -340,6 +344,7 @@
     "contactWhatsappLabel": "WhatsApp",
     "contactPhoneLabel": "Téléphone",
     "contactZoomLabel": "Zoom",
+    "contactEmailLabel": "E-mail",
     "contactNoneSet": "{name} n'a pas encore ajouté de coordonnées.",
     "fullNameLabel": "Nom complet : {name}",
     "subjectTipBody": "Vous avez maintenant un Chavrusa pour ce sujet ? Décochez-le sur votre profil et laissez vos autres sujets cochés. Les personnes qui cherchent ceux-là peuvent toujours vous trouver, et on cesse de vous solliciter pour celui qui est réglé.",
@@ -595,7 +600,11 @@
     "changeEmailButton": "Mettre à jour l'e-mail",
     "changeEmailCancel": "Annuler",
     "changeEmailSent": "Consultez à la fois {email} et votre adresse actuelle pour confirmer le changement.",
-    "emailUpdated": "L'adresse e-mail de votre compte a été mise à jour."
+    "emailUpdated": "L'adresse e-mail de votre compte a été mise à jour.",
+    "newMemberEmailsLabel": "M’avertir par e-mail quand des personnes qui étudient ce que j’étudie nous rejoignent",
+    "newMemberEmailsHint": "Au maximum une fois par semaine, et seulement si quelqu’un nous a effectivement rejoints. En dehors de cela, nous ne vous écrivons qu’à propos de vos demandes, de vos mises en relation et de vos messages.",
+    "emailPrefsSaved": "Enregistré",
+    "emailPrefsError": "Impossible d’enregistrer. Veuillez réessayer."
   },
   "Notice": {
     "menOnly": "Chavrusa Link est actuellement réservé aux hommes. Si vous êtes une femme à la recherche d'un partenaire d'étude, <link>écrivez-nous via notre formulaire de contact</link> pour en savoir plus."
@@ -616,7 +625,12 @@
     "newMessageHeading": "Un message de {name}",
     "newMessageBody": "{name} vous a écrit sur Chavrusa Link. Vous pouvez le lire et répondre sur le site — nous ne vous enverrons pas d'autre e-mail à propos de cette conversation avant que vous ne l'ayez lu.",
     "newMessageAction": "Lire le message",
-    "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met également fin à ces e-mails."
+    "newMessageFootnote": "Vous recevez ceci parce que vous êtes en relation avec cet apprenant. Mettre fin à la relation met également fin à ces e-mails.",
+    "newMembersSubject": "{count, plural, =1 {# nouvel apprenant sur Chavrusa Link} other {# nouveaux apprenants sur Chavrusa Link}}",
+    "newMembersHeading": "{count, plural, =1 {Quelqu’un de nouveau étudie ce que vous étudiez} other {Des personnes étudient ce que vous étudiez}}",
+    "newMembersBody": "{count, plural, =1 {# apprenant a rejoint Chavrusa Link depuis notre dernier message, et il étudie : {subjects}. Jetez-y un œil pour voir si cela vous convient.} other {# apprenants ont rejoint Chavrusa Link depuis notre dernier message, et ensemble ils étudient : {subjects}. Jetez-y un œil pour voir si l’un d’eux vous convient.}}",
+    "newMembersAction": "Voir qui nous a rejoints",
+    "newMembersFootnote": "Vous recevez ce message parce que votre profil indique des sujets que d’autres étudient aussi. Vous pouvez désactiver ces e-mails sur votre page de profil."
   },
   "BrowseWall": {
     "heading": "Parcourir les chavroutas",

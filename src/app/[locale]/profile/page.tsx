@@ -8,6 +8,7 @@ import PhotoUpload from "@/components/PhotoUpload";
 import AccountLinkedBanner from "@/components/AccountLinkedBanner";
 import EmailUpdatedBanner from "@/components/EmailUpdatedBanner";
 import ChangeEmailForm from "@/components/ChangeEmailForm";
+import EmailPreferences from "@/components/EmailPreferences";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
@@ -37,14 +38,14 @@ export default async function ProfilePage({
   const { data: profile } = await supabase
     .from("profiles")
     .select(
-      "id, name, username, languages, study_languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, display_name_set, is_active, is_looking, match_count, phone, phone_verified",
+      "id, name, username, languages, study_languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, display_name_set, is_active, is_looking, match_count, phone, phone_verified, new_member_emails",
     )
     .eq("id", user.id)
     .maybeSingle();
 
   const { data: contacts } = await supabase
     .from("profile_contacts")
-    .select("id, whatsapp, contact_phone, zoom_link")
+    .select("id, whatsapp, contact_phone, zoom_link, contact_email")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -105,6 +106,15 @@ export default async function ProfilePage({
         <ChangeEmailForm locale={locale} />
       </section>
 
+      {/* Directly under the address it is sent to, which is the question
+          anybody reading a mail setting asks first. */}
+      <EmailPreferences
+        initialEnabled={
+          (profile as { new_member_emails: boolean } | null)
+            ?.new_member_emails ?? true
+        }
+      />
+
       <PhotoUpload
         initialStatus={photoRow?.status ?? null}
         initialUrl={photoUrl}
@@ -114,6 +124,7 @@ export default async function ProfilePage({
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}
         initialFullName={(nameRow as { full_name: string } | null)?.full_name ?? ""}
+        accountEmail={user.email ?? ""}
       />
     </div>
   );
