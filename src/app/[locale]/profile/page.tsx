@@ -44,7 +44,7 @@ export default async function ProfilePage({
 
   const { data: contacts } = await supabase
     .from("profile_contacts")
-    .select("id, whatsapp, contact_phone, zoom_link")
+    .select("id, whatsapp, contact_phone, zoom_link, contact_email")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -114,6 +114,7 @@ export default async function ProfilePage({
         initialProfile={profile as Profile | null}
         initialContacts={contacts as ProfileContacts | null}
         initialFullName={(nameRow as { full_name: string } | null)?.full_name ?? ""}
+        accountEmail={user.email ?? ""}
       />
     </div>
   );

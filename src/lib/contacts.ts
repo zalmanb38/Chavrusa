@@ -3,4 +3,5 @@ export interface ProfileContacts {
   whatsapp: string;
   contact_phone: string;
   zoom_link: string;
+  contact_email: string;
 }
