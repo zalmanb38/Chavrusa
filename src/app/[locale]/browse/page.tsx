@@ -22,6 +22,7 @@ import {
   type TimeOfDay,
 } from "@/lib/profile-options";
 import { topicName } from "@/lib/topic-names";
+import { PHONE_VERIFICATION_REQUIRED } from "@/lib/verification";
 import {
   PROFILE_COLUMNS,
   proximityOptions,
@@ -149,8 +150,11 @@ export default async function BrowsePage({
 
   // Browsing still works while unverified, but nobody can see you back —
   // so say so here rather than leaving someone to wonder why no requests
-  // ever arrive.
-  const viewerVerified = viewer?.phone_verified ?? false;
+  // ever arrive. Only true while verification is a requirement: with it
+  // optional, an unverified profile is as visible as any other and the
+  // notice would be a warning about nothing.
+  const viewerHidden =
+    PHONE_VERIFICATION_REQUIRED && !(viewer?.phone_verified ?? false);
 
   // Someone who switched themselves off is still welcome to browse, but
   // the switch is on another page and its effect shows up here as silence.
@@ -165,11 +169,13 @@ export default async function BrowsePage({
   // carries kilometres either way.
   const proximity = proximityOptions(viewer?.country, filters.near);
 
-  // Only phone-verified people are discoverable, per the safety spec:
-  // a verified number is what makes a bad actor costly to replace after
-  // being blocked or suspended. phone_verified can only be set by the
-  // SMS route (service role) or an admin — the profiles trigger reverts
-  // a user's own write to it — so this can't be self-granted.
+  // While PHONE_VERIFICATION_REQUIRED is on, only phone-verified people
+  // are discoverable, per the safety spec: a verified number is what
+  // makes a bad actor costly to replace after being blocked or
+  // suspended. phone_verified can only be set by the SMS route (service
+  // role) or an admin — the profiles trigger reverts a user's own write
+  // to it — so this can't be self-granted. It is off until launch, so
+  // anybody named and looking is listed; see src/lib/verification.ts.
   let query = supabase
     .from("profiles")
     .select(PROFILE_COLUMNS)
@@ -179,8 +185,11 @@ export default async function BrowsePage({
     // somebody who has taken themselves off Browse is off it, the way
     // is_active works for an account an admin has hidden.
     .eq("is_looking", true)
-    .eq("phone_verified", true)
     .not("name", "eq", "");
+
+  if (PHONE_VERIFICATION_REQUIRED) {
+    query = query.eq("phone_verified", true);
+  }
 
   if (blockedIds.length > 0) {
     query = query.not("id", "in", `(${blockedIds.join(",")})`);
@@ -236,14 +245,17 @@ export default async function BrowsePage({
   // the knowledge that this query found nothing.
   let totalDiscoverable = profiles.length;
   if (profiles.length === 0) {
-    const { count } = await supabase
+    let totalQuery = supabase
       .from("profiles")
       .select("id", { count: "exact", head: true })
       .neq("id", user.id)
       .eq("is_active", true)
       .eq("is_looking", true)
-      .eq("phone_verified", true)
       .not("name", "eq", "");
+    if (PHONE_VERIFICATION_REQUIRED) {
+      totalQuery = totalQuery.eq("phone_verified", true);
+    }
+    const { count } = await totalQuery;
     totalDiscoverable = count ?? 0;
   }
 
@@ -308,7 +320,7 @@ export default async function BrowsePage({
         </div>
       </div>
 
-      {!viewerVerified && (
+      {viewerHidden && (
         <div className="mb-6 flex flex-col gap-2 border-s-2 border-brass bg-surface p-4">
           <p className="font-semibold">{t("notVisibleTitle")}</p>
           <p className="text-sm text-muted">{t("notVisibleBody")}</p>

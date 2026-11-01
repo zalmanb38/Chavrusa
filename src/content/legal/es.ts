@@ -28,7 +28,7 @@ export const es: LegalContent = {
       },
       {
         type: "p",
-        text: "**Número de teléfono.** Recopilamos y verificamos tu número de teléfono mediante un código SMS (a través de nuestro proveedor, Twilio) antes de que tu perfil sea visible para otros usuarios. Es una medida de seguridad para reducir las cuentas falsas.",
+        text: "**Número de teléfono.** Puedes añadir un número de teléfono y verificarlo mediante un código SMS (a través de nuestro proveedor, Twilio). Es opcional mientras la comunidad está empezando, y es una medida de seguridad para reducir las cuentas falsas. Podremos exigirlo en el futuro, y lo avisaremos antes de que se aplique.",
       },
       {
         type: "p",
@@ -65,7 +65,7 @@ export const es: LegalContent = {
       {
         type: "ul",
         items: [
-          "Tu nombre, idiomas, temas, nivel, ciudad y disponibilidad son visibles para otros usuarios registrados mientras exploran, **solo una vez que tu número de teléfono esté verificado**.",
+          "Tu nombre, idiomas, temas, nivel, ciudad y disponibilidad son visibles para otros usuarios registrados mientras exploran, en cuanto tu perfil tiene un nombre y estás buscando un chavrusa. Tu número de teléfono no se muestra en tu perfil.",
           "Tus datos de contacto (WhatsApp, teléfono o Zoom) se comparten **únicamente** con un usuario conectado contigo, y **solo después** de que ambos confirméis una sesión de estudio.",
           "Los reportes que envías solo son visibles para los administradores de Chavrusa Link, nunca para la persona reportada.",
         ],
@@ -166,7 +166,7 @@ export const es: LegalContent = {
         type: "ul",
         items: [
           "Eres responsable de la exactitud de la información de tu perfil.",
-          "Debes verificar tu número de teléfono antes de que tu perfil sea visible para otros usuarios. Facilitar un número falso o no autorizado constituye una violación de estos Términos.",
+          "Si añades un número de teléfono, facilitar un número falso o no autorizado constituye una violación de estos Términos. Podremos exigir un número de teléfono verificado antes de que un perfil sea visible para otros usuarios.",
           "Eres responsable de mantener seguras tus credenciales y de toda la actividad realizada desde tu cuenta.",
           "No puedes crear una cuenta en nombre de otra persona, ni crear varias cuentas para eludir un bloqueo o una suspensión.",
         ],

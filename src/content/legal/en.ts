@@ -25,7 +25,7 @@ export const en: LegalContent = {
       },
       {
         type: "p",
-        text: "**Phone number.** We collect and verify your phone number via SMS code (through our provider, Twilio) before your profile becomes visible to other users. This is a safety measure to reduce fake accounts.",
+        text: "**Phone number.** You may add a phone number and verify it by SMS code (through our provider, Twilio). It is optional while the community is getting started, and it is a safety measure to reduce fake accounts. We may require it in future, and we will say so before that applies.",
       },
       {
         type: "p",
@@ -62,7 +62,7 @@ export const en: LegalContent = {
       {
         type: "ul",
         items: [
-          "Your name, languages, topics, level, city, and availability are visible to other signed-in users while browsing, **only once your phone number is verified**.",
+          "Your name, languages, topics, level, city, and availability are visible to other signed-in users while browsing, once your profile has a name and you are looking for a Chavrusa. Your phone number is not shown on your profile.",
           "Your contact information (WhatsApp/phone/Zoom) is shared **only** with a matched user, **only after** a study session is mutually confirmed.",
           "Reports you submit are visible only to Chavrusa Link administrators, not to the person you reported.",
         ],
@@ -163,7 +163,7 @@ export const en: LegalContent = {
         type: "ul",
         items: [
           "You are responsible for the accuracy of the information in your profile.",
-          "You must verify your phone number before your profile becomes visible to other users. Providing a false or unauthorized phone number is a violation of these Terms.",
+          "If you add a phone number, providing a false or unauthorized number is a violation of these Terms. We may require a verified phone number before a profile becomes visible to other users.",
           "You are responsible for keeping your account credentials secure and for all activity under your account.",
           "You may not create an account on behalf of someone else, or create multiple accounts to evade a block or suspension.",
         ],

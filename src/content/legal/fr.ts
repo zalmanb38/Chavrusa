@@ -28,7 +28,7 @@ export const fr: LegalContent = {
       },
       {
         type: "p",
-        text: "**Numéro de téléphone.** Nous recueillons et vérifions votre numéro de téléphone par code SMS (via notre prestataire, Twilio) avant que votre profil ne devienne visible par les autres utilisateurs. Il s'agit d'une mesure de sécurité destinée à limiter les faux comptes.",
+        text: "**Numéro de téléphone.** Vous pouvez ajouter un numéro de téléphone et le vérifier par code SMS (via notre prestataire, Twilio). C'est facultatif pendant que la communauté se constitue, et il s'agit d'une mesure de sécurité destinée à limiter les faux comptes. Nous pourrons l'exiger à l'avenir, et nous vous en informerons avant que cela s'applique.",
       },
       {
         type: "p",
@@ -65,7 +65,7 @@ export const fr: LegalContent = {
       {
         type: "ul",
         items: [
-          "Votre nom, vos langues, vos sujets, votre niveau, votre ville et votre disponibilité sont visibles par les autres utilisateurs connectés lorsqu'ils parcourent le site, **uniquement une fois votre numéro de téléphone vérifié**.",
+          "Votre nom, vos langues, vos sujets, votre niveau, votre ville et votre disponibilité sont visibles par les autres utilisateurs connectés lorsqu'ils parcourent le site, dès lors que votre profil porte un nom et que vous cherchez un chavrusa. Votre numéro de téléphone n'apparaît pas sur votre profil.",
           "Vos coordonnées (WhatsApp / téléphone / Zoom) sont partagées **uniquement** avec un utilisateur mis en relation avec vous, et **seulement après** qu'une séance d'étude a été confirmée par vous deux.",
           "Les signalements que vous soumettez ne sont visibles que par les administrateurs de Chavrusa Link, et jamais par la personne signalée.",
         ],
@@ -166,7 +166,7 @@ export const fr: LegalContent = {
         type: "ul",
         items: [
           "Vous êtes responsable de l'exactitude des informations figurant dans votre profil.",
-          "Vous devez vérifier votre numéro de téléphone avant que votre profil ne devienne visible par les autres utilisateurs. Fournir un numéro faux ou dont vous n'êtes pas titulaire constitue une violation des présentes Conditions.",
+          "Si vous ajoutez un numéro de téléphone, fournir un numéro faux ou dont vous n'êtes pas titulaire constitue une violation des présentes Conditions. Nous pourrons exiger un numéro de téléphone vérifié avant qu'un profil ne devienne visible par les autres utilisateurs.",
           "Vous êtes responsable de la confidentialité de vos identifiants et de toute activité effectuée depuis votre compte.",
           "Vous ne pouvez pas créer de compte au nom d'une autre personne, ni créer plusieurs comptes pour contourner un blocage ou une suspension.",
         ],

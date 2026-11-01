@@ -293,7 +293,7 @@
     "emptyFilteredBody": "{count, plural, =0 {Clearing your filters would show everyone here.} =1 {Clearing your filters would show # learner.} other {Clearing your filters would show # learners.}}",
     "widenSearch": "Widen the search",
     "emptyTitle": "Nobody to show yet.",
-    "emptyBody": "Only learners who have verified a phone number appear here. As more people join, this fills up.",
+    "emptyBody": "As more people join, this fills up. If you know somebody looking for a Chavrusa, inviting them is the quickest way to fill it.",
     "alreadyLearning": "Already has a Chavrusa",
     "filterNotMatched": "Only people without a Chavrusa yet",
     "notLookingTitle": "Your profile is hidden from Browse",
@@ -462,6 +462,7 @@
   "Phone": {
     "title": "Verify phone",
     "hint": "Please verify your number to complete your account setup. An unverified phone number will cause your profile to stay hidden from other users.",
+    "hintOptional": "Optional for now. Verifying a number helps us keep fake accounts out, and it is never shown on your profile.",
     "requiredBadge": "Required",
     "phoneLabel": "Phone number",
     "phonePlaceholder": "e.g. 555 123 4567",
@@ -619,9 +620,9 @@
   },
   "BrowseWall": {
     "heading": "Browse Chavrusas",
-    "count": "{count, plural, =0 {Verified learners are joining now.} =1 {# verified learner is here.} other {# verified learners are here.}}",
+    "count": "{count, plural, =0 {Learners are joining now.} =1 {# learner is here.} other {# learners are here.}}",
     "body": "Sign in to view more information and connect with a potential Chavrusa. You’ll be able to see what they learn, when they are available, and whether they may be a good fit for you.",
-    "reassurance": "Free to join. Your profile is only visible once you verify your account.",
+    "reassurance": "Free to join. You choose what to show on your profile, and you can take yourself off Browse at any time.",
     "heroImageDirection": "A stack of seforim on a table, shot from the side. Objects and texts only — no faces.",
     "createAccount": "Create a free account",
     "signIn": "Sign in",

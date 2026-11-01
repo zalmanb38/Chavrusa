@@ -10,6 +10,7 @@ import {
 } from "@/lib/country-codes";
 import ErrorNote from "@/components/ErrorNote";
 import RequiredMark from "@/components/RequiredMark";
+import { PHONE_VERIFICATION_REQUIRED } from "@/lib/verification";
 
 const inputClass =
   "rounded-xl border border-border bg-transparent px-3.5 py-2.5 text-sm focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none disabled:opacity-60";
@@ -178,13 +179,19 @@ export default function PhoneVerification({
   return (
     <fieldset className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4">
       <legend className="flex flex-wrap items-center gap-2 px-1 text-sm font-medium">
-        {t("title")}
+        {/* While a number is a requirement the heading names the step to
+            do; while it is optional there is no step, only a field, so
+            the heading names what the box holds — the same heading the
+            settled card carries. */}
+        {PHONE_VERIFICATION_REQUIRED ? t("title") : t("phoneLabel")}
         {/* A tag rather than an asterisk: this is the one thing on the
             page that has to be done before anybody can be found at all,
             and it is a step, not a field to fill in. Not said to someone
             already carrying the flag: their profile is not hidden, so the
-            warning below would be untrue for them. */}
-        {!verified && (
+            warning below would be untrue for them. No tag at all while a
+            number is optional — and no "optional" tag either, since on
+            this page the absence of a mark is the whole signal. */}
+        {PHONE_VERIFICATION_REQUIRED && !verified && (
           <span className="border-s-2 border-clay bg-clay-tint px-2 py-0.5 text-[11px] font-semibold tracking-[0.08em] text-clay-text uppercase">
             {t("requiredBadge")}
           </span>
@@ -193,15 +200,25 @@ export default function PhoneVerification({
       {/* The error pattern's own styling, without the alert role: it says
           what is not working yet, but it is the resting state of a new
           account rather than something that just went wrong. */}
-      {!verified && (
+      {PHONE_VERIFICATION_REQUIRED && !verified && (
         <p className="-mt-2 border-s-2 border-clay bg-clay-tint px-3 py-2 text-sm text-clay-text">
           {t("hint")}
         </p>
       )}
+      {/* Nothing is wrong, so none of the warning styling: just what the
+          number is for, in the muted voice the other hints on the page
+          use. */}
+      {!PHONE_VERIFICATION_REQUIRED && !verified && (
+        <p className="-mt-2 text-sm text-muted">{t("hintOptional")}</p>
+      )}
 
       <div className="flex flex-col gap-1.5 text-sm">
-        <span>
-          {t("phoneLabel")} <RequiredMark />
+        {/* The legend already says "Phone number" when the step is
+            optional, and a heading repeating itself one line down reads
+            as two different things. Kept for screen readers either way,
+            since the inputs need a label of their own. */}
+        <span className={PHONE_VERIFICATION_REQUIRED ? undefined : "sr-only"}>
+          {t("phoneLabel")} {PHONE_VERIFICATION_REQUIRED && <RequiredMark />}
         </span>
         <div className="flex gap-2" dir="ltr">
           <label className="sr-only" htmlFor="phone-country">

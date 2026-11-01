@@ -293,7 +293,7 @@
     "emptyFilteredBody": "{count, plural, =0 {Borrar los filtros mostraría a todos.} one {Borrar los filtros mostraría # persona.} other {Borrar los filtros mostraría # personas.}}",
     "widenSearch": "Ampliar la búsqueda",
     "emptyTitle": "Todavía no hay nadie que mostrar.",
-    "emptyBody": "Aquí solo aparecen quienes han verificado un número de teléfono. La lista se irá llenando conforme se una más gente.",
+    "emptyBody": "La lista se irá llenando conforme se una más gente. Si conoces a alguien que busca un chavrusa, invitarlo es la forma más rápida de llenarla.",
     "alreadyLearning": "Ya tiene Chavrusa",
     "filterNotMatched": "Solo personas que aún no tienen Chavrusa",
     "notLookingTitle": "Tu perfil está oculto al explorar",
@@ -462,6 +462,7 @@
   "Phone": {
     "title": "Verificar teléfono",
     "hint": "Verifica tu número para completar la configuración de tu cuenta. Un número de teléfono sin verificar hará que tu perfil permanezca oculto para los demás usuarios.",
+    "hintOptional": "Opcional por ahora. Verificar un número nos ayuda a evitar cuentas falsas, y nunca aparece en tu perfil.",
     "requiredBadge": "Obligatorio",
     "phoneLabel": "Número de teléfono",
     "phonePlaceholder": "p. ej. 9 11 1234 5678",
@@ -619,9 +620,9 @@
   },
   "BrowseWall": {
     "heading": "Explorar chavrutas",
-    "count": "{count, plural, =0 {Ahora mismo se están uniendo personas verificadas.} one {Hay # persona verificada aquí.} other {Hay # personas verificadas aquí.}}",
+    "count": "{count, plural, =0 {Ahora mismo se están uniendo personas.} one {Hay # persona aquí.} other {Hay # personas aquí.}}",
     "body": "Inicia sesión para ver más información y ponerte en contacto con una posible chavruta. Podrás ver qué estudian, cuándo tienen tiempo y si pueden encajar contigo.",
-    "reassurance": "Unirse es gratis. Tu ficha solo aparece cuando verificas tu cuenta.",
+    "reassurance": "Unirse es gratis. Tú eliges qué se muestra en tu perfil, y puedes salir del listado cuando quieras.",
     "heroImageDirection": "Una pila de sefarim sobre una mesa, de lado. Solo objetos y textos, sin rostros.",
     "createAccount": "Crear una cuenta gratuita",
     "signIn": "Iniciar sesión",

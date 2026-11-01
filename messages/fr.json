@@ -293,7 +293,7 @@
     "emptyFilteredBody": "{count, plural, =0 {Effacer vos filtres afficherait tout le monde.} one {Effacer vos filtres afficherait # apprenant.} other {Effacer vos filtres afficherait # apprenants.}}",
     "widenSearch": "Élargir la recherche",
     "emptyTitle": "Personne à afficher pour l'instant.",
-    "emptyBody": "Seuls les apprenants ayant vérifié un numéro de téléphone apparaissent ici. La liste se remplira à mesure que d'autres nous rejoignent.",
+    "emptyBody": "La liste se remplira à mesure que d'autres nous rejoignent. Si vous connaissez quelqu'un qui cherche un chavrusa, l'inviter est le moyen le plus rapide de la remplir.",
     "alreadyLearning": "A déjà un Chavrusa",
     "filterNotMatched": "Uniquement les personnes sans Chavrusa",
     "notLookingTitle": "Votre profil n'apparaît pas dans la recherche",
@@ -462,6 +462,7 @@
   "Phone": {
     "title": "Vérifier le téléphone",
     "hint": "Veuillez vérifier votre numéro pour terminer la création de votre compte. Un numéro de téléphone non vérifié fait que votre profil reste masqué aux autres utilisateurs.",
+    "hintOptional": "Facultatif pour le moment. Vérifier un numéro nous aide à écarter les faux comptes, et il n'apparaît jamais sur votre profil.",
     "requiredBadge": "Obligatoire",
     "phoneLabel": "Numéro de téléphone",
     "phonePlaceholder": "ex. 6 12 34 56 78",
@@ -619,9 +620,9 @@
   },
   "BrowseWall": {
     "heading": "Parcourir les chavroutas",
-    "count": "{count, plural, =0 {Des apprenants vérifiés nous rejoignent en ce moment.} one {# apprenant vérifié est ici.} other {# apprenants vérifiés sont ici.}}",
+    "count": "{count, plural, =0 {Des apprenants nous rejoignent en ce moment.} one {# apprenant est ici.} other {# apprenants sont ici.}}",
     "body": "Connectez-vous pour en voir plus et entrer en contact avec une chavrouta. Vous verrez ce qu’ils étudient, quand ils sont disponibles et s’ils peuvent vous convenir.",
-    "reassurance": "L’inscription est gratuite. Votre fiche n’apparaît qu’une fois que vous avez vérifié votre compte.",
+    "reassurance": "L’inscription est gratuite. Vous choisissez ce qui figure sur votre profil, et vous pouvez vous retirer de la liste à tout moment.",
     "heroImageDirection": "Une pile de sefarim sur une table, vue de côté. Objets et textes uniquement, pas de visages.",
     "createAccount": "Créer un compte gratuit",
     "signIn": "Se connecter",
