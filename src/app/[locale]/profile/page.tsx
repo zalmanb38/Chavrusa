@@ -4,11 +4,14 @@ import { redirect } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/server";
 import ProfileForm from "@/components/ProfileForm";
 import PhoneVerification from "@/components/PhoneVerification";
+import NotificationChannel from "@/components/NotificationChannel";
 import PhotoUpload from "@/components/PhotoUpload";
 import AccountLinkedBanner from "@/components/AccountLinkedBanner";
 import EmailUpdatedBanner from "@/components/EmailUpdatedBanner";
 import ChangeEmailForm from "@/components/ChangeEmailForm";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
+import { smsAvailableFor } from "@/lib/sms";
+import type { NotificationChannel as Channel } from "@/lib/notifications";
 import type { Profile } from "@/lib/profile-options";
 import type { ProfileContacts } from "@/lib/contacts";
 
@@ -64,6 +67,22 @@ export default async function ProfilePage({
       ? await signedPhotoUrl(photoRow.storage_path)
       : null;
 
+  // Their own row only — migration 0034 gives this table no policy for
+  // anybody else. No row means email, which is what the site did before
+  // the setting existed.
+  const { data: preference } = await supabase
+    .from("notification_preferences")
+    .select("channel, sms_opted_out_at")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const preferenceRow = preference as {
+    channel: Channel;
+    sms_opted_out_at: string | null;
+  } | null;
+
+  const phone = (profile as { phone: string | null } | null)?.phone ?? null;
+
   const { data: nameRow } = await supabase
     .from("profile_names")
     .select("full_name")
@@ -73,10 +92,25 @@ export default async function ProfilePage({
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-6 py-12 sm:px-8">
       <PhoneVerification
-        initialPhone={(profile as { phone: string | null } | null)?.phone ?? null}
+        initialPhone={phone}
         initialVerified={
           (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
         }
+      />
+      {/* Directly under the phone box, because the two text options
+          depend on the number in it — and because a reason to verify is
+          worth putting next to the thing it is a reason for. */}
+      <NotificationChannel
+        initialChannel={preferenceRow?.channel ?? "email"}
+        phone={phone}
+        phoneVerified={
+          (profile as { phone_verified: boolean } | null)?.phone_verified ?? false
+        }
+        /* With no number on file yet there is no country to rule out,
+           so the card asks them to verify rather than telling them
+           their country is unsupported. */
+        countryAllowed={!phone || smsAvailableFor(phone)}
+        optedOut={Boolean(preferenceRow?.sms_opted_out_at)}
       />
       {/* The next screen after an OAuth round-trip, so this is where the
           one-time linking notice lands. */}

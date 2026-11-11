@@ -2,11 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { MAX_MESSAGE_LENGTH } from "@/lib/messages";
-import { sendEmail } from "@/lib/email";
-import { renderEmailHtml, renderEmailText } from "@/lib/email-template";
-import { getTranslations } from "next-intl/server";
-import { hasLocale } from "next-intl";
-import { routing } from "@/i18n/routing";
+import { deliver } from "@/lib/notifications";
 
 /**
  * Sending caps. Generous enough that a real back-and-forth never notices,
@@ -120,44 +116,26 @@ async function notifyIfFirstUnread(requestId: string, senderId: string) {
     const recipientId =
       match.requester_id === senderId ? match.recipient_id : match.requester_id;
 
-    const [{ data: recipient }, { data: sender }] = await Promise.all([
-      admin
-        .from("profiles")
-        .select("name, languages, suspended")
-        .eq("id", recipientId)
-        .maybeSingle(),
-      admin.from("profiles").select("name").eq("id", senderId).maybeSingle(),
-    ]);
+    const { data: sender } = await admin
+      .from("profiles")
+      .select("name")
+      .eq("id", senderId)
+      .maybeSingle();
 
-    if (!recipient || recipient.suspended) return;
-
-    const { data: email } = await admin.rpc("admin_get_user_email", {
-      user_id: recipientId,
-    });
-    if (typeof email !== "string" || !email) return;
-
-    const locale =
-      (recipient.languages ?? []).find((l: string) =>
-        hasLocale(routing.locales, l),
-      ) ?? routing.defaultLocale;
-
-    const t = await getTranslations({ locale, namespace: "Emails" });
-    const content = {
-      heading: t("newMessageHeading", { name: sender?.name ?? "" }),
-      paragraphs: [t("newMessageBody", { name: sender?.name ?? "" })],
-      action: { label: t("newMessageAction"), path: `/matches/${requestId}` },
-      footnote: t("newMessageFootnote"),
-    };
-
-    const result = await sendEmail({
-      to: email,
-      subject: t("newMessageSubject", { name: sender?.name ?? "" }),
-      text: renderEmailText(content, locale),
-      html: renderEmailHtml(content, locale),
+    // Which channels this reaches them on, and whether they are
+    // suspended, are decided inside deliver() from their own
+    // preferences — the same path the request and session
+    // notifications take.
+    const result = await deliver({
+      admin,
+      recipientId,
+      kind: "new_message",
+      senderName: sender?.name ?? "",
+      path: `/matches/${requestId}`,
     });
 
-    if (!result.sent) {
-      console.error("New-message email not sent", result.reason);
+    if (result.notes.length > 0) {
+      console.error("New-message notification", result.notes.join("; "));
     }
   } catch (error) {
     // The message is already saved. A notification failure must not turn

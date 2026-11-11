@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
-import { getTranslations } from "next-intl/server";
-import { hasLocale } from "next-intl";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { sendEmail } from "@/lib/email";
-import { renderEmailHtml, renderEmailText } from "@/lib/email-template";
-import { routing } from "@/i18n/routing";
+import { deliver, type NotificationKind } from "@/lib/notifications";
 
 const TYPES = [
   "connect_request",
@@ -15,26 +11,17 @@ const TYPES = [
 ] as const;
 type NotifyType = (typeof TYPES)[number];
 
-/**
- * People pick languages they speak, not an interface language, so their
- * first choice is the best signal we have about what to write to them in.
- */
-function preferredLocale(languages: string[] | null | undefined): string {
-  const first = (languages ?? []).find((l) => hasLocale(routing.locales, l));
-  return first ?? routing.defaultLocale;
-}
-
 interface Target {
   userId: string;
   senderName: string;
   /** Where the email should land the reader. */
   path: string;
   /**
-   * Overrides the message keys when one request type can mean two
+   * Overrides the notification kind when one request type can mean two
    * different things to the reader — proposing a time and countering one
    * are the same row in two states.
    */
-  messageType?: string;
+  messageType?: NotificationKind;
 }
 
 export async function POST(request: Request) {
@@ -177,55 +164,36 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "server_misconfigured" }, { status: 500 });
   }
 
-  // Email lives in auth.users, which the caller's own client can't read.
-  const { data: recipientAuth } = await admin.auth.admin.getUserById(
-    target.userId,
-  );
-  const to = recipientAuth?.user?.email;
+  // From here the recipient's own preferences decide the channels: the
+  // address, the verified number and the choice between them are all
+  // things only the service role can see, and none of them are the
+  // caller's business.
+  const result = await deliver({
+    admin,
+    recipientId: target.userId,
+    kind: target.messageType ?? type,
+    senderName: target.senderName,
+    path: target.path,
+  });
 
-  if (!to) {
-    console.error(`notify: no email on file for ${target.userId}`);
-    return NextResponse.json({ error: "no_recipient_email" }, { status: 404 });
-  }
-
-  // A suspended account shouldn't be pulled back in by notifications.
-  const { data: recipientProfile } = await admin
-    .from("profiles")
-    .select("languages, suspended")
-    .eq("id", target.userId)
-    .maybeSingle();
-
-  if (recipientProfile?.suspended) {
+  if (result.skipped === "recipient_suspended") {
     return NextResponse.json({ skipped: "recipient_suspended" });
   }
 
-  const locale = preferredLocale(recipientProfile?.languages);
-  const t = await getTranslations({ locale, namespace: "Email" });
-  const name = target.senderName || t("someone");
-
-  // The same shell the new-message email uses. The path stays relative:
-  // the template is what turns it into a locale-prefixed absolute URL.
-  const messageType = target.messageType ?? type;
-
-  const content = {
-    heading: t(`${messageType}Heading`, { name }),
-    paragraphs: [t(`${messageType}Body`, { name })],
-    action: { label: t(`${messageType}Action`), path: target.path },
-    footnote: t(`${messageType}Footnote`),
-  };
-
-  const result = await sendEmail({
-    to,
-    subject: t(`${messageType}Subject`, { name }),
-    text: renderEmailText(content, locale),
-    html: renderEmailHtml(content, locale),
-  });
-
-  if (!result.sent) {
-    // The action itself already succeeded, so this is logged rather than
-    // surfaced — but it must not vanish silently either.
-    console.error(`notify: ${type} email not sent (${result.reason})`);
+  if (result.skipped === "no_recipient") {
+    console.error(`notify: nothing to send to for ${target.userId}`);
+    return NextResponse.json({ error: "no_recipient" }, { status: 404 });
   }
 
-  return NextResponse.json({ sent: result.sent });
+  if (result.notes.length > 0) {
+    // The action itself already succeeded, so this is logged rather than
+    // surfaced — but it must not vanish silently either.
+    console.error(`notify: ${type} (${result.notes.join("; ")})`);
+  }
+
+  return NextResponse.json({
+    sent: result.emailSent || result.smsSent,
+    email: result.emailSent,
+    sms: result.smsSent,
+  });
 }

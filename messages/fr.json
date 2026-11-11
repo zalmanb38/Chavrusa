@@ -682,5 +682,31 @@
     "joinButton": "Rejoindre Chavrusa Link",
     "shareButton": "Partager avec des amis",
     "dismiss": "Fermer"
+  },
+  "Notifications": {
+    "title": "Comment vous prévenir",
+    "hint": "Les avis concernant les demandes, les messages et les sessions.",
+    "channelEmail": "E-mail",
+    "channelSms": "SMS",
+    "channelBoth": "E-mail et SMS",
+    "needsVerified": "nécessite un numéro vérifié",
+    "verifyPrompt": "Vérifiez votre numéro de téléphone ci-dessus pour recevoir des SMS. Certains fournisseurs de messagerie classent nos e-mails dans les promotions, alors qu'un SMS n'est classé nulle part.",
+    "sentTo": "Les SMS sont envoyés au",
+    "stopNote": "Répondez STOP à n'importe quel SMS pour les désactiver. Des frais de message et de données peuvent s'appliquer.",
+    "optedOut": "Vous avez répondu STOP, les SMS sont donc désactivés. Choisissez à nouveau SMS pour les réactiver.",
+    "countryUnavailable": "pas encore disponible dans votre pays",
+    "countryUnavailableHint": "Les SMS ne sont pas encore disponibles pour les numéros de votre pays. Nous vous préviendrons par e-mail.",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "saveError": "Impossible d'enregistrer. Veuillez réessayer."
+  },
+  "Sms": {
+    "connect_request": "Chavrusa Link: {name} souhaite apprendre avec vous. {link} Répondez STOP pour arrêter.",
+    "request_accepted": "Chavrusa Link: {name} a accepté votre demande. {link} Répondez STOP pour arrêter.",
+    "session_proposed": "Chavrusa Link: {name} a proposé un horaire pour apprendre. {link} Répondez STOP pour arrêter.",
+    "session_countered": "Chavrusa Link: {name} a proposé un autre horaire. {link} Répondez STOP pour arrêter.",
+    "session_confirmed": "Chavrusa Link: votre session avec {name} est confirmée. {link} Répondez STOP pour arrêter.",
+    "new_message": "Chavrusa Link: {name} vous a envoyé un message. {link} Répondez STOP pour arrêter.",
+    "help": "Avis de Chavrusa Link. Répondez STOP pour arrêter. Aide : {email}"
   }
 }
