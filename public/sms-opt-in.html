@@ -1,0 +1,159 @@
+<!doctype html>
+<!--
+  Opt-in proof for Twilio's toll-free verification, and for any carrier
+  review after it.
+
+  A plain file in public/ rather than a route, deliberately. The opt-in
+  itself is behind a login, which a reviewer cannot pass, and what they
+  need is one public page stating the whole arrangement: who sends, what
+  is sent, how often, how somebody agreed to it and how they stop it.
+  Nothing links here from the site, and it is in English only, because
+  its readers are US and Canadian carrier reviewers rather than members.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Text message notifications — Chavrusa Link</title>
+    <style>
+      :root {
+        --paper: #f8f6f0;
+        --ink: #1b2430;
+        --muted: #59544c;
+        --slate: #1c4b8f;
+        --gold: #c48f2a;
+        --hairline: #ddd8cc;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        line-height: 1.55;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 40px 16px 64px;
+      }
+      header {
+        border-bottom: 2px solid var(--gold);
+        padding-bottom: 12px;
+        margin-bottom: 28px;
+      }
+      header span {
+        font-size: 20px;
+      }
+      h1 {
+        font-size: 28px;
+        line-height: 1.15;
+        font-weight: 600;
+        margin: 0 0 18px;
+      }
+      h2 {
+        font-size: 19px;
+        font-weight: 600;
+        margin: 32px 0 8px;
+      }
+      p {
+        margin: 0 0 14px;
+        font-size: 17px;
+      }
+      figure {
+        margin: 24px 0;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--hairline);
+      }
+      figcaption {
+        font-size: 14px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      .rates {
+        font-weight: 600;
+      }
+      footer {
+        border-top: 1px solid var(--hairline);
+        margin-top: 40px;
+        padding-top: 16px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+      a {
+        color: var(--slate);
+      }
+      footer a {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header><span>Chavrusa Link</span></header>
+
+      <h1>Text message notifications on Chavrusa Link</h1>
+
+      <p>
+        Chavrusa Link helps people find a chavrusa to learn with. Members may
+        choose to be notified by text message instead of, or in addition to,
+        email.
+      </p>
+
+      <h2>How members opt in</h2>
+      <p>
+        On their own profile page, after signing in, a member enters their
+        mobile number and verifies it with a one-time code sent by SMS. Only a
+        number they have verified can be used. A section headed “How we reach
+        you” then offers three choices: Email, Text message, and Email and text
+        message. Email is the default; the two text options stay disabled until
+        the number is verified, and choosing one of them is the opt-in. No
+        member is opted in automatically.
+      </p>
+
+      <figure>
+        <img
+          src="/sms-opt-in.png"
+          alt="The notification settings on a member's profile page, shown twice: once with the text options disabled and marked “needs a verified number”, and once with a verified number and “Email and text message” selected."
+        />
+        <figcaption>
+          The settings as a member sees them: before verifying a number, and
+          after opting in.
+        </figcaption>
+      </figure>
+
+      <h2>What we send</h2>
+      <p>
+        Only notifications about the member’s own activity: someone asked to
+        learn with them, their request was accepted, a time was suggested or
+        confirmed, or another member sent them a message. No marketing or
+        promotional messages.
+      </p>
+
+      <h2>How often</h2>
+      <p>
+        Only when one of those things happens — typically a few messages a
+        month, and never more than twelve a day.
+      </p>
+
+      <p class="rates">Message and data rates may apply.</p>
+
+      <h2>To stop</h2>
+      <p>
+        Reply STOP to any message. Texts stop immediately and notifications go
+        back to email. Reply HELP for help, or write to
+        <a href="mailto:info@chavrusalink.com">info@chavrusalink.com</a>.
+      </p>
+
+      <footer>
+        <a href="https://chavrusalink.com/en/terms">Terms of Service</a> ·
+        <a href="https://chavrusalink.com/en/privacy">Privacy Policy</a> ·
+        <a href="https://chavrusalink.com/en">chavrusalink.com</a>
+      </footer>
+    </main>
+  </body>
+</html>
