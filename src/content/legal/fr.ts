@@ -28,7 +28,7 @@ export const fr: LegalContent = {
       },
       {
         type: "p",
-        text: "**Numéro de téléphone.** Vous pouvez ajouter un numéro de téléphone et le vérifier par code SMS (via notre prestataire, Twilio). C'est facultatif pendant que la communauté se constitue, et il s'agit d'une mesure de sécurité destinée à limiter les faux comptes. Nous pourrons l'exiger à l'avenir, et nous vous en informerons avant que cela s'applique.",
+        text: "**Numéro de téléphone.** Vous pouvez ajouter un numéro de téléphone et le vérifier par code SMS (via notre prestataire, Twilio). C'est facultatif pendant que la communauté se constitue, et il s'agit d'une mesure de sécurité destinée à limiter les faux comptes. Nous pourrons l'exiger à l'avenir, et nous vous en informerons avant que cela s'applique. Si vous choisissez d'être prévenu par SMS, nous utilisons aussi votre numéro pour vous envoyer ces avis.",
       },
       {
         type: "p",
@@ -54,6 +54,7 @@ export const fr: LegalContent = {
           "Pour répondre aux signalements, appliquer les blocages et préserver la sécurité de la communauté",
           "Pour vous envoyer les e-mails liés au compte (confirmations, réinitialisations de mot de passe) via notre prestataire, Resend",
           "Pour vous envoyer les codes de vérification par SMS via notre prestataire, Twilio",
+          "Pour vous envoyer des avis par SMS, si vous l'avez choisi",
         ],
       },
       {
@@ -80,7 +81,7 @@ export const fr: LegalContent = {
         type: "ul",
         items: [
           "**Supabase** — héberge notre base de données, gère l'authentification et la connexion",
-          "**Twilio** — envoie les codes de vérification par SMS",
+          "**Twilio** — envoie les codes de vérification par SMS et, si vous le choisissez, les avis par SMS",
           "**Resend** — envoie les e-mails liés au compte",
           '**Google** — fournit la connexion facultative « Continuer avec Google »',
           "**Vercel** — héberge notre site web",
@@ -167,6 +168,7 @@ export const fr: LegalContent = {
         items: [
           "Vous êtes responsable de l'exactitude des informations figurant dans votre profil.",
           "Si vous ajoutez un numéro de téléphone, fournir un numéro faux ou dont vous n'êtes pas titulaire constitue une violation des présentes Conditions. Nous pourrons exiger un numéro de téléphone vérifié avant qu'un profil ne devienne visible par les autres utilisateurs.",
+          "Les avis par SMS sont facultatifs. En les activant, vous confirmez que le numéro est bien le vôtre et que vous acceptez de recevoir des SMS automatiques concernant votre propre activité sur le site. Répondez STOP à n'importe quel SMS pour les arrêter. Des frais de message et de données peuvent s'appliquer.",
           "Vous êtes responsable de la confidentialité de vos identifiants et de toute activité effectuée depuis votre compte.",
           "Vous ne pouvez pas créer de compte au nom d'une autre personne, ni créer plusieurs comptes pour contourner un blocage ou une suspension.",
         ],

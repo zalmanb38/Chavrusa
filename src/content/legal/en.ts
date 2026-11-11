@@ -25,7 +25,7 @@ export const en: LegalContent = {
       },
       {
         type: "p",
-        text: "**Phone number.** You may add a phone number and verify it by SMS code (through our provider, Twilio). It is optional while the community is getting started, and it is a safety measure to reduce fake accounts. We may require it in future, and we will say so before that applies.",
+        text: "**Phone number.** You may add a phone number and verify it by SMS code (through our provider, Twilio). It is optional while the community is getting started, and it is a safety measure to reduce fake accounts. We may require it in future, and we will say so before that applies. If you choose to be notified by text message, we also use your number to send you those notifications.",
       },
       {
         type: "p",
@@ -51,6 +51,7 @@ export const en: LegalContent = {
           "To respond to reports, enforce blocks, and maintain a safe community",
           "To send you account-related emails (confirmations, password resets) via our provider, Resend",
           "To send you SMS verification codes via our provider, Twilio",
+          "To send you notifications by text message, if you have chosen that",
         ],
       },
       {
@@ -77,7 +78,7 @@ export const en: LegalContent = {
         type: "ul",
         items: [
           "**Supabase** — hosts our database, handles authentication and login",
-          "**Twilio** — sends SMS verification codes",
+          "**Twilio** — sends SMS verification codes and, if you choose it, text notifications",
           "**Resend** — sends account-related emails",
           '**Google** — provides optional "Continue with Google" sign-in',
           "**Vercel** — hosts our website",
@@ -164,6 +165,7 @@ export const en: LegalContent = {
         items: [
           "You are responsible for the accuracy of the information in your profile.",
           "If you add a phone number, providing a false or unauthorized number is a violation of these Terms. We may require a verified phone number before a profile becomes visible to other users.",
+          "Text notifications are optional. If you turn them on, you confirm that the number is yours and that you agree to receive automated texts about your own activity on the site. Reply STOP to any text to stop them. Message and data rates may apply.",
           "You are responsible for keeping your account credentials secure and for all activity under your account.",
           "You may not create an account on behalf of someone else, or create multiple accounts to evade a block or suspension.",
         ],

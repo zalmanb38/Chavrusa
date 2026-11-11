@@ -682,5 +682,31 @@
     "joinButton": "Join Chavrusa Link",
     "shareButton": "Share with Friends",
     "dismiss": "Dismiss"
+  },
+  "Notifications": {
+    "title": "How we reach you",
+    "hint": "Notifications about requests, messages and sessions.",
+    "channelEmail": "Email",
+    "channelSms": "Text message",
+    "channelBoth": "Email and text message",
+    "needsVerified": "needs a verified number",
+    "verifyPrompt": "Verify your phone number above to get text messages. Some email providers file our mail under promotions, and a text does not get filed anywhere.",
+    "sentTo": "Texts go to",
+    "stopNote": "Reply STOP to any text to turn them off. Message and data rates may apply.",
+    "optedOut": "You replied STOP, so texts are off. Choose text message again to turn them back on.",
+    "countryUnavailable": "not available in your country yet",
+    "countryUnavailableHint": "Text messages aren't available for numbers in your country yet. We will email you instead.",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "Couldn't save that. Please try again."
+  },
+  "Sms": {
+    "connect_request": "Chavrusa Link: {name} would like to learn with you. {link} Reply STOP to stop.",
+    "request_accepted": "Chavrusa Link: {name} accepted your connect request. {link} Reply STOP to stop.",
+    "session_proposed": "Chavrusa Link: {name} suggested a time to learn. {link} Reply STOP to stop.",
+    "session_countered": "Chavrusa Link: {name} suggested a different time. {link} Reply STOP to stop.",
+    "session_confirmed": "Chavrusa Link: your session with {name} is confirmed. {link} Reply STOP to stop.",
+    "new_message": "Chavrusa Link: {name} sent you a message. {link} Reply STOP to stop.",
+    "help": "Chavrusa Link notifications. Reply STOP to stop. Help: {email}"
   }
 }

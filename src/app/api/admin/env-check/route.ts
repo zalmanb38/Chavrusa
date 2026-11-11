@@ -18,6 +18,7 @@ import { createClient } from "@/lib/supabase/server";
 const PREFIXABLE = new Set([
   "TWILIO_ACCOUNT_SID",
   "TWILIO_VERIFY_SERVICE_SID",
+  "TWILIO_MESSAGING_SERVICE_SID",
   "NEXT_PUBLIC_SUPABASE_URL",
   "CONTACT_FROM_EMAIL",
 ]);
@@ -29,9 +30,14 @@ const EXPECTED = [
   "TWILIO_ACCOUNT_SID",
   "TWILIO_AUTH_TOKEN",
   "TWILIO_VERIFY_SERVICE_SID",
+  "TWILIO_MESSAGING_SERVICE_SID",
   "RESEND_API_KEY",
   "CONTACT_FROM_EMAIL",
   "CRON_SECRET",
+  // Not secret and not required: with it unset, texts report "not
+  // configured" and email carries on alone. Listed because a value in
+  // the wrong field is the failure this endpoint exists to make visible.
+  "SMS_ALLOWED_DIAL_CODES",
 ];
 
 export async function GET() {

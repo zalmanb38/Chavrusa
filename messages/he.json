@@ -682,5 +682,31 @@
     "joinButton": "הצטרפו ל-Chavrusa Link",
     "shareButton": "שתפו עם חברים",
     "dismiss": "סגור"
+  },
+  "Notifications": {
+    "title": "איך נעדכן אותך",
+    "hint": "עדכונים על בקשות, הודעות ולימודים.",
+    "channelEmail": "אימייל",
+    "channelSms": "הודעת טקסט",
+    "channelBoth": "אימייל והודעת טקסט",
+    "needsVerified": "דרוש מספר מאומת",
+    "verifyPrompt": "אמת את מספר הטלפון שלך למעלה כדי לקבל הודעות טקסט. אצל חלק מספקי האימייל ההודעות שלנו מגיעות לתיקיית הקידומים, והודעת טקסט לא מגיעה לשום תיקייה.",
+    "sentTo": "הודעות הטקסט נשלחות למספר",
+    "stopNote": "אפשר להשיב STOP לכל הודעה כדי לבטל אותן. ייתכנו עלויות הודעות ונתונים.",
+    "optedOut": "השבת STOP, ולכן הודעות הטקסט מושבתות. בחר שוב בהודעת טקסט כדי להפעיל אותן מחדש.",
+    "countryUnavailable": "עדיין לא זמין במדינה שלך",
+    "countryUnavailableHint": "הודעות טקסט אינן זמינות עדיין למספרים מהמדינה שלך. נעדכן אותך באימייל במקום.",
+    "saving": "שומר…",
+    "saved": "נשמר",
+    "saveError": "לא ניתן לשמור. נסה שוב."
+  },
+  "Sms": {
+    "connect_request": "Chavrusa Link: {name} מעוניין ללמוד איתך. {link} להפסקה: STOP",
+    "request_accepted": "Chavrusa Link: {name} אישר את בקשת החיבור שלך. {link} להפסקה: STOP",
+    "session_proposed": "Chavrusa Link: {name} הציע זמן ללמוד. {link} להפסקה: STOP",
+    "session_countered": "Chavrusa Link: {name} הציע זמן אחר. {link} להפסקה: STOP",
+    "session_confirmed": "Chavrusa Link: הלימוד שלך עם {name} אושר. {link} להפסקה: STOP",
+    "new_message": "Chavrusa Link: {name} שלח לך הודעה. {link} להפסקה: STOP",
+    "help": "עדכונים מ-Chavrusa Link. להפסקה: STOP. עזרה: {email}"
   }
 }

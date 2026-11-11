@@ -682,5 +682,31 @@
     "joinButton": "Unirme a Chavrusa Link",
     "shareButton": "Compartir con amigos",
     "dismiss": "Cerrar"
+  },
+  "Notifications": {
+    "title": "Cómo te avisamos",
+    "hint": "Avisos sobre solicitudes, mensajes y sesiones.",
+    "channelEmail": "Correo electrónico",
+    "channelSms": "Mensaje de texto",
+    "channelBoth": "Correo electrónico y mensaje de texto",
+    "needsVerified": "requiere un número verificado",
+    "verifyPrompt": "Verifica tu número de teléfono arriba para recibir mensajes de texto. Algunos proveedores de correo archivan nuestros mensajes como promociones; un mensaje de texto no se archiva en ninguna parte.",
+    "sentTo": "Los mensajes de texto se envían al",
+    "stopNote": "Responde STOP a cualquier mensaje para desactivarlos. Pueden aplicarse tarifas de mensajes y datos.",
+    "optedOut": "Respondiste STOP, así que los mensajes de texto están desactivados. Elige mensaje de texto otra vez para reactivarlos.",
+    "countryUnavailable": "aún no disponible en tu país",
+    "countryUnavailableHint": "Los mensajes de texto aún no están disponibles para números de tu país. Te avisaremos por correo electrónico.",
+    "saving": "Guardando…",
+    "saved": "Guardado",
+    "saveError": "No se pudo guardar. Inténtalo de nuevo."
+  },
+  "Sms": {
+    "connect_request": "Chavrusa Link: {name} quiere aprender contigo. {link} Responde STOP para cancelar.",
+    "request_accepted": "Chavrusa Link: {name} aceptó tu solicitud. {link} Responde STOP para cancelar.",
+    "session_proposed": "Chavrusa Link: {name} sugirió una hora para aprender. {link} Responde STOP para cancelar.",
+    "session_countered": "Chavrusa Link: {name} sugirió otra hora. {link} Responde STOP para cancelar.",
+    "session_confirmed": "Chavrusa Link: tu sesión con {name} está confirmada. {link} Responde STOP para cancelar.",
+    "new_message": "Chavrusa Link: {name} te envió un mensaje. {link} Responde STOP para cancelar.",
+    "help": "Avisos de Chavrusa Link. Responde STOP para cancelar. Ayuda: {email}"
   }
 }

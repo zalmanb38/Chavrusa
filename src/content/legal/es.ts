@@ -28,7 +28,7 @@ export const es: LegalContent = {
       },
       {
         type: "p",
-        text: "**Número de teléfono.** Puedes añadir un número de teléfono y verificarlo mediante un código SMS (a través de nuestro proveedor, Twilio). Es opcional mientras la comunidad está empezando, y es una medida de seguridad para reducir las cuentas falsas. Podremos exigirlo en el futuro, y lo avisaremos antes de que se aplique.",
+        text: "**Número de teléfono.** Puedes añadir un número de teléfono y verificarlo mediante un código SMS (a través de nuestro proveedor, Twilio). Es opcional mientras la comunidad está empezando, y es una medida de seguridad para reducir las cuentas falsas. Podremos exigirlo en el futuro, y lo avisaremos antes de que se aplique. Si eliges recibir avisos por mensaje de texto, también usamos tu número para enviártelos.",
       },
       {
         type: "p",
@@ -54,6 +54,7 @@ export const es: LegalContent = {
           "Para responder a reportes, aplicar bloqueos y mantener una comunidad segura",
           "Para enviarte correos relacionados con la cuenta (confirmaciones, restablecimiento de contraseña) a través de nuestro proveedor, Resend",
           "Para enviarte códigos de verificación por SMS a través de nuestro proveedor, Twilio",
+          "Para enviarte avisos por mensaje de texto, si lo has elegido",
         ],
       },
       {
@@ -80,7 +81,7 @@ export const es: LegalContent = {
         type: "ul",
         items: [
           "**Supabase** — aloja nuestra base de datos y gestiona la autenticación y el inicio de sesión",
-          "**Twilio** — envía los códigos de verificación por SMS",
+          "**Twilio** — envía los códigos de verificación por SMS y, si lo eliges, avisos por mensaje de texto",
           "**Resend** — envía los correos relacionados con la cuenta",
           '**Google** — proporciona el inicio de sesión opcional «Continuar con Google»',
           "**Vercel** — aloja nuestro sitio web",
@@ -167,6 +168,7 @@ export const es: LegalContent = {
         items: [
           "Eres responsable de la exactitud de la información de tu perfil.",
           "Si añades un número de teléfono, facilitar un número falso o no autorizado constituye una violación de estos Términos. Podremos exigir un número de teléfono verificado antes de que un perfil sea visible para otros usuarios.",
+          "Los avisos por mensaje de texto son opcionales. Si los activas, confirmas que el número es tuyo y que aceptas recibir mensajes automáticos sobre tu propia actividad en el sitio. Responde STOP a cualquier mensaje para detenerlos. Pueden aplicarse tarifas de mensajes y datos.",
           "Eres responsable de mantener seguras tus credenciales y de toda la actividad realizada desde tu cuenta.",
           "No puedes crear una cuenta en nombre de otra persona, ni crear varias cuentas para eludir un bloqueo o una suspensión.",
         ],
