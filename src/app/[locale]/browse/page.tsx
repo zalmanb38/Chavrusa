@@ -40,6 +40,8 @@ import ImageSlot from "@/components/ImageSlot";
 import BrowseWall from "@/components/BrowseWall";
 import MultiSelectFilter from "@/components/MultiSelectFilter";
 import BrowseMapView from "@/components/BrowseMapView";
+import SuggestedSections from "@/components/SuggestedSections";
+import { buildSuggestions, type Viewer } from "@/lib/suggestions";
 import {
   buildConnectStatusMap,
   type ConnectRequestRow,
@@ -70,11 +72,16 @@ export default async function BrowsePage({
   const tLanguages = await getTranslations("Languages");
   const tMap = await getTranslations("Map");
   const tLocation = await getTranslations("Location");
+  const tSuggested = await getTranslations("Suggested");
   // A stored value from an older subject list is shown as it was saved
   // rather than crashing the page on a missing name.
   const topicLabel = (key: string) =>
     isTopicKey(key) ? topicName(key, locale) : key;
   const mapView = filters.view === "map";
+  // The third view. Suggestions are not a filter of the list — they are
+  // built from the viewer's own profile — so this one turns the filter
+  // panel off rather than feeding it.
+  const suggestedView = filters.view === "suggested";
   // Everything except the view itself, so each toggle link carries the
   // current filters rather than resetting them.
   const { view: _view, ...filterQuery } = filters;
@@ -142,7 +149,14 @@ export default async function BrowsePage({
     supabase.from("blocks").select("blocked_id").eq("blocker_id", user.id),
     supabase
       .from("profiles")
-      .select("phone_verified, is_looking, country, region, city")
+      // The suggested view scores the viewer against everyone else, so it
+      // needs the viewer's own answers and not just their city. One row,
+      // read once, whichever view is being rendered.
+      // One literal, unsplit: PostgREST infers the row shape from the
+      // string itself, and a concatenation hands back GenericStringError.
+      .select(
+        "phone_verified, is_looking, country, region, city, neighborhood, topics, level, languages, study_languages, preference, frequency, time_of_day, session_length, age_range, hidden_fields",
+      )
       .eq("id", user.id)
       .maybeSingle(),
   ]);
@@ -196,8 +210,13 @@ export default async function BrowsePage({
   }
 
   // Every filter lives in one module so the list and the map cannot drift
-  // apart — they render the same array, filtered once.
-  query = applyQueryFilters(query, filters);
+  // apart — they render the same array, filtered once. The suggested view
+  // is the exception on purpose: it has no filter panel, and applying a
+  // stale one from the URL would silently narrow a list the person has no
+  // way of seeing was narrowed.
+  if (!suggestedView) {
+    query = applyQueryFilters(query, filters);
+  }
 
   const { data: rows, error: rowsError } = await query.order("created_at", {
     ascending: false,
@@ -207,7 +226,7 @@ export default async function BrowsePage({
   // row shape from it the way it does for a literal select string.
   const { profiles, unplaceableExcluded } = applyLocalFilters(
     (rows ?? []) as unknown as Profile[],
-    filters,
+    suggestedView ? {} : filters,
     viewerCoords,
   );
 
@@ -270,6 +289,17 @@ export default async function BrowsePage({
   const freeToStart = profiles.filter((p) => p.match_count === 0);
   const alreadyLearning = profiles.filter((p) => p.match_count > 0);
 
+  // Suggestions are arithmetic over the rows already read — no second
+  // query, no stored ranking, nothing anybody else can see.
+  const viewerTopics = ((viewer?.topics ?? []) as string[]).filter(isTopicKey);
+  const suggestions =
+    suggestedView && viewer
+      ? buildSuggestions(
+          { ...(viewer as unknown as Viewer), id: user.id },
+          profiles,
+        )
+      : { groups: [], shown: 0, heldBack: 0 };
+
   const filterChips = activeFilterChips(filters, {
     topic: (v: string) => topicLabel(v),
     language: (v: string) => tLanguages(v),
@@ -292,16 +322,20 @@ export default async function BrowsePage({
           <h1 className="text-[2rem] font-semibold sm:text-[40px]">
             {t("title")}
           </h1>
-          <p className="text-[13.5px] text-muted">
-            {t("resultCount", { count: profiles.length })}
+          <p className="max-w-[44em] text-[13.5px] text-muted">
+            {suggestedView
+              ? tSuggested("intro")
+              : t("resultCount", { count: profiles.length })}
           </p>
         </div>
 
-        {/* List / Map as a segmented control on a hairline. */}
+        {/* Suggested / List / Map as a segmented control on a hairline. */}
         <div className="flex border border-border">
-          {(["list", "map"] as const).map((view) => {
-            const active = (view === "map") === mapView;
-            const query = view === "map" ? { ...filterQuery, view } : filterQuery;
+          {(["suggested", "list", "map"] as const).map((view) => {
+            const active =
+              view === "list" ? !mapView && !suggestedView : filters.view === view;
+            const query =
+              view === "list" ? filterQuery : { ...filterQuery, view };
             return (
               <Link
                 key={view}
@@ -313,7 +347,9 @@ export default async function BrowsePage({
                     : "px-4 py-2 text-sm hover:bg-surface"
                 }
               >
-                {tMap(view === "map" ? "mapView" : "listView")}
+                {view === "suggested"
+                  ? t("suggestedView")
+                  : tMap(view === "map" ? "mapView" : "listView")}
               </Link>
             );
           })}
@@ -353,6 +389,11 @@ export default async function BrowsePage({
 
       {/* ── Sidebar + results ──────────────────────────────────────── */}
       <div className="flex flex-col pb-16">
+        {/* No filter panel in the suggested view: the suggestion is the
+            filter, and a filtered suggestion list is Browse with extra
+            steps. The subject headings link into Browse for anyone who
+            wants the controls back. */}
+        {!suggestedView && (
 <form className="flex flex-col gap-5 border-t border-border py-6">
           <label className="flex flex-col gap-1.5">
             <span className={filterLabelClass}>{t("filterKeyword")}</span>
@@ -552,8 +593,58 @@ export default async function BrowsePage({
             {t("applyFilters")}
           </button>
         </form>
+        )}
 
         <main className="flex flex-col gap-5 border-t border-border pt-6">
+          {suggestedView ? (
+            viewerTopics.length === 0 ? (
+              // Nothing to suggest from. One sentence on what happened,
+              // one on what fixes it, one action — the page's rule for
+              // every empty state.
+              <div className="flex max-w-[34em] flex-col items-start gap-4 py-6">
+                <h2 className="text-[24px] font-semibold">
+                  {tSuggested("noSubjectsTitle")}
+                </h2>
+                <p className="text-[15px] text-muted">
+                  {tSuggested("noSubjectsBody")}
+                </p>
+                <Link
+                  href="/profile"
+                  className="bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
+                >
+                  {tSuggested("noSubjectsCta")}
+                </Link>
+              </div>
+            ) : suggestions.groups.length === 0 ? (
+              <div className="flex max-w-[34em] flex-col items-start gap-4 py-6">
+                <h2 className="text-[24px] font-semibold">
+                  {tSuggested("emptyTitle")}
+                </h2>
+                <p className="text-[15px] text-muted">
+                  {tSuggested("emptyBody")}
+                </p>
+                <Link
+                  href="/browse"
+                  className="bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-slate-600"
+                >
+                  {tSuggested("emptyCta")}
+                </Link>
+              </div>
+            ) : (
+              <>
+                <h2 className="text-[11.5px] tracking-[0.14em] text-muted uppercase">
+                  {tSuggested("heading")}
+                </h2>
+                <SuggestedSections
+                  groups={suggestions.groups}
+                  heldBack={suggestions.heldBack}
+                  currentUserId={user.id}
+                  connectStatuses={connectStatuses}
+                />
+              </>
+            )
+          ) : (
+            <>
           {filterChips.length > 0 && (
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[12.5px] text-muted">
@@ -668,6 +759,8 @@ export default async function BrowsePage({
                   </ul>
                 </section>
               )}
+            </>
+          )}
             </>
           )}
         </main>
