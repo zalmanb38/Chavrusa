@@ -1,0 +1,102 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { topicName } from "@/lib/topic-names";
+import type { ConnectInfo } from "@/lib/connect";
+import type { SuggestionGroup } from "@/lib/suggestions";
+import SuggestedCard from "@/components/SuggestedCard";
+
+/**
+ * The suggested view of Browse: one section per subject the viewer
+ * learns, strongest fit first inside each.
+ *
+ * Subjects are the organising idea rather than a filter, because that is
+ * the question a person actually arrives with — not "who is a good fit?"
+ * but "who can I learn Gemara with?". Each heading is a gold rule with
+ * the subject in both its names, the count beside it, and a link out to
+ * everyone else learning it, so a section is a doorway into Browse rather
+ * than a dead end.
+ */
+export default function SuggestedSections({
+  groups,
+  heldBack,
+  currentUserId,
+  connectStatuses,
+}: {
+  groups: SuggestionGroup[];
+  heldBack: number;
+  currentUserId: string;
+  connectStatuses: Record<string, ConnectInfo>;
+}) {
+  const t = useTranslations("Suggested");
+  const locale = useLocale();
+
+  return (
+    <div className="flex flex-col gap-10">
+      {groups.map((group) => {
+        const subject = topicName(group.topic, locale);
+        return (
+          <section key={group.topic} className="flex flex-col">
+            {/* Subject heading on a gold rule — the design's one ornament,
+                used here because a section break has to be readable at a
+                glance while scrolling past four of them. */}
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t-2 border-brass pt-2">
+              <h2 className="text-[23px] leading-tight font-semibold">
+                {subject}
+              </h2>
+              <div className="flex items-baseline gap-4">
+                <span className="text-[13px] text-muted">
+                  {t("sectionCount", { count: group.total })}
+                </span>
+                <Link
+                  href={{ pathname: "/browse", query: { topic: group.topic } }}
+                  className="text-[13px] text-slate-600 underline hover:text-brass"
+                >
+                  {t("seeAll", { subject })}
+                </Link>
+              </div>
+            </div>
+
+            <ul className="flex flex-col">
+              {group.suggestions.map((suggestion) => (
+                <SuggestedCard
+                  key={suggestion.profile.id}
+                  suggestion={suggestion}
+                  currentUserId={currentUserId}
+                  connectStatus={
+                    connectStatuses[suggestion.profile.id]?.status ?? "none"
+                  }
+                  requestId={
+                    connectStatuses[suggestion.profile.id]?.requestId ?? null
+                  }
+                  retryAfter={
+                    connectStatuses[suggestion.profile.id]?.retryAfter ?? null
+                  }
+                />
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+
+      {heldBack > 0 && (
+        <p className="text-[13px] text-muted">
+          {t("heldBack", { count: heldBack })}
+        </p>
+      )}
+
+      {/* The method, in the person's reach but not in their way. A list
+          that ranks people owes a plain account of how — and saying so
+          here is also what keeps the cards free of explanation. */}
+      <details className="border-t border-border pt-4">
+        <summary className="cursor-pointer text-sm font-medium select-none">
+          {t("howChosen")}
+        </summary>
+        <p className="mt-3 max-w-[46em] text-[14.5px] text-muted">
+          {t("howChosenBody")}
+        </p>
+      </details>
+    </div>
+  );
+}
