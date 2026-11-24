@@ -713,9 +713,6 @@
   "Suggested": {
     "heading": "Chavrusas sugeridos",
     "intro": "Personas cuyo perfil encaja con el tuyo, agrupadas por lo que estudias. La lista cambia a medida que se suman perfiles nuevos, así que vale la pena volver.",
-    "tierStrong": "Encaja muy bien",
-    "tierGood": "Encaja",
-    "tierPossible": "Quizá",
     "dimSubject": "Tema",
     "dimLevel": "Nivel",
     "dimWhen": "Cuándo",
@@ -731,8 +728,6 @@
     "emptyTitle": "Todavía no hay sugerencias.",
     "emptyBody": "Nadie en el sitio estudia aún los temas de tu perfil. Mientras tanto, explorar a todos es la forma más rápida de encontrar a alguien.",
     "emptyCta": "Explorar a todos",
-    "howChosen": "Cómo se eligen estas sugerencias",
-    "howChosenBody": "Cada sugerencia comparte al menos un tema contigo, habla un idioma que hablas y puede estudiar como tú quieres: en persona, a distancia o de las dos formas. Más allá de eso, cuentan las cinco columnas bajo cada nombre: el tema compartido, lo cerca que están sus niveles, si coinciden los horarios, los idiomas en común y lo cerca que viven. Nadie se ordena por edad y nada de esta página lo ve nadie más.",
     "heldBack": "{count, plural, =1 {# persona más comparte tus temas} other {# personas más comparten tus temas}}: los títulos de arriba llevan a todas."
   }
 }

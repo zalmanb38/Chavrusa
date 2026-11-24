@@ -85,15 +85,12 @@ export type FitValue =
   | { kind: "place"; text: string }
   | { kind: "remote" };
 
-export type FitTier = "strong" | "good" | "possible";
-
 export interface Suggestion {
   profile: Profile;
   /** Points earned, kept for ordering and for the explain panel. */
   score: number;
   /** Points that were assessable for this pair. */
   possible: number;
-  tier: FitTier;
   cells: FitCell[];
   /** Every subject the two share, viewer's order. */
   sharedTopics: TopicKey[];
@@ -118,8 +115,12 @@ export interface SuggestionResult {
 
 /** Shown per subject before "see all" takes over. */
 export const PER_TOPIC = 4;
-/** Distinct people on the page, however many subjects the viewer lists. */
-export const TOTAL_CAP = 20;
+/**
+ * Rows on the page, however many subjects the viewer lists. Rows and not
+ * people: one person can appear under each subject they share, so a page
+ * of twenty-four rows may be a dozen people seen from several angles.
+ */
+export const TOTAL_ROWS = 24;
 
 const levelIndex = (level: Level | null): number =>
   level ? LEVELS.indexOf(level) : -1;
@@ -363,13 +364,6 @@ function scorePair(
   return { score, possible, cells };
 }
 
-function tierOf(score: number, possible: number): FitTier {
-  const share = possible > 0 ? score / possible : 0;
-  if (share >= 0.7) return "strong";
-  if (share >= 0.45) return "good";
-  return "possible";
-}
-
 /**
  * Builds the page.
  *
@@ -417,7 +411,6 @@ export function buildSuggestions(
       profile: candidate,
       score,
       possible,
-      tier: tierOf(score, possible),
       cells,
       sharedTopics,
     });
@@ -433,48 +426,46 @@ export function buildSuggestions(
       a.profile.name.localeCompare(b.profile.name),
   );
 
-  // One person, one section: whoever would appear under three subjects
-  // appears under the first of them in the viewer's own list, which is
-  // the order they put their subjects in. Repeating somebody three times
-  // makes a short list look long.
-  const placed = new Set<string>();
-  const totals = new Map<TopicKey, number>();
+  // Somebody who learns three of your subjects belongs under all three.
+  //
+  // This used to put each person under the first subject they shared, so
+  // that no name appeared twice — which quietly collapsed the whole page
+  // into one section. Subjects are stored in the catalogue's order, not
+  // in any order the person chose, so "the first shared subject" is very
+  // nearly always the same subject for everyone, and the other sections
+  // were left empty while the first one held the entire site.
   const byTopic = new Map<TopicKey, Suggestion[]>();
-
   for (const suggestion of scored) {
     for (const topic of suggestion.sharedTopics) {
-      totals.set(topic, (totals.get(topic) ?? 0) + 1);
+      const list = byTopic.get(topic) ?? [];
+      list.push(suggestion);
+      byTopic.set(topic, list);
     }
-    const home = viewerTopics.find((topic) =>
-      suggestion.sharedTopics.includes(topic),
-    );
-    if (!home || placed.has(suggestion.profile.id)) continue;
-    placed.add(suggestion.profile.id);
-    const list = byTopic.get(home) ?? [];
-    list.push(suggestion);
-    byTopic.set(home, list);
   }
 
-  let shown = 0;
-  let heldBack = 0;
+  let rows = 0;
   const groups: SuggestionGroup[] = [];
+  const shownIds = new Set<string>();
 
   for (const topic of viewerTopics) {
     const list = byTopic.get(topic) ?? [];
     if (list.length === 0) continue;
 
-    const room = Math.max(0, TOTAL_CAP - shown);
+    const room = Math.max(0, TOTAL_ROWS - rows);
     const take = list.slice(0, Math.min(PER_TOPIC, room));
-    heldBack += list.length - take.length;
-    shown += take.length;
     if (take.length === 0) continue;
+    rows += take.length;
+    for (const suggestion of take) shownIds.add(suggestion.profile.id);
 
-    groups.push({
-      topic,
-      suggestions: take,
-      total: totals.get(topic) ?? take.length,
-    });
+    groups.push({ topic, suggestions: take, total: list.length });
   }
+
+  // Counted in people rather than rows: somebody listed under two
+  // headings has not been held back from anything.
+  const heldBack = scored.filter(
+    (suggestion) => !shownIds.has(suggestion.profile.id),
+  ).length;
+  const shown = shownIds.size;
 
   return { groups, shown, heldBack };
 }

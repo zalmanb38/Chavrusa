@@ -713,9 +713,6 @@
   "Suggested": {
     "heading": "Chavrusas suggérés",
     "intro": "Des personnes dont le profil correspond au vôtre, regroupées par sujet. La liste change à mesure que de nouveaux profils arrivent, cela vaut la peine de revenir.",
-    "tierStrong": "Très compatible",
-    "tierGood": "Compatible",
-    "tierPossible": "Peut-être",
     "dimSubject": "Sujet",
     "dimLevel": "Niveau",
     "dimWhen": "Quand",
@@ -731,8 +728,6 @@
     "emptyTitle": "Pas encore de suggestions.",
     "emptyBody": "Personne sur le site n'étudie encore les sujets de votre profil. En attendant, parcourir tout le monde est le plus rapide pour trouver quelqu'un.",
     "emptyCta": "Parcourir tout le monde",
-    "howChosen": "Comment ces suggestions sont choisies",
-    "howChosenBody": "Chaque suggestion partage au moins un sujet avec vous, parle une langue que vous parlez et peut étudier comme vous le souhaitez — en personne, à distance ou les deux. Au-delà, ce sont les cinq colonnes sous chaque nom qui comptent : le sujet commun, l'écart entre vos niveaux, si vos horaires concordent, les langues en commun et la distance entre vous. Personne n'est classé selon son âge, et rien sur cette page n'est visible par les autres.",
     "heldBack": "{count, plural, =1 {# autre personne partage vos sujets} other {# autres personnes partagent vos sujets}} — les titres ci-dessus mènent à toutes."
   }
 }

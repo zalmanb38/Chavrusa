@@ -713,9 +713,6 @@
   "Suggested": {
     "heading": "Suggested Chavrusas",
     "intro": "People whose profile lines up with yours, grouped by what you learn. The list changes as new profiles arrive, so it's worth coming back.",
-    "tierStrong": "Strong fit",
-    "tierGood": "Good fit",
-    "tierPossible": "Possible fit",
     "dimSubject": "Subject",
     "dimLevel": "Level",
     "dimWhen": "When",
@@ -731,8 +728,6 @@
     "emptyTitle": "No suggestions yet.",
     "emptyBody": "Nobody on the site learns the subjects on your profile yet. Browsing everyone is the quickest way to find somebody in the meantime.",
     "emptyCta": "Browse everyone",
-    "howChosen": "How these are chosen",
-    "howChosenBody": "Every suggestion shares at least one subject with you, speaks a language you speak, and can learn the way you want to — in person, remotely, or either. Beyond that, the five columns under each name are what counts: the subject you share, how close your levels are, whether your times line up, the languages you have in common, and how near you are. Nobody is ranked by age, and nothing on this page is visible to anybody else.",
     "heldBack": "{count, plural, =1 {# more person shares your subjects} other {# more people share your subjects}} — the subject headings link to all of them."
   }
 }
