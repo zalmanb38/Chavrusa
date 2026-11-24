@@ -21,9 +21,10 @@ import { visibleAgeRange } from "@/lib/browse-filters";
  * Everything about a person that is safe to show before a match.
  *
  * Shared by Browse and the Requests page so the two can't describe the
- * same person differently. Note what isn't here: full name and photo,
- * both governed by the match-reveal rule, and neither ever passed to this
- * component in the first place.
+ * same person differently. Note what isn't here: the full name, governed
+ * by the match-reveal rule, and the photo, which an incoming request
+ * shows beside the name rather than inside this block. Neither is ever
+ * passed to this component.
  */
 export type ProfileDetailFields = Pick<
   Profile,
