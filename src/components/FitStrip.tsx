@@ -30,10 +30,11 @@ const dimensionLabelKey: Record<(typeof FIT_DIMENSIONS)[number], string> = {
  * Five columns, always the same five in the same order, so a reader
  * learns the shape once and then reads down it. A column the two have in
  * common is a tinted block under a gold rule; one they do not is left
- * plain and grey. Above them, the count of the five — "4 of 5 in
- * common" — because a reader should not have to decode an ornament to
- * learn how good a fit is, and the number is one they can check against
- * the row beneath it.
+ * plain and grey.
+ *
+ * The blocks are the whole signal: no label above them saying how many
+ * are filled, and no marks to decode. Four tinted boxes out of five is
+ * already a count, and it is one the reader takes in without reading.
  */
 export default function FitStrip({
   cells,
@@ -96,18 +97,9 @@ export default function FitStrip({
   };
 
   const byDimension = new Map(cells.map((cell) => [cell.dimension, cell]));
-  const sharedCount = FIT_DIMENSIONS.filter((dimension) => {
-    const cell = byDimension.get(dimension);
-    return Boolean(cell?.shared && cell.values.length > 0);
-  }).length;
 
   return (
     <div className="flex flex-col gap-2">
-      {/* Said in words and a number, not in marks. */}
-      <p className="text-[11.5px] font-semibold tracking-[0.14em] text-accent uppercase">
-        {t("inCommon", { count: sharedCount })}
-      </p>
-
       <dl className="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
         {FIT_DIMENSIONS.map((dimension) => {
           const cell = byDimension.get(dimension);
