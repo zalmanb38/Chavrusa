@@ -50,10 +50,18 @@ export default function ProfileForm({
   initialProfile,
   initialContacts,
   initialFullName,
+  accountEmail,
 }: {
   initialProfile: Profile | null;
   initialContacts: ProfileContacts | null;
   initialFullName: string;
+  /**
+   * The address this account signs in with, offered as a one-click fill
+   * for the contact email. Never written without the person asking for
+   * it: an address that appeared in a shared field by itself is a
+   * privacy surprise, whatever it says underneath.
+   */
+  accountEmail: string;
 }) {
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Common");
@@ -113,6 +121,9 @@ export default function ProfileForm({
     initialContacts?.contact_phone ?? "",
   );
   const [zoomLink, setZoomLink] = useState(initialContacts?.zoom_link ?? "");
+  const [contactEmail, setContactEmail] = useState(
+    initialContacts?.contact_email ?? "",
+  );
 
   // Existing profiles had their public name derived from a full name they
   // never chose, so say so once rather than letting a mangled surname sit
@@ -159,7 +170,8 @@ export default function ProfileForm({
     if (
       !whatsapp.trim() &&
       !contactPhone.trim() &&
-      !zoomLink.trim()
+      !zoomLink.trim() &&
+      !contactEmail.trim()
     ) {
       setError(t("contactRequired"));
       return;
@@ -170,6 +182,15 @@ export default function ProfileForm({
     // here rather than discovering when someone tries to dial it.
     if (!isValidOptionalPhone(whatsapp) || !isValidOptionalPhone(contactPhone)) {
       setError(t("contactPhoneInvalid"));
+      return;
+    }
+
+    // Deliberately loose: something@something.something. Anything
+    // stricter rejects real addresses, and the only cost of a wrong one
+    // here is a chavrusa writing to nobody — the same cost as a wrong
+    // phone number, which is checked no harder.
+    if (contactEmail.trim() && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contactEmail.trim())) {
+      setError(t("contactEmailInvalid"));
       return;
     }
 
@@ -211,6 +232,7 @@ export default function ProfileForm({
         whatsapp: whatsapp.trim(),
         contact_phone: contactPhone.trim(),
         zoom_link: zoomLink.trim(),
+        contact_email: contactEmail.trim().toLowerCase(),
       },
     });
 
@@ -611,6 +633,36 @@ export default function ProfileForm({
             className={inputClass}
           />
         </label>
+
+        {/* Last of the four, because it is the fallback rather than the
+            way most people will want to be reached — but it is the one
+            everybody already has, so nobody has to find a new thing to
+            hand over to finish their profile. */}
+        <div className="flex flex-col gap-1.5 text-sm">
+          <label className="flex flex-col gap-1.5" htmlFor="contact-email">
+            {t("contactEmail")}
+          </label>
+          <input
+            id="contact-email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            dir="ltr"
+            value={contactEmail}
+            placeholder={t("contactEmailPlaceholder")}
+            onChange={(e) => setContactEmail(e.target.value)}
+            className={inputClass}
+          />
+          {accountEmail && contactEmail.trim().toLowerCase() !== accountEmail.toLowerCase() && (
+            <button
+              type="button"
+              onClick={() => setContactEmail(accountEmail)}
+              className="w-fit text-xs text-muted underline"
+            >
+              {t("useAccountEmail", { email: accountEmail })}
+            </button>
+          )}
+        </div>
       </fieldset>
 
       {error && <ErrorNote>{error}</ErrorNote>}

@@ -124,14 +124,18 @@ export default async function MatchDetailPage({
     ? (
         await supabase
           .from("profile_contacts")
-          .select("whatsapp, contact_phone, zoom_link")
+          .select("whatsapp, contact_phone, zoom_link, contact_email")
           .eq("id", otherId)
           .maybeSingle()
       ).data
     : null;
 
   const hasAnyContactInfo =
-    !!contacts && (contacts.whatsapp || contacts.contact_phone || contacts.zoom_link);
+    !!contacts &&
+    (contacts.whatsapp ||
+      contacts.contact_phone ||
+      contacts.zoom_link ||
+      contacts.contact_email);
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-12 sm:px-8">
@@ -239,6 +243,14 @@ export default async function MatchDetailPage({
                 <div className="flex gap-2">
                   <dt className="font-medium">{t("contactZoomLabel")}:</dt>
                   <dd className="break-all">{contacts.zoom_link}</dd>
+                </div>
+              )}
+              {contacts?.contact_email && (
+                <div className="flex gap-2">
+                  <dt className="font-medium">{t("contactEmailLabel")}:</dt>
+                  <dd className="break-all" dir="ltr">
+                    {contacts.contact_email}
+                  </dd>
                 </div>
               )}
             </dl>
