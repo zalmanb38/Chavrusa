@@ -41,8 +41,8 @@ export default function SuggestedSections({
             {/* Subject heading on a gold rule — the design's one ornament,
                 used here because a section break has to be readable at a
                 glance while scrolling past four of them. */}
-            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t-2 border-brass pt-2">
-              <h2 className="text-[23px] leading-tight font-semibold">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t-2 border-brass bg-surface px-3 pt-2.5 pb-2.5">
+              <h2 className="text-[27px] leading-tight font-semibold">
                 {subject}
               </h2>
               <div className="flex items-baseline gap-4">
@@ -59,10 +59,12 @@ export default function SuggestedSections({
             </div>
 
             <ul className="flex flex-col">
-              {group.suggestions.map((suggestion) => (
+              {group.suggestions.map((suggestion, index) => (
                 <SuggestedCard
                   key={suggestion.profile.id}
                   suggestion={suggestion}
+                  rank={index + 1}
+                  topic={group.topic}
                   currentUserId={currentUserId}
                   connectStatus={
                     connectStatuses[suggestion.profile.id]?.status ?? "none"
@@ -86,17 +88,6 @@ export default function SuggestedSections({
         </p>
       )}
 
-      {/* The method, in the person's reach but not in their way. A list
-          that ranks people owes a plain account of how — and saying so
-          here is also what keeps the cards free of explanation. */}
-      <details className="border-t border-border pt-4">
-        <summary className="cursor-pointer text-sm font-medium select-none">
-          {t("howChosen")}
-        </summary>
-        <p className="mt-3 max-w-[46em] text-[14.5px] text-muted">
-          {t("howChosenBody")}
-        </p>
-      </details>
     </div>
   );
 }

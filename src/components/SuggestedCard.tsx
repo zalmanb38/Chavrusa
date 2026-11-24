@@ -21,12 +21,18 @@ import FitStrip from "@/components/FitStrip";
  */
 export default function SuggestedCard({
   suggestion,
+  rank,
+  topic,
   currentUserId,
   connectStatus,
   requestId,
   retryAfter,
 }: {
   suggestion: Suggestion;
+  /** Position inside its subject section, counted from 1. */
+  rank: number;
+  /** The section's subject, so the strip can lead with it. */
+  topic: string;
   currentUserId: string;
   connectStatus: ConnectStatus;
   requestId: string | null;
@@ -36,10 +42,20 @@ export default function SuggestedCard({
   const { profile } = suggestion;
 
   return (
-    <li className="grid gap-6 border-t border-border py-5 transition-colors hover:bg-surface lg:grid-cols-[1fr_200px]">
+    <li className="grid gap-x-6 gap-y-4 border-t border-border py-6 transition-colors hover:bg-surface lg:grid-cols-[2.5rem_1fr_200px]">
+      {/* The gold numeral: "gold — rules, numerals, ornament". It gives
+          each row a visible start, which is what keeps four of them from
+          reading as one block of text. */}
+      <p
+        className="hidden text-[26px] leading-none font-semibold text-brass lg:block"
+        aria-hidden
+      >
+        {rank}
+      </p>
+
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
-          <h3 className="text-[21px] leading-tight font-semibold">
+          <h3 className="text-[23px] leading-tight font-semibold">
             {profile.name}
           </h3>
           <ProfileHandle username={profile.username} className="text-[13.5px]" />
@@ -53,7 +69,7 @@ export default function SuggestedCard({
           )}
         </div>
 
-        <FitStrip cells={suggestion.cells} tier={suggestion.tier} />
+        <FitStrip cells={suggestion.cells} leadTopic={topic} />
 
         {profile.blurb && (
           <p className="max-w-[46em] border-s-2 border-brass ps-3 text-[14.5px] text-muted italic">

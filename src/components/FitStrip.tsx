@@ -13,7 +13,6 @@ import { topicName } from "@/lib/topic-names";
 import {
   FIT_DIMENSIONS,
   type FitCell,
-  type FitTier,
   type FitValue,
 } from "@/lib/suggestions";
 
@@ -25,34 +24,24 @@ const dimensionLabelKey: Record<(typeof FIT_DIMENSIONS)[number], string> = {
   place: "dimPlace",
 };
 
-const tierLabelKey: Record<FitTier, string> = {
-  strong: "tierStrong",
-  good: "tierGood",
-  possible: "tierPossible",
-};
-
-const tierFilled: Record<FitTier, number> = {
-  strong: 3,
-  good: 2,
-  possible: 1,
-};
-
 /**
  * Why these two line up, as a table rather than a sentence.
  *
  * Five columns, always the same five in the same order, so a reader
- * learns the shape once and then reads down it: a column with a gold rule
- * and a value is something the two have in common, a column with a
- * hairline and a dash is something they do not. That is the whole visual
- * argument — no percentages, no badge, nothing that reads as a score out
- * of a hundred.
+ * learns the shape once and then reads down it. A column the two have in
+ * common is a tinted block under a gold rule; one they do not is left
+ * plain and grey. Above them, the count of the five — "4 of 5 in
+ * common" — because a reader should not have to decode an ornament to
+ * learn how good a fit is, and the number is one they can check against
+ * the row beneath it.
  */
 export default function FitStrip({
   cells,
-  tier,
+  leadTopic,
 }: {
   cells: FitCell[];
-  tier: FitTier;
+  /** The subject whose section this row is in; shown first. */
+  leadTopic?: string;
 }) {
   const t = useTranslations("Suggested");
   const tProfile = useTranslations("Profile");
@@ -107,29 +96,19 @@ export default function FitStrip({
   };
 
   const byDimension = new Map(cells.map((cell) => [cell.dimension, cell]));
+  const sharedCount = FIT_DIMENSIONS.filter((dimension) => {
+    const cell = byDimension.get(dimension);
+    return Boolean(cell?.shared && cell.values.length > 0);
+  }).length;
 
   return (
     <div className="flex flex-col gap-2">
-      {/* The tier, in the chrome voice, with three marks beside it. Gold
-          is the design's figure-and-rule colour, which is exactly what
-          this is: an ornament that happens to carry a number. */}
-      <div className="flex items-center gap-2">
-        <span className="text-[11px] font-semibold tracking-[0.14em] text-accent uppercase">
-          {t(tierLabelKey[tier])}
-        </span>
-        <span className="flex gap-[3px]" aria-hidden>
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className={`h-[7px] w-[14px] ${
-                i < tierFilled[tier] ? "bg-brass" : "border border-brass-tint"
-              }`}
-            />
-          ))}
-        </span>
-      </div>
+      {/* Said in words and a number, not in marks. */}
+      <p className="text-[11.5px] font-semibold tracking-[0.14em] text-accent uppercase">
+        {t("inCommon", { count: sharedCount })}
+      </p>
 
-      <dl className="grid grid-cols-2 gap-x-5 gap-y-2.5 sm:grid-cols-3 lg:grid-cols-5">
+      <dl className="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
         {FIT_DIMENSIONS.map((dimension) => {
           const cell = byDimension.get(dimension);
           const shared = Boolean(cell?.shared && cell.values.length > 0);
@@ -137,15 +116,28 @@ export default function FitStrip({
             ? "—"
             : dimension === "language"
               ? formatLanguageCell(cell!.values)
-              : // A subject already carries a middot between its two
-                // names, so a second one between subjects would read as
-                // one long list of four things.
-                cell!.values.map(formatValue).join(dimension === "subject" ? ", " : " · ");
+              : dimension === "subject"
+                ? // The section's own subject leads, then the rest. Under
+                  // a "Gemara" heading, a cell starting "Chumash" reads
+                  // like the wrong row. A subject already carries a
+                  // middot between its two names, so these are joined
+                  // with a comma rather than a second one.
+                  [...cell!.values]
+                    .sort(
+                      (a, b) =>
+                        Number(b.kind === "topic" && b.topic === leadTopic) -
+                        Number(a.kind === "topic" && a.topic === leadTopic),
+                    )
+                    .map(formatValue)
+                    .join(", ")
+                : cell!.values.map(formatValue).join(" · ");
           return (
             <div
               key={dimension}
-              className={`flex flex-col gap-0.5 border-t pt-1.5 ${
-                shared ? "border-brass" : "border-border"
+              className={`flex flex-col gap-0.5 border-t-2 px-2 pt-1.5 pb-2 ${
+                shared
+                  ? "border-brass bg-neutral-100"
+                  : "border-neutral-300 bg-transparent"
               }`}
             >
               <dt className="text-[10.5px] tracking-[0.14em] text-muted uppercase">
@@ -153,7 +145,7 @@ export default function FitStrip({
               </dt>
               <dd
                 className={`text-[13.5px] leading-snug ${
-                  shared ? "text-foreground" : "text-neutral-400"
+                  shared ? "font-medium text-foreground" : "text-neutral-400"
                 }`}
               >
                 {text}
