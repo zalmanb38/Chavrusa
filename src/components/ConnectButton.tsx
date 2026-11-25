@@ -14,12 +14,19 @@ export default function ConnectButton({
   initialStatus,
   requestId,
   retryAfter,
+  onStatusChange,
 }: {
   currentUserId: string;
   recipientId: string;
   initialStatus: ConnectStatus;
   requestId: string | null;
   retryAfter: string | null;
+  /**
+   * Told when this button changes what it says, for the cards that show
+   * the same person twice — once in the row, once in the fuller view —
+   * and must not end up offering to connect to somebody already asked.
+   */
+  onStatusChange?: (status: ConnectStatus) => void;
 }) {
   const t = useTranslations("Browse");
   const format = useFormatter();
@@ -50,6 +57,7 @@ export default function ConnectButton({
     if (inserted?.id) notify("connect_request", inserted.id);
 
     setStatus("pending_sent");
+    onStatusChange?.("pending_sent");
     router.refresh();
   }
 
