@@ -196,37 +196,37 @@ export default function PhotoUpload({
         </div>
       </div>
 
-      {/* Only once there is a photo to be seen. Offered while it is still
-          in review as well as after, so the decision can be made at the
-          moment the photo is chosen rather than remembered later. */}
-      {status && status !== "rejected" && (
-        <fieldset className="mt-1 flex flex-col gap-2 border-t border-border pt-3">
-          <legend className="text-xs font-medium">{t("visibilityTitle")}</legend>
-          {(
-            [
-              { value: false, label: t("private"), hint: t("privateHint") },
-              { value: true, label: t("public"), hint: t("publicHint") },
-            ] as const
-          ).map((option) => (
-            <label
-              key={String(option.value)}
-              className="flex items-start gap-2.5 text-xs"
-            >
-              <input
-                type="radio"
-                name="photo_public"
-                className="mt-0.5 shrink-0 accent-primary"
-                checked={isPublic === option.value}
-                onChange={() => setVisibility(option.value)}
-              />
-              <span className="flex flex-col gap-0.5">
-                <span className="font-medium">{option.label}</span>
-                <span className="text-muted">{option.hint}</span>
-              </span>
-            </label>
-          ))}
-        </fieldset>
-      )}
+      {/* Always, whether or not there is a photo on the card. This is a
+          standing privacy choice rather than a step in uploading: it has
+          to be findable when somebody comes to the page to change their
+          mind, and a setting that appears and disappears with the photo
+          is one they would have to go and upload something to read. */}
+      <fieldset className="mt-1 flex flex-col gap-2 border-t border-border pt-3">
+        <legend className="text-xs font-medium">{t("visibilityTitle")}</legend>
+        {(
+          [
+            { value: false, label: t("private"), hint: t("privateHint") },
+            { value: true, label: t("public"), hint: t("publicHint") },
+          ] as const
+        ).map((option) => (
+          <label
+            key={String(option.value)}
+            className="flex items-start gap-2.5 text-xs"
+          >
+            <input
+              type="radio"
+              name="photo_public"
+              className="mt-0.5 shrink-0 accent-primary"
+              checked={isPublic === option.value}
+              onChange={() => setVisibility(option.value)}
+            />
+            <span className="flex flex-col gap-0.5">
+              <span className="font-medium">{option.label}</span>
+              <span className="text-muted">{option.hint}</span>
+            </span>
+          </label>
+        ))}
+      </fieldset>
 
       <input
         ref={inputRef}
