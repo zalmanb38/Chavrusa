@@ -200,6 +200,14 @@ export interface Profile {
    * thing from their having stopped looking.
    */
   match_count: number;
+  /**
+   * The person's own answer to "may other members see my photo?". False
+   * — the default — keeps the 0019/0037 rule: a photo is released only
+   * to a chavrusa or to somebody deciding on their request, and Browse
+   * shows a placeholder. True also shows it in Browse and in
+   * suggestions. Approval is a separate gate either way.
+   */
+  photo_public: boolean;
 }
 
 export const preferenceMessageKey: Record<Preference, string> = {

@@ -8,6 +8,7 @@ import ConnectButton from "@/components/ConnectButton";
 import ProfileHandle from "@/components/ProfileHandle";
 import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 /**
  * One learner, as shown in Browse.
@@ -17,6 +18,11 @@ import BlockButton from "@/components/BlockButton";
  * because a map cluster deliberately doesn't attach names to a place, and
  * `showMatchedNote`, because the list says it with a section heading and
  * a map has no bottom to put one at.
+ *
+ * The photo slot is always drawn, with or without a photo in it. Most
+ * people's will be private — the default — and a row that only grows a
+ * thumbnail for the few who chose otherwise would read as a ranking of
+ * the list rather than a fact about each person.
  */
 export default function BrowseCard({
   profile,
@@ -24,6 +30,7 @@ export default function BrowseCard({
   connectStatus,
   requestId,
   retryAfter,
+  photoUrl = null,
   showName,
   showMatchedNote = false,
 }: {
@@ -32,6 +39,11 @@ export default function BrowseCard({
   connectStatus: ConnectStatus;
   requestId: string | null;
   retryAfter: string | null;
+  /**
+   * A signed URL, present only where the person made their photo public
+   * and it has been approved. Null is the ordinary case, not an error.
+   */
+  photoUrl?: string | null;
   showName: boolean;
   showMatchedNote?: boolean;
 }) {
@@ -42,7 +54,24 @@ export default function BrowseCard({
     // separated by whitespace and, where a boundary is needed, a single
     // 1px rule." The hover tint is the row's own, per the design.
     <li className="grid gap-6 border-t border-border py-4 transition-colors hover:bg-surface lg:grid-cols-[1fr_200px]">
-      <div className="flex flex-col gap-2">
+      {/* Photo and words side by side, the words free to wrap in their
+          own column: a long name and a column of tags should not drag
+          the face away from the line it belongs to. */}
+      <div className="flex items-start gap-4">
+        {photoUrl ? (
+          /* Signed Supabase URLs are short-lived and host-specific, so
+             they don't fit next/image's remotePatterns model. */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoUrl}
+            alt=""
+            className="size-14 shrink-0 rounded-2xl object-cover"
+          />
+        ) : (
+          <PhotoPlaceholder className="size-14 shrink-0" />
+        )}
+
+      <div className="flex min-w-0 flex-col gap-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
           <h2 className="text-[21px] leading-tight font-semibold">
             {showName ? profile.name : t("anonymousLearner")}
@@ -76,6 +105,7 @@ export default function BrowseCard({
         </div>
 
         <ProfileDetails profile={profile} compact />
+      </div>
       </div>
 
       {/* Right rail, opened by a hairline on the inline-start edge so it

@@ -40,7 +40,7 @@ export default async function ProfilePage({
   const { data: profile } = await supabase
     .from("profiles")
     .select(
-      "id, name, username, languages, study_languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, display_name_set, is_active, is_looking, match_count, phone, phone_verified",
+      "id, name, username, languages, study_languages, topics, topic_other, level, city, country, region, neighborhood, meeting_spot, preference, availability, age_range, frequency, time_of_day, session_length, blurb, hidden_fields, display_name_set, is_active, is_looking, match_count, photo_public, phone, phone_verified",
     )
     .eq("id", user.id)
     .maybeSingle();
@@ -143,6 +143,7 @@ export default async function ProfilePage({
         initialStatus={photoRow?.status ?? null}
         initialUrl={photoUrl}
         initialNote={photoRow?.review_note ?? ""}
+        initialPublic={profile?.photo_public ?? false}
       />
       <ProfileForm
         initialProfile={profile as Profile | null}

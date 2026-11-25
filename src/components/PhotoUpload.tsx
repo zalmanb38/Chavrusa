@@ -22,10 +22,13 @@ export default function PhotoUpload({
   initialStatus,
   initialUrl,
   initialNote,
+  initialPublic,
 }: {
   initialStatus: PhotoStatus | null;
   initialUrl: string | null;
   initialNote: string;
+  /** Whether other members may see this photo on Browse. */
+  initialPublic: boolean;
 }) {
   const t = useTranslations("Photo");
   const router = useRouter();
@@ -35,6 +38,38 @@ export default function PhotoUpload({
   const [preview, setPreview] = useState<string | null>(initialUrl);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPublic, setIsPublic] = useState(initialPublic);
+
+  /**
+   * The choice is applied straight away rather than on a Save button:
+   * there is no form around this card, and a privacy setting that looks
+   * set but isn't saved is the worst of the three states.
+   *
+   * It moves in the UI first and rolls back if the write fails, so
+   * turning it off reads as instant — which is the direction where
+   * waiting is least acceptable.
+   */
+  async function setVisibility(next: boolean) {
+    const previous = isPublic;
+    setIsPublic(next);
+    setError(null);
+    try {
+      const response = await fetch("/api/photos", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ photo_public: next }),
+      });
+      if (!response.ok) {
+        setIsPublic(previous);
+        setError(t("visibilityFailed"));
+        return;
+      }
+      router.refresh();
+    } catch {
+      setIsPublic(previous);
+      setError(t("visibilityFailed"));
+    }
+  }
 
   async function upload(file: File) {
     setError(null);
@@ -160,6 +195,38 @@ export default function PhotoUpload({
           </div>
         </div>
       </div>
+
+      {/* Only once there is a photo to be seen. Offered while it is still
+          in review as well as after, so the decision can be made at the
+          moment the photo is chosen rather than remembered later. */}
+      {status && status !== "rejected" && (
+        <fieldset className="mt-1 flex flex-col gap-2 border-t border-border pt-3">
+          <legend className="text-xs font-medium">{t("visibilityTitle")}</legend>
+          {(
+            [
+              { value: false, label: t("private"), hint: t("privateHint") },
+              { value: true, label: t("public"), hint: t("publicHint") },
+            ] as const
+          ).map((option) => (
+            <label
+              key={String(option.value)}
+              className="flex items-start gap-2.5 text-xs"
+            >
+              <input
+                type="radio"
+                name="photo_public"
+                className="mt-0.5 shrink-0 accent-primary"
+                checked={isPublic === option.value}
+                onChange={() => setVisibility(option.value)}
+              />
+              <span className="flex flex-col gap-0.5">
+                <span className="font-medium">{option.label}</span>
+                <span className="text-muted">{option.hint}</span>
+              </span>
+            </label>
+          ))}
+        </fieldset>
+      )}
 
       <input
         ref={inputRef}
