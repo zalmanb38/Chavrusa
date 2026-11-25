@@ -490,7 +490,7 @@
   },
   "Photo": {
     "title": "Profile photo",
-    "hint": "Your photo stays private until you're matched with a Chavrusa.",
+    "hint": "Your photo is private. Only people you request, or whose request you accept, can see it.",
     "choose": "Add a photo",
     "replace": "Change photo",
     "remove": "Remove photo",

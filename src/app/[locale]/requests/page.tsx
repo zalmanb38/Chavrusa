@@ -14,6 +14,8 @@ import ProfileDetails, {
   type ProfileDetailFields,
 } from "@/components/ProfileDetails";
 import ProfileHandle from "@/components/ProfileHandle";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 
 interface ProfileSummary {
   id: string;
@@ -27,8 +29,10 @@ type RequesterHandle = { username: string };
 /**
  * An incoming request shows the requester's whole public profile, not
  * just a name — the recipient hasn't browsed to them, so this is their
- * only chance to judge the fit before answering. Full name and photo stay
- * out of it: those are governed by the match-reveal rule.
+ * only chance to judge the fit before answering. Their photo comes with
+ * it, for the same reason: you are being asked to decide about a
+ * stranger. The full name is not, and stays governed by the
+ * match-reveal rule.
  */
 type RequesterProfile = ProfileSummary & ProfileDetailFields & RequesterHandle;
 
@@ -151,9 +155,10 @@ function EmptyState({
 /**
  * One person in a list.
  *
- * The initial stands in for a photograph, which this page never has: a
- * profile photo is only revealed on a confirmed match, and even then it
- * belongs on the match page rather than in a list.
+ * The initial stands in for a photograph. Used for the lists where
+ * there is no photo to show: a request you sent, a match (whose photo
+ * belongs on the match page), someone you blocked. Incoming requests are
+ * laid out differently and carry the requester's photo themselves.
  */
 function PersonRow({
   name,
@@ -274,6 +279,36 @@ export default async function RequestsPage({
         .is("read_at", null)
     : { data: [] };
 
+  // Photos for the people asking. RLS releases an approved photo to the
+  // recipient of a pending request (0037), so this query returns a row
+  // only where we are entitled to one — the same "ask and see what comes
+  // back" shape the match page uses, rather than a second entitlement
+  // check written here.
+  const pendingRequesterIds = incomingRows
+    .filter((row) => row.status === "pending")
+    .map((row) => row.requester.id);
+
+  const { data: requesterPhotos } = pendingRequesterIds.length
+    ? await supabase
+        .from("profile_photos")
+        .select("id, storage_path, status")
+        .in("id", pendingRequesterIds)
+        .eq("status", "approved")
+    : { data: [] };
+
+  // Signing is a network call each, so they go together rather than one
+  // after another down the list.
+  const photoRows = (requesterPhotos ?? []) as unknown as Pick<
+    ProfilePhoto,
+    "id" | "storage_path" | "status"
+  >[];
+  const signed = await Promise.all(
+    photoRows.map(async (row) => [row.id, await signedPhotoUrl(row.storage_path)] as const),
+  );
+  const photoByRequester = new Map<string, string>(
+    signed.filter((pair): pair is readonly [string, string] => !!pair[1]),
+  );
+
   const unreadByMatch = new Map<string, number>();
   for (const row of matchedRows) {
     const forThread = ((threadMessages ?? []) as unknown as Message[]).filter(
@@ -313,15 +348,35 @@ export default async function RequestsPage({
                 key={row.id}
                 className="flex flex-col gap-3 border-t border-border py-5"
               >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="text-[21px] leading-tight font-semibold">
-                    {row.requester.name}
-                  </p>
-                  <ProfileHandle
-                    username={row.requester.username}
-                    className="text-[13.5px]"
-                  />
-                  <ProfileLocation profile={row.requester} />
+                {/* Photo and identity on one line, details underneath:
+                    the thumbnail belongs to the name beside it, not to
+                    the whole block, and a tall column of subjects should
+                    not drag the face away from it. */}
+                <div className="flex items-start gap-4">
+                  {photoByRequester.has(row.requester.id) ? (
+                    /* Signed Supabase URLs are short-lived and
+                       host-specific, so they don't fit next/image's
+                       remotePatterns model. */
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={photoByRequester.get(row.requester.id)}
+                      alt=""
+                      className="size-16 shrink-0 rounded-2xl object-cover"
+                    />
+                  ) : (
+                    <PhotoPlaceholder className="size-16 shrink-0" />
+                  )}
+
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <p className="text-[21px] leading-tight font-semibold">
+                      {row.requester.name}
+                    </p>
+                    <ProfileHandle
+                      username={row.requester.username}
+                      className="text-[13.5px]"
+                    />
+                    <ProfileLocation profile={row.requester} />
+                  </div>
                 </div>
 
                 <ProfileDetails profile={row.requester} />

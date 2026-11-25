@@ -490,7 +490,7 @@
   },
   "Photo": {
     "title": "Foto de perfil",
-    "hint": "Tu foto es privada hasta que tengas una chavrusa asignada.",
+    "hint": "Tu foto es privada. Solo pueden verla las personas a las que envías una solicitud o cuya solicitud aceptas.",
     "choose": "Añadir una foto",
     "replace": "Cambiar la foto",
     "remove": "Quitar la foto",
