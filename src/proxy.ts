@@ -45,7 +45,11 @@ export const config = {
     // public/ has to be excluded here or next-intl rewrites it to a
     // locale path and it 404s. That covers site-verification files,
     // robots.txt and sitemap.xml — all of which have to answer on the
-    // bare domain, with no /en prefix.
-    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|html|txt|xml)$).*)",
+    // bare domain, with no /en prefix. The typefaces in public/fonts are
+    // here for the same reason, and for one of their own: a stylesheet
+    // asks for a font at the path it was written with, so a redirect to
+    // /en/fonts/… is not followed into a usable font — the page simply
+    // falls back to Georgia with no error anywhere.
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|html|txt|xml|woff2|woff|ttf|otf)$).*)",
   ],
 };

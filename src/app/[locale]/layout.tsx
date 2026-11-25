@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Frank_Ruhl_Libre } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -21,18 +20,17 @@ import { SITE_URL } from "@/lib/site";
 // mixed run like "Gemara · בבא מציעא" each script picks up its own face
 // within the same element — which is exactly what the handoff asks for,
 // without needing a span around every Hebrew word.
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  style: ["normal", "italic"],
-});
-
-const frankRuhlLibre = Frank_Ruhl_Libre({
-  variable: "--font-frank-ruhl",
-  subsets: ["latin", "hebrew"],
-  weight: ["400", "500", "700"],
-});
+//
+// Both faces are declared in globals.css against files in public/fonts,
+// rather than fetched by next/font/google at build time: see the note
+// there for why a build must not depend on reaching Google.
+//
+// The one latin file each locale certainly needs, asked for early so the
+// first paint isn't waiting on the stylesheet to discover it.
+const PRELOADED_FONT = {
+  latin: "/fonts/source-serif-4-latin.woff2",
+  hebrew: "/fonts/frank-ruhl-libre-hebrew.woff2",
+} as const;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -115,8 +113,17 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={isRtl(locale) ? "rtl" : "ltr"}
-      className={`${sourceSerif.variable} ${frankRuhlLibre.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
+      <head>
+        <link
+          rel="preload"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+          href={isRtl(locale) ? PRELOADED_FONT.hebrew : PRELOADED_FONT.latin}
+        />
+      </head>
       <body className="min-h-full flex flex-col font-sans">
         <NextIntlClientProvider locale={locale as Locale}>
           <NavBar
