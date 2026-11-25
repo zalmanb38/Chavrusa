@@ -490,7 +490,7 @@
   },
   "Photo": {
     "title": "Photo de profil",
-    "hint": "Votre photo reste privée jusqu'à ce que vous soyez mis en relation avec un chavrusa.",
+    "hint": "Votre photo est privée. Seules les personnes à qui vous envoyez une demande, ou dont vous acceptez la demande, peuvent la voir.",
     "choose": "Ajouter une photo",
     "replace": "Changer la photo",
     "remove": "Supprimer la photo",
