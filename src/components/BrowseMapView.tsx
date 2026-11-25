@@ -24,10 +24,13 @@ export default function BrowseMapView({
   profiles,
   currentUserId,
   connectStatuses,
+  photoUrls,
 }: {
   profiles: Profile[];
   currentUserId: string;
   connectStatuses: Record<string, ConnectInfo>;
+  /** Signed photo URLs by owner id, for the people who made theirs public. */
+  photoUrls: Record<string, string>;
 }) {
   const t = useTranslations("Map");
   const tLocation = useTranslations("Location");
@@ -121,6 +124,7 @@ export default function BrowseMapView({
                 connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                 requestId={connectStatuses[profile.id]?.requestId ?? null}
                 retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
+                photoUrl={photoUrls[profile.id] ?? null}
                 showName
                 showMatchedNote
               />

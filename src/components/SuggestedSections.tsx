@@ -23,11 +23,14 @@ export default function SuggestedSections({
   heldBack,
   currentUserId,
   connectStatuses,
+  photoUrls,
 }: {
   groups: SuggestionGroup[];
   heldBack: number;
   currentUserId: string;
   connectStatuses: Record<string, ConnectInfo>;
+  /** Signed photo URLs by owner id, for the people who made theirs public. */
+  photoUrls: Record<string, string>;
 }) {
   const t = useTranslations("Suggested");
   const locale = useLocale();
@@ -75,6 +78,7 @@ export default function SuggestedSections({
                   retryAfter={
                     connectStatuses[suggestion.profile.id]?.retryAfter ?? null
                   }
+                  photoUrl={photoUrls[suggestion.profile.id] ?? null}
                 />
               ))}
             </ul>

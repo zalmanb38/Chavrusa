@@ -42,6 +42,7 @@ import MultiSelectFilter from "@/components/MultiSelectFilter";
 import BrowseMapView from "@/components/BrowseMapView";
 import SuggestedSections from "@/components/SuggestedSections";
 import { buildSuggestions, type Viewer } from "@/lib/suggestions";
+import { signedPhotoUrls } from "@/lib/photos";
 import {
   buildConnectStatusMap,
   type ConnectRequestRow,
@@ -299,6 +300,33 @@ export default async function BrowsePage({
           profiles,
         )
       : { groups: [], shown: 0, heldBack: 0 };
+
+  // Photos for the people on this page who chose to be seen.
+  //
+  // Asked for rather than worked out here: 0038 releases an approved
+  // photo to any member only where its owner set photo_public, so a row
+  // coming back is itself the entitlement. The profile's own flag
+  // narrows the query first, so this is not a list of who has uploaded.
+  const photoOwners = profiles
+    .filter((profile) => profile.photo_public)
+    .map((profile) => profile.id);
+
+  const { data: publicPhotos, error: photosError } = photoOwners.length
+    ? await supabase
+        .from("profile_photos")
+        .select("id, storage_path")
+        .in("id", photoOwners)
+        .eq("status", "approved")
+    : { data: [], error: null };
+
+  if (photosError) console.error("Browse: photos query failed", photosError);
+
+  // One signing call for the page, not one per face.
+  const photoUrls = Object.fromEntries(
+    await signedPhotoUrls(
+      (publicPhotos ?? []) as unknown as { id: string; storage_path: string }[],
+    ),
+  );
 
   const filterChips = activeFilterChips(filters, {
     topic: (v: string) => topicLabel(v),
@@ -640,6 +668,7 @@ export default async function BrowsePage({
                   heldBack={suggestions.heldBack}
                   currentUserId={user.id}
                   connectStatuses={connectStatuses}
+                  photoUrls={photoUrls}
                 />
               </>
             )
@@ -713,6 +742,7 @@ export default async function BrowsePage({
               profiles={profiles}
               currentUserId={user.id}
               connectStatuses={connectStatuses}
+              photoUrls={photoUrls}
             />
           ) : (
             <>
@@ -726,6 +756,7 @@ export default async function BrowsePage({
                       connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                       requestId={connectStatuses[profile.id]?.requestId ?? null}
                       retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
+                      photoUrl={photoUrls[profile.id] ?? null}
                       showName
                     />
                   ))}
@@ -753,6 +784,7 @@ export default async function BrowsePage({
                         connectStatus={connectStatuses[profile.id]?.status ?? "none"}
                         requestId={connectStatuses[profile.id]?.requestId ?? null}
                         retryAfter={connectStatuses[profile.id]?.retryAfter ?? null}
+                        photoUrl={photoUrls[profile.id] ?? null}
                         showName
                       />
                     ))}

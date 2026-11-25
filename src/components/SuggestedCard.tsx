@@ -9,6 +9,7 @@ import ProfileHandle from "@/components/ProfileHandle";
 import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
 import FitStrip from "@/components/FitStrip";
+import PhotoPlaceholder from "@/components/PhotoPlaceholder";
 
 /**
  * One suggested chavrusa.
@@ -27,6 +28,7 @@ export default function SuggestedCard({
   connectStatus,
   requestId,
   retryAfter,
+  photoUrl = null,
 }: {
   suggestion: Suggestion;
   /** Position inside its subject section, counted from 1. */
@@ -37,6 +39,8 @@ export default function SuggestedCard({
   connectStatus: ConnectStatus;
   requestId: string | null;
   retryAfter: string | null;
+  /** Signed URL, only where this person made their photo public. */
+  photoUrl?: string | null;
 }) {
   const t = useTranslations("Browse");
   const { profile } = suggestion;
@@ -53,7 +57,21 @@ export default function SuggestedCard({
         {rank}
       </p>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex items-start gap-4">
+        {photoUrl ? (
+          /* Signed Supabase URLs are short-lived and host-specific, so
+             they don't fit next/image's remotePatterns model. */
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoUrl}
+            alt=""
+            className="size-14 shrink-0 rounded-2xl object-cover"
+          />
+        ) : (
+          <PhotoPlaceholder className="size-14 shrink-0" />
+        )}
+
+      <div className="flex min-w-0 flex-col gap-3">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
           <h3 className="text-[23px] leading-tight font-semibold">
             {profile.name}
@@ -76,6 +94,7 @@ export default function SuggestedCard({
             {profile.blurb}
           </p>
         )}
+      </div>
       </div>
 
       <div className="flex flex-col items-start gap-3 lg:border-s lg:border-border lg:ps-6">

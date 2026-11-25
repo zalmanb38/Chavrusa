@@ -150,3 +150,44 @@ export async function DELETE() {
 
   return NextResponse.json({ ok: true });
 }
+
+/**
+ * Change who may see the signed-in user's photo.
+ *
+ * A column with a privacy promise on it gets one way in, the same way
+ * uploads do: the member's own write to profiles.photo_public is
+ * reverted by the 0038 trigger, so this route — on the service role,
+ * after checking the session — is the only thing that can set it.
+ */
+export async function PATCH(request: Request) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+  }
+
+  const body = await request.json().catch(() => null);
+  const isPublic = (body as { photo_public?: unknown } | null)?.photo_public;
+
+  // Strictly boolean: a missing or mistyped field must not be read as
+  // "public" by coercion.
+  if (typeof isPublic !== "boolean") {
+    return NextResponse.json({ error: "bad_request" }, { status: 400 });
+  }
+
+  const admin = createAdminClient();
+  const { error } = await admin
+    .from("profiles")
+    .update({ photo_public: isPublic })
+    .eq("id", user.id);
+
+  if (error) {
+    console.error("Photo visibility write failed", error);
+    return NextResponse.json({ error: "save_failed" }, { status: 500 });
+  }
+
+  return NextResponse.json({ photo_public: isPublic });
+}

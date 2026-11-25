@@ -66,3 +66,49 @@ export async function signedPhotoUrl(
     return null;
   }
 }
+
+/**
+ * Signed URLs for several stored photos at once, keyed by owner id.
+ *
+ * Browse lists many people, and one signing round-trip each would make
+ * the page's cost a function of how many of them have a photo. Supabase
+ * signs a batch in one call, so this does.
+ *
+ * Entitlement is the caller's business here too: hand it only rows a
+ * query under RLS actually returned.
+ */
+export async function signedPhotoUrls(
+  rows: { id: string; storage_path: string }[],
+): Promise<Map<string, string>> {
+  const byId = new Map<string, string>();
+  if (rows.length === 0) return byId;
+
+  try {
+    const admin = createAdminClient();
+    const { data, error } = await admin.storage
+      .from(PHOTO_BUCKET)
+      .createSignedUrls(
+        rows.map((row) => row.storage_path),
+        SIGNED_URL_TTL_SECONDS,
+      );
+
+    if (error) {
+      console.error("Could not sign photo URLs", error);
+      return byId;
+    }
+
+    // The result comes back in the order the paths went in, and carries
+    // its own per-path error — one unsignable file shouldn't blank the
+    // other faces on the page.
+    (data ?? []).forEach((signed, index) => {
+      const owner = rows[index]?.id;
+      if (owner && signed?.signedUrl && !signed.error) {
+        byId.set(owner, signed.signedUrl);
+      }
+    });
+  } catch (error) {
+    console.error("Photo signing unavailable", error);
+  }
+
+  return byId;
+}
