@@ -1,8 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { topicNameHe } from "@/lib/topic-names";
+import { topicName } from "@/lib/topic-names";
 import type { ConnectInfo } from "@/lib/connect";
 import type { SuggestionGroup } from "@/lib/suggestions";
 import SuggestedCard from "@/components/SuggestedCard";
@@ -14,7 +14,7 @@ import SuggestedCard from "@/components/SuggestedCard";
  * Subjects are the organising idea rather than a filter, because that is
  * the question a person actually arrives with — not "who is a good fit?"
  * but "who can I learn Gemara with?". Each heading is a gold rule with
- * the subject in its Hebrew name, the count beside it, and a link out to
+ * the subject in both its names, the count beside it, and a link out to
  * everyone else learning it, so a section is a doorway into Browse rather
  * than a dead end.
  */
@@ -33,14 +33,15 @@ export default function SuggestedSections({
   photoUrls: Record<string, string>;
 }) {
   const t = useTranslations("Suggested");
+  const locale = useLocale();
 
   return (
     <div className="flex flex-col gap-10">
       {groups.map((group) => {
-        // Hebrew alone, as on the cards below it: the heading and the
-        // rows under it name the same subject, so a heading in two
-        // languages over rows in one reads as two different lists.
-        const subject = topicNameHe(group.topic);
+        // Both names here, unlike the rows below: a heading is read once
+        // on the way past, where the pair is an ornament rather than
+        // repetition, and Zalman prefers it (25 Nov 2026).
+        const subject = topicName(group.topic, locale);
         return (
           <section key={group.topic} className="flex flex-col">
             {/* Subject heading on a gold rule — the design's one ornament,
