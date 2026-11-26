@@ -119,7 +119,10 @@ as $$
    and n.topics && r.topics
   where u.email is not null
     and u.email_confirmed_at is not null
-  group by r.id, u.email, r.name, r.languages
+  -- r.since and r.topics are grouped as well, because the shared-subjects
+  -- subquery above reads them: Postgres has no way to know they are one
+  -- value per recipient, and refuses the query otherwise.
+  group by r.id, u.email, r.name, r.languages, r.since, r.topics
 $$;
 
 revoke all on function public.new_member_digest(interval)
