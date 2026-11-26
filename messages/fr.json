@@ -301,7 +301,9 @@
     "notLookingFix": "Réactiver",
     "matchedSectionTitle": "Étudient déjà avec quelqu'un",
     "matchedSectionBody": "Ils ont un Chavrusa et restent ouverts à un autre.",
-    "suggestedView": "Suggestions"
+    "suggestedView": "Suggestions",
+    "moreInfo": "Plus d'infos",
+    "closeDetails": "Fermer"
   },
   "Requests": {
     "title": "Demandes de connexion",

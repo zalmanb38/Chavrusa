@@ -13,7 +13,7 @@ import {
   type TimeOfDay,
   ageRangeLabel,
 } from "@/lib/profile-options";
-import { topicLabels } from "@/lib/topic-names";
+import { topicLabels, topicLabelsHe } from "@/lib/topic-names";
 import { formatLocationShort } from "@/lib/locations";
 import { visibleAgeRange } from "@/lib/browse-filters";
 
@@ -104,7 +104,11 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
  * width on every row to repeat words the tags now say for themselves.
  *
  * `compact` is for lists, where the job is scanning many people rather
- * than reading one.
+ * than reading one — so it shows the two things a row is chosen on, the
+ * subjects and how the two of you would meet, and leaves the rest to the
+ * fuller view behind "More info". Subjects there carry the Hebrew name
+ * only: a row listing four of them in two languages is mostly repetition
+ * of names the reader already knows.
  */
 export default function ProfileDetails({
   profile,
@@ -117,21 +121,29 @@ export default function ProfileDetails({
   const tLanguages = useTranslations("Languages");
   const locale = useLocale();
 
-  const topics = topicLabels(profile.topics, profile.topic_other, locale);
+  const topics = compact
+    ? topicLabelsHe(profile.topics, profile.topic_other)
+    : topicLabels(profile.topics, profile.topic_other, locale);
   const storedAge = visibleAgeRange(profile);
   const age = storedAge ? ageRangeLabel(storedAge, tProfile) : "";
 
   const facts = [
-    profile.level && tProfile(levelMessageKey[profile.level]),
+    // Level is not on a row: most people leave it empty, and an empty
+    // column of its own was the widest thing on the card that said the
+    // least. It is one line down in the fuller view, where a blank is
+    // just a blank rather than a hole in a grid.
+    !compact && profile.level && tProfile(levelMessageKey[profile.level]),
     tProfile(preferenceListKey[profile.preference as Preference]),
-    age,
-    profile.languages?.length > 0 &&
+    !compact && age,
+    !compact &&
+      profile.languages?.length > 0 &&
       tProfile("speaksValue", {
         languages: profile.languages
           .map((l: LanguageCode) => tLanguages(l))
           .join(", "),
       }),
-    profile.study_languages?.length > 0 &&
+    !compact &&
+      profile.study_languages?.length > 0 &&
       tProfile("studiesInValue", {
         languages: profile.study_languages
           .map((l) => tLanguages(l))
@@ -171,7 +183,7 @@ export default function ProfileDetails({
         </div>
       )}
 
-      {available.length > 0 && (
+      {!compact && available.length > 0 && (
         <Row label={tProfile("availableShort")}>{available.join(" · ")}</Row>
       )}
 

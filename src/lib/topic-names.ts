@@ -52,3 +52,24 @@ export function topicLabels(
     return topicName(key, locale);
   });
 }
+
+/**
+ * The Hebrew name alone, for places where the pair is too much text.
+ *
+ * Browse rows list several subjects each, and the second name doubles the
+ * width of every one of them for a reader who recognises the first. The
+ * fuller view still shows both, so the transliteration is a click away
+ * rather than gone.
+ */
+export function topicLabelsHe(
+  topics: string[] | null | undefined,
+  topicOther: string | null | undefined,
+): string[] {
+  return (topics ?? []).filter(isTopicKey).map((key) => {
+    if (key === OTHER_TOPIC) {
+      const custom = topicOther?.trim();
+      return custom && custom.length > 0 ? custom : topicNameHe(key);
+    }
+    return topicNameHe(key);
+  });
+}

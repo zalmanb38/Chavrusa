@@ -1,5 +1,6 @@
 "use client";
 
+import { useId, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Profile } from "@/lib/profile-options";
 import type { ConnectStatus } from "@/lib/connect";
@@ -9,6 +10,7 @@ import ProfileHandle from "@/components/ProfileHandle";
 import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import ProfileDialog from "@/components/ProfileDialog";
 
 /**
  * One learner, as shown in Browse.
@@ -48,6 +50,26 @@ export default function BrowseCard({
   showMatchedNote?: boolean;
 }) {
   const t = useTranslations("Browse");
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  // One source of truth for the two Connect buttons — the row's and the
+  // dialog's. Without it, connecting from the dialog would leave the row
+  // behind it still offering to connect.
+  const [status, setStatus] = useState(connectStatus);
+  const headingId = useId();
+
+  const displayName = showName ? profile.name : t("anonymousLearner");
+
+  const connect = (
+    <ConnectButton
+      key={status}
+      currentUserId={currentUserId}
+      recipientId={profile.id}
+      initialStatus={status}
+      requestId={requestId}
+      retryAfter={retryAfter}
+      onStatusChange={setStatus}
+    />
+  );
 
   return (
     // A hairline row, not a card: "no boxes for layout — sections are
@@ -73,8 +95,18 @@ export default function BrowseCard({
 
       <div className="flex min-w-0 flex-col gap-2">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          {/* The name is the way in: a person reading a row is already
+              looking at it, so the fuller view opens from the thing they
+              are looking at rather than from a control somewhere else.
+              "More info" below says so for anyone who wouldn't guess. */}
           <h2 className="text-[21px] leading-tight font-semibold">
-            {showName ? profile.name : t("anonymousLearner")}
+            <button
+              type="button"
+              onClick={() => setDetailsOpen(true)}
+              className="text-start hover:text-brass hover:underline underline-offset-4"
+            >
+              {displayName}
+            </button>
           </h2>
           {/* The handle rides in the same baseline row as the name rather
               than on a line of its own: this is a hairline row, and a
@@ -105,29 +137,47 @@ export default function BrowseCard({
         </div>
 
         <ProfileDetails profile={profile} compact />
+
+        {/* Everything the row no longer carries — level, age, languages,
+            when they are free — is behind this, so the decision to reach
+            out can be made without leaving the list. */}
+        <button
+          type="button"
+          onClick={() => setDetailsOpen(true)}
+          className="w-fit text-[13.5px] text-slate-600 underline underline-offset-2 hover:text-brass"
+        >
+          {t("moreInfo")}
+        </button>
       </div>
       </div>
 
       {/* Right rail, opened by a hairline on the inline-start edge so it
           mirrors correctly in Hebrew. */}
       <div className="flex flex-col items-start gap-3 lg:border-s lg:border-border lg:ps-6">
-        <ConnectButton
-          currentUserId={currentUserId}
-          recipientId={profile.id}
-          initialStatus={connectStatus}
-          requestId={requestId}
-          retryAfter={retryAfter}
-        />
+        {connect}
 
         <div className="flex gap-3">
           <ReportButton currentUserId={currentUserId} reportedId={profile.id} />
           <BlockButton
             currentUserId={currentUserId}
             blockedId={profile.id}
-            blockedName={showName ? profile.name : t("anonymousLearner")}
+            blockedName={displayName}
           />
         </div>
       </div>
+
+      {detailsOpen && (
+        <ProfileDialog
+          profile={showName ? profile : { ...profile, username: null }}
+          name={displayName}
+          photoUrl={photoUrl}
+          labelledById={headingId}
+          matchedNote={showMatchedNote && profile.match_count > 0}
+          onClose={() => setDetailsOpen(false)}
+        >
+          {connect}
+        </ProfileDialog>
+      )}
     </li>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   frequencyMessageKey,
   levelMessageKey,
@@ -9,7 +9,7 @@ import {
   type Level,
   type TimeOfDay,
 } from "@/lib/profile-options";
-import { topicName } from "@/lib/topic-names";
+import { topicNameHe } from "@/lib/topic-names";
 import {
   FIT_DIMENSIONS,
   type FitCell,
@@ -25,15 +25,27 @@ const dimensionLabelKey: Record<(typeof FIT_DIMENSIONS)[number], string> = {
 };
 
 /**
+ * The columns the strip draws.
+ *
+ * Level is scored and still shown in the fuller view, but it is not a
+ * column: most people leave it blank, so on a row of five it was most
+ * often an empty box taking a fifth of the width — and an empty box is
+ * read as a missing answer rather than as "they didn't say".
+ */
+const STRIP_DIMENSIONS = FIT_DIMENSIONS.filter(
+  (dimension) => dimension !== "level",
+);
+
+/**
  * Why these two line up, as a table rather than a sentence.
  *
- * Five columns, always the same five in the same order, so a reader
+ * Four columns, always the same four in the same order, so a reader
  * learns the shape once and then reads down it. A column the two have in
  * common is a tinted block under a gold rule; one they do not is left
  * plain and grey.
  *
  * The blocks are the whole signal: no label above them saying how many
- * are filled, and no marks to decode. Four tinted boxes out of five is
+ * are filled, and no marks to decode. Three tinted boxes out of four is
  * already a count, and it is one the reader takes in without reading.
  */
 export default function FitStrip({
@@ -47,14 +59,13 @@ export default function FitStrip({
   const t = useTranslations("Suggested");
   const tProfile = useTranslations("Profile");
   const tLanguages = useTranslations("Languages");
-  const locale = useLocale();
 
   const formatValue = (value: FitValue): string => {
     switch (value.kind) {
       case "topic":
-        return topicName(value.topic, locale);
+        return topicNameHe(value.topic);
       case "topicOther":
-        return value.text || topicName("other", locale);
+        return value.text || topicNameHe("other");
       case "level":
         return tProfile(levelMessageKey[value.level as Level]);
       case "frequency":
@@ -100,8 +111,8 @@ export default function FitStrip({
 
   return (
     <div className="flex flex-col gap-2">
-      <dl className="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-3 lg:grid-cols-5">
-        {FIT_DIMENSIONS.map((dimension) => {
+      <dl className="grid grid-cols-2 gap-x-3 gap-y-2 sm:grid-cols-4">
+        {STRIP_DIMENSIONS.map((dimension) => {
           const cell = byDimension.get(dimension);
           const shared = Boolean(cell?.shared && cell.values.length > 0);
           const text = !shared

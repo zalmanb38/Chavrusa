@@ -301,7 +301,9 @@
     "notLookingFix": "להדליק בחזרה",
     "matchedSectionTitle": "כבר לומדים עם חברותא",
     "matchedSectionBody": "יש להם חברותא, והם פתוחים גם לעוד אחת.",
-    "suggestedView": "הצעות"
+    "suggestedView": "הצעות",
+    "moreInfo": "מידע נוסף",
+    "closeDetails": "סגירה"
   },
   "Requests": {
     "title": "בקשות התחברות",

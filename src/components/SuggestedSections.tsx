@@ -38,6 +38,9 @@ export default function SuggestedSections({
   return (
     <div className="flex flex-col gap-10">
       {groups.map((group) => {
+        // Both names here, unlike the rows below: a heading is read once
+        // on the way past, where the pair is an ornament rather than
+        // repetition, and Zalman prefers it (25 Nov 2026).
         const subject = topicName(group.topic, locale);
         return (
           <section key={group.topic} className="flex flex-col">

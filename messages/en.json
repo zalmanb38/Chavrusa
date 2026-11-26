@@ -301,7 +301,9 @@
     "notLookingFix": "Turn it back on",
     "matchedSectionTitle": "Already learning with someone",
     "matchedSectionBody": "They have a Chavrusa and are still open to another.",
-    "suggestedView": "Suggested"
+    "suggestedView": "Suggested",
+    "moreInfo": "More info",
+    "closeDetails": "Close"
   },
   "Requests": {
     "title": "Connect Requests",

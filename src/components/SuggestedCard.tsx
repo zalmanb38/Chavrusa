@@ -1,5 +1,6 @@
 "use client";
 
+import { useId, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { ConnectStatus } from "@/lib/connect";
 import type { Suggestion } from "@/lib/suggestions";
@@ -10,6 +11,7 @@ import ReportButton from "@/components/ReportButton";
 import BlockButton from "@/components/BlockButton";
 import FitStrip from "@/components/FitStrip";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import ProfileDialog from "@/components/ProfileDialog";
 
 /**
  * One suggested chavrusa.
@@ -44,6 +46,23 @@ export default function SuggestedCard({
 }) {
   const t = useTranslations("Browse");
   const { profile } = suggestion;
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  // Shared by the row's Connect button and the dialog's, so connecting
+  // from one doesn't leave the other offering it again.
+  const [status, setStatus] = useState(connectStatus);
+  const headingId = useId();
+
+  const connect = (
+    <ConnectButton
+      key={status}
+      currentUserId={currentUserId}
+      recipientId={profile.id}
+      initialStatus={status}
+      requestId={requestId}
+      retryAfter={retryAfter}
+      onStatusChange={setStatus}
+    />
+  );
 
   return (
     <li className="grid gap-x-6 gap-y-4 border-t border-border py-6 transition-colors hover:bg-surface lg:grid-cols-[2.5rem_1fr_200px]">
@@ -74,7 +93,13 @@ export default function SuggestedCard({
       <div className="flex min-w-0 flex-col gap-3">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
           <h3 className="text-[23px] leading-tight font-semibold">
-            {profile.name}
+            <button
+              type="button"
+              onClick={() => setDetailsOpen(true)}
+              className="text-start underline-offset-4 hover:text-brass hover:underline"
+            >
+              {profile.name}
+            </button>
           </h3>
           <ProfileHandle username={profile.username} className="text-[13.5px]" />
           <span className="text-[13.5px] text-muted">
@@ -94,17 +119,20 @@ export default function SuggestedCard({
             {profile.blurb}
           </p>
         )}
+        {/* The strip says what the two of you have in common; this says
+            everything else about them, without leaving the page. */}
+        <button
+          type="button"
+          onClick={() => setDetailsOpen(true)}
+          className="w-fit text-[13.5px] text-slate-600 underline underline-offset-2 hover:text-brass"
+        >
+          {t("moreInfo")}
+        </button>
       </div>
       </div>
 
       <div className="flex flex-col items-start gap-3 lg:border-s lg:border-border lg:ps-6">
-        <ConnectButton
-          currentUserId={currentUserId}
-          recipientId={profile.id}
-          initialStatus={connectStatus}
-          requestId={requestId}
-          retryAfter={retryAfter}
-        />
+        {connect}
         <div className="flex gap-3">
           <ReportButton currentUserId={currentUserId} reportedId={profile.id} />
           <BlockButton
@@ -114,6 +142,19 @@ export default function SuggestedCard({
           />
         </div>
       </div>
+
+      {detailsOpen && (
+        <ProfileDialog
+          profile={profile}
+          name={profile.name}
+          photoUrl={photoUrl}
+          labelledById={headingId}
+          matchedNote={profile.match_count > 0}
+          onClose={() => setDetailsOpen(false)}
+        >
+          {connect}
+        </ProfileDialog>
+      )}
     </li>
   );
 }
