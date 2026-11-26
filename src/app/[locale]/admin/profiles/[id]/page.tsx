@@ -44,6 +44,7 @@ interface ContactInfo {
   whatsapp: string;
   contact_phone: string;
   zoom_link: string;
+  contact_email: string;
 }
 
 export default async function AdminProfileDetailPage({
@@ -78,7 +79,7 @@ export default async function AdminProfileDetailPage({
       .maybeSingle(),
     supabase
       .from("profile_contacts")
-      .select("whatsapp, contact_phone, zoom_link")
+      .select("whatsapp, contact_phone, zoom_link, contact_email")
       .eq("id", id)
       .maybeSingle(),
     supabase
@@ -254,9 +255,16 @@ export default async function AdminProfileDetailPage({
             </p>
           </div>
           <div className="sm:col-span-2">
-            <p className="text-xs text-muted">{tProfile("zoomLink")}</p>
-            <p>{c?.zoom_link || "—"}</p>
+            <p className="text-xs text-muted">{tProfile("contactEmail")}</p>
+            <p>{c?.contact_email || "—"}</p>
           </div>
+          {/* Only for the profiles that still carry one. */}
+          {c?.zoom_link && (
+            <div className="sm:col-span-2">
+              <p className="text-xs text-muted">{tProfile("zoomLink")}</p>
+              <p>{c.zoom_link}</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

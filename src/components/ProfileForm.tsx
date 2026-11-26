@@ -46,14 +46,28 @@ function toggle<T>(list: T[], value: T): T[] {
     : [...list, value];
 }
 
+/**
+ * Loose on purpose: something@something.something. A wrong address costs
+ * what a wrong phone number costs, which is checked no harder, and the
+ * strict rule rejects addresses that work.
+ */
+function isValidOptionalEmail(raw: string): boolean {
+  const value = raw.trim();
+  if (value === "") return true;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 export default function ProfileForm({
   initialProfile,
   initialContacts,
   initialFullName,
+  accountEmail,
 }: {
   initialProfile: Profile | null;
   initialContacts: ProfileContacts | null;
   initialFullName: string;
+  /** Offered as a one-click fill, never filled in by itself. */
+  accountEmail: string;
 }) {
   const t = useTranslations("Profile");
   const tCommon = useTranslations("Common");
@@ -112,7 +126,13 @@ export default function ProfileForm({
   const [contactPhone, setContactPhone] = useState(
     initialContacts?.contact_phone ?? "",
   );
-  const [zoomLink, setZoomLink] = useState(initialContacts?.zoom_link ?? "");
+  const [contactEmail, setContactEmail] = useState(
+    initialContacts?.contact_email ?? "",
+  );
+  // No longer offered, and never sent back: a Zoom link saved while the
+  // field existed stays in the database and keeps being shown to a
+  // confirmed chavrusa, so it still counts as a way to be reached.
+  const savedZoomLink = (initialContacts?.zoom_link ?? "").trim();
 
   // Existing profiles had their public name derived from a full name they
   // never chose, so say so once rather than letting a mangled surname sit
@@ -159,7 +179,8 @@ export default function ProfileForm({
     if (
       !whatsapp.trim() &&
       !contactPhone.trim() &&
-      !zoomLink.trim()
+      !contactEmail.trim() &&
+      !savedZoomLink
     ) {
       setError(t("contactRequired"));
       return;
@@ -170,6 +191,11 @@ export default function ProfileForm({
     // here rather than discovering when someone tries to dial it.
     if (!isValidOptionalPhone(whatsapp) || !isValidOptionalPhone(contactPhone)) {
       setError(t("contactPhoneInvalid"));
+      return;
+    }
+
+    if (!isValidOptionalEmail(contactEmail)) {
+      setError(t("contactEmailInvalid"));
       return;
     }
 
@@ -207,10 +233,13 @@ export default function ProfileForm({
         display_name_set: true,
       },
       p_full_name: fullName.trim(),
+      // zoom_link is deliberately absent rather than empty: 0040 reads a
+      // missing key as "leave it alone", so a link saved while the field
+      // was still offered survives every later save.
       p_contacts: {
         whatsapp: whatsapp.trim(),
         contact_phone: contactPhone.trim(),
-        zoom_link: zoomLink.trim(),
+        contact_email: contactEmail.trim(),
       },
     });
 
@@ -602,15 +631,27 @@ export default function ProfileForm({
         </label>
 
         <label className="flex flex-col gap-1.5 text-sm">
-          {t("zoomLink")}
+          {t("contactEmail")}
           <input
-            type="text"
-            value={zoomLink}
-            placeholder={t("zoomLinkPlaceholder")}
-            onChange={(e) => setZoomLink(e.target.value)}
+            type="email"
+            value={contactEmail}
+            placeholder={t("contactEmailPlaceholder")}
+            onChange={(e) => setContactEmail(e.target.value)}
             className={inputClass}
           />
         </label>
+        {/* Offered, never filled in by itself: an address that appeared
+            in a shared field on its own would be a privacy surprise
+            however it was labelled. */}
+        {accountEmail && contactEmail.trim() !== accountEmail && (
+          <button
+            type="button"
+            onClick={() => setContactEmail(accountEmail)}
+            className="-mt-1 w-fit text-sm text-primary underline underline-offset-4"
+          >
+            {t("useAccountEmail", { email: accountEmail })}
+          </button>
+        )}
       </fieldset>
 
       {error && <ErrorNote>{error}</ErrorNote>}

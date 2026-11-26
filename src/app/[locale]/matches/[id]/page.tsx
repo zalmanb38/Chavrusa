@@ -124,14 +124,18 @@ export default async function MatchDetailPage({
     ? (
         await supabase
           .from("profile_contacts")
-          .select("whatsapp, contact_phone, zoom_link")
+          .select("whatsapp, contact_phone, zoom_link, contact_email")
           .eq("id", otherId)
           .maybeSingle()
       ).data
     : null;
 
   const hasAnyContactInfo =
-    !!contacts && (contacts.whatsapp || contacts.contact_phone || contacts.zoom_link);
+    !!contacts &&
+    (contacts.whatsapp ||
+      contacts.contact_phone ||
+      contacts.contact_email ||
+      contacts.zoom_link);
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-12 sm:px-8">
@@ -235,6 +239,14 @@ export default async function MatchDetailPage({
                   <dd>{contacts.contact_phone}</dd>
                 </div>
               )}
+              {contacts?.contact_email && (
+                <div className="flex gap-2">
+                  <dt className="font-medium">{t("contactEmailLabel")}:</dt>
+                  <dd className="break-all">{contacts.contact_email}</dd>
+                </div>
+              )}
+              {/* The field is gone from the form, but a link saved while
+                  it was there is still a way to reach this person. */}
               {contacts?.zoom_link && (
                 <div className="flex gap-2">
                   <dt className="font-medium">{t("contactZoomLabel")}:</dt>
