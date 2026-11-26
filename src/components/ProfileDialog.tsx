@@ -1,11 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
-import ProfileDetails, { ProfileLocation } from "@/components/ProfileDetails";
+import { useLocale, useTranslations } from "next-intl";
 import type { ProfileDetailFields } from "@/components/ProfileDetails";
 import ProfileHandle from "@/components/ProfileHandle";
 import PhotoPlaceholder from "@/components/PhotoPlaceholder";
+import {
+  ageRangeLabel,
+  frequencyMessageKey,
+  levelMessageKey,
+  preferenceListKey,
+  timeOfDayMessageKey,
+  type Frequency,
+  type LanguageCode,
+  type Preference,
+  type TimeOfDay,
+} from "@/lib/profile-options";
+import { topicLabels } from "@/lib/topic-names";
+import { formatLocation } from "@/lib/locations";
+import { visibleAgeRange } from "@/lib/browse-filters";
 
 /**
  * The fuller view of one person, over the page rather than in it.
@@ -26,6 +39,7 @@ export default function ProfileDialog({
   name,
   photoUrl = null,
   labelledById,
+  matchedNote = false,
   children,
   onClose,
 }: {
@@ -34,11 +48,18 @@ export default function ProfileDialog({
   name: string;
   photoUrl?: string | null;
   labelledById: string;
+  /** True where the card says they already have a chavrusa. */
+  matchedNote?: boolean;
   /** The action rail, repeated at the foot of the dialog. */
   children?: React.ReactNode;
   onClose: () => void;
 }) {
   const t = useTranslations("Browse");
+  const tProfile = useTranslations("Profile");
+  const tLanguages = useTranslations("Languages");
+  const tLocation = useTranslations("Location");
+  const tSuggested = useTranslations("Suggested");
+  const locale = useLocale();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
@@ -90,6 +111,61 @@ export default function ProfileDialog({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
 
+  // "Label — the only chrome voice": small, wide tracking, uppercase.
+  const labelClass = "text-[11px] tracking-[0.14em] text-muted uppercase";
+  // Reused rather than a new string: the profile form already calls an
+  // unanswered question this, in all four languages.
+  const unanswered = tProfile("levelUnset");
+
+  const topics = topicLabels(profile.topics, profile.topic_other, locale);
+  const place = formatLocation(profile, (code) => tLocation(`country_${code}`));
+  const storedAge = visibleAgeRange(profile);
+
+  const languageList = (codes: readonly string[] | null | undefined) =>
+    (codes ?? []).map((code) => tLanguages(code as LanguageCode)).join(", ");
+
+  const when = [
+    profile.frequency &&
+      tProfile(frequencyMessageKey[profile.frequency as Frequency]),
+    profile.time_of_day &&
+      tProfile(timeOfDayMessageKey[profile.time_of_day as TimeOfDay]),
+    profile.session_length &&
+      tProfile("sessionLengthValue", { minutes: Number(profile.session_length) }),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  // Order follows the questions people ask each other: what level, how
+  // old, what you'd speak, what the text is in, how you'd meet, when,
+  // and anything they added themselves.
+  const rows: { label: string; value: string }[] = [
+    {
+      label: tProfile("learningLevel"),
+      value: profile.level ? tProfile(levelMessageKey[profile.level]) : "",
+    },
+    {
+      label: tProfile("ageRange"),
+      value: storedAge ? ageRangeLabel(storedAge, tProfile) : "",
+    },
+    {
+      label: tProfile("languagesShort"),
+      value: languageList(profile.languages),
+    },
+    {
+      label: tProfile("studyLanguages"),
+      value: languageList(profile.study_languages),
+    },
+    {
+      label: tProfile("learningPreference"),
+      value: tProfile(preferenceListKey[profile.preference as Preference]),
+    },
+    { label: tSuggested("dimWhen"), value: when },
+    {
+      label: tProfile("availability"),
+      value: profile.availability?.trim() ?? "",
+    },
+  ];
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#1b2430]/60 p-3 sm:items-center sm:p-6"
@@ -100,7 +176,7 @@ export default function ProfileDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledById}
-        className="relative my-auto flex w-full max-w-[560px] flex-col gap-5 border border-border bg-background p-5 sm:p-7"
+        className="relative my-auto flex w-full max-w-[680px] flex-col gap-5 border border-border bg-background p-5 sm:p-7"
         onClick={(event) => event.stopPropagation()}
       >
         <button
@@ -130,32 +206,81 @@ export default function ProfileDialog({
             <img
               src={photoUrl}
               alt=""
-              className="size-16 shrink-0 rounded-2xl object-cover"
+              className="size-20 shrink-0 rounded-2xl object-cover"
             />
           ) : (
-            <PhotoPlaceholder className="size-16 shrink-0" />
+            <PhotoPlaceholder className="size-20 shrink-0" />
           )}
 
-          <div className="flex min-w-0 flex-col gap-0.5">
-            <h2 id={labelledById} className="text-[24px] leading-tight font-semibold">
+          <div className="flex min-w-0 flex-col gap-1">
+            <h2
+              id={labelledById}
+              className="text-[27px] leading-tight font-semibold"
+            >
               {name}
             </h2>
-            <div className="flex flex-wrap items-baseline gap-x-3 text-[13.5px] text-muted">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 text-[13.5px] text-muted">
               <ProfileHandle
-                username={
-                  (profile as { username?: string | null }).username ?? null
-                }
+                username={profile.username ?? null}
                 className="text-[13.5px]"
               />
-              <ProfileLocation profile={profile} />
+              <span>{place}</span>
+              {matchedNote && <span>{t("alreadyLearning")}</span>}
             </div>
           </div>
         </div>
 
-        {/* The full block, both names on every subject: here there is one
-            person on the screen and room to read them. */}
-        <div className="border-t border-border pt-4">
-          <ProfileDetails profile={profile} />
+        {/* Subjects first and across the full width — they are what
+            somebody opened this to check — with both names, which the
+            card no longer has room for. */}
+        <div className="flex flex-col gap-1.5 border-t border-border pt-4">
+          <span className={labelClass}>{tProfile("topicsShort")}</span>
+          {topics.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5">
+              {topics.map((topic) => (
+                <span
+                  key={topic}
+                  className="bg-slate-100 px-2 py-0.5 text-[14px] leading-snug text-slate-700"
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="text-[15px] text-neutral-400">{unanswered}</span>
+          )}
+        </div>
+
+        {/*
+          Every answer, labelled, including the ones they left blank.
+          A field shown as "Not specified" says something a missing row
+          cannot: that it was asked and not answered, which is worth
+          knowing before writing to somebody.
+        */}
+        <dl className="grid gap-x-8 gap-y-4 border-t border-border pt-4 sm:grid-cols-2">
+          {rows.map(({ label, value }) => (
+            <div key={label} className="flex flex-col gap-0.5">
+              <dt className={labelClass}>{label}</dt>
+              <dd
+                className={`text-[15px] leading-snug ${
+                  value ? "text-foreground" : "text-neutral-400"
+                }`}
+              >
+                {value || unanswered}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="flex flex-col gap-1.5 border-t border-border pt-4">
+          <span className={labelClass}>{tProfile("blurb")}</span>
+          {profile.blurb?.trim() ? (
+            <p className="border-s-2 border-brass ps-3 text-[15px] leading-relaxed text-muted italic">
+              {profile.blurb}
+            </p>
+          ) : (
+            <span className="text-[15px] text-neutral-400">{unanswered}</span>
+          )}
         </div>
 
         {children && (

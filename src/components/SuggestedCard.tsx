@@ -149,6 +149,7 @@ export default function SuggestedCard({
           name={profile.name}
           photoUrl={photoUrl}
           labelledById={headingId}
+          matchedNote={profile.match_count > 0}
           onClose={() => setDetailsOpen(false)}
         >
           {connect}

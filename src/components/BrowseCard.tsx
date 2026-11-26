@@ -172,6 +172,7 @@ export default function BrowseCard({
           name={displayName}
           photoUrl={photoUrl}
           labelledById={headingId}
+          matchedNote={showMatchedNote && profile.match_count > 0}
           onClose={() => setDetailsOpen(false)}
         >
           {connect}
