@@ -9,6 +9,7 @@ import PhotoUpload from "@/components/PhotoUpload";
 import AccountLinkedBanner from "@/components/AccountLinkedBanner";
 import EmailUpdatedBanner from "@/components/EmailUpdatedBanner";
 import ChangeEmailForm from "@/components/ChangeEmailForm";
+import EmailPreferences from "@/components/EmailPreferences";
 import { signedPhotoUrl, type ProfilePhoto } from "@/lib/photos";
 import { smsAvailableFor } from "@/lib/sms";
 import type { NotificationChannel as Channel } from "@/lib/notifications";
@@ -72,13 +73,14 @@ export default async function ProfilePage({
   // the setting existed.
   const { data: preference } = await supabase
     .from("notification_preferences")
-    .select("channel, sms_opted_out_at")
+    .select("channel, sms_opted_out_at, new_member_emails")
     .eq("id", user.id)
     .maybeSingle();
 
   const preferenceRow = preference as {
     channel: Channel;
     sms_opted_out_at: string | null;
+    new_member_emails: boolean;
   } | null;
 
   const phone = (profile as { phone: string | null } | null)?.phone ?? null;
@@ -138,6 +140,12 @@ export default async function ProfilePage({
         <p className="text-xs text-muted">{tAccount("emailHint")}</p>
         <ChangeEmailForm locale={locale} />
       </section>
+
+      {/* Directly under the address it is sent to, which is the question
+          anybody reading a mail setting asks first. */}
+      <EmailPreferences
+        initialEnabled={preferenceRow?.new_member_emails ?? true}
+      />
 
       <PhotoUpload
         initialStatus={photoRow?.status ?? null}
